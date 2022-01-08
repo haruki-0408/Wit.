@@ -22,18 +22,58 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light pb-1 px-4"><p class="border px-4 rounded border-light  p-3 text-light">Wit.</p></nav>
-    <div class="container ">
     
-      <div class="row" >
-        <div class="col-12  m-0  ">A</div>
-        <div class="col-12  m-0">B</div>
-        <div class="col-12  m-0">C</div>
+  <div class="container-fluid top-wrapper">
+    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
+      <a class="navbar-brand"  href="#">Wit.</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="test">内容</div>
-        <!--<img src="{{ asset('images/sample.jpg')}}"> -->
-    </div>
-    </div>
+      <div class="collapse navbar-collapse" id="navbarsExample03">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-md-0">
+          <input class="form-control" type="text" placeholder="Search">
+        </form>
+      </div>
+    </nav>
+
+      <div class="row" >
+        <div class="top-message"> 
+          <div class="col-8 mx-auto">
+          <img width=200px height=200px src="{{ asset('/images/chara.png') }} "" >
+            Welcome to Wit.
+          </div>
+        </div>     
+
+        <div class="top-button m-3">
+          <div class="col-4 mx-auto">  
+            <a href="#" class="btn btn-primary m-5" >ログイン</a>        
+            <a href="#" class="btn btn-success m-5">新規登録</a>
+          </div>
+        </div>
+
+        <div class="message-wrapper">
+          
+        
+      </div>
+  </div>
 
 
 

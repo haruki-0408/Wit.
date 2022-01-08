@@ -1,4 +1,4 @@
-body{
+.top-wrapper{
     background-image: url('/images/sample.jpg');
     background-color:rgba(255,255,255,0.4);
     background-blend-mode:lighten;
@@ -7,12 +7,16 @@ body{
     position: relative;
 
 }
-.navbar{
-    background: linear-gradient(#dfa28a, #ce7018);
+
+.navbar-brand{
+    font-family: "zapfino";
+    font-weight:bolder;
 }
-.navbar p{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size:20px;
+
+.top-message{
+    font-size:50px;
+    font-family: "zapfino";
+    font-weight:bolder;
 }
 
 .test{
