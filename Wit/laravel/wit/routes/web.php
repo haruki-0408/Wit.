@@ -26,6 +26,15 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/bootstrap', function () {
-    return view('bootstrap');
+Route::get('/index', function () {
+    return view('wit.index');
+});
+
+Route::get('/index/layouts', function (){
+    return view('layouts.Witapp');
+});
+
+
+Route::get('/index/test', function (){
+    return view('layouts.test');
 });
