@@ -19,6 +19,41 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+    .tags {
+        display: inline-block;
+        margin: 0 .1em .6em 0;
+        padding: .6em;
+        line-height: 1;
+        color: #fff;
+        text-decoration: none;
+        background-color: #0d6efd;
+        border-radius: 2em 0 0 2em;
+        font-size:12px;
+    }
+    .tags:before {
+	content: '●';
+	margin-right: .5em;
+	color: #fff;
+    } 
+
+    #left-sidebar{
+        position: sticky;
+    }
+
+    
+
+    #right-sidebar{
+        position: sticky;
+    }
+
+
+
+    ul{
+        list-style-type: none;
+    }
+    </style>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
