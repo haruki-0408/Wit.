@@ -18,19 +18,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/wit.css') }}" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    
 
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -38,42 +38,32 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
+                     
                     <!-- Right Side Of Navbar -->
                     <div class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                       <div class="input-group"> 
+                        <input class="form-control mx-2" type="text" placeholder="検索ワード">
+                        <input class="btn btn-primary" type="submit" value="検索">
+                       </div> 
+
                         <div class="btn-group" >
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            フィルター
-                            </button>
-                            
+                            <button class="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">フィルター</button>
                             <ul class="dropdown-menu">
                             ...
                             </ul>
                         </div>
 
-                        <div class="input-group">
-                        <input class="form-control" type="text" placeholder="検索ワード">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                <i class='bi bi-search w-2 h-2'></i>
-                                </button>
-                            </span>
-                        </div>
-
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">ログイン</a>
+                                    <a class="nav-link text-nowrap" href="{{ route('login') }}">ログイン</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">新規登録</a>
+                                    <a class="nav-link text-nowrap" href="{{ route('register') }}">新規登録</a>
                                 </li>
                             @endif
                         @else
@@ -100,7 +90,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main >
             @yield('content')
         </main>
     </div>

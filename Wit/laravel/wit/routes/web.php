@@ -14,27 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-Route::get('/index', function () {
     return view('wit.index');
 });
 
-Route::get('/index/layouts', function (){
-    return view('layouts.Witapp');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/app2', function() {
+    return view('layouts.app2');
 });
 
-
-Route::get('/index/test', function (){
-    return view('layouts.test');
-});
+Auth::routes();
