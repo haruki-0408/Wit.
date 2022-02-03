@@ -32,26 +32,25 @@
         font-size:12px;
     }
     .tags:before {
-	content: '●';
-	margin-right: .5em;
-	color: #fff;
+	    content: '●';
+	    margin-right: .5em;
+	    color: #fff;
     } 
 
-    #left-sidebar{
-        position: sticky;
+    #center-content{
+        max-height:150vh;
+        overflow: scroll;
     }
 
-    
-
-    #right-sidebar{
-        position: sticky;
-    }
-
+   
 
 
     ul{
         list-style-type: none;
     }
+
+    
+}
     </style>
 
     <!-- Bootstrap CSS -->
