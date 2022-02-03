@@ -178,7 +178,7 @@
                                             <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
                                             <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
                                             <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>å
+                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
                                         
 
                                         </ul>

@@ -34,9 +34,13 @@
     .tags:before {
 	    content: '●';
 	    margin-right: .5em;
-	    color: #fff;
+	    
     } 
 
+    .tags:hover{
+        color:#0d6efd;
+        background-color:#fff;
+    }
     #center-content{
         max-height:150vh;
         overflow: scroll;
