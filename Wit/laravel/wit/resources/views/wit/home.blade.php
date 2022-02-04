@@ -4,7 +4,7 @@
 
 <div class="container-fluid"> 
     <div class="row ">    
-        <div id="left-sidebar" class="col-3 d-flex flex-column p-3 bg-light ">      
+        <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light ">      
                 <div class="profile-box  ">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <i class="bi bi-person-fill mx-2"></i>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="Profile-message text-break fs-6">
-                        Hi I'm Test account I'll work hard to make this project a success. Thank you. </div>    
+                        Hi I'm Test account I'll work hard to make this project a success. Thank you. dafdasdfsadfsfefasfeafeafeafsafeafasfeasfafasfaseefasfweafaefesafeasfasefasfeasfaefeasfaefef</div>    
             
                     <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
@@ -76,7 +76,7 @@
                             <li>
                                 <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                                     <img src="https://github.com/mika.png" alt="" width="30" height="30" class="rounded-circle me-2">
-                                    mika
+                                    asdfghjkloiuytrewqas
                                 </a>
                             </li>    
                             <li>
@@ -122,203 +122,387 @@
         
         
         <!-- Room content -->
-        <div id="center-content" class="d-flex flex-column col-6 ">         
-                <ul id="Rooms" class="align-items-center p-1 m-0 ">
-                    <li>
-                        <div class="card border-0 ">
-                            <div class="card-body">
-                                <h4 class="card-title">Room title</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/row.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>tenten</strong>
-                                </a>
-                                <p class="card-text m-2">“The word he said reminded me of the memory during my childhood in Japan. The memory is sad.”</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+        <div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12">         
+            <ul id="Rooms" class="align-items-center p-3 m-0 ">
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">WORLD FOOLER</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/carbon.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Mr.X</strong>
+                                    </a>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="card border-0 w-100">
-                            <div class="card-body">
-                                <h4 class="card-title">SUPER LONG TITLE PLEASE</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/angle.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>haruki</strong>
-                                </a>
-                                <p class="card-text m-2">Some quick example text to build on the cardsadfasdfasfafsadfdsafsdfdafasdfaffdsgdsfgdsafadsfdsafdasfsafdsafdasfdsafdsafasdfdsafs title and make up the bulk of the card's content.</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                        
-
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="card border-0 w-100">
-                            <div class="card-body">
-                                <h4 class="card-title">WORLD FOOLER</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/carbon.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>Mr.X</strong>
-                                </a>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
                                 <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                                </div>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
-                    <li>
-                        <div class="card border-0 w-100">
-                            <div class="card-body">
-                                <h4 class="card-title">Room title</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/rower.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>jank</strong>
-                                </a>
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">Apple is the Strongest Paas?</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/haruki.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>haruki</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
                                 <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                                </div>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
-                    <li>
-                        <div class="card border-0 w-100">
-                            <div class="card-body">
-                                <h4 class="card-title">Room title</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/rower.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>jank</strong>
-                                </a>
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">SUPER TEXT EDITOR</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/ram.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Ram</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
                                 <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                                </div>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </li>
+                    </div>
+                </li>
 
-                    <li>
-                        <div class="card border-0 w-100">
-                            <div class="card-body">
-                                <h4 class="card-title">Room title</h4> 
-                                <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                    <img src="https://github.com/rower.png" alt="" width="50" height="50" class="rounded-circle me-2">
-                                    <strong>jank</strong>
-                                </a>
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">GLIDE</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/betty.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>betty</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
                                 <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <div class="row">
-                                    <div class="room_tags col-10">
-                                        <ul>
-                                            <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-                                            <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="text-end col-2"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                                </div>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">IS NEW CHANCE</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/car.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>CHan</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">WORLD FOOLER</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/carbon.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Mr.X</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">INHIVITE</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/bon.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Irruus</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">WORLD FOOLER</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/carbon.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Mr.X</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">Tensow flow</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/jai.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Mr.X</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">りんごはなぜ赤い？</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/kazuki.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>はるき</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">日本語バージョンのルームのテストです。どんな感じになるかな。</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">果物</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">日本語</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">りんご</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">傘</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="card border-0 mt-4 w-100">
+                        <div class="container-card-body">
+                            <h4 class="card-title p-1">WORLD FOOLER</h4> 
+                            <div class="row">
+                                <div class="col-6 text-start">
+                                    <a href="#" class="link-dark text-decoration-none">
+                                        <img src="https://github.com/carbon.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                        <strong>Mr.X</strong>
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                                <p class="card-text m-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                                
+                            <div class="room_tags">
+                                <ul class="p-0">
+                                    <li class="d-inline-block"><a class="tags"href="#">Food</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Fassion</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">anime</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">programming</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">suits</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">sports</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">fdfe fefe fsefefes </a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>                                        
+                                    <li class="d-inline-block"><a class="tags"href="#">Movie</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                
+            </ul>
         </div>    
 
-        <div id="right-sidebar" class="col-3 d-flex flex-column p-3   bg-light">    
+        <div id="right-sidebar" class="col-3 d-none d-lg-block d-flex flex-column p-3   bg-light">    
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <i class="bi bi-tag-fill mx-2 "></i>
                     <span class="fs-4">Tags</span> <!-- Tagには文字数制限をつける　--> 

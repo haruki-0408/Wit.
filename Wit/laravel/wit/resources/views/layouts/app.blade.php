@@ -41,7 +41,7 @@
         color:#0d6efd;
         background-color:#fff;
     }
-    #center-content{
+    #Room-content{
         max-height:150vh;
         overflow: scroll;
     }
@@ -81,12 +81,12 @@
                     <div class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                        <div class="input-group"> 
-                        <input class="form-control mx-2" type="text" placeholder="検索ワード">
-                        <input class="btn btn-primary" type="submit" value="検索">
+                        <input class="form-control mx-2" type="text" placeholder="KEYWORD">
+                        <a> <i class="btn btn-primary bi bi-search"></i>  </a>
                        </div> 
 
                         <div class="btn-group" >
-                            <button class="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">フィルター</button>
+                            <button class="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="true">filter</button>
                             <ul class="dropdown-menu">
                             ...
                             </ul>
