@@ -20,6 +20,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
+    main{
+        padding-bottom: 10px;
+        }
+    body{
+        padding-top:60px;
+        }
     .tags {
         display: inline-block;
         margin: 0 .1em .6em 0;
@@ -46,9 +52,6 @@
         overflow: scroll;
     }
 
-   
-
-
     ul{
         list-style-type: none;
     }
@@ -65,7 +68,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm ">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name') }}
@@ -80,13 +83,14 @@
                     <!-- Right Side Of Navbar -->
                     <div class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                       <div class="input-group"> 
-                        <input class="form-control mx-2" type="text" placeholder="KEYWORD">
-                        <a> <i class="btn btn-primary bi bi-search"></i>  </a>
+                        
+                       <div class="input-group p-2"> 
+                            <input class="form-control mx-2" type="text" placeholder="KEYWORD">
+                            <a> <i class="btn btn-primary bi bi-search"></i>  </a>
                        </div> 
 
-                        <div class="btn-group" >
-                            <button class="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="true">filter</button>
+                        <div class="btn-group p-2" >
+                            <button class="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-filter-square"></i></button>
                             <ul class="dropdown-menu">
                             ...
                             </ul>

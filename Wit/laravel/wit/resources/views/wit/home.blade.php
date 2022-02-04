@@ -4,7 +4,7 @@
 
 <div class="container-fluid"> 
     <div class="row ">    
-        <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light ">      
+        <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">      
                 <div class="profile-box  ">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <i class="bi bi-person-fill mx-2"></i>
@@ -108,7 +108,7 @@
                        
                         Rooms :
                     
-                        <ul class="text-truncate list-group  fs-6 ">
+                        <ul class="text-truncate list-group  m-2 fs-6 ">
                             <li class="list-group-item  text-truncate">An itemdafasdfsadfasfdsafasfdsfasfdsafasfafdsafsafdsfasfdsafasdfa</li>
                             <li class="list-group-item">A second item</li>
                             <li class="list-group-item">A third item</li>
@@ -122,7 +122,7 @@
         
         
         <!-- Room content -->
-        <div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12">         
+        <div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12">
             <ul id="Rooms" class="align-items-center p-3 m-0 ">
                 <li>
                     <div class="card border-0 mt-4 w-100">
@@ -548,6 +548,20 @@
                 <hr>
         </div>    
     </div><!--row-->
+
+    <footer class="footer d-md-none d-lg-none fixed-bottom bg-light">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid justify-content-center">
+                <div class="btn-group  gap-5" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary rounded-circle p-0" style="width:3rem;height:3rem;">＋</button>
+                    <button type="button" class="btn btn-primary rounded-circle p-0" style="width:3rem;height:3rem;">＋</button>
+                    <button type="button" class="btn btn-primary rounded-circle p-0" style="width:3rem;height:3rem;">＋</button>
+                    <button type="button" class="btn btn-primary rounded-circle p-0" style="width:3rem;height:3rem;">＋</button>
+            
+                </div>
+            </div>
+          </nav>
+    </footer>
 </div><!--container-fluid-->
 
 @endsection
