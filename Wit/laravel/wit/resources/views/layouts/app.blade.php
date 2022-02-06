@@ -21,8 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        header {
-            padding-bottom: 60px;
+        main {
+            padding-top: 60px;
         }
 
         .tags {
@@ -57,9 +57,6 @@
             list-style-type: none;
         }
 
-
-        }
-
     </style>
 
     <!-- Bootstrap CSS -->
@@ -75,7 +72,7 @@
         <header>
             <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                         {{ config('app.name') }}
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
