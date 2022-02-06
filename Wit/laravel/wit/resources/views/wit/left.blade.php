@@ -1,6 +1,48 @@
+<!-- Modal -->
+<div class="modal fade" id="posts" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="posts" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="posts">Posts</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @component('wit.posts')
+                @endcomponent
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="answers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="answer" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="answers">Answers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @component('wit.answers')
+                @endcomponent
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div class="profile-box  ">
-        <a href="/home/profile" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <a href="/home/profile"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <i class="bi bi-person-fill mx-2"></i>
             <span class="fs-4">Profile</span>
         </a>
@@ -32,20 +74,14 @@
 
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    Home
-                </a>
-            </li>
-
             <li>
-                <a href="#" class="nav-link link-dark">
-                    Post
+                <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#posts">
+                    Posts
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
-                    Answer
+                <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#answers">
+                    Answers
                 </a>
             </li>
         </ul>
@@ -60,9 +96,10 @@
         <hr>
 
         <div class="user-list fs-5">
-            <i class="bi bi-people-fill mx-2"></i>
-
-            Users
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
+                <i class="bi bi-people-fill mx-2 "></i>
+                Users :
+            </a>
 
             <ul class="nav nav-pills flex-column m-2 mb-auto fs-6 ">
                 <li class="nav-item" id="user">
@@ -106,9 +143,10 @@
 
 
         <div class="room-list fs-5 mt-3 ">
-            <i class="bi bi-house-fill mx-2 "></i>
-
-            Rooms :
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
+                <i class="bi bi-house-fill mx-2 "></i>
+                Rooms :
+            </a>
 
             <ul class="text-truncate list-group  m-2 fs-6 ">
                 <li class="list-group-item  text-truncate">An

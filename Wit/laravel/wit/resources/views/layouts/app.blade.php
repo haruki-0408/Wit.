@@ -88,8 +88,8 @@
                         <div class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
 
-                            <div class="input-group p-2">
-                                <input class="form-control mx-2" type="text" placeholder="KEYWORD">
+                            <div class="input-group p-2 align-items-center">
+                                <input class="form-control mx-2" type="text" >
                                 <a> <i class="btn btn-primary bi bi-search"></i> </a>
                             </div>
 

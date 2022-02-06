@@ -87,8 +87,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="d-flex flex-column p-3  ">
                     @component('wit.tags')
+                    
                     @endcomponent
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -154,12 +157,12 @@
                     <ul style="list-style-type:disc">
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#posts">
-                                Post 
+                                Posts
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#answers">
-                                Answer
+                                Answers
                             </a>
                         </li>
                         <li class="border-bottom">
