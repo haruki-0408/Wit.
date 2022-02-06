@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('wit.home');
     }
+
+    public function showProfile()
+    {
+        return view('wit.profile');
+    }
 }

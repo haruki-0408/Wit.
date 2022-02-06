@@ -21,12 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        main {
-            padding-bottom: 10px;
-        }
-
-        body {
-            padding-top: 60px;
+        header {
+            padding-bottom: 60px;
         }
 
         .tags {
@@ -152,10 +148,7 @@
         <main>
             @yield('content')
         </main>
-
-        <footer>
-            @yield('footer')
-        </footer>
+        
     </div>
 </body>
 
