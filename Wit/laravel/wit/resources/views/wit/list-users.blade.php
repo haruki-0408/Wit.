@@ -33,5 +33,48 @@
             doggy
         </a>
     </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/tenten.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            tenten
+        </a>
+    </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/kaori.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            香織
+        </a>
+    </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/Hong.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            Hong
+        </a>
+    </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/dod.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            rice-cooker
+        </a>
+    </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/d2.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            anchan1223
+        </a>
+    </li>
+    <li class="p-2" >
+        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+            <img src="https://github.com/jang.png" alt="" width="50" height="50"
+                class="rounded-circle me-2">
+            まさや
+        </a>
+    </li>
+
 
 </ul>

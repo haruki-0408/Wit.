@@ -30,4 +30,10 @@ class HomeController extends Controller
     {
         return view('wit.profile');
     }
+
+    public function enterRoom($room_id)
+    {
+        $id = ["id"=>$room_id];
+        return view('wit.room',$id);
+    }
 }

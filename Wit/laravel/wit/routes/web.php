@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('show_profile');
+Route::get('/home/room/{id?}', [App\Http\Controllers\HomeController::class, 'enterRoom'])->name('enter_room');
 
 
 Auth::routes();

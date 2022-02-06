@@ -1,5 +1,5 @@
 <!-- Room content -->
-<div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 mt-3">
+<div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 ">
     <ul id="Rooms" class="align-items-center p-2 m-0 ">
         <li>
             <div class="card border-0 pt-4 w-100">
@@ -260,14 +260,16 @@
                     <div class="row">
                         <div class="col-6 text-start">
                             <a href="#" class="link-dark text-decoration-none">
-                                <img src="https://github.com/carbon.png" alt="" width="50" height="50"
+                                <img src="https://github.com/char.png" alt="" width="50" height="50"
                                     class="rounded-circle me-2">
-                                <strong>Mr.X</strong>
+                                <strong>yamban</strong>
                             </a>
                         </div>
                         <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
-                        <p class="card-text m-2">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
+                        <p class="card-text m-2">It is important to read all the long sentences, but "paragraph
+                            reading" is recommended as a tip to grasp the contents more efficiently. Paragraph reading
+                            is a method of reading a long sentence while holding down the main points of a paragraph or
+                            guessing.</p>
                     </div>
 
                     <div class="room_tags">
@@ -367,7 +369,8 @@
                     <div class="row">
                         <div class="col-6 text-start">
                             <a href="#" class="link-dark text-decoration-none">
-                                <img src="https://github.com/rudy.png" alt="" width="50" height="50"　class="rounded-circle me-2">
+                                <img src="https://github.com/rudy.png" alt="" width="50" height="50"
+                                    class="rounded-circle me-2">
                                 <strong>tange</strong>
                             </a>
                         </div>
@@ -399,7 +402,5 @@
                 </div>
             </div>
         </li>
-
-
     </ul>
 </div>

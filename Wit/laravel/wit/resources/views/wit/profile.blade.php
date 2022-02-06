@@ -152,32 +152,32 @@
                 </div>
                 <hr>
 
-                <div class="lists">
+                <div class="lists p-2">
                     <!-- Button trigger modal -->
-                    <ul style="list-style-type:disc">
+                    <ul style="list-style-type:disc ">
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#posts">
-                                Posts
+                                <strong>Posts</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#answers">
-                                Answers
+                                <strong>Answers</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
-                                Users
+                                <strong>Users</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
-                                Rooms
+                                <strong>Rooms</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#tags">
-                                Tags
+                                <strong>Tags</strong>
                             </a>
                         </li>
                     </ul>

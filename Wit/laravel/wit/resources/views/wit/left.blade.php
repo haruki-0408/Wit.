@@ -58,7 +58,7 @@
 
 
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">New Room</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="/home/profile">Profile</a></li>
                 <li>
@@ -75,12 +75,12 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#posts">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#posts">
                     Posts
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#answers">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#answers">
                     Answers
                 </a>
             </li>
@@ -101,35 +101,35 @@
                 Users :
             </a>
 
-            <ul class="nav nav-pills flex-column m-2 mb-auto fs-6 ">
-                <li class="nav-item" id="user">
+            <ul class="list-group flex-column m-2 mb-auto fs-6 ">
+                <li class="list-group-item " >
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
                             class="rounded-circle me-2">
                         haruki
                     </a>
                 </li>
-                <li>
+                <li class="list-group-item ">
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/mika.png" alt="" width="30" height="30"
                             class="rounded-circle me-2">
                         asdfghjkloiuytrewqas
                     </a>
                 </li>
-                <li>
+                <li class="list-group-item ">
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/ham.png" alt="" width="30" height="30" class="rounded-circle me-2">
                         roy
                     </a>
                 </li>
-                <li>
+                <li class="list-group-item ">
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/erika.png" alt="" width="30" height="30"
                             class="rounded-circle me-2">
                         erika
                     </a>
                 </li>
-                <li>
+                <li class="list-group-item ">
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/doggy.png" alt="" width="30" height="30"
                             class="rounded-circle me-2">

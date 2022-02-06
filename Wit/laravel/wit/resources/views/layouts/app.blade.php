@@ -57,6 +57,29 @@
             list-style-type: none;
         }
 
+        .btn-room-create {
+            display: inline-block;
+            text-decoration: none;
+            width: 50px;
+            height: 50px;
+            border-width: thin;
+            border-color: #0d6efd;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 20px;
+            background-color: white;
+            /* transition: .3s;*/
+            color: #0d6efd;
+            box-shadow: 0 3px 10ex white;
+        }
+
+        .btn-room-create:hover{
+            background-color: #0d6efd;
+            /* transition: .3s;*/
+            color: white;
+        }
+        
+
     </style>
 
     <!-- Bootstrap CSS -->
@@ -68,7 +91,7 @@
 </head>
 
 <body>
-    <div id="wit">
+    <div id="app">
         <header>
             <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top">
                 <div class="container">
@@ -89,7 +112,7 @@
                             <!-- Authentication Links -->
 
                             <div class="input-group p-2 align-items-center">
-                                <input class="form-control mx-2" type="text" >
+                                <input class="form-control mx-2" type="text">
                                 <a> <i class="btn btn-primary bi bi-search"></i> </a>
                             </div>
 
@@ -123,8 +146,9 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -145,7 +169,7 @@
         <main>
             @yield('content')
         </main>
-        
+
     </div>
 </body>
 

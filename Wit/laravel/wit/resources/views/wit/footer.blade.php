@@ -59,23 +59,23 @@
     </div>
 </div>
 
-<div class="footer d-md-none d-lg-none fixed-bottom bg-light mt-2">
+<div class="footer d-sm-none fixed-bottom bg-light mt-2">
     <nav class="navbar navbar-light bg-light justify-content-around">
         <a class="home link-dark footer-buttons" href="/home"><i class="rounded bi bi-house-door-fill"></i></a>
         <a class="profile link-dark footer-buttons" href="/home/profile"><i class="bi bi-person-fill"></i></a>
         <div class="dropup">
             <a class="mylist dropup link-dark footer-buttons dropdown-toggle" data-bs-toggle="dropdown"
                 aria-expanded="false"" href=" #"><i class="bi bi-card-list"></i></a>
-            <ul class="dropdown-menu">
-                <!-- Dropdown menu links -->
-                <li>
+            <ul class="dropdown-menu justify-content-center p-2">
+                <li class="p-2">
                     <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
-                        Users
+                    <strong>Users</strong>
                     </a>
                 </li>
-                <li>
+                <hr>
+                <li class="p-2">
                     <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
-                        Rooms
+                    <strong>Rooms</strong>
                     </a>
                 </li>
             </ul>
