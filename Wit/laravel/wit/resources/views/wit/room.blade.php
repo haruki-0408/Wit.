@@ -60,49 +60,46 @@
 <body>
     <div id="2">
         <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm ">
+            <nav class="navbar navbar-light bg-light shadow-sm ">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
+                    <div class="col-2 d-none d-md-block d-flex justify-content-center align-items-center">
+                        <div class="row">
                             <strong>
-                                ID:{{ $id }}
+                                ID:{{ $id }}329343854753438439436556456
                             </strong>
-                            <img src="https://github.com/mdo.png" alt="" width="80" height="80"
+                        </div>
+                        <div class="row">
+                            <div class="hostUser">
+                                <img src="https://github.com/mdo.png" alt="" width="80px" height="80px"
                                     class="rounded-circle me-2">
                                 <strong>{{ Auth::user()->name }}</strong>
-                        </div>
-                        <div class="col-9">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <!-- Left Side Of Navbar -->
-
-                                <!-- Right Side Of Navbar -->
-                                <div class="navbar-nav ms-auto">
-                                    <!-- Authentication Links -->
-
-                                    <div class="input-group p-2 align-items-center">
-                                        <input class="form-control mx-2" type="text">
-                                        <a> <i class="btn btn-primary bi bi-search"></i> </a>
-                                    </div>
-
-                                    <div class="btn-group p-2">
-                                        <button class="btn btn-primary dropdown-toggle mx-3" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="true"><i
-                                                class="bi bi-filter-square"></i></button>
-                                        <ul class="dropdown-menu">
-                                            ...
-                                        </ul>
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-xs-11 col-md-9 text-truncate fw-bold">
+                        Let's Create Room Starting I'm glad to meeting you and that222fdfer
+                    </div>
+                    <div class="col-1 m-0 d-flex justify-content-center">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-arrow-bar-left"></i></button>
+                        
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                            aria-labelledby="offcanvasRightLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
             </nav>
         </header>
         <main>

@@ -148,13 +148,13 @@
                 Rooms :
             </a>
 
-            <ul class="text-truncate list-group  m-2 fs-6 ">
-                <li class="list-group-item  text-truncate">An
+            <ul class="list-group  m-2 fs-6 ">
+                <li class="list-group-item text-truncate">An
                     itemdafasdfsadfasfdsafasfdsfasfdsafasfafdsafsafdsfasfdsafasdfa</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A fourth item</li>
-                <li class="list-group-item">And a fifth one</li>
+                <li class="list-group-item text-truncate">A second item</li>
+                <li class="list-group-item text-truncate">A third item</li>
+                <li class="list-group-item text-truncate">A fourth item</li>
+                <li class="list-group-item text-truncate">And a fifth one</li>
             </ul>
         </div>
         <hr>

@@ -28,9 +28,9 @@
         .tags {
             display: inline-block;
             margin: 0 .1em .6em 0;
-            padding: .6em;
-            line-height: 1;
+            padding: .5em;  
             color: #fff;
+            text-align:center;
             text-decoration: none;
             background-color: #0d6efd;
             border-radius: 2em 0 0 2em;
@@ -40,7 +40,6 @@
         .tags:before {
             content: '●';
             margin-right: .5em;
-
         }
 
         .tags:hover {
@@ -56,6 +55,8 @@
         ul {
             list-style-type: none;
         }
+
+        
 
         .btn-room-create {
             display: inline-block;

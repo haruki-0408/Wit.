@@ -13,7 +13,7 @@
                                 <strong>Mr.X</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary">Enter</a></div>
+                        <div class="col-6 text-end"><a href="/home/room/2" class="btn btn-outline-primary">Enter</a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
