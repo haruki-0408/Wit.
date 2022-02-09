@@ -25,7 +25,7 @@
             padding-top: 60px;
         }
 
-        .tags {
+        .tag {
             display: inline-block;
             margin: 0 .1em .6em 0;
             padding: .5em;  
@@ -37,12 +37,12 @@
             font-size: 12px;
         }
 
-        .tags:before {
+        .tag:before {
             content: '●';
             margin-right: .5em;
         }
 
-        .tags:hover {
+        .tag:hover {
             color: #0d6efd;
             background-color: #fff;
         }
@@ -55,8 +55,6 @@
         ul {
             list-style-type: none;
         }
-
-        
 
         .btn-room-create {
             display: inline-block;

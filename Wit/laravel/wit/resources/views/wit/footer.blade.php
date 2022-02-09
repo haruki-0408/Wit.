@@ -59,7 +59,7 @@
     </div>
 </div>
 
-<div class="footer d-sm-none fixed-bottom bg-light mt-2">
+<div class="footer d-md-none fixed-bottom bg-light mt-2">
     <nav class="navbar navbar-light bg-light justify-content-around">
         <a class="home link-dark footer-buttons" href="/home"><i class="rounded bi bi-house-door-fill"></i></a>
         <a class="profile link-dark footer-buttons" href="/home/profile"><i class="bi bi-person-fill"></i></a>
@@ -80,7 +80,7 @@
                 </li>
             </ul>
         </div>
-        <a class="tag link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#tags" href="#"><i
+        <a class="tags link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#tags" href="#"><i
                 class="bi bi-tag-fill"></i></a>
         <a class="settings link-dark footer-buttons" href="#"><i class="bi bi-gear-fill"></i></a>
     </nav>

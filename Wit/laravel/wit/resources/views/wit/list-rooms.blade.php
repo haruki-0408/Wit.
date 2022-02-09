@@ -17,19 +17,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -53,19 +53,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -89,19 +89,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -125,19 +125,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -161,19 +161,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,19 +197,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -233,19 +233,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -269,19 +269,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -305,19 +305,19 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -340,19 +340,19 @@
                         <p class="card-text m-2">日本語バージョンのルームのテストです。どんな感じになるかな。</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">果物</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">日本語</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">りんご</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">傘</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">果物</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">日本語</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">りんご</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">傘</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
                         </ul>
                     </div>
                 </div>
@@ -376,24 +376,24 @@
                             bulk of the card's content.</p>
                     </div>
 
-                    <div class="room_tags">
+                    <div class="room_tag">
                         <ul class="p-0">
-                            <li class="d-inline-block"><a class="tags" href="#">Food</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Fassion</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">anime</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">programming</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">suits</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">sports</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">Movie</a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tags" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Food</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Fassion</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">anime</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">programming</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">suits</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">sports</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">Movie</a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
                         </ul>
                     </div>
                 </div>
