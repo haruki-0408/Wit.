@@ -2,7 +2,7 @@
     <i class="bi bi-droplet mx-2" style="color: red;"></i>
     World Trend :
     <ul>
-        <li><a class="tag" href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span class="badge badge-light">4</span></a></li>
+        <li><a class="tag" href="#">Foodadfafasfdsafasfff<span class="badge badge-light">4</span></a></li>
         <li><a class="tag" href="#">Fassion<span class="badge badge-dark">5</span></a></li>
         <li><a class="tag" href="#">Mathmatics<span class="badge badge-dark">3</span></a></li>
         <li><a class="tag" href="#">Science<span class="badge badge-dark">15</span></a></li>
