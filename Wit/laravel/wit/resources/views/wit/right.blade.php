@@ -9,4 +9,5 @@
     <hr>
     @component('wit.tags')
     @endcomponent
+    <hr>
 </div>

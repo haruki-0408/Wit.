@@ -28,9 +28,9 @@
         .tag {
             display: inline-block;
             margin: 0 .1em .6em 0;
-            padding: .5em;  
+            padding: .5em;
             color: #fff;
-            text-align:center;
+            text-align: center;
             text-decoration: none;
             background-color: #0d6efd;
             border-radius: 2em 0 0 2em;
@@ -72,12 +72,11 @@
             box-shadow: 0 3px 10ex white;
         }
 
-        .btn-room-create:hover{
+        .btn-room-create:hover {
             background-color: #0d6efd;
             /* transition: .3s;*/
             color: white;
         }
-        
 
     </style>
 
@@ -95,7 +94,9 @@
             <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/home') }}">
+                        <img style="width:40px;height:40px;" src="{{ asset('/images/wit.png') }} ">
                         {{ config('app.name') }}
+                            
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -147,7 +148,7 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                                                                 document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 

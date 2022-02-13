@@ -101,7 +101,7 @@
         <div class="user-list fs-5">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
                 <i class="bi bi-people-fill mx-2 "></i>
-                Users :
+                Users 
             </a>
 
             <ul class="list-group flex-column m-2 mb-auto fs-6 ">
@@ -148,7 +148,7 @@
         <div class="room-list fs-5 mt-3 ">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
                 <i class="bi bi-house-fill mx-2 "></i>
-                Rooms :
+                Rooms 
             </a>
 
             <ul class="list-group  m-2 fs-6 ">

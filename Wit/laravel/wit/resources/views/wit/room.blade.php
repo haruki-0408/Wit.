@@ -58,6 +58,10 @@
             max-height: 100%;
         }
 
+        #chat {
+            height: 50%;
+        }
+
         .tag {
             display: inline-block;
             margin: 0 .1em .6em 0;
@@ -94,6 +98,86 @@
 
 </head>
 
+ <!-- Offcanvas -->
+ <div style="width:90px;" class="offcanvas d-flex align-items-start justify-content-center offcanvas-end"
+ tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+ <div class="offcanvas-header">
+     <div id="offcanvasRightLabel">
+         <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
+             class="rounded-circle me-2">
+     </div>
+     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+         aria-label="Close"></button>
+ </div>
+
+ <div class="offcanvas-body d-flex flex-column ">
+     <div data-bs-toggle="modal" data-bs-target="#users" class="onlineUsers pb-3">
+         <i style="width:30px; height:30px" class="bi bi-person-check-fill mx-2"></i>
+     </div>
+
+     <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
+         <i style="width:30px; height:30px" class="bi bi-tag-fill mx-2"></i>
+     </div>
+
+     <div class="information pb-3">
+         <i style="width:30px; height:30px" class="bi bi-info-circle-fill mx-2"></i>
+     </div>
+
+     <div class="exitRoomButton pt-3">
+         <a style="width:42px; height:30px;" href="/home" class="btn btn-outline-primary">
+             <i class="d-flex bi bi-arrow-bar-right align-items-center"></i>
+         </a>
+     </div>
+ </div>
+</div>
+
+<!-- Mordals -->
+<div class="modal fade" id="users" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+ aria-labelledby="users" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-scrollable">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="users"><i class="bi bi-person-check-fill mx-2"></i>Online</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal"
+                 aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+             @component('wit.room-users')
+             @endcomponent
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         </div>
+     </div>
+ </div>
+</div>
+
+<div class="modal fade" id="tags" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+ aria-labelledby="tags" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-scrollable">
+     <div class="modal-content">
+         <div class="modal-header">
+             
+             <h5 class="modal-title" id="tags"><i class="bi bi-tag-fill mx-2"></i>Room Tags</h5>
+             <div class="col-1"></div>
+             <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
+             <button type="button" class="btn-close" data-bs-dismiss="modal"
+                 aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+             <div class="d-flex flex-column p-3  ">
+                 @component('wit.room-tags')
+
+                 @endcomponent
+             </div>
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         </div>
+     </div>
+ </div>
+</div>
+
 <body>
     <div id="app">
         <header>
@@ -107,36 +191,34 @@
                         </div>
                     </div>
 
-
                     <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">テストルーム（カタカナ文字数制限）をいくつにするか？</h4>
-                        <p class="d-sm-none fs-6">テストルーム（カタカナ文字数制限）をいくつにするか？</p>
+                        <h4 class="d-none d-md-block">テストルーム（カタカナ文字数制限）をいくつにするか？ここまでで３３文字</h4>
+                        <p class="d-sm-none">テストルーム（カタカナ文字数制限）をいくつにするか？ここまでで３３文字
+                        </p>
                     </div>
 
-                    <div class="col-2 d-flex justify-content-center ">
-                        <a style="width:42px; height:30px;" href="/home" class="btn btn-outline-primary">
+                    <div class="exitRoomButton col-2 d-none d-md-block d-flex justify-content-center ">
+                        <a style="width:42px; height:30px;" href="/home"
+                            class="d-flex justify-content-center btn btn-outline-primary">
                             <i class="d-flex bi bi-arrow-bar-right align-items-center"></i>
                         </a>
+
                     </div>
+
+                    <div class="col-2 d-sm-none d-flex justify-content-center ">
+                        <a data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
+                            aria-controls="offcanvasRight">
+                            <button class="navbar-toggler" type="button">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </a>
+                    </div>
+
                 </div>
             </nav>
         </header>
 
         <main>
-            <!--<div class="row">
-                <div class="col-6">
-                    <a class="d-md-none d-flex justify-content-start align-middle" data-bs-toggle="offcanvas"
-                        href="#offcanvasLeft" role="button" aria-controls="offcanvasLeft">
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="col-6">
-                    <a class="d-md-none d-flex justify-content-end align-middle" data-bs-toggle="offcanvas"
-                        href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
-                        <i class="bi bi-chevron-left"></i>
-                    </a>
-                </div>
-            </div> -->
             <div class="container-fluid h-100">
                 <div class="row h-100">
                     <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
@@ -147,37 +229,12 @@
                                     <strong>Room tags</strong>
                                 </div>
                                 <div class="col-6 p-0 text-end">
-                                    <a href="#"class="btn btn-outline-primary"><i class="bi bi-tags-fill"></i></a>
+                                    <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
                                 </div>
                             </div>
                             <div class="roomTagsList col-12 fs-5 h-25">
-                                <ul>
-                                    <li><a class="tag"
-                                            href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span
-                                                class="badge badge-light">4</span></a></li>
-                                    <li><a class="tag" href="#">Fassion<span
-                                                class="badge badge-dark">5</span></a></li>
-                                    <li><a class="tag" href="#">Mathmatics<span
-                                                class="badge badge-dark">3</span></a></li>
-                                    <li><a class="tag" href="#">Science<span
-                                                class="badge badge-dark">15</span></a></li>
-                                    <li><a class="tag" href="#">PHP<span
-                                                class="badge badge-dark">194</span></a>
-                                    </li>
-                                    <li><a class="tag"
-                                            href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span
-                                                class="badge badge-light">4</span></a></li>
-                                    <li><a class="tag" href="#">Fassion<span
-                                                class="badge badge-dark">5</span></a></li>
-                                    <li><a class="tag" href="#">PHP<span
-                                                class="badge badge-dark">194</span></a>
-                                    </li>
-                                    <li><a class="tag"
-                                            href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span
-                                                class="badge badge-light">4</span></a></li>
-                                    <li><a class="tag" href="#">Fassion<span
-                                                class="badge badge-dark">5</span></a></li>
-                                </ul>
+                                @component('wit.room-tags')
+                                @endcomponent
                             </div>
                             <hr>
                             <div class="settingButtons col-12 h-50">
@@ -194,16 +251,8 @@
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0"
                                         class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                    <!--
-                                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2"
-                                        aria-label="Slide 3"></button>
-                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="3"
-                                        aria-label="Slide 4"></button>
-                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="4"
-                                        aria-label="Slide 5"></button>
-                                    -->
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                 </div>
 
                                 <div class="carousel-inner d-flex align-items-center h-100 w-100">
@@ -215,19 +264,11 @@
                                     <div id='img02' onclick="this.webkitRequestFullScreen();" class="carousel-item">
                                         <img src="{{ asset('/images/sample02.png') }} ">
                                     </div>
-                                    <!--
-                                    <div id='img03' onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                        <img src="{{ asset('/images/sample03.jpg') }} ">
-                                    </div>
-
-                                    <div id='img04' onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                        <img src="{{ asset('/images/sample04.png') }} ">
-                                    </div>
 
                                     <div id='img05' onclick="this.webkitRequestFullScreen();" class="carousel-item">
                                         <img src="{{ asset('/images/sample05.png') }} ">
                                     </div>
-                                -->
+
                                 </div>
 
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
@@ -245,7 +286,7 @@
                             </div>
                         </div>
 
-                        <div id="chat" class="card col-12 h-50">
+                        <div id="chat" class="card col-12 ">
                             <div class="card-body">
 
                             </div>
@@ -280,129 +321,15 @@
                             </div>
 
                             <div id="onlineUsersList" class="col-12">
-                                <ul class="p-0">
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
-                                            <img src="https://github.com/haruki-0408.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            haruki
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
-                                            <img src="https://github.com/mika.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            asdfghjkloiuytrewqasadadfafdsa
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
-                                            <img src="https://github.com/ham.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            roy
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/erika.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            erika
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/doggy.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            doggy
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/tenten.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            tenten
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/kaori.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            香織
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/Hong.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            Hong
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/dod.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            rice-cooker
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/d2.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            anchan1223
-                                        </a>
-                                    </li>
-
-                                    <li class="p-2">
-                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                            <img src="https://github.com/jang.png" alt="" width="50" height="50"
-                                                class="rounded-circle me-2">
-                                            まさや
-                                        </a>
-                                    </li>
-
-                                </ul>
+                                @component('wit.room-users')
+                                @endcomponent
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-
-                <div style="width:200px;" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft"
-                    aria-labelledby="offcanvasLeftLabel">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasLeftLabel">Left</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        ...
-                    </div>
-                </div>
-
-                <div style="width:100px;" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                    aria-labelledby="offcanvasRightLabel">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasRightLabel">Right</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        ...
-                    </div>
-                </div>
-
         </main>
-
     </div>
 </body>
 

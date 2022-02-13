@@ -33,4 +33,4 @@
         <li><a class="tag" href="#">Star Wars</a></li>
     </ul>
 </div>
-<hr>
+
