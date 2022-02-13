@@ -38,7 +38,7 @@
         }
 
         #onlineUsersList {
-            height:90%;
+            height: 90%;
             overflow: scroll;
         }
 
@@ -141,9 +141,14 @@
                 <div class="row h-100">
                     <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
                         <div class="row h-100">
-                            <div class="roomTags col-12">
-                                <i class="bi bi-tag-fill mx-2"></i>
-                                <strong>Room tags :</strong>
+                            <div class="row roomTags">
+                                <div class="col-6 p-0 text-start">
+                                    <i class="bi bi-tag-fill mx-2"></i>
+                                    <strong>Room tags</strong>
+                                </div>
+                                <div class="col-6 p-0 text-end">
+                                    <a href="#"class="btn btn-outline-primary"><i class="bi bi-tags-fill"></i></a>
+                                </div>
                             </div>
                             <div class="roomTagsList col-12 fs-5 h-25">
                                 <ul>
@@ -242,6 +247,7 @@
 
                         <div id="chat" class="card col-12 h-50">
                             <div class="card-body">
+
                             </div>
                             <div class="card-footer">
                                 <form>
@@ -287,7 +293,7 @@
                                         <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
                                             <img src="https://github.com/mika.png" alt="" width="50" height="50"
                                                 class="rounded-circle me-2">
-                                            asdfghjkloiuytrewqasadadfafdsafasfdsafdsfasfdsfsafdsafasfdfadsfasdasfdsfa
+                                            asdfghjkloiuytrewqasadadfafdsa
                                         </a>
                                     </li>
 
