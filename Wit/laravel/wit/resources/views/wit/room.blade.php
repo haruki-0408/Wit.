@@ -33,43 +33,29 @@
             height: 90vh;
         }
 
-        .roomTags {
+        .roomTagsList {
             overflow: scroll;
         }
 
-        #right-content {
+        #onlineUsersList {
+            height:90%;
             overflow: scroll;
         }
 
-        .carousel .carousel-indicators li {
-            background-color: #333333;
+
+        :-webkit-full-screen {
+            background-color: #f8f9fa;
         }
 
-        #image img {
-            width: auto;
-            height: auto;
+        :-webkit-full-screen img {
+            display: block;
+            margin: auto;
+            cursor: pointer;
+        }
+
+        .carousel-item img {
             max-width: 100%;
             max-height: 100%;
-            vertical-align: middle;
-        }
-
-        .modal-body img{
-            max-width:100vh;
-            max-height:100vh;
-        }
-
-        .carousel-item {
-            position: relative;
-            width: 350px;
-            height: 350px;
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            border: 1px solid darkgray;
-        }
-
-        #chat {
-            height: 40%;
         }
 
         .tag {
@@ -155,9 +141,11 @@
                 <div class="row h-100">
                     <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
                         <div class="row h-100">
-                            <div class="roomTags col-12 fs-5 h-50">
+                            <div class="roomTags col-12">
                                 <i class="bi bi-tag-fill mx-2"></i>
-                                Room tags :
+                                <strong>Room tags :</strong>
+                            </div>
+                            <div class="roomTagsList col-12 fs-5 h-25">
                                 <ul>
                                     <li><a class="tag"
                                             href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span
@@ -176,127 +164,79 @@
                                                 class="badge badge-light">4</span></a></li>
                                     <li><a class="tag" href="#">Fassion<span
                                                 class="badge badge-dark">5</span></a></li>
-
-
+                                    <li><a class="tag" href="#">PHP<span
+                                                class="badge badge-dark">194</span></a>
+                                    </li>
+                                    <li><a class="tag"
+                                            href="#">Foodadfafasfdsafasffffffffffffffasdfawesf<span
+                                                class="badge badge-light">4</span></a></li>
+                                    <li><a class="tag" href="#">Fassion<span
+                                                class="badge badge-dark">5</span></a></li>
                                 </ul>
                             </div>
                             <hr>
                             <div class="settingButtons col-12 h-50">
-                                ID : {{$id}}
+                                ID : {{ $id }}
                             </div>
                         </div>
                     </div>
 
                     <div id="center-content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
-                        <div id="image" class="card col-12 h-50">
-                            <div class="card-body p-0 w-100 h-100 ">
-                                <div id="carouselExampleIndicators" class="carousel  slide w-100 h-100"
-                                    data-bs-interval="false">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="0" class="active" aria-current="true"
-                                            aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="3" aria-label="Slide 4"></button>
-                                    </div>
-                                    <div class="carousel-inner justify-content-center">
-                                        <div class="carousel-item active align-items-center">
-                                            <img src="{{ asset('/images/sample01.jpg') }} " data-bs-toggle="modal"
-                                                data-bs-target="#imageModal01">
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="imageModal01" tabindex="-1"
-                                                aria-labelledby="imageModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <img src="{{ asset('/images/sample01.jpg') }} ">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="{{ asset('/images/sample02.jpg') }} " data-bs-toggle="modal"
-                                                data-bs-target="#imageModal02">
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="imageModal02" tabindex="-1"
-                                                aria-labelledby="imageModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <img src="{{ asset('/images/sample02.jpg') }} ">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img src="{{ asset('/images/sample03.jpg') }} " data-bs-toggle="modal"
-                                                data-bs-target="#imageModal03">
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="imageModal03" tabindex="-1"
-                                                aria-labelledby="imageModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <img src="{{ asset('/images/sample03.jpg') }} ">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="carousel-item ">
-                                            <img src="{{ asset('/images/sample04.png') }} " data-bs-toggle="modal"
-                                                data-bs-target="#imageModal04">
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="imageModal04" tabindex="-1"
-                                                aria-labelledby="imageModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <img src="{{ asset('/images/sample04.png') }} ">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <i style="font-size:2rem; font-weight:bold; color:white;"
-                                            class="bi bi-chevron-left"></i>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <i style="font-size:2rem; font-weight:bold; color:white;"
-                                            class="bi bi-chevron-right"></i>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+                        <div id="image" class="h-50">
+                            <div id="carouselIndicators"
+                                class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center "
+                                data-bs-interval="false">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0"
+                                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1"
+                                        aria-label="Slide 2"></button>
+                                    <!--
+                                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2"
+                                        aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="3"
+                                        aria-label="Slide 4"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="4"
+                                        aria-label="Slide 5"></button>
+                                    -->
                                 </div>
+
+                                <div class="carousel-inner d-flex align-items-center h-100 w-100">
+                                    <div id='img01' onclick="this.webkitRequestFullScreen();"
+                                        class="carousel-item active">
+                                        <img src="{{ asset('/images/sample01.png') }} ">
+                                    </div>
+
+                                    <div id='img02' onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                        <img src="{{ asset('/images/sample02.png') }} ">
+                                    </div>
+                                    <!--
+                                    <div id='img03' onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                        <img src="{{ asset('/images/sample03.jpg') }} ">
+                                    </div>
+
+                                    <div id='img04' onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                        <img src="{{ asset('/images/sample04.png') }} ">
+                                    </div>
+
+                                    <div id='img05' onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                        <img src="{{ asset('/images/sample05.png') }} ">
+                                    </div>
+                                -->
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
+                                    data-bs-slide="prev">
+                                    <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                        class="bi bi-chevron-left"></i>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators"
+                                    data-bs-slide="next">
+                                    <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                        class="bi bi-chevron-right"></i>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
                         </div>
 
@@ -309,7 +249,7 @@
                                         <div class="col-9">
                                             <input id="message" class="form-control" type="text">
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-3 d-flex justify-content-center">
                                             <button type="button" class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
@@ -326,121 +266,134 @@
                         </div>
                     </div>
 
-                    <div id="right-content" class="col-3 bg-light d-none d-md-block p-1 h-100">
-                        <div class="onlineUsers">
-                            <i class="bi bi-person-workspace"></i>
-                            <span class="fs-4">Online Users</span>
-                            <ul class="flex-column">
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/haruki-0408.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        haruki
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/mika.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        asdfghjkloiuytrewqas
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/ham.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        roy
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/erika.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        erika
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/doggy.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        doggy
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/tenten.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        tenten
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/kaori.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        香織
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/Hong.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        Hong
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/dod.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        rice-cooker
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/d2.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        anchan1223
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                                        <img src="https://github.com/jang.png" alt="" width="50" height="50"
-                                            class="rounded-circle me-2">
-                                        まさや
-                                    </a>
-                                </li>
+                    <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
+                        <div class="row h-100">
+                            <div class="onlineUsers col-12">
+                                <i class="bi bi-person-check-fill mx-2"></i>
+                                <strong>Online</strong>
+                            </div>
 
+                            <div id="onlineUsersList" class="col-12">
+                                <ul class="p-0">
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
+                                            <img src="https://github.com/haruki-0408.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            haruki
+                                        </a>
+                                    </li>
 
-                            </ul>
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
+                                            <img src="https://github.com/mika.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            asdfghjkloiuytrewqasadadfafdsafasfdsafdsfasfdsfsafdsafasfdfadsfasdasfdsfa
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none">
+                                            <img src="https://github.com/ham.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            roy
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/erika.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            erika
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/doggy.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            doggy
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/tenten.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            tenten
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/kaori.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            香織
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/Hong.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            Hong
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/dod.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            rice-cooker
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/d2.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            anchan1223
+                                        </a>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+                                            <img src="https://github.com/jang.png" alt="" width="50" height="50"
+                                                class="rounded-circle me-2">
+                                            まさや
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
+
                     </div>
-
                 </div>
-            </div>
 
 
-            <div style="width:200px;" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft"
-                aria-labelledby="offcanvasLeftLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasLeftLabel">Left</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+                <div style="width:200px;" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft"
+                    aria-labelledby="offcanvasLeftLabel">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasLeftLabel">Left</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        ...
+                    </div>
                 </div>
-                <div class="offcanvas-body">
-                    ...
-                </div>
-            </div>
 
-            <div style="width:100px;" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel">Right</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+                <div style="width:100px;" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasRightLabel">Right</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        ...
+                    </div>
                 </div>
-                <div class="offcanvas-body">
-                    ...
-                </div>
-            </div>
 
         </main>
 

@@ -70,7 +70,10 @@
 
         <div class="Profile-message text-break fs-6">
             Hi I'm Test account I'll work hard to make this project a success. Thank you.
-            dafdasdfsadfsfefasfeafeafeafsafeafasfeasfafasfaseefasfweafaefesafeasfasefasfeasfaefeasfaefef</div>
+            Makoto is a junior high school student. He has a friend who came from Chicago last year. His friend's
+            name is John. John's father and Makoto's father work at the same place. One day John said to Makoto, "I
+            will go back to America with my family for ten days during the spring vacation. You can visit Chicago with
+            us.</div>
 
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
@@ -102,7 +105,7 @@
             </a>
 
             <ul class="list-group flex-column m-2 mb-auto fs-6 ">
-                <li class="list-group-item " >
+                <li class="list-group-item ">
                     <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
                         <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
                             class="rounded-circle me-2">
