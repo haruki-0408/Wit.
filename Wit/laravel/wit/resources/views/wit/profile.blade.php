@@ -11,17 +11,16 @@
             <div class="row">
                 <div class="header">
                     <div class="row align-items-center">
-                        <div class="col-6 text-start">
+                        <div class="col-10 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
-                                <img src="https://github.com/mdo.png" alt="" width="80" height="80"
+                                <img src="https://github.com/mdo.png" alt="" width="70" height="70"
                                     class="rounded-circle me-2">
                                 <strong>{{ Auth::user()->name }}</strong>
                             </a>
 
                         </div>
-                        <div class="col-6 text-end">
-                            <a href="home/setting" class="link-dark"><i style="font-size:1.5rem;"
-                                    class="bi bi-gear-fill"></i></a>
+                        <div class="col-2 text-end">
+                            <a href="home/setting" class="link-dark"><i style="font-size:1.5rem;"class="bi bi-gear-fill"></i></a>
                         </div>
                     </div>
 

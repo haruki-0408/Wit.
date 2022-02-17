@@ -13,10 +13,10 @@
             asdfghjkloiuytrewqas
         </a>
     </li>
-    <li class="p-2" >
-        <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
+    <li class="p-2">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none ">
             <img src="https://github.com/ham.png" alt="" width="50" height="50" class="rounded-circle me-2">
-            roy
+            <strong>わけわからん文字化け発生してね？あわかっあかさたな</strong>
         </a>
     </li>
     <li class="p-2" >

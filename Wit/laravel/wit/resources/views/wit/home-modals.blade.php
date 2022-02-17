@@ -7,7 +7,7 @@
                 <h5 class="modal-title" id="posts">Posts</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-1">
                 @component('wit.posts')
                 @endcomponent
             </div>
@@ -26,7 +26,7 @@
                 <h5 class="modal-title" id="answers">Answers</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-1">
                 @component('wit.answers')
                 @endcomponent
             </div>
@@ -45,7 +45,7 @@
                 <h5 class="modal-title" id="users"><i class="bi bi-people-fill mx-2 "></i>Users</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-1">
                 @component('wit.list-users')
                 @endcomponent
             </div>
@@ -64,11 +64,9 @@
                 <h5 class="modal-title" id="list-rooms"><i class="bi bi-house-fill mx-2 "></i>Rooms</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div id="Room-content" class="d-flex flex-column ">
-                    @component('wit.list-rooms')
-                    @endcomponent
-                </div>
+            <div class="modal-body p-1">
+                @component('wit.list-rooms')
+                @endcomponent
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -88,7 +86,6 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
                     @component('wit.tags')
-
                     @endcomponent
                 </div>
             </div>
