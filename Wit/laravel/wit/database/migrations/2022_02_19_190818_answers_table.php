@@ -14,13 +14,9 @@ class AnswersTable extends Migration
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users'); //users_tableからの外部キー参照
-
-            $table->integer('room_id')->unsigned();
-            $table->foreign('room_id')->references('id')->on('rooms'); //rooms_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
+            $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->dateTime('created_at')->useCurrent();
             $table->softDeletes();
         });

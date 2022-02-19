@@ -14,12 +14,11 @@ class RoomsTable extends Migration
     public function up()
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users'); //users_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
+            $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('title', 30);
             $table->string('description', 400);
+            $table->string('password')->nullable()->default(null)->comment('private用のパスワード');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent()->nullable();
             $table->softDeletes();

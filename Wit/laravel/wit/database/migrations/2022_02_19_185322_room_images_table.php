@@ -14,14 +14,12 @@ class RoomImagesTable extends Migration
     public function up()
     {
         Schema::create('room_images', function (Blueprint $table) {
-            $table->integer('room_id')->unsigned();
-            $table->foreign('room_id')->references('id')->on('rooms'); //users_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
-            $table->string('image');
+            $table->id();
+            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->string('image')->comment('画像ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrent()->nullable();
-            $table->softDeletes(); //論理削除のためのdeleted_at
+            $table->dateTime('updated_at')->nullable();
+            $table->softDeletes(); 
         });
     }
 

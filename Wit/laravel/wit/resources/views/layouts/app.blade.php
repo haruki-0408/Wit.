@@ -94,7 +94,7 @@
             <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/home') }}">
-                        <img style="width:40px;height:40px;" src="{{ asset('/images/wit.png') }} ">
+                        <img style="width:40px;height:40px;" src="{{ asset('/images/wit/wit.png') }} ">
                         {{ config('app.name') }}
                             
                     </a>

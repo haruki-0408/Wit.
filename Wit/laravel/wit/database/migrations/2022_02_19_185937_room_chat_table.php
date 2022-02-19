@@ -14,20 +14,14 @@ class RoomChatTable extends Migration
     public function up()
     {
         Schema::create('room_chat', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users'); //users_tableからの外部キー参照
-
-            $table->integer('room_id')->unsigned();
-            $table->foreign('room_id')->references('id')->on('rooms'); //rooms_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
+            $table->id();
+            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('message'); //内容
-            $table->string('postfile'); //投稿ファイルのパス
+            $table->string('postfile')->nullable(); //投稿ファイルのパス
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrent()->nullable();
             $table->softDeletes(); //論理削除のためのdeleted_at
         });
-
     }
 
     /**

@@ -4,7 +4,7 @@
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
-                    <h4 class="card-title p-1">WORLD FOOLER</h4>
+                    <h4 class="card-title p-1">Fill IMAGES ROOM TEST</h4>
                     <div class="row align-items-center">
                         <div class="col-10 text-start text-truncate">
                             <a href="#" class="link-dark text-decoration-none ">
@@ -13,7 +13,13 @@
                             </a>
                         </div>
                         <div class="col-2 text-end"><a href="/home/room/2" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
-                        <p class="card-text m-2">YouTubeを趣味でやってます！ なりたい自分が見えたので、プログラム始めました！ってなことで、なんとなくQiita始めました！ YouTubeと同じく趣味の範疇でやるのでお手柔らかに。Some quick example text to build on the card title and make up thebulk of the card's content.５００文字の適当な文字を並べるあｄふぁふぇさｊふぃおあｓふぉいあせふぁｓふぁえｆさふぇYouTubeを趣味でやってます！ なりたい自分が見えたので、プログラム始めました！ってなことで、なんとなくQiita始めました！ YouTubeと同じく趣味の範疇でやるので。Some quick example text to build on the cardnd make up thebulk of the card's cont.</p>
+                        <p class="card-text m-2">
+                            OSS活動というと、一流エンジニアたちがすごい会話をしながら行っている敷居の高いものというイメージがありましたが、実際はわたしのような経験の浅いエンジニアでも気軽に参加できるものだと感じました。
+
+コントリビュートの方法もプログラミングを書くことだけでなく、リソースの追加や誤字の訂正（タイポ）、翻訳作業など多岐にわたります。
+
+ゆくゆくはプログラミング言語を提案できるようなコントリビュートもしてみたいですが、最初の１歩目としては今回わたしが行ったような方法で感覚を掴んでみることはOSS未経験者にとって大変有効だなと思います。
+                        </p>
                     </div>
 
                     <div class="room_tag">
@@ -38,18 +44,17 @@
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
-                    <h4 class="card-title p-1">Apple is the Strongest Paas?</h4>
+                    <h4 class="card-title p-1">画像なし用のテストルーム</h4>
                     <div class="row align-items-center">
                         <div class="col-6 text-start text-truncate">
                             <a href="#" class="link-dark text-decoration-none">
-                                <img src="https://github.com/haruki.png" alt="" width="50" height="50"
+                                <img src="{{ asset('/images/wit/wit.png') }}" alt="" width="50" height="50"
                                     class="rounded-circle me-2">
                                 <strong>haruki</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
-                        <p class="card-text m-2">Some quick example text to build on the card title and make up the
-                            bulk of the card's content.</p>
+                        <div class="col-6 text-end"><a href="/home/room/3" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <p class="card-text m-2">日本語のページかつルームに画像を挿入しないときの挙動をテストするためのルーム</p>
                     </div>
 
                     <div class="room_tag">

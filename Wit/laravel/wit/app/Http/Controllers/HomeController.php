@@ -33,7 +33,11 @@ class HomeController extends Controller
 
     public function enterRoom($room_id)
     {
-        $id = ["id"=>$room_id];
-        return view('wit.room',$id);
+        $id = ["id" => $room_id];
+        if ($id['id'] < 3) {
+            return view('wit.room', $id);
+        } else {
+            return view('wit.room3', $id);
+        };
     }
 }

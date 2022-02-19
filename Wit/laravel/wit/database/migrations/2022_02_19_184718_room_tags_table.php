@@ -14,13 +14,9 @@ class RoomTagsTable extends Migration
     public function up()
     {
         Schema::create('room_tags', function (Blueprint $table) {
-            $table->integer('tag_id')->unsigned();
-            $table->foreign('tag_id')->references('id')->on('tags'); //tags_tableからの外部キー参照
-
-            $table->integer('room_id')->unsigned();
-            $table->foreign('room_id')->references('id')->on('rooms'); //users_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
+            $table->id();
+            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->foreignId('tag_id')->references('id')->on('tags')->cascadeOnUpdate()->cascadeOnDelete()->comment('tags_tableからの外部キー参照');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent()->nullable();
         });

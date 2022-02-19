@@ -14,13 +14,9 @@ class RoomUsersTable extends Migration
     public function up()
     {
         Schema::create('room_users', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users'); //users_tableからの外部キー参照
-
-            $table->integer('room_id')->unsigned();
-            $table->foreign('room_id')->references('id')->on('rooms'); //rooms_tableからの外部キー参照
-
-            $table->primary("id")->incriment();
+            $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->dateTime('entered_at')->useCurrent();
             $table->dateTime('exited_at')->useCurrent();
         });
