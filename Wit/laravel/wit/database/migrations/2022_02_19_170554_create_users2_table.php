@@ -21,7 +21,7 @@ class CreateUsers2Table extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_message',500);
-            $table->string('profile_image');
+            $table->string('profile_image'); //画像のパスファイル
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent()->nullable();
             $table->softDeletes(); //論理削除のためのdeleted_at

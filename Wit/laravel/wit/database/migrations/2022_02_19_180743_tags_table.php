@@ -13,10 +13,13 @@ class TagsTable extends Migration
      */
     public function up()
     {
-        $table->primary("id")->incriment();
-        $table->string('name',);
-        $table->dateTime('created_at')->useCurrent();
-        $table->dateTime('updated_at')->useCurrent()->nullable();
+        Schema::create('tags', function (Blueprint $table) {
+            $table->primary("id")->incriment();
+            $table->string('name', 20);
+            $table->integer('number')->unsigned();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->nullable();
+        });
     }
 
     /**
