@@ -44,4 +44,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rooms(){
+        return $this->hasMany('App\Models\Room');
+    }
+
+    public function listUsers(){
+        return $this->hasMany('App\Models\ListUser');
+    }
+
+    public function favoriteUsers(){
+        return $this->hasMany('App\Models\ListUser','favorite_user_id');
+    }
+
+    public function listRooms(){
+        return $this->hasMany('App\Models\ListRoom');
+    }
+
+    public function roomChat(){
+        return $this->hasMany('App\Models\RoomChat');
+    }
+
+    public function roomUsers(){
+        return $this->hasMany('App\Models\RoomUser');
+    }
+
+    public function answers(){
+        return $this->hasMany('App\Models\Answer');
+    }
 }
