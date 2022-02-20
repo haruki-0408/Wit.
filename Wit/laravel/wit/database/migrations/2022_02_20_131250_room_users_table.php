@@ -18,7 +18,7 @@ class RoomUsersTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->dateTime('entered_at')->useCurrent();
-            $table->dateTime('exited_at')->useCurrent();
+            $table->dateTime('exited_at')->nullable()->default(null)->comment('論理削除により出入りをテーブルに記録する');
         });
     }
 

@@ -20,8 +20,8 @@ class RoomsTable extends Migration
             $table->string('description', 400);
             $table->string('password')->nullable()->default(null)->comment('private用のパスワード');
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrent()->nullable();
-            $table->softDeletes();
+            $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
+            $table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除のためのdeleted_at'); 
         });
     }
 

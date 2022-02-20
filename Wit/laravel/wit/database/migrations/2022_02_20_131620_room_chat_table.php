@@ -17,10 +17,10 @@ class RoomChatTable extends Migration
             $table->id();
             $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
-            $table->string('message'); //内容
-            $table->string('postfile')->nullable(); //投稿ファイルのパス
+            $table->string('message'); 
+            $table->string('postfile')->nullable()->comment('投稿ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();
-            $table->softDeletes(); //論理削除のためのdeleted_at
+            $table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除にしてチャットの内容はすべて記録する'); 
         });
     }
 

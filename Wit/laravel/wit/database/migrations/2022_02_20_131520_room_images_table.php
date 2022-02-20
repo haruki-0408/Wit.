@@ -18,8 +18,7 @@ class RoomImagesTable extends Migration
             $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->string('image')->comment('画像ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->nullable();
-            $table->softDeletes(); 
+            $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
         });
     }
 
