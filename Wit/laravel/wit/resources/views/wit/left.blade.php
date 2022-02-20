@@ -52,8 +52,11 @@
         <div class="dropdown mb-3">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="70" height="70" class="rounded-circle me-2">
-                <strong>{{ Auth::user()->name }}</strong>
+                    <div class="profile">
+                        <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
+                            class="rounded-circle me-2">
+                        <strong>{{ Auth::user()->name }}</strong>
+                    </div>
             </a>
 
 
@@ -68,12 +71,7 @@
             </ul>
         </div>
 
-        <div class="Profile-message text-break fs-6">
-            Hi I'm Test account I'll work hard to make this project a success. Thank you.
-            Makoto is a junior high school student. He has a friend who came from Chicago last year. His friend's
-            name is John. John's father and Makoto's father work at the same place. One day John said to Makoto, "I
-            will go back to America with my family for ten days during the spring vacation. You can visit Chicago with
-            us.</div>
+        <div class="Profile-message text-break fs-6">{{ Auth::user()->profile_message }}</div>
 
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
@@ -101,7 +99,7 @@
         <div class="user-list fs-5">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
                 <i class="bi bi-people-fill mx-2 "></i>
-                Users 
+                Users
             </a>
 
             <ul class="list-group flex-column m-2 mb-auto fs-6 ">
@@ -148,7 +146,7 @@
         <div class="room-list fs-5 mt-3 ">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
                 <i class="bi bi-house-fill mx-2 "></i>
-                Rooms 
+                Rooms
             </a>
 
             <ul class="list-group  m-2 fs-6 ">

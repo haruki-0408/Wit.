@@ -185,7 +185,7 @@
                 <div class="container-fluid">
                     <div class="col-2 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
-                            <img src="https://github.com/mdo.png" alt="" width="50px" height="50px"
+                            <img src="{{ Auth::user()->profile_image }}" alt="" width="50px" height="50px"
                                 class="rounded-circle m-1">
                             <strong class="d-flex align-items-center">{{ Auth::user()->name }}</strong>
                         </div>

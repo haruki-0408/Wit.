@@ -13,9 +13,11 @@
                     <div class="row align-items-center">
                         <div class="col-10 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
-                                <img src="https://github.com/mdo.png" alt="" width="70" height="70"
+                                <div class="profile">
+                                <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
                                     class="rounded-circle me-2">
                                 <strong>{{ Auth::user()->name }}</strong>
+                                </div>
                             </a>
 
                         </div>
@@ -44,15 +46,7 @@
                 <hr>
                 <div class="discription">
                     <p class="text-wrap fs-6">
-                        <!--文字数制限を入れる-->
-                        Greetings everyone! My name is Timmy Ang and a new addition to the iTop family school of
-                        instructors. My
-                        goal is to get you guys started in speaking english. I believe that learning another language
-                        improves
-                        ones view of the world as well as opens many opportunities both professional and otherwise. If you
-                        have
-                        the passion, interest, and love for of a language, it should be quite easy and exciting.
-
+                        {{ Auth::user()->profile_message }}
                     </p>
                 </div>
                 <hr>
