@@ -10,6 +10,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $items = User::all();
-        return view('wit.databaseContentShow',['items' => $items]);
+        return view('wit.showUser' ,['users' => $items]);
     }
 }

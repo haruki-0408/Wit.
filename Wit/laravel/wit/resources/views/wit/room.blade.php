@@ -71,7 +71,7 @@
             text-decoration: none;
             background-color: #0d6efd;
             border-radius: 2em 0 0 2em;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         .tag:before {

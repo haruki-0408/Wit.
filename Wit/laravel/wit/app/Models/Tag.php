@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
+    
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+
+    ];
 
     public function roomTags(){
         return $this->hasMany('App\Models\RoomTag');

@@ -23,6 +23,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home/profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('show_profile');
 Route::get('/home/room/{id?}', [App\Http\Controllers\HomeController::class, 'enterRoom'])->name('enter_room');
 Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->name('ShowUser');
+Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('ShowRoom');
+Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('ShowTag');
+Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationGet'])->name('ShowRoomTag');
 
 
 Auth::routes();
