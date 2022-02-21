@@ -110,31 +110,19 @@
                         <!-- Right Side Of Navbar -->
                         <div class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
-
-                            <div class="input-group p-2 align-items-center">
-                                <input class="form-control mx-2" type="text">
-                                <a> <i class="btn btn-primary bi bi-search"></i> </a>
-                            </div>
-
-                            <div class="btn-group p-2">
-                                <button class="btn btn-primary dropdown-toggle mx-3" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="true"><i
-                                        class="bi bi-filter-square"></i></button>
-                                <ul class="dropdown-menu">
-                                    ...
-                                </ul>
-                            </div>
+                            @yield('home-only')
+                           
 
                             @guest
                                 @if (Route::has('login'))
                                     <li class="nav-item">
-                                        <a class="nav-link text-nowrap" href="{{ route('login') }}">ログイン</a>
+                                        <a class="nav-link text-nowrap text-black" href="{{ route('login') }}">ログイン</a>
                                     </li>
                                 @endif
 
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link text-nowrap" href="{{ route('register') }}">新規登録</a>
+                                        <a class="nav-link text-nowrap text-black" href="{{ route('register') }}">新規登録</a>
                                     </li>
                                 @endif
                             @else
