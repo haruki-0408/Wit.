@@ -8,6 +8,9 @@ use App\Models\Tag;
 use App\Models\RoomUser;
 use App\Models\RoomImage;
 use App\Models\RoomChat;
+use App\Models\RoomTag;
+use Illuminate\Support\Facades\Auth;
+
 
 class RoomController extends Controller
 {
@@ -21,7 +24,7 @@ class RoomController extends Controller
     {
         $items = Room::with(['roomTags', 'roomChat' ,'roomImages'])->where('id',$id)->get();
 
-        return view('wit.roomtest' ,['room_informations' => $items,'show_id'=>$id]);
+        return view('wit.room' ,['room_informations' => $items,'show_id'=>$id]);
     }
 
 
@@ -43,22 +46,11 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoomChat',['room_chat' =>$items]);
     }
 
-    public function storeImage($imageFile)
-    {
-        $image = new RoomImage;
-        // name属性が'thumbnail'のinputタグをファイル形式に、画像をpublic/imagesに保存
-        $image_path = $imageFile->store('public/images/');
-
-        // 上記処理にて保存した画像のPATHをRoomImageテーブルのimageカラムに、格納
-        $image->image = basename($image_path); //basenameメソッドでファイルのパスを保存
-
-        return $image;
-    }
 
     public function create(Request $request)
     {
-        $this->validate($request, Room::$rules);
-        $this->validate($request, Tag::$rules);
+        //$this->validate($request, Room::$rules);
+        //$this->validate($request, Tag::$rules);
 
         $room = new Room;
         $room_image = new RoomImage;
@@ -83,7 +75,7 @@ class RoomController extends Controller
         
         //room_imagesテーブルへ保存
         $room_image->room_id =$room->id;
-        $room_image->storeImage($request->file("roomImage"));
+        $room_image->image = "images/sample02.jpg";
         $room_image->save();
 
 
@@ -96,8 +88,9 @@ class RoomController extends Controller
         $room_tag->tag_id = $tag->id;
         $room_tag->save();
         
-        return redirect()->route('/home/room/{id?}')->with('id', $room->id);
-        
+        return redirect(route('getRoom', [
+            'id' => $room->id,
+        ]));
     }
 }
 

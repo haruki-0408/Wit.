@@ -48,6 +48,9 @@
 
 
                     @endforeach
+
+                    <hr>
+                    <p>{{$room_informations}}</p>
                 </tr>
 
 

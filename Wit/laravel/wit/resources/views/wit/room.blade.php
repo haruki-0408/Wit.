@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Room:{{ $id }}</title>
+    <title>Room:{{ $show_id }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -33,33 +33,33 @@
             height: 90vh;
         }
 
-        .card-body{
+        .card-body {
             overflow: scroll;
         }
 
-        #messageList p{
-            font-size:13px;
-            padding:10px;
-            margin:5px;
-            border-radius:20px;
+        #messageList p {
+            font-size: 13px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 20px;
         }
-       
-        .message-wrapper{
+
+        .message-wrapper {
             text-align: right;
         }
-        
-        .myself p{
-            max-width:70%;
+
+        .myself p {
+            max-width: 70%;
             background-color: #0d6efd;
-            color:#fff;
-            display:inline-block;
+            color: #fff;
+            display: inline-block;
             text-align: left;
         }
 
-        .opponent p{
+        .opponent p {
             display: table;
-            max-width:70%;
-            background-color: #f8f9fa; 
+            max-width: 70%;
+            background-color: #f8f9fa;
         }
 
         .roomTagsList {
@@ -199,22 +199,22 @@
 </div>
 
 <body>
+    @foreach ($room_informations as $room_information)
     <div id="app">
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
                 <div class="container-fluid">
                     <div class="col-2 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
-                            <img src="{{ Auth::user()->profile_image }}" alt="" width="50px" height="50px"
+                            <img src="{{ $room_information->user->profile_image }}" alt="" width="50px" height="50px"
                                 class="rounded-circle m-1">
-                            <strong class="d-flex align-items-center">{{ Auth::user()->name }}</strong>
+                            <strong class="d-flex align-items-center">{{ $room_information->user->name }}</strong>
                         </div>
                     </div>
 
                     <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">テストルーム（カタカナ文字数制限）をいくつにするか？ここまでで３３文字</h4>
-                        <p class="d-sm-none">テストルーム（カタカナ文字数制限）をいくつにするか？ここまでで３３文字
-                        </p>
+                        <h4 class="d-none d-md-block">{{ $room_information->title }}</h4>
+                        <p class="d-sm-none">{{ $room_information->title }}</p>
                     </div>
 
                     <div class="exitRoomButton col-2 d-none d-md-block d-flex justify-content-center ">
@@ -258,7 +258,7 @@
                             </div>
                             <hr>
                             <div class="settingButtons col-12 h-50">
-                                ID : {{ $id }}
+                                ID : {{ $show_id }}
                             </div>
                         </div>
                     </div>
@@ -280,9 +280,11 @@
                                 <div class="carousel-inner d-flex align-items-center h-100 w-100">
                                     <div id='img01' onclick="this.webkitRequestFullScreen();"
                                         class="carousel-item active">
-                                        <img src="{{ asset('/images/sample01.png') }} ">
+                                        @foreach ($room_information->roomImages as $roomImage)
+                                            <img src="{{ $roomImage->image }}" alt="" style="width:100; height:100;"></li>
+                                        @endforeach
                                     </div>
-
+                                    <!--　静的画像
                                     <div id='img02' onclick="this.webkitRequestFullScreen();" class="carousel-item">
                                         <img src="{{ asset('/images/sample02.png') }} ">
                                     </div>
@@ -290,6 +292,7 @@
                                     <div id='img05' onclick="this.webkitRequestFullScreen();" class="carousel-item">
                                         <img src="{{ asset('/images/sample03.jpg') }} ">
                                     </div>
+                                    -->
 
                                 </div>
 
@@ -312,8 +315,18 @@
                             <div class="card-body">
                                 <!-- MESSAGE -->
                                 <ul id="messageList" class="p-0 m-0 w-100 ">
+                                    <li class="myself">
+                                        <div class="message-wrapper">
+                                            <p>
+                                                @foreach ($room_information->roomChat as $chat)
+                                                    {{ $chat->message }}
+                                                @endforeach
+                                            </p><br>
+                                        </div>
+                                    </li>
+
                                     <li class="opponent">
-                                        <img class="" src="{{ Auth::user()->profile_image }}" alt=""
+                                        <img class="" src="{{ $room_information->user->profile_image }}" alt=""
                                             width="20" height="20" class="rounded-circle">
                                         <strong>haruki</strong>
                                         <p>test message!</p>
@@ -323,14 +336,14 @@
 
                                     <li class="myself">
                                         <div class="message-wrapper">
-                                        <p>harukiさん</p><br>
-                                        <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p><br>
-                                        <p>相手のページからは左側に見えるのでフレキシブルです</p><br>
+                                            <p>harukiさん</p><br>
+                                            <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p><br>
+                                            <p>相手のページからは左側に見えるのでフレキシブルです</p><br>
                                         </div>
                                     </li>
 
                                     <li class="opponent">
-                                        <img class="" src="{{asset("images/sample02.PNG")}}" alt=""
+                                        <img class="" src="{{ asset('images/sample02.PNG') }}" alt=""
                                             width="20" height="20" class="rounded-circle">
                                         <strong>test2</strong>
                                         <p>test message!</p>
@@ -340,10 +353,10 @@
 
                                     <li class="myself">
                                         <div class="message-wrapper">
-                                        <p>harukiさん</p><br>
-                                        <p>こちらこそはじめまして、自分側のメッセージは</p><br>
-                                        <p>相手のページからは左側</p><br>
-                                        <p>I have got the bus</p><br>
+                                            <p>harukiさん</p><br>
+                                            <p>こちらこそはじめまして、自分側のメッセージは</p><br>
+                                            <p>相手のページからは左側</p><br>
+                                            <p>I have got the bus</p><br>
                                         </div>
                                     </li>
 
@@ -393,6 +406,7 @@
 
         </main>
     </div>
+    @endforeach
 </body>
 
 </html>
