@@ -33,6 +33,32 @@
             height: 90vh;
         }
 
+        .card-body{
+            overflow: scroll;
+        }
+
+        #messageList p{
+            font-size:13px;
+            padding:5px;
+            margin:5px;
+            border-radius:10px;
+        }
+       
+        .myself p{
+            position:relative;
+            left:50%;
+            max-width:50%;
+            background-color: #0d6efd;
+            color:#fff;
+            display:table;
+        }
+
+        .opponent p{
+            display: table;
+            max-width:50%;
+            background-color: #f8f9fa; 
+        }
+
         .roomTagsList {
             overflow: scroll;
         }
@@ -56,10 +82,6 @@
         .carousel-item img {
             max-width: 100%;
             max-height: 100%;
-        }
-
-        #chat {
-            height: 50%;
         }
 
         .tag {
@@ -98,84 +120,79 @@
 
 </head>
 
- <!-- Offcanvas -->
- <div style="width:90px;" class="offcanvas d-flex align-items-start justify-content-center offcanvas-end"
- tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
- <div class="offcanvas-header">
-     <div id="offcanvasRightLabel">
-         <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
-             class="rounded-circle me-2">
-     </div>
-     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-         aria-label="Close"></button>
- </div>
+<!-- Offcanvas -->
+<div style="width:90px;" class="offcanvas d-flex align-items-start justify-content-center offcanvas-end" tabindex="-1"
+    id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <div id="offcanvasRightLabel">
+            <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30" class="rounded-circle me-2">
+        </div>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
 
- <div class="offcanvas-body d-flex flex-column ">
-     <div data-bs-toggle="modal" data-bs-target="#users" class="onlineUsers pb-3">
-         <i style="width:30px; height:30px" class="bi bi-person-check-fill mx-2"></i>
-     </div>
+    <div class="offcanvas-body d-flex flex-column ">
+        <div data-bs-toggle="modal" data-bs-target="#users" class="onlineUsers pb-3">
+            <i style="width:30px; height:30px" class="bi bi-person-check-fill mx-2"></i>
+        </div>
 
-     <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
-         <i style="width:30px; height:30px" class="bi bi-tag-fill mx-2"></i>
-     </div>
+        <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
+            <i style="width:30px; height:30px" class="bi bi-tag-fill mx-2"></i>
+        </div>
 
-     <div class="information pb-3">
-         <i style="width:30px; height:30px" class="bi bi-info-circle-fill mx-2"></i>
-     </div>
+        <div class="information pb-3">
+            <i style="width:30px; height:30px" class="bi bi-info-circle-fill mx-2"></i>
+        </div>
 
-     <div class="exitRoomButton pt-3">
-         <a style="width:42px; height:30px;" href="/home" class="btn btn-outline-primary">
-             <i class="d-flex bi bi-arrow-bar-right align-items-center"></i>
-         </a>
-     </div>
- </div>
+        <div class="exitRoomButton pt-3">
+            <a style="width:42px; height:30px;" href="/home" class="btn btn-outline-primary">
+                <i class="d-flex bi bi-arrow-bar-right align-items-center"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <!-- Mordals -->
 <div class="modal fade" id="users" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
- aria-labelledby="users" aria-hidden="true">
- <div class="modal-dialog modal-dialog-scrollable">
-     <div class="modal-content">
-         <div class="modal-header">
-             <h5 class="modal-title" id="users"><i class="bi bi-person-check-fill mx-2"></i>Online</h5>
-             <button type="button" class="btn-close" data-bs-dismiss="modal"
-                 aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-             @component('wit.room-users')
-             @endcomponent
-         </div>
-         <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         </div>
-     </div>
- </div>
+    aria-labelledby="users" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="users"><i class="bi bi-person-check-fill mx-2"></i>Online</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @component('wit.room-users')
+                @endcomponent
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="tags" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
- aria-labelledby="tags" aria-hidden="true">
- <div class="modal-dialog modal-dialog-scrollable">
-     <div class="modal-content">
-         <div class="modal-header">
-             
-             <h5 class="modal-title" id="tags"><i class="bi bi-tag-fill mx-2"></i>Room Tags</h5>
-             <div class="col-1"></div>
-             <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
-             <button type="button" class="btn-close" data-bs-dismiss="modal"
-                 aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-             <div class="d-flex flex-column p-3  ">
-                 @component('wit.room-tags')
+    aria-labelledby="tags" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
 
-                 @endcomponent
-             </div>
-         </div>
-         <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         </div>
-     </div>
- </div>
+                <h5 class="modal-title" id="tags"><i class="bi bi-tag-fill mx-2"></i>Room Tags</h5>
+                <div class="col-1"></div>
+                <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column p-3  ">
+                    @component('wit.room-tags')
+                    @endcomponent
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <body>
@@ -251,8 +268,10 @@
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0"
                                         class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1"
+                                        aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2"
+                                        aria-label="Slide 3"></button>
                                 </div>
 
                                 <div class="carousel-inner d-flex align-items-center h-100 w-100">
@@ -266,7 +285,7 @@
                                     </div>
 
                                     <div id='img05' onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                        <img src="{{ asset('/images/sample05.png') }} ">
+                                        <img src="{{ asset('/images/sample03.jpg') }} ">
                                     </div>
 
                                 </div>
@@ -286,10 +305,38 @@
                             </div>
                         </div>
 
-                        <div id="chat" class="card col-12 ">
+                        <div id="chat" class="card col-12 h-50">
                             <div class="card-body">
+                                <!-- MESSAGE -->
+                                <ul id="messageList" class="p-0 m-0 w-100">
+                                    <li class="opponent">
+                                        <img class="" src="{{ Auth::user()->profile_image }}" alt=""
+                                            width="20" height="20" class="rounded-circle">
+                                        <strong>haruki</strong>
+                                        <p>test message!</p>
+                                        <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
+                                        <p>こちらのチャットスペースではすべての背景を灰色にし、メッセージだけでなく画像やPDFファイルの投稿も可能です。</p>
+                                    </li>
 
+                                    <li class="myself">
+                                        <p>harukiさん</p>
+                                        <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p>
+                                        <p>相手のページからは左側に見えるのでフレキシブルです</p>
+                                    </li>
+
+                                    <li class="opponent">
+                                        <img class="" src="{{asset("images/sample02.PNG")}}" alt=""
+                                            width="20" height="20" class="rounded-circle">
+                                        <strong>test2</strong>
+                                        <p>test message!</p>
+                                        <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
+                                        <p>こちらのチャットスペースではすべての背景を灰色にし、メッセージだけでなく画像やPDFファイルの投稿も可能です。</p>
+                                    </li>
+
+
+                                </ul>
                             </div>
+
                             <div class="card-footer">
                                 <form>
                                     <div class="row">
@@ -311,6 +358,7 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
 
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">

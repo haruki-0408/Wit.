@@ -26,6 +26,8 @@ Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->n
 Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('ShowRoom');
 Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('ShowTag');
 Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationGet'])->name('ShowRoomTag');
+Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet'])->name('ShowRoomUser');
+Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('ShowRoomImage');
 
 
 Auth::routes();

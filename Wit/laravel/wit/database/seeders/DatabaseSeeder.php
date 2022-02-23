@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoomsTableSeeder::class);
         $this->call(TagsTableSeeder::class);
         $this->call(RoomTagsTableSeeder::class);
+        $this->call(RoomUsersTableSeeder::class);
+        $this->call(RoomImagesTableSeeder::class);
 
     }
 }

@@ -16,7 +16,7 @@ class TagController extends Controller
 
     public function relationGet(Request $requeset)
     {
-        $items =RoomTag::with('tag')->get();
+        $items =RoomTag::with('Tag')->get();
         return view('wit.showRoomTag', ['room_tags' =>$items]);
     }
 }
