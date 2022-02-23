@@ -29,5 +29,8 @@ Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationG
 Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet'])->name('ShowRoomUser');
 Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('ShowRoomImage');
 Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('ShowRoomChat');
+Route::get('/Room{id}', [App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoom');
+
+
 
 Auth::routes();

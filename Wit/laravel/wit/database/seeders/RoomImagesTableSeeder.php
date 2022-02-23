@@ -25,5 +25,10 @@ class RoomImagesTableSeeder extends Seeder
             'room_id' => '1',
             'image'=>'/images/sample03.JPG',
         ]);
+
+        DB::table('room_images')->insert([
+            'room_id' => '2',
+            'image'=>'/images/sample05.PNG',
+        ]);
     }
 }

@@ -26,5 +26,11 @@ class RoomChatTableSeeder extends Seeder
             'user_id' => '6',
             'message'=>'こんにちはテストメッセージ2です!',
         ]);
+
+        DB::table('room_chat')->insert([
+            'room_id' => '2',
+            'user_id' => '8',
+            'message'=>'こんにちはテストメッセージ3です!',
+        ]);
     }
 }

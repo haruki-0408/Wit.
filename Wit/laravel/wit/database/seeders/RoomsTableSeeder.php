@@ -20,5 +20,11 @@ class RoomsTableSeeder extends Seeder
             'title'=>'TestRoom1',
             'description'=>'TestRoom1シーディングの確認とパスワード設定の確認を兼ね備えた全テーブル確認'
         ]);
+
+        DB::table('rooms')->insert([ 
+            'user_id'=>'5',
+            'title'=>'TestRoom2',
+            'description'=>'TestRoom2シーディングの確認とパスワード設定の確認を兼ね備えた全テーブル確認'
+        ]);
     }
 }

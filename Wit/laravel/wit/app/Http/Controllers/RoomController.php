@@ -17,6 +17,14 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoom',['rooms' => $items]);
     }
 
+    public function getRoomInfo($id)
+    {
+        $items = Room::with(['roomTags', 'roomChat' ,'roomImages'])->where('id',$id)->get();
+
+        return view('wit.roomtest' ,['room_informations' => $items,'show_id'=>$id]);
+    }
+
+
     public function userGet()
     {
         $items = RoomUser::with('User')->get();

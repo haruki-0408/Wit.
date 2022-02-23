@@ -20,5 +20,20 @@ class RoomTagsTableSeeder extends Seeder
             'room_id' => '1',
             'tag_id'=>'2',
         ]);
+
+        DB::table('room_tags')->insert([
+            'room_id' => '1',
+            'tag_id'=>'10',
+        ]);
+
+        DB::table('room_tags')->insert([
+            'room_id' => '2',
+            'tag_id'=>'5',
+        ]);
+
+        DB::table('room_tags')->insert([
+            'room_id' => '2',
+            'tag_id'=>'6',
+        ]);
     }
 }

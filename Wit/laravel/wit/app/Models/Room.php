@@ -10,17 +10,17 @@ class Room extends Model
     use HasFactory;
 
     //バリデーションルール
-    public static $rules =[
-        'title'=>'required|max:5',
-        'description'=>'required|max:400',
+    public static $rules = [
+        'title' => 'required|max:5',
+        'description' => 'required|max:400',
     ];
 
 
     protected $guarded = [
         'id',
     ];
-    
-     /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -46,36 +46,41 @@ class Room extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        
-    ];
+    protected $casts = [];
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function listRooms(){
+    public function listRooms()
+    {
         return $this->hasMany('App\Models\ListRoom');
     }
 
-    public function RoomChat(){
+    public function roomChat()
+    {
         return $this->hasMany('App\Models\RoomChat');
     }
 
-    public function roomUsers(){
+    public function roomUsers()
+    {
         return $this->hasMany('App\Models\RoomUser');
     }
 
-    public function roomTags(){
+    public function roomTags()
+    {
         return $this->hasMany('App\Models\RoomTag');
     }
 
-    public function roomImages(){
+    public function roomImages()
+    {
         return $this->hasMany('App\Models\RoomImage');
     }
 
-    public function answers(){
+    public function answer()
+    {
         return $this->hasOne('App\Models\Answer');
     }
 

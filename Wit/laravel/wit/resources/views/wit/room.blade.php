@@ -39,23 +39,26 @@
 
         #messageList p{
             font-size:13px;
-            padding:5px;
+            padding:10px;
             margin:5px;
-            border-radius:10px;
+            border-radius:20px;
         }
        
+        .message-wrapper{
+            text-align: right;
+        }
+        
         .myself p{
-            position:relative;
-            left:50%;
-            max-width:50%;
+            max-width:70%;
             background-color: #0d6efd;
             color:#fff;
-            display:table;
+            display:inline-block;
+            text-align: left;
         }
 
         .opponent p{
             display: table;
-            max-width:50%;
+            max-width:70%;
             background-color: #f8f9fa; 
         }
 
@@ -308,7 +311,7 @@
                         <div id="chat" class="card col-12 h-50">
                             <div class="card-body">
                                 <!-- MESSAGE -->
-                                <ul id="messageList" class="p-0 m-0 w-100">
+                                <ul id="messageList" class="p-0 m-0 w-100 ">
                                     <li class="opponent">
                                         <img class="" src="{{ Auth::user()->profile_image }}" alt=""
                                             width="20" height="20" class="rounded-circle">
@@ -319,9 +322,11 @@
                                     </li>
 
                                     <li class="myself">
-                                        <p>harukiさん</p>
-                                        <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p>
-                                        <p>相手のページからは左側に見えるのでフレキシブルです</p>
+                                        <div class="message-wrapper">
+                                        <p>harukiさん</p><br>
+                                        <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p><br>
+                                        <p>相手のページからは左側に見えるのでフレキシブルです</p><br>
+                                        </div>
                                     </li>
 
                                     <li class="opponent">
@@ -331,6 +336,15 @@
                                         <p>test message!</p>
                                         <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
                                         <p>こちらのチャットスペースではすべての背景を灰色にし、メッセージだけでなく画像やPDFファイルの投稿も可能です。</p>
+                                    </li>
+
+                                    <li class="myself">
+                                        <div class="message-wrapper">
+                                        <p>harukiさん</p><br>
+                                        <p>こちらこそはじめまして、自分側のメッセージは</p><br>
+                                        <p>相手のページからは左側</p><br>
+                                        <p>I have got the bus</p><br>
+                                        </div>
                                     </li>
 
 
