@@ -37,7 +37,7 @@ class HomeController extends Controller
         if ($id['id'] < 3) {
             return view('wit.room', $id);
         } else {
-            return view('wit.room3', $id);
+            return view('wit.room', $id);
         };
     }
 }

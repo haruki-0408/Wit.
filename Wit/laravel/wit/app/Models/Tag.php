@@ -9,11 +9,15 @@ class Tag extends Model
 {
     use HasFactory;
     
+    protected $guarded = [
+        'id',
+    ];
+
     public $timestamps = false;
 
     protected $fillable = [
         'name',
-
+        'number',
     ];
 
     public function roomTags(){

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     use HasFactory;
+
+    protected $guarded = [
+        'id',
+    ];
     
      /**
      * The attributes that are mass assignable.
@@ -18,7 +22,6 @@ class Room extends Model
         'title',
         'description',
         'password',
-
     ];
 
     /**
