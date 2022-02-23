@@ -21,7 +21,7 @@
 
                     <div class="mb-3">
                         <label for="InputImages" class="form-label">Images</label>
-                        <input class="form-control" type="file" id="InputImages" multiple>
+                        <input class="form-control" name="roomImage" type="file" id="InputImages" multiple>
                         <div id="InputImages" class="form-text">画像は最大5MBまで追加できます。JPEG,PNGファイル形式のみ</div>
                     </div>
 

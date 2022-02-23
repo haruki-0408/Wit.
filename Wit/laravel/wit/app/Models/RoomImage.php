@@ -9,6 +9,10 @@ class RoomImage extends Model
 {
     use HasFactory;
 
+    public static $rules =[
+        'image'=>'string',
+        ];
+
     protected $guarded = [
         'id',
     ];

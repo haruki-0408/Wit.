@@ -9,6 +9,13 @@ class Room extends Model
 {
     use HasFactory;
 
+    //バリデーションルール
+    public static $rules =[
+        'title'=>'required|max:5',
+        'description'=>'required|max:400',
+    ];
+
+
     protected $guarded = [
         'id',
     ];

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoomTagsTableSeeder::class);
         $this->call(RoomUsersTableSeeder::class);
         $this->call(RoomImagesTableSeeder::class);
+        $this->call(RoomChatTableSeeder::class);
 
     }
 }

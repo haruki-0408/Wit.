@@ -7,9 +7,9 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $items = User::all();
-        return view('wit.showUser' ,['users' => $items]);
+        return view('wit.ShowDatabase.showUser' ,['users' => $items]);
     }
 }

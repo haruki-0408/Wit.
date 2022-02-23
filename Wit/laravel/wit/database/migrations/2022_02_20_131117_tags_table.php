@@ -15,7 +15,7 @@ class TagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20);
+            $table->string('name', 20)->unique();
             $table->integer('number')->unsigned();
             $table->dateTime('created_at')->useCurrent();
         });

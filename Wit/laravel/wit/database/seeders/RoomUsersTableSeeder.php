@@ -20,7 +20,7 @@ class RoomUsersTableSeeder extends Seeder
         ]);
         DB::table('room_users')->insert([
             'room_id' => '1',
-            'user_id'=>'11',
+            'user_id'=>'7',
         ]);
     }
 }

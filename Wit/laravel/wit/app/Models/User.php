@@ -12,6 +12,13 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public static $rules = [
+        'name' => 'required|max:20',
+        'email' => 'required|email',
+        'password' => 'required',
+        'profille_message' => 'required|max:500',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,31 +56,38 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rooms(){
+    public function rooms()
+    {
         return $this->hasMany('App\Models\Room');
     }
 
-    public function listUsers(){
+    public function listUsers()
+    {
         return $this->hasMany('App\Models\ListUser');
     }
 
-    public function favoriteUsers(){
-        return $this->hasMany('App\Models\ListUser','favorite_user_id');
+    public function favoriteUsers()
+    {
+        return $this->hasMany('App\Models\ListUser', 'favorite_user_id');
     }
 
-    public function listRooms(){
+    public function listRooms()
+    {
         return $this->hasMany('App\Models\ListRoom');
     }
 
-    public function roomChat(){
+    public function roomChat()
+    {
         return $this->hasMany('App\Models\RoomChat');
     }
 
-    public function roomUsers(){
+    public function roomUsers()
+    {
         return $this->hasMany('App\Models\RoomUser');
     }
 
-    public function answers(){
+    public function answers()
+    {
         return $this->hasMany('App\Models\Answer');
     }
 }
