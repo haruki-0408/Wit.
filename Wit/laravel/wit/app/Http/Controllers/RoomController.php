@@ -55,10 +55,8 @@ class RoomController extends Controller
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'public'を指定
-            $img = $image_file->storeAs('roomImages', 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension,['disk'=>'local']);
+            $img = $image_file->storeAs('roomImages/RoomID:'.$room_id, 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
             return $img;
-        } else {
-            return view('wit.home');
         }
     }
 
@@ -67,7 +65,7 @@ class RoomController extends Controller
     {
         //$this->validate($request, Room::$rules);
         //$this->validate($request, Tag::$rules);
-        $image_count = 1;
+
         $room = new Room;
         $tag = new Tag;
         $room_tag = new RoomTag;
@@ -89,11 +87,13 @@ class RoomController extends Controller
         $room_chat->save();
 
         //room_imagesテーブルへ保存
-
-        $room_image = new RoomImage;
-        $room_image->room_id = $room->id;
-        $room_image->image = $this->storeImage($request->file("roomImages"), $image_count, $room->id);
-        $room_image->save();
+        foreach ($request->file("roomImages") as $index => $roomImage) {
+            $image_count = $index;
+            $room_image = new RoomImage;
+            $room_image->room_id = $room->id;
+            $room_image->image = $this->storeImage($roomImage, $image_count, $room->id);
+            $room_image->save();
+        }
 
         //tagの処理は今は適当
         $tag->name = $request->tag;

@@ -3,6 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <?php phpinfo(); ?>
+
             <table>
                 <h1>Room</h1>
                 <tr>
@@ -19,13 +21,13 @@
                 @foreach ($rooms as $room)
                     <tr>
                         <td>{{ $room->id }}</td>
-                        <td>{{ $room->user_id}}</td>
-                        <td>{{ $room->title}}</td>
-                        <td>{{ $room->description}}</td>
-                        <td>{{ $room->password}}</td>
-                        <td>{{ $room->created_at}}</td>
-                        <td>{{ $room->updated_at}}</td>
-                        <td>{{ $room->deleted_at}}</td>
+                        <td>{{ $room->user_id }}</td>
+                        <td>{{ $room->title }}</td>
+                        <td>{{ $room->description }}</td>
+                        <td>{{ $room->password }}</td>
+                        <td>{{ $room->created_at }}</td>
+                        <td>{{ $room->updated_at }}</td>
+                        <td>{{ $room->deleted_at }}</td>
                     </tr>
                 @endforeach
             </table>

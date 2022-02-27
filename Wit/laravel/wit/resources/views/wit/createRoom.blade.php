@@ -5,6 +5,7 @@
         <div class="modal-content">
             <form action="/home/create" enctype="multipart/form-data" method="post">
                 @csrf
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="newRoom">NEW ROOM</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -23,7 +24,7 @@
 
                     <div class="mb-3">
                         <label for="InputImages" class="form-label">Images</label>
-                        <input class="form-control" name="roomImages" type="file"  multiple>
+                        <input class="form-control" name="roomImages[]" type="file"  multiple accept="image/*">
                         <div id="InputImages" class="form-text">画像は最大5MBまで追加できます。JPEG,PNGファイル形式のみ</div>
                     </div>
 
