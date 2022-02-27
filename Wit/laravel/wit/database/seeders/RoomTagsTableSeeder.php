@@ -35,5 +35,10 @@ class RoomTagsTableSeeder extends Seeder
             'room_id' => '2',
             'tag_id'=>'6',
         ]);
+
+        DB::table('room_tags')->insert([
+            'room_id' => '30',
+            'tag_id'=>'6',
+        ]);
     }
 }

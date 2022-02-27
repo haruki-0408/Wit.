@@ -67,7 +67,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public'), //初期からある
+        public_path('roomImages') => storage_path('app/roomImages'),
     ],
 
 ];
