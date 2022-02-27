@@ -274,10 +274,10 @@
                                     @foreach ($room_info->roomImages as $roomImage)
                                         @if ($loop->first)
                                             <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}" class="active" aria-current="true"></button>
+                                                data-bs-slide-to="{{ $loop->index }}" class="active" aria-current="true" aria-label="image {{ $loop->index }}"></button>
                                         @else
                                             <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}"></button>
+                                                data-bs-slide-to="{{ $loop->index }}" aria-label="image {{ $loop->index }}"></button>
                                         @endif
                                     @endforeach
                                 </div>
