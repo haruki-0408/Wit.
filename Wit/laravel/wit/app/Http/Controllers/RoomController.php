@@ -62,12 +62,7 @@ class RoomController extends Controller
 
     public function storeTag($match)
     {
-        //$tag = Tag::UpdateOrCreate(['name' => $tag_name], ['name' => $tag_name, 'number' => 1]);
-        //入力されたタグのidを取得
-        $tag = new Tag;
-        $tag->name = $match;
-        $tag->number = rand(1, 10);
-        $tag->save();
+        $tag = Tag::UpdateOrCreate(['name' => $match], ['name' => $match, 'number' => \DB::raw('number + 1')]);
         return $tag;
     }
 
