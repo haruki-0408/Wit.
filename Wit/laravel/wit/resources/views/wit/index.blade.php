@@ -77,7 +77,7 @@
 
         <div class="message-wrapper mx-auto"></div>
           <div class="row text-center"> 
-            <div class="col-auto-12 m-3"><h1>〜Witとは？〜</h1></div>
+            <div class="col-auto-12 m-3"><h1>〜Witとは？docker ｈ？反応なし〜</h1></div>
             <div class="col-auto-12 m-3"><h2>知識を共有するSNS型Webサービスです</h2></div>
             <div class="col-auto-12 m-3"><h2>あなたの技術的に知りたい聞きたい</h2></div>
             <div class="col-auto-12 m-3"><h2>そんな願望を叶えてくれます</h2></div>

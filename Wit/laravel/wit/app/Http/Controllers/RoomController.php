@@ -55,9 +55,20 @@ class RoomController extends Controller
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'public'を指定
-            $img = $image_file->storeAs('roomImages/RoomID:'.$room_id, 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
+            $img = $image_file->storeAs('roomImages/RoomID:' . $room_id, 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
             return $img;
         }
+    }
+
+    public function storeTag($match)
+    {
+        //$tag = Tag::UpdateOrCreate(['name' => $tag_name], ['name' => $tag_name, 'number' => 1]);
+        //入力されたタグのidを取得
+        $tag = new Tag;
+        $tag->name = $match;
+        $tag->number = rand(1, 10);
+        $tag->save();
+        return $tag;
     }
 
 
@@ -67,9 +78,7 @@ class RoomController extends Controller
         //$this->validate($request, Tag::$rules);
 
         $room = new Room;
-        $tag = new Tag;
-        $room_tag = new RoomTag;
-        $room_chat = new RoomChat;
+
 
         //roomsテーブルへ保存
         $room->user_id =  Auth::user()->id;
@@ -81,31 +90,36 @@ class RoomController extends Controller
         $room->save();
 
         //room_chatテーブルへ保存
+        $room_chat = new RoomChat;
         $room_chat->room_id = $room->id;
         $room_chat->user_id = $room->user_id;
         $room_chat->message = $room->description;
         $room_chat->save();
 
         //room_imagesテーブルへ保存
-        foreach ($request->file("roomImages") as $index => $roomImage) {
-            $image_count = $index;
-            $room_image = new RoomImage;
-            $room_image->room_id = $room->id;
-            $room_image->image = $this->storeImage($roomImage, $image_count, $room->id);
-            $room_image->save();
+        if ($request->has('roomImages')) {
+            foreach ($request->file("roomImages") as $index => $roomImage) {
+                $image_count = $index;
+                $room_image = new RoomImage;
+                $room_image->room_id = $room->id;
+                $room_image->image = $this->storeImage($roomImage, $image_count, $room->id);
+                $room_image->save();
+            }
         }
 
-        //tagの処理は今は適当
-        $tag->name = $request->tag;
-        $tag->number = 1;
-        $tag->save();
-
-        $room_tag->room_id = $room->id;
-        $room_tag->tag_id = $tag->id;
-        $room_tag->save();
-
+        //tagの処理は別関数にまかせて帰ってきた複数のtag_idをroom_idと紐付ける処理をしている
+        if ($request->has('tag')) {
+            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠]+);/u', $request->tag, $matches);
+            foreach ($matches[1] as $match) {
+                $tag = $this->storeTag($match);
+                $room_tag = new RoomTag;
+                $room_tag->room_id = $room->id;
+                $room_tag->tag_id = $tag->id;
+                $room_tag->save();
+            }
+        }
         return redirect(route('getRoom', [
-            'id' => $room->id,
+            'id' => $room->id, 
         ]));
     }
 }

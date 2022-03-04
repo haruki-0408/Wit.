@@ -91,7 +91,7 @@
 
         .tag {
             display: inline-block;
-            margin: 0 .1em .6em 0;
+            margin: 0 .1em .6em .2em;
             padding: .6em;
             line-height: 1;
             color: #fff;
@@ -201,7 +201,7 @@
 </div>
 
 <body>
-
+    
     <div id="app">
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">

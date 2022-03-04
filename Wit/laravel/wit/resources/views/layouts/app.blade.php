@@ -27,7 +27,7 @@
 
         .tag {
             display: inline-block;
-            margin: 0 .1em .6em 0;
+            margin: 0 .1em .6em .2em;
             padding: .5em;
             color: #fff;
             text-align: center;

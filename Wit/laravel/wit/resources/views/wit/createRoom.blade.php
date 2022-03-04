@@ -1,7 +1,7 @@
 <!-- Create Room Form -->
-<div class="modal fade" id="CreateRoomForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade " id="CreateRoomForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="CreateRoomForm" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <form action="/home/create" enctype="multipart/form-data" method="post">
                 @csrf
@@ -14,7 +14,8 @@
 
                     <div class="mb-3">
                         <label for="InputTitle" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="InputTitle" aria-describedby="titleHelp">
+                        <input type="text" name="title" class="form-control" id="InputTitle"
+                            aria-describedby="titleHelp">
                         <div id="titleHelp" class="form-text">シンプルかつ簡潔に書きましょう</div>
                     </div>
                     <div class="mb-3">
@@ -24,15 +25,21 @@
 
                     <div class="mb-3">
                         <label for="InputImages" class="form-label">Images</label>
-                        <input class="form-control" name="roomImages[]" type="file"  multiple accept="image/*">
+                        <input class="form-control" name="roomImages[]" type="file" multiple accept="image/*">
                         <div id="InputImages" class="form-text">画像は最大5MBまで追加できます。JPEG,PNGファイル形式のみ</div>
                     </div>
 
 
                     <div class="mb-3">
                         <label for="InputTags" class="form-label">Tags</label>
-                        <input type="tags" class="form-control" type="text" name="tag" aria-describedby="tagsHelp">
-                        <div id="tagsHelp" class="form-text">1タグにつき最大20文字、複数記入は' ; 'で区切ってください</div>
+                        <input id="InputTags" class="form-control" type="text" name="tag" multiple>
+                        <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
+                        <hr>
+                        <p class="form-text">登録されるタグ</p>
+                        <div id="showTags">
+                            
+
+                        </div>
                     </div>
 
                     <div class="form-check form-switch">
@@ -42,7 +49,7 @@
 
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label"></label>
-                        <div id="test1">
+                        <div id="password">
 
                         </div>
                     </div>
@@ -57,17 +64,43 @@
 </div>
 
 <script>
-    function valueChange(event) {
+    let RoomSwitch = document.getElementById('RoomSwitch');
+    RoomSwitch.addEventListener('change', switchCheck);
+    let password = document.getElementById('password');
+
+    let InputTags = document.getElementById('InputTags');
+    InputTags.addEventListener('change', valueChange)
+    let showTag = document.getElementById('showTags');
+    
+
+    function switchCheck(event) {
         if (RoomSwitch.checked) {
-            test1.innerHTML =
+            password.innerHTML =
                 '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password">';
         } else {
-            test1.innerHTML =
+            password.innerHTML =
                 '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" disabled>';
         }
     }
 
-    let RoomSwitch = document.getElementById('RoomSwitch');
-    RoomSwitch.addEventListener('change', valueChange);
-    let test1 = document.getElementById('test1');
+
+    function valueChange(event) {
+        showTag.innerHTML = '';
+        let startpoint = 0;
+        let endpoint = 0;
+        if (InputTags.value.indexOf(';') != -1) {
+            while(endpoint != InputTags.value.lastIndexOf(';')) {
+                endpoint = InputTags.value.indexOf(';',startpoint);
+                let element = document.createElement("span");
+                element.setAttribute("class", "tag");
+                element.innerText = InputTags.value.slice(startpoint, endpoint);
+                showTag.appendChild(element);
+                startpoint = endpoint + 1;
+            }
+        }
+
+
+    }
+
+    
 </script>
