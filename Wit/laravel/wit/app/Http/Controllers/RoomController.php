@@ -24,7 +24,7 @@ class RoomController extends Controller
     public function getRoomInfo($room_id)
     {
         $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-        $tags_info = RoomTag::with('tag')->get();
+        $tags_info = RoomTag::with('tag')->where('room_id',$room_id)->get();
         if (isset($room_info)) {
             return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
         }
@@ -74,7 +74,6 @@ class RoomController extends Controller
 
         $room = new Room;
 
-
         //roomsテーブルへ保存
         $room->user_id =  Auth::user()->id;
         $room->title = $request->title;
@@ -112,7 +111,7 @@ class RoomController extends Controller
                 $room_tag->save();
             }
         }
-        return redirect(route('getRoom', [
+        return redirect(route('getRoomInfo', [
             'id' => $room->id,
         ]));
     }
