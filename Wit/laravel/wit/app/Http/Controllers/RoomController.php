@@ -10,23 +10,23 @@ use App\Models\RoomImage;
 use App\Models\RoomChat;
 use App\Models\RoomTag;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class RoomController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $items = Room::all();
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
     }
 
-    public function getRoomInfo($id)
+    public function getRoomInfo($room_id)
     {
-        $items = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($id);
-        if (isset($items)) {
-            return view('wit.room', ['room_info' => $items, 'show_id' => $id]);
-        } else {
-            return view('wit.room2', ['room_info' => $items, 'show_id' => $id]);
+        $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
+        $tags_info = RoomTag::with('tag')->get();
+        if (isset($room_info)) {
+            return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
         }
     }
 
@@ -62,7 +62,7 @@ class RoomController extends Controller
 
     public function storeTag($match)
     {
-        $tag = Tag::UpdateOrCreate(['name' => $match], ['name' => $match, 'number' => \DB::raw('number + 1')]);
+        $tag = Tag::UpdateOrCreate(['name' => $match], ['name' => $match, 'number' => DB::raw('number + 1')]);
         return $tag;
     }
 
@@ -102,7 +102,6 @@ class RoomController extends Controller
             }
         }
 
-        //tagの処理は別関数にまかせて帰ってきた複数のtag_idをroom_idと紐付ける処理をしている
         if ($request->has('tag')) {
             preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠]+);/u', $request->tag, $matches);
             foreach ($matches[1] as $match) {
@@ -114,7 +113,7 @@ class RoomController extends Controller
             }
         }
         return redirect(route('getRoom', [
-            'id' => $room->id, 
+            'id' => $room->id,
         ]));
     }
 }

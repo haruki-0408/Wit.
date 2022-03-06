@@ -29,7 +29,7 @@ Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationG
 Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet'])->name('showRoomUser');
 Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('showRoomImage');
 Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('showRoomChat');
-Route::get('/Room{id}', [App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoom');
+Route::get('/Room{id}', [App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
 Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'])->name('createRoom');
 
 

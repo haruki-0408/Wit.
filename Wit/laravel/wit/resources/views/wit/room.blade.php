@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Room:{{ $show_id }}</title>
+    <title>Room:{{ $room_info->id }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -201,7 +201,6 @@
 </div>
 
 <body>
-    
     <div id="app">
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
@@ -245,22 +244,31 @@
                 <div class="row h-100">
                     <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
                         <div class="row h-100">
+
                             <div class="row roomTags">
                                 <div class="col-6 p-0 text-start">
                                     <i class="bi bi-tag-fill mx-2"></i>
-                                    <strong>Room tags</strong>
+                                    <strong>Room Tags</strong>
                                 </div>
                                 <div class="col-6 p-0 text-end">
                                     <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
                                 </div>
                             </div>
+
                             <div class="roomTagsList col-12 fs-5 h-25">
-                                @component('wit.room-tags')
-                                @endcomponent
+                                <div class="Room-tag fs-5">
+                                    <ul>
+                                        @foreach($tags_info as $tag_info)
+                                        <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span class="badge badge-light">{{ $tag_info->tag->number }}</span></a></li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
                             </div>
+
                             <hr>
                             <div class="settingButtons col-12 h-50">
-                                ID : {{ $show_id }}
+                                ID : {{ $room_info->id }}
                             </div>
                         </div>
                     </div>
@@ -274,10 +282,12 @@
                                     @foreach ($room_info->roomImages as $roomImage)
                                         @if ($loop->first)
                                             <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}" class="active" aria-current="true" aria-label="image {{ $loop->index }}"></button>
+                                                data-bs-slide-to="{{ $loop->index }}" class="active"
+                                                aria-current="true" aria-label="image {{ $loop->index }}"></button>
                                         @else
                                             <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}" aria-label="image {{ $loop->index }}"></button>
+                                                data-bs-slide-to="{{ $loop->index }}"
+                                                aria-label="image {{ $loop->index }}"></button>
                                         @endif
                                     @endforeach
                                 </div>
@@ -296,8 +306,6 @@
                                             </div>
                                         @endif
                                     @endforeach
-
-
                                 </div>
 
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
@@ -405,10 +413,10 @@
                                 @endcomponent
                             </div>
                         </div>
-
                     </div>
-                </div>
 
+                </div>
+            </div>
         </main>
     </div>
 

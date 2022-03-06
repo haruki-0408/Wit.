@@ -20,4 +20,10 @@ class RoomTag extends Model
     public function room(){
         return $this->belongsTo('App\Models\Room');
     }
+    
+    public function getTagInfo()
+    {
+        $items = $this->with('Tag')->get();
+        return $items->tag->name ;
+    }
 }

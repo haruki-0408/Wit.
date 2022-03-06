@@ -4,7 +4,7 @@
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
-                    <h4 class="card-title p-1">docker 反応なし</h4>
+                    <h4 class="card-title p-1">反応...</h4>
                     <div class="row align-items-center">
                         <div class="col-10 text-start text-truncate">
                             <a href="#" class="link-dark text-decoration-none ">
