@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Room:{{ $room_info->id }}</title>
+    <title>RoomID:{{ $room_info->id }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -77,8 +77,7 @@
         }
 
         :-webkit-full-screen img {
-            display: block;
-            margin: auto;
+            
             cursor: pointer;
         }
 
@@ -86,8 +85,10 @@
             width: auto;
             max-width: 100%;
             max-height: 100%;
-            margin: 0 auto;
+            display:block;
+            margin:auto;
         }
+
 
         .tag {
             display: inline-block;
@@ -189,8 +190,12 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
-                    @component('wit.room-tags')
-                    @endcomponent
+                    <ul>
+                        @foreach ($tags_info as $tag_info)
+                            <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span
+                                        class="badge badge-light">{{ $tag_info->tag->number }}</span></a></li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
             <div class="modal-footer">
@@ -258,10 +263,11 @@
                             <div class="roomTagsList col-12 fs-5 h-25">
                                 <div class="Room-tag fs-5">
                                     <ul>
-                                        @foreach($tags_info as $tag_info)
-                                        <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span class="badge badge-light">{{ $tag_info->tag->number }}</span></a></li>
+                                        @foreach ($tags_info as $tag_info)
+                                            <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span
+                                                        class="badge badge-light">{{ $tag_info->tag->number }}</span></a>
+                                            </li>
                                         @endforeach
-
                                     </ul>
                                 </div>
                             </div>
@@ -292,17 +298,15 @@
                                     @endforeach
                                 </div>
 
-                                <div class="carousel-inner d-flex align-items-center h-100 w-100">
+                                <div class="carousel-inner  h-100 w-100">
                                     @foreach ($room_info->roomImages as $roomImage)
                                         @if ($loop->first)
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item active">
-                                                <img src=" {{ url($roomImage->image) }}" alt=""
-                                                    style="width:100; height:100;">
+                                                <img src=" {{ url($roomImage->image) }}" alt="">
                                             </div>
                                         @else
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item ">
-                                                <img src=" {{ url($roomImage->image) }}" alt=""
-                                                    style="width:100; height:100;">
+                                                <img src=" {{ url($roomImage->image) }}" alt="">
                                             </div>
                                         @endif
                                     @endforeach
