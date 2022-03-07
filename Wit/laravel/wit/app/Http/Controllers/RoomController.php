@@ -11,6 +11,7 @@ use App\Models\RoomChat;
 use App\Models\RoomTag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class RoomController extends Controller
@@ -26,7 +27,10 @@ class RoomController extends Controller
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
             $tags_info = RoomTag::with('tag')->where('room_id', $room_id)->get();
-            if (isset($room_info)) {
+            if (isset($room_info->password)) {
+
+                return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
+            }else{
                 return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
             }
         }else{
@@ -83,7 +87,7 @@ class RoomController extends Controller
         $room->title = $request->title;
         $room->description = $request->description;
         if ($request->has('password')) {
-            $room->password = $request->password;
+            $room->password = Hash::make('$request->password');
         };
         $room->save();
 

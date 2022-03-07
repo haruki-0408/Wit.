@@ -23,6 +23,7 @@
     <style>
         main {
             padding-top: 60px;
+            padding-bottom: 20px;
         }
 
         .tag {

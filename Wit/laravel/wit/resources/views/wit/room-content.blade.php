@@ -8,17 +8,19 @@
                     <div class="row align-items-center">
                         <div class="col-10 text-start text-truncate">
                             <a href="#" class="link-dark text-decoration-none ">
-                                <img src="https://github.com/yugi.png" alt="" width="50" height="50" class="rounded-circle me-2">
+                                <img src="https://github.com/yugi.png" alt="" width="50" height="50"
+                                    class="rounded-circle me-2">
                                 <strong>Test1</strong>
                             </a>
                         </div>
-                        <div class="col-2 text-end"><a href="/home/room/2" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-2 text-end"><a href="/home/room/2" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">
                             OSS活動というと、一流エンジニアたちがすごい会話をしながら行っている敷居の高いものというイメージがありましたが、実際はわたしのような経験の浅いエンジニアでも気軽に参加できるものだと感じました。
 
-コントリビュートの方法もプログラミングを書くことだけでなく、リソースの追加や誤字の訂正（タイポ）、翻訳作業など多岐にわたります。
+                            コントリビュートの方法もプログラミングを書くことだけでなく、リソースの追加や誤字の訂正（タイポ）、翻訳作業など多岐にわたります。
 
-ゆくゆくはプログラミング言語を提案できるようなコントリビュートもしてみたいですが、最初の１歩目としては今回わたしが行ったような方法で感覚を掴んでみることはOSS未経験者にとって大変有効だなと思います。
+                            ゆくゆくはプログラミング言語を提案できるようなコントリビュートもしてみたいですが、最初の１歩目としては今回わたしが行ったような方法で感覚を掴んでみることはOSS未経験者にとって大変有効だなと思います。
                         </p>
                     </div>
 
@@ -53,7 +55,8 @@
                                 <strong>haruki</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="/home/room/3" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="/home/room/3" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">日本語のページかつルームに画像を挿入しないときの挙動をテストするためのルーム</p>
                     </div>
 
@@ -75,7 +78,7 @@
                 </div>
             </div>
         </li>
-        <!--
+
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
@@ -88,7 +91,8 @@
                                 <strong>Ram</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -124,7 +128,8 @@
                                 <strong>betty</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -160,7 +165,8 @@
                                 <strong>CHan</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -196,7 +202,8 @@
                                 <strong>Mr.X</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -232,7 +239,8 @@
                                 <strong>Irruus</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -268,7 +276,8 @@
                                 <strong>yamban</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">It is important to read all the long sentences, but "paragraph
                             reading" is recommended as a tip to grasp the contents more efficiently. Paragraph reading
                             is a method of reading a long sentence while holding down the main points of a paragraph or
@@ -306,7 +315,8 @@
                                 <strong>Mr.X</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -342,7 +352,8 @@
                                 <strong>はるき</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">日本語バージョンのルームのテストです。どんな感じになるかな。</p>
                     </div>
 
@@ -377,7 +388,8 @@
                                 <strong>tange</strong>
                             </a>
                         </div>
-                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
                     </div>
@@ -393,12 +405,13 @@
                             <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
                             <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
                             <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
-                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefesft </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefesft </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </li>
-    -->
+
     </ul>
 </div>

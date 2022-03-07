@@ -7,6 +7,7 @@
                 @csrf
 
                 <div class="modal-header">
+                    <i class="bi bi-house-fill mx-2"></i>
                     <h5 class="modal-title" id="newRoom">NEW ROOM</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -76,10 +77,10 @@
     function switchCheck(event) {
         if (RoomSwitch.checked) {
             password.innerHTML =
-                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password">';
+                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
         } else {
             password.innerHTML =
-                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" disabled>';
+                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
         }
     }
 
