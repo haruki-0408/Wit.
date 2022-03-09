@@ -1,6 +1,3 @@
-@component("wit.home-modals")
-@endcomponent
-
 <div class="footer d-md-none fixed-bottom bg-light mt-2">
     <nav class="navbar navbar-light bg-light justify-content-around">
         <a class="home link-dark footer-buttons" href="/home"><i class="rounded bi bi-house-door-fill"></i></a>

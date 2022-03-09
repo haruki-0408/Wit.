@@ -77,7 +77,6 @@
         }
 
         :-webkit-full-screen img {
-            
             cursor: pointer;
         }
 
@@ -85,8 +84,8 @@
             width: auto;
             max-width: 100%;
             max-height: 100%;
-            display:block;
-            margin:auto;
+            display: block;
+            margin: auto;
         }
 
 
@@ -219,7 +218,7 @@
                     </div>
 
                     <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">{{ $room_info->title }}</h4>
+                        <h4 class="d-none d-md-block">{{ $room_info->title }} + {{ $room_info->password }}</h4>
                         <p class="d-sm-none">{{ $room_info->title }}</p>
                     </div>
 
@@ -285,17 +284,20 @@
                                 class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center "
                                 data-bs-interval="false">
                                 <div class="carousel-indicators">
-                                    @foreach ($room_info->roomImages as $roomImage)
-                                        @if ($loop->first)
-                                            <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}" class="active"
-                                                aria-current="true" aria-label="image {{ $loop->index }}"></button>
-                                        @else
-                                            <button type="button" data-bs-target="#carouselIndicators"
-                                                data-bs-slide-to="{{ $loop->index }}"
-                                                aria-label="image {{ $loop->index }}"></button>
-                                        @endif
-                                    @endforeach
+                                    @if (count($room_info->roomImages) > 1)
+                                        @foreach ($room_info->roomImages as $roomImage)
+                                            @if ($loop->first)
+                                                <button type="button" data-bs-target="#carouselIndicators"
+                                                    data-bs-slide-to="{{ $loop->index }}" class="active"
+                                                    aria-current="true"
+                                                    aria-label="image {{ $loop->index }}"></button>
+                                            @else
+                                                <button type="button" data-bs-target="#carouselIndicators"
+                                                    data-bs-slide-to="{{ $loop->index }}"
+                                                    aria-label="image {{ $loop->index }}"></button>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </div>
 
                                 <div class="carousel-inner  h-100 w-100">
@@ -312,18 +314,20 @@
                                     @endforeach
                                 </div>
 
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
-                                    data-bs-slide="prev">
-                                    <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
-                                        class="bi bi-chevron-left"></i>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators"
-                                    data-bs-slide="next">
-                                    <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
-                                        class="bi bi-chevron-right"></i>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                                @if (count($room_info->roomImages) > 1)
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                                        <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                            class="bi bi-chevron-left"></i>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselIndicators" data-bs-slide="next">
+                                        <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                            class="bi bi-chevron-right"></i>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                @endif
                             </div>
                         </div>
 

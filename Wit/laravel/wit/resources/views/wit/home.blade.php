@@ -19,6 +19,10 @@
 @component("wit.createRoom")
 @endcomponent
 
+@component("wit.home-modals")
+@endcomponent
+
+
 
 
 
