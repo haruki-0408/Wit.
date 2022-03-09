@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center mb-3">
         <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#tags">
             <i class="bi bi-tag-fill mx-2"></i>
-            <span class="fs-4">Tags</span> <!-- Tagには文字数制限をつける　-->
+            <span class="fs-4">Trend Tag</span> <!-- Tagには文字数制限をつける　-->
         </a>
     </div>
 

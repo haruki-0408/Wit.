@@ -27,8 +27,7 @@ class RoomController extends Controller
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
             $tags_info = RoomTag::with('tag')->where('room_id', $room_id)->get();
-            if (isset($room_info->password)) {
-                
+            if (isset($room_info->password)) {    
                 return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
             }else{
                 return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);

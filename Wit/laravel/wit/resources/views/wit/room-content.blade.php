@@ -1,6 +1,6 @@
 <!-- Room content -->
-<div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 ">
-    <ul id="Rooms" class="align-items-center p-2 m-0 ">
+<div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 h-100">
+    <ul id="Rooms" class="p-2 m-0 h-100">
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">

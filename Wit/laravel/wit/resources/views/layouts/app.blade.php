@@ -21,11 +21,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        main {
-            padding-top: 60px;
-            padding-bottom: 20px;
+        body{
+            max-height:100vh;
         }
-
+        header{
+            max-heigh:10vh;
+        }
+        main{
+            max-height:90vh
+        }
         .tag {
             display: inline-block;
             margin: 0 .1em .6em .2em;
@@ -47,9 +51,15 @@
             color: #0d6efd;
             background-color: #fff;
         }
+        #left-sidebar{
+            height: 100%;
+        }
 
+        #right-sidebar{
+            height: 100%;
+        }
         #Room-content {
-            max-height: 150vh;
+            height: 100%;
             overflow: scroll;
         }
 
@@ -92,7 +102,7 @@
 <body>
     <div id="app">
         <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top">
+            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm ">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/home') }}">
                         <img style="width:40px;height:40px;" src="{{ asset('/images/wit/wit.png') }} ">

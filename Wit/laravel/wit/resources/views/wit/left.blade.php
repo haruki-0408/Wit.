@@ -30,18 +30,16 @@
             </ul>
         </div>
 
-        <div class="Profile-message text-break fs-6">{{ Auth::user()->profile_message }}</div>
-
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
                 <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#posts">
-                    Posts
+                    Post
                 </a>
             </li>
             <li>
                 <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#answers">
-                    Answers
+                    Answer
                 </a>
             </li>
         </ul>
@@ -58,64 +56,16 @@
         <div class="user-list fs-5">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
                 <i class="bi bi-people-fill mx-2 "></i>
-                Users
+                User
             </a>
-
-            <ul class="list-group flex-column m-2 mb-auto fs-6 ">
-                <li class="list-group-item ">
-                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                        <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
-                            class="rounded-circle me-2">
-                        haruki
-                    </a>
-                </li>
-                <li class="list-group-item ">
-                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                        <img src="https://github.com/mika.png" alt="" width="30" height="30"
-                            class="rounded-circle me-2">
-                        asdfghjkloiuytrewqas
-                    </a>
-                </li>
-                <li class="list-group-item ">
-                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                        <img src="https://github.com/ham.png" alt="" width="30" height="30" class="rounded-circle me-2">
-                        roy
-                    </a>
-                </li>
-                <li class="list-group-item ">
-                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                        <img src="https://github.com/erika.png" alt="" width="30" height="30"
-                            class="rounded-circle me-2">
-                        erika
-                    </a>
-                </li>
-                <li class="list-group-item ">
-                    <a href="#" class="d-flex align-items-center  link-dark text-decoration-none">
-                        <img src="https://github.com/doggy.png" alt="" width="30" height="30"
-                            class="rounded-circle me-2">
-                        doggy
-                    </a>
-                </li>
-
-            </ul>
-
         </div>
 
 
         <div class="room-list fs-5 mt-3 ">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
                 <i class="bi bi-house-fill mx-2 "></i>
-                Rooms
+                Room
             </a>
-
-            <ul class="list-group  m-2 fs-6 ">
-                <li class="list-group-item text-truncate">An
-                    itemdafasdfsadfasfdsafasfdsfasfdsafasfafdsafsafdsfasfdsafasdfa</li>
-                <li class="list-group-item text-truncate">A second item</li>
-                <li class="list-group-item text-truncate">A third item</li>
-                <li class="list-group-item text-truncate">A fourth item</li>
-                <li class="list-group-item text-truncate">And a fifth one</li>
-            </ul>
         </div>
         <hr>
     </div>
