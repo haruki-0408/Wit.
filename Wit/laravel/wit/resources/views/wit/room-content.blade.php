@@ -1,6 +1,6 @@
 <!-- Room content -->
-<div id="Room-content" class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 h-100">
-    <ul id="Rooms" class="p-2 m-0 h-100">
+<div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 ">
+    <ul id="Rooms" class="p-2 m-0 ">
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
@@ -188,7 +188,7 @@
                 </div>
             </div>
         </li>
-
+        
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
@@ -391,6 +391,42 @@
                                     class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">Some quick example text to build on the card title and make up the
                             bulk of the card's content.</p>
+                    </div>
+
+                    <div class="room_tag">
+                        <ul class="p-0">
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefes </a></li>
+                            <li class="d-inline-block"><a class="tag" href="#">fdfe fefe fsefefesft </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="card border-0 pt-4 w-100">
+                <div class="container-card-body">
+                    <h4 class="card-title p-1">終わりの始まり</h4>
+                    <div class="row align-items-center">
+                        <div class="col-6 text-start">
+                            <a href="#" class="link-dark text-decoration-none">
+                                <img src="https://github.com/DIO.png" alt="" width="50" height="50"
+                                    class="rounded-circle me-2">
+                                <strong>THE END</strong>
+                            </a>
+                        </div>
+                        <div class="col-6 text-end"><a href="#" class="btn btn-outline-primary"><i
+                                    class="bi bi-arrow-bar-left"></i></a></div>
+                        <p class="card-text m-2">end of page</p>
                     </div>
 
                     <div class="room_tag">

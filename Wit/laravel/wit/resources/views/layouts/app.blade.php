@@ -22,14 +22,9 @@
 
     <style>
         body{
-            max-height:100vh;
+            overflow: hidden;
         }
-        header{
-            max-heigh:10vh;
-        }
-        main{
-            max-height:90vh
-        }
+
         .tag {
             display: inline-block;
             margin: 0 .1em .6em .2em;
@@ -51,15 +46,9 @@
             color: #0d6efd;
             background-color: #fff;
         }
-        #left-sidebar{
-            height: 100%;
-        }
 
-        #right-sidebar{
-            height: 100%;
-        }
         #Room-content {
-            height: 100%;
+            height:85%;
             overflow: scroll;
         }
 
@@ -100,14 +89,14 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="h-100">
         <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm ">
+            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/home') }}">
                         <img style="width:40px;height:40px;" src="{{ asset('/images/wit/wit.png') }} ">
                         {{ config('app.name') }}
-                            
+
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -122,7 +111,7 @@
                         <div class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
                             @yield('home-only')
-                           
+
 
                             @guest
                                 @if (Route::has('login'))
@@ -133,11 +122,11 @@
 
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link text-nowrap text-black" href="{{ route('register') }}">新規登録</a>
+                                        <a class="nav-link text-nowrap text-black"
+                                            href="{{ route('register') }}">新規登録</a>
                                     </li>
                                 @endif
                             @else
-
                                 <li class="nav-item text-center dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle " href="#" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -147,7 +136,7 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                                                 document.getElementById('logout-form').submit();">
+                                                                                     document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -171,5 +160,6 @@
 
     </div>
 </body>
+
 
 </html>
