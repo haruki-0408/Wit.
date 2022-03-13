@@ -190,9 +190,9 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
                     <ul>
-                        @foreach ($tags_info as $tag_info)
-                            <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span
-                                        class="badge badge-light">{{ $tag_info->tag->number }}</span></a></li>
+                        @foreach ($room_info->roomTags as $roomTag)
+                            <li><a class="tag" href="#">{{ $roomTag->tag->name }}<span
+                                        class="badge badge-light">{{ $roomTag->tag->number }}</span></a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -262,9 +262,9 @@
                             <div class="roomTagsList col-12 fs-5 h-25">
                                 <div class="Room-tag fs-5">
                                     <ul>
-                                        @foreach ($tags_info as $tag_info)
-                                            <li><a class="tag" href="#">{{ $tag_info->tag->name }}<span
-                                                        class="badge badge-light">{{ $tag_info->tag->number }}</span></a>
+                                        @foreach ($room_info->roomTags as $roomTag)
+                                            <li><a class="tag" href="#">{{ $roomTag->tag->name }}<span
+                                                        class="badge badge-light">{{ $roomTag->tag->number }}</span></a>
                                             </li>
                                         @endforeach
                                     </ul>

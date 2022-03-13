@@ -4,6 +4,36 @@
         <li>
             <div class="user-table"></div>
         </li>
+        
+        <template id="Room-template">
+            <li>
+                <div class="card border-0 pt-4 w-100">
+                    <div class="container-card-body">
+                        <h4 class="card-title p-1"></h4>
+                        <div class="row align-items-center">
+                            <div class="col-10 text-start text-truncate">
+                                <a href="#" class="link-dark text-decoration-none ">
+                                    <img src="" alt="" width="50" height="50"
+                                        class="rounded-circle me-2 profile-image">
+                                    <strong class="user-name"></strong>
+                                </a>
+                            </div>
+                            <div class="col-2 text-end"><a href="#" data-bs-toggle="modal"
+                                    data-bs-target="#passwordForm" class="btn btn-outline-primary"><i
+                                        class="bi bi-arrow-bar-left"></i></a></div>
+                            <p class="card-text m-2 room-description"></p>
+                        </div>
+
+                        <div class="room_tag">
+                            <ul class="p-0">
+                                <li class="d-inline-block"><a class="tag" href="#"><span
+                                            class="badge badge-light"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </template>
 
         <li>
             <div class="card border-0 pt-4 w-100">
@@ -456,6 +486,7 @@
 </div>
 
 <!-- 非同期処理 -->
-@push('scripts')å
+@push('scripts')
+    å
     <script src="{{ asset('js/jquery.js') }}"></script>
 @endpush

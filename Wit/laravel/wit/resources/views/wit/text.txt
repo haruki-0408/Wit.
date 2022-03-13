@@ -1,0 +1,493 @@
+[
+    {
+        "id": 5,
+        "user_id": 1,
+        "title": "5",
+        "description": "5",
+        "created_at": "2022-03-13T08:18:44.000000Z",
+        "updated_at": "2022-03-13T08:18:44.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 20,
+                "room_id": 5,
+                "tag_id": 35,
+                "created_at": "2022-03-13T08:18:44.000000Z",
+                "updated_at": "2022-03-13T08:18:44.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "user_id": 1,
+        "title": "4",
+        "description": "4",
+        "created_at": "2022-03-13T08:18:29.000000Z",
+        "updated_at": "2022-03-13T08:18:29.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 19,
+                "room_id": 4,
+                "tag_id": 34,
+                "created_at": "2022-03-13T08:18:29.000000Z",
+                "updated_at": "2022-03-13T08:18:29.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "title": "3",
+        "description": "3",
+        "created_at": "2022-03-13T08:18:16.000000Z",
+        "updated_at": "2022-03-13T08:18:16.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 18,
+                "room_id": 3,
+                "tag_id": 33,
+                "created_at": "2022-03-13T08:18:16.000000Z",
+                "updated_at": "2022-03-13T08:18:16.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "title": "fedfs",
+        "description": "fefssafsa;asef;asef;",
+        "created_at": "2022-03-13T08:06:29.000000Z",
+        "updated_at": "2022-03-13T08:06:29.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 8,
+                "room_id": 2,
+                "tag_id": 8,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 9,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 10,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 11,
+                "room_id": 2,
+                "tag_id": 9,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 12,
+                "room_id": 2,
+                "tag_id": 10,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 13,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 14,
+                "room_id": 2,
+                "tag_id": 9,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 15,
+                "room_id": 2,
+                "tag_id": 11,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 16,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 17,
+                "room_id": 2,
+                "tag_id": 12,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "user_id": 1,
+        "title": "dfads",
+        "description": "fefefef",
+        "created_at": "2022-03-13T08:06:06.000000Z",
+        "updated_at": "2022-03-13T08:06:06.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 1,
+                "room_id": 1,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 2,
+                "room_id": 1,
+                "tag_id": 2,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 3,
+                "room_id": 1,
+                "tag_id": 3,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 4,
+                "room_id": 1,
+                "tag_id": 4,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 5,
+                "room_id": 1,
+                "tag_id": 5,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 6,
+                "room_id": 1,
+                "tag_id": 6,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 7,
+                "room_id": 1,
+                "tag_id": 7,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            }
+        ]
+    }
+][
+    {
+        "id": 5,
+        "user_id": 1,
+        "title": "5",
+        "description": "5",
+        "created_at": "2022-03-13T08:18:44.000000Z",
+        "updated_at": "2022-03-13T08:18:44.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 20,
+                "room_id": 5,
+                "tag_id": 35,
+                "created_at": "2022-03-13T08:18:44.000000Z",
+                "updated_at": "2022-03-13T08:18:44.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "user_id": 1,
+        "title": "4",
+        "description": "4",
+        "created_at": "2022-03-13T08:18:29.000000Z",
+        "updated_at": "2022-03-13T08:18:29.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 19,
+                "room_id": 4,
+                "tag_id": 34,
+                "created_at": "2022-03-13T08:18:29.000000Z",
+                "updated_at": "2022-03-13T08:18:29.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "title": "3",
+        "description": "3",
+        "created_at": "2022-03-13T08:18:16.000000Z",
+        "updated_at": "2022-03-13T08:18:16.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 18,
+                "room_id": 3,
+                "tag_id": 33,
+                "created_at": "2022-03-13T08:18:16.000000Z",
+                "updated_at": "2022-03-13T08:18:16.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "title": "fedfs",
+        "description": "fefssafsa;asef;asef;",
+        "created_at": "2022-03-13T08:06:29.000000Z",
+        "updated_at": "2022-03-13T08:06:29.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 8,
+                "room_id": 2,
+                "tag_id": 8,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 9,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 10,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 11,
+                "room_id": 2,
+                "tag_id": 9,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 12,
+                "room_id": 2,
+                "tag_id": 10,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 13,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 14,
+                "room_id": 2,
+                "tag_id": 9,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 15,
+                "room_id": 2,
+                "tag_id": 11,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 16,
+                "room_id": 2,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            },
+            {
+                "id": 17,
+                "room_id": 2,
+                "tag_id": 12,
+                "created_at": "2022-03-13T08:06:29.000000Z",
+                "updated_at": "2022-03-13T08:06:29.000000Z"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "user_id": 1,
+        "title": "dfads",
+        "description": "fefefef",
+        "created_at": "2022-03-13T08:06:06.000000Z",
+        "updated_at": "2022-03-13T08:06:06.000000Z",
+        "user": {
+            "id": 1,
+            "name": "Test1",
+            "email": "test1@test.com",
+            "email_verified_at": null,
+            "profile_message": null,
+            "profile_image": "/images/wit/wit.png",
+            "created_at": "2022-03-13T08:05:54.000000Z",
+            "updated_at": "2022-03-13T08:05:54.000000Z",
+            "deleted_at": null
+        },
+        "room_tags": [
+            {
+                "id": 1,
+                "room_id": 1,
+                "tag_id": 1,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 2,
+                "room_id": 1,
+                "tag_id": 2,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 3,
+                "room_id": 1,
+                "tag_id": 3,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 4,
+                "room_id": 1,
+                "tag_id": 4,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 5,
+                "room_id": 1,
+                "tag_id": 5,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 6,
+                "room_id": 1,
+                "tag_id": 6,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            },
+            {
+                "id": 7,
+                "room_id": 1,
+                "tag_id": 7,
+                "created_at": "2022-03-13T08:06:06.000000Z",
+                "updated_at": "2022-03-13T08:06:06.000000Z"
+            }
+        ]
+    }
+]

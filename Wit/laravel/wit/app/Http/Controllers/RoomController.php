@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use App\Models\Room;
 use App\Models\Tag;
 use App\Models\RoomUser;
@@ -22,18 +23,26 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
     }
 
-    public function getRoomInfo($room_id)
+    public function getRoomInfo()
+    {
+
+        $rooms = Room::with(['user', 'roomTags'])->orderBy('id', 'desc')->take(10)->get();
+      
+        return $rooms;
+    }
+
+    public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-            $tags_info = RoomTag::with('tag')->where('room_id', $room_id)->get();
-            if (isset($room_info->password)) {    
-                return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
-            }else{
-                return view('wit.room', ['room_info' => $room_info, 'tags_info' => $tags_info]);
+            
+            if (isset($room_info->password)) {
+                return view('wit.room', ['room_info' => $room_info]);
+            } else {
+                return view('wit.room', ['room_info' => $room_info]);
             }
-        }else{
-            return view('wit.room-error',['room_id' => $room_id]);
+        } else {
+            return view('wit.room-error', ['room_id' => $room_id]);
         }
     }
 
@@ -46,8 +55,8 @@ class RoomController extends Controller
 
     public function getUser()
     {
-      $users = User::select('name','email')->get();
-      return $users;
+        $users = User::select('name', 'email')->get();
+        return $users;
     }
 
     public function imageGet()
@@ -124,7 +133,7 @@ class RoomController extends Controller
                 $room_tag->save();
             }
         }
-        return redirect(route('getRoomInfo', [
+        return redirect(route('enterRoom', [
             'id' => $room->id,
         ]));
     }
