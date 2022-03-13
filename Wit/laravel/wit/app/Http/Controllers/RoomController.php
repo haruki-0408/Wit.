@@ -44,6 +44,12 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoomUser', ['room_users' => $items]);
     }
 
+    public function getUser()
+    {
+      $users = User::select('name','email')->get();
+      return $users;
+    }
+
     public function imageGet()
     {
         $items = RoomImage::with('Room')->get();

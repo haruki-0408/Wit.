@@ -31,7 +31,7 @@ Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageG
 Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('showRoomChat');
 Route::get('/Room{id}', [App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
 Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'])->name('createRoom');
-
+Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');
 
 
 Auth::routes();

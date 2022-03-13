@@ -2,6 +2,10 @@
 <div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 ">
     <ul id="Rooms" class="p-2 m-0 ">
         <li>
+            <div class="user-table"></div>
+        </li>
+
+        <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
                     <h4 class="card-title p-1">反応...</h4>
@@ -13,7 +17,8 @@
                                 <strong>Test1</strong>
                             </a>
                         </div>
-                        <div class="col-2 text-end"><a href="#" data-bs-toggle="modal" data-bs-target="#passwordForm" class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
+                        <div class="col-2 text-end"><a href="#" data-bs-toggle="modal" data-bs-target="#passwordForm"
+                                class="btn btn-outline-primary"><i class="bi bi-arrow-bar-left"></i></a></div>
                         <p class="card-text m-2">
                             OSS活動というと、一流エンジニアたちがすごい会話をしながら行っている敷居の高いものというイメージがありましたが、実際はわたしのような経験の浅いエンジニアでも気軽に参加できるものだと感じました。
 
@@ -188,7 +193,7 @@
                 </div>
             </div>
         </li>
-        
+
         <li>
             <div class="card border-0 pt-4 w-100">
                 <div class="container-card-body">
@@ -447,6 +452,10 @@
                 </div>
             </div>
         </li>
-
     </ul>
 </div>
+
+<!-- 非同期処理 -->
+@push('scripts')å
+    <script src="{{ asset('js/jquery.js') }}"></script>
+@endpush
