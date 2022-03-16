@@ -85,6 +85,39 @@
 
 
 </head>
+<template id="Room-template">
+    <li>
+        <div class="card border-0">
+            <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
+                <div class="user">
+                    <a href="#" class="link-dark p-1 text-decoration-none d-flex align-items-center">
+                        <img src="" alt="" width="50" height="50"
+                            class="profile-image rounded-circle me-2">
+                        <strong class="user-name"></strong>
+                    </a>
+                </div>
+
+                <div class="btn-group d-flex align-items-center p-2">
+                    <a href="#" class="add-list-room btn btn-outline-primary p-2"><i class="bi bi-plus"></i><i
+                            class="bi bi-card-list"></i></a>
+                    <a href="#" class="enter-room btn btn-outline-primary p-2" data-bs-toggle="modal"
+                        data-bs-target="#passwordForm"><i class="bi bi-door-open"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-1 row align-items-center m-0">
+            <strong class="card-title"></strong>
+            <p class="card-text room-description"></p>
+        </div>
+
+        <div class="card-footer border-0 bg-white p-0">
+            <ul class="room_tags p-1">
+                
+            </ul>
+        </div>
+    </li>
+</template>
 
 <body>
     <div id="app" class="h-100">

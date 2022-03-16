@@ -26,8 +26,8 @@ class RoomController extends Controller
     public function getRoomInfo()
     {
 
-        $rooms = Room::with(['user', 'roomTags'])->orderBy('id', 'desc')->take(10)->get();
-      
+        $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+        //roomTags.tag でリレーションのリレーション先まで取得できた
         return $rooms;
     }
 
@@ -124,7 +124,7 @@ class RoomController extends Controller
         }
 
         if ($request->has('tag')) {
-            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠%；　 ]+);/u', $request->tag, $matches);
+            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠%；　 -]+);/u', $request->tag, $matches);
             foreach ($matches[1] as $match) {
                 $tag = $this->storeTag($match);
                 $room_tag = new RoomTag;

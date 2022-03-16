@@ -10934,7 +10934,7 @@ $("#Room-content").on('scroll', function () {
 
   windowHeight = document.getElementById('Room-content').clientHeight; //スクロールウィンドウ部分の高さ
 
-  docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
+  docBottom = docHeight - windowHeight; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
 
   if (docBottom < docSCR) {
     //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
@@ -10966,29 +10966,35 @@ $(window).on('load', function () {
 });
 
 function addRoomPage(res) {
+  console.log(res);
+  res = JSON.parse(res);
   var template = document.getElementById('Room-template');
 
-  if ('content' in document.createElement('Room-template')) {
-    for (var i = 0; i < Object.keys(res).length; i++) {
-      // template要素の内容を複製
-      var clone = template.content.cloneNode(true); // 複製したtemplate要素にデータを挿入
+  for (var i = 0; i < Object.keys(res).length; i++) {
+    // template要素の内容を複製
+    var clone = template.content.cloneNode(true);
+    clone.querySelector('.card-title').textContent = res[i].title;
+    clone.querySelector('.profile-image').src = res[i].user.profile_image;
+    clone.querySelector('.user-name').textContent = res[i].user.name;
+    clone.querySelector('.room-description').textContent = res[i].description;
 
-      clone.querySelector('.card-title').textContent = res[i].title;
-      clone.querySelector('.profile-image').textContent = res[i].user.profile_image;
-      clone.querySelector('.user-name').textContent = res[i].user.name;
-      clone.querySelector('.room-description').textContent = res[i].description;
-
-      for (var j = 0; j < Object.keys(room_tags).length; i++) {
-        var clone = clone.querySelector('d-inline-block').cloneNode(true);
-        clone.querySelector('.tag').textContent = res[j].room_tags.tag_id;
-        clone.querySelector('.badge').textContent = res[j].room_tags.tag_id;
-      } // div#containerの中に追加
-
-
-      document.getElementById('Rooms').appendChild(clone);
+    for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) {
+      //ここの実装見直したい、、
+      var room_tag_li = document.createElement("li");
+      room_tag_li.setAttribute("class", "d-inline-block");
+      var room_tag_a = document.createElement("a");
+      room_tag_a.setAttribute("class", "tag");
+      room_tag_a.href = "#";
+      room_tag_a.textContent = res[i].room_tags[j].tag.name;
+      var room_tag_span = document.createElement("span");
+      room_tag_span.className = "number badge badge-light";
+      room_tag_span.textContent = res[i].room_tags[j].tag.number;
+      room_tag_a.appendChild(room_tag_span);
+      room_tag_li.appendChild(room_tag_a);
+      clone.querySelector('.room_tags').appendChild(room_tag_li);
     }
-  } else {
-    console.log('templateがおかしい');
+
+    document.getElementById('Rooms').appendChild(clone);
   }
 }
 })();

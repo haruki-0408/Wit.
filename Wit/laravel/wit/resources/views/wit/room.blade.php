@@ -255,7 +255,7 @@
                                     <strong>Room Tags</strong>
                                 </div>
                                 <div class="col-6 p-0 text-end">
-                                    <a href="#" class="btn btn-outline-primary">+<i class="bi bi-tags-fill"></i></a>
+                                    <a href="#" class="btn btn-outline-primary"><i class="bi bi-plus"></i><i class="bi bi-tags-fill"></i></a>
                                 </div>
                             </div>
 
