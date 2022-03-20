@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- normal CSS -->
-    <link href="{{ asset('css/wit.css') }}" rel="stylesheet" >
+    
     
     <style>
       
@@ -61,7 +61,7 @@
         <div class="top-message mx-auto"> 
           <div class="row justify-content-center" >
             <div class="col-8">
-              <img width=200px height=200px src="{{ asset('/images/chara.png') }} "" >
+              <img width=200px height=200px src="{{ asset('/images/wit/wit.png') }} "" >
               Welcome to Wit.
             </div>
           </div>
@@ -77,7 +77,7 @@
 
         <div class="message-wrapper mx-auto"></div>
           <div class="row text-center"> 
-            <div class="col-auto-12 m-3"><h1>〜Witとは？docker ｈ？反応なし〜</h1></div>
+            <div class="col-auto-12 m-3"><h1>Wit</h1></div>
             <div class="col-auto-12 m-3"><h2>知識を共有するSNS型Webサービスです</h2></div>
             <div class="col-auto-12 m-3"><h2>あなたの技術的に知りたい聞きたい</h2></div>
             <div class="col-auto-12 m-3"><h2>そんな願望を叶えてくれます</h2></div>

@@ -24,7 +24,7 @@
 
 
 @section('content')
-    <div class="container-fluid h-100">
+    <div id="home-content" class="container-fluid h-100">
         <div class="row h-100">
             @component('wit.left')
 

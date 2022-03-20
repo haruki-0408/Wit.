@@ -26,7 +26,7 @@ class RoomController extends Controller
     public function getRoomInfo()
     {
 
-        $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+        $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
         //roomTags.tag でリレーションのリレーション先まで取得できた
         return $rooms;
     }
@@ -38,9 +38,7 @@ class RoomController extends Controller
             
             if (isset($room_info->password)) {
                 return view('wit.room', ['room_info' => $room_info]);
-            } else {
-                return view('wit.room', ['room_info' => $room_info]);
-            }
+            } 
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);
         }
