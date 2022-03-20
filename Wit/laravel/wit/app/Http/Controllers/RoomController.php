@@ -23,22 +23,29 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
     }
 
-    public function getRoomInfo()
+    public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
-
         $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
-        //roomTags.tag でリレーションのリレーション先まで取得できた
         return $rooms;
+    }
+
+    public function getRoomInfo($room_id) //スクロール時のルーム取得
+    {
+        if (isset($room_id)) {
+            $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
+            //roomTags.tag でリレーションのリレーション先まで取得できた
+            return $rooms;
+        } 
     }
 
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-            
+
             if (isset($room_info->password)) {
                 return view('wit.room', ['room_info' => $room_info]);
-            } 
+            }
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);
         }

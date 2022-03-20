@@ -31,7 +31,9 @@ Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet
 Route::get('/home/Room{id}', [App\Http\Controllers\RoomController::class,'enterRoom'])->name('enterRoom');
 Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'])->name('createRoom');
 Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');
-Route::get('/getRoomInfo',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
+Route::get('/getRoomInfo{room_id}',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
+
+Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->name('getFirstRoomInfo');
 
 
 Auth::routes();

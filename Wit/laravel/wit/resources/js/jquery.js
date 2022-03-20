@@ -5,7 +5,7 @@ $(function () {
         // ページ読み込み時に実行したい処理
         $.ajax({
             type: "get", //HTTP通信の種類
-            url: '/getRoomInfo', //通信したいURL
+            url: '/getFirstRoomInfo', //通信したいURL
             dataType: 'json'
         })
             //通信が成功したとき
@@ -28,10 +28,13 @@ $("#Room-content").on('scroll', function () {
     docBottom = docHeight - windowHeight; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
 
     if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
+        var last = document.getElementById('Rooms');
+        var lastli = last.lastElementChild.getAttribute('id');
+        console.log(lastli);
         $.ajax({
             type: "get", //HTTP通信の種類
-            url: '/getRoomInfo', //通信したいURL
-            dataType: 'json'
+            url: '/getRoomInfo' +lastli , //通信したいURL
+            dataType: 'json',
         })
             //通信が成功したとき
             .done((res) => {
@@ -81,7 +84,8 @@ function addRoomPage(res) {
             document.getElementById('Rooms').appendChild(clone);
 
 
+
         }
-        console.log(document.getElementById('Rooms'));
+
     }
 }

@@ -10934,7 +10934,7 @@ $(function () {
     $.ajax({
       type: "get",
       //HTTP通信の種類
-      url: '/getRoomInfo',
+      url: '/getFirstRoomInfo',
       //通信したいURL
       dataType: 'json'
     }) //通信が成功したとき
@@ -10958,10 +10958,13 @@ $("#Room-content").on('scroll', function () {
 
   if (docBottom < docSCR) {
     //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
+    var last = document.getElementById('Rooms');
+    var lastli = last.lastElementChild.getAttribute('id');
+    console.log(lastli);
     $.ajax({
       type: "get",
       //HTTP通信の種類
-      url: '/getRoomInfo',
+      url: '/getRoomInfo' + lastli,
       //通信したいURL
       dataType: 'json'
     }) //通信が成功したとき
@@ -11007,8 +11010,6 @@ function addRoomPage(res) {
 
       document.getElementById('Rooms').appendChild(clone);
     }
-
-    console.log(document.getElementById('Rooms'));
   }
 }
 })();
