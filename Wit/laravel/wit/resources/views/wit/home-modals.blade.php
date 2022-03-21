@@ -88,7 +88,7 @@
                 <div class="d-flex flex-column p-3">
                     <form name='test' method="post" action="/home/authPassword" id="Room-password">
                         @csrf
-                        <input type="text" name="enterPass" class="form-control mb-3">
+                        <input type="password" name="enterPass" class="form-control mb-3">
                         <input type="hidden" name="room_id">
                         <button type="submit" form="Room-password" class="btn btn-primary text-end">Submit</button>
                     </form>
