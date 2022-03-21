@@ -218,7 +218,7 @@
                     </div>
 
                     <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">{{ $room_info->title }} + {{ $room_info->password }}</h4>
+                        <h4 class="d-none d-md-block">{{ $room_info->title }}</h4>
                         <p class="d-sm-none">{{ $room_info->title }}</p>
                     </div>
 

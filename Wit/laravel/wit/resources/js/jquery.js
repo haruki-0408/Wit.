@@ -25,11 +25,15 @@ $("#Room-content").on('scroll', function () {
     var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
         docSCR = $('#Room-content').scrollTop(); //一番上からスクロールされた量
     windowHeight = document.getElementById('Room-content').clientHeight //スクロールウィンドウ部分の高さ
-    docBottom = docHeight - windowHeight; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
+    docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
 
     if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
         var last = document.getElementById('Rooms');
         var lastli = last.lastElementChild.getAttribute('id');
+        console.log('底の高さ:' + docBottom);
+        console.log('スクロール量:' + docSCR);
+        console.log('底の高さをスクロール量が超えた');
+        console.log(lastli);
 
         $.ajax({
             type: "get", //HTTP通信の種類
@@ -39,7 +43,7 @@ $("#Room-content").on('scroll', function () {
             //通信が成功したとき
             .done((res) => {
                 //resStringfy = JSON.stringify(res);
-                addRoomPage(res);
+                addRoomPage(res); //1秒時間をずらすことでデータベースの混同を防ぐ
             })
             //通信が失敗したとき
             .fail((error) => {
@@ -56,11 +60,20 @@ function addRoomPage(res) {
         for (var i = 0; i < Object.keys(res).length; i++) {
             var clone = template.content.cloneNode(true);  // template要素の内容を複製
             clone.querySelector('li').setAttribute('id', res[i].id);
-            clone.querySelector('.card-title').textContent = res[i].title;
+            if (res[i].password === null) {
+                clone.querySelector('.card-title').textContent = res[i].title;
+                clone.querySelector('.enter-room').remove();
+                var a = document.createElement('a');
+                a.href='/home/Room'+res[i].id;
+                a.className = "enter-room btn btn-outline-primary p-2";
+                a.innerHTML = "<i class='bi bi-door-open'></i>";
+                clone.querySelector('.btn-group').appendChild(a);
+            } else {
+                clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
+            }
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').textContent = res[i].description;
-            clone.querySelector('.enter-room').setAttribute('id', 'button-' + res[i].id);
 
 
 

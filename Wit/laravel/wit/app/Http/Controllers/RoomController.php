@@ -26,6 +26,11 @@ class RoomController extends Controller
     public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
         $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
+        for($i=0;$i<5;$i++){
+            if(isset($rooms[$i]->password)){
+                $rooms[$i]->password = '7891';
+            }
+        }
         return $rooms;
     }
 
@@ -34,6 +39,12 @@ class RoomController extends Controller
         if (isset($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
+            for($i=0;$i<5;$i++){
+                if(isset($rooms[$i]->password)){
+                    $rooms[$i]->password = '7891';
+                }
+            }
+            
             return $rooms;
         }
     }
