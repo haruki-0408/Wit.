@@ -91,17 +91,16 @@
             <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                 <div class="user">
                     <a href="#" class="link-dark p-1 text-decoration-none d-flex align-items-center">
-                        <img src="" alt="" width="50" height="50"
-                            class="profile-image rounded-circle me-2">
+                        <img src="" alt="" width="50" height="50" class="profile-image rounded-circle me-2">
                         <strong class="user-name"></strong>
                     </a>
                 </div>
 
                 <div class="btn-group d-flex align-items-center p-2">
-                    <a href="#" class="add-list-room btn btn-outline-primary p-2"><i class="bi bi-plus"></i><i
-                            class="bi bi-card-list"></i></a>
-                    <a href="#" class="enter-room btn btn-outline-primary p-2" data-bs-toggle="modal"
-                        data-bs-target="#passwordForm"><i class="bi bi-door-open"></i></a>
+                    <button type="button" class="add-list-room btn btn-outline-primary p-2"><i
+                            class="bi bi-plus"></i><i class="bi bi-card-list"></i></button>
+                    <button type="button" class="enter-room btn btn-outline-primary p-2" data-bs-toggle="modal"
+                        data-bs-target="#passwordForm"><i class="bi bi-door-open"></i></button>
                 </div>
             </div>
         </div>
@@ -113,7 +112,7 @@
 
         <div class="card-footer border-0 bg-white p-0">
             <ul class="room_tags p-1">
-                
+
             </ul>
         </div>
     </li>
@@ -153,8 +152,7 @@
 
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link text-nowrap text-black"
-                                            href="{{ route('register') }}">新規登録</a>
+                                        <a class="nav-link text-nowrap text-black" href="{{ route('register') }}">新規登録</a>
                                     </li>
                                 @endif
                             @else
@@ -167,7 +165,7 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                                                         document.getElementById('logout-form').submit();">
+                                                                                             document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -188,7 +186,7 @@
         <main>
             @yield('content')
         </main>
-        
+
 
     </div>
 
@@ -196,8 +194,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
-   
-   
 </body>
 
 

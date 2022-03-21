@@ -86,16 +86,14 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3">
-                    <form>
-                          <div class="mb-3">
-                            <input type="text" id="" class="form-control " >
-                          </div>
-                          <button type="submit" class="btn btn-primary text-end">Submit</button>
-                      </form>
+                    <form name='test' method="post" action="/home/authPassword" id="Room-password">
+                        @csrf
+                        <input type="text" name="enterPass" class="form-control mb-3">
+                        <input type="hidden" name="room_id">
+                        <button type="submit" form="Room-password" class="btn btn-primary text-end">Submit</button>
+                    </form>
                 </div>
             </div>
-            
-        
         </div>
     </div>
 </div>

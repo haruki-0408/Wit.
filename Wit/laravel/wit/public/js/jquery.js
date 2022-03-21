@@ -10960,7 +10960,6 @@ $("#Room-content").on('scroll', function () {
     //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
     var last = document.getElementById('Rooms');
     var lastli = last.lastElementChild.getAttribute('id');
-    console.log(lastli);
     $.ajax({
       type: "get",
       //HTTP通信の種類
@@ -10991,6 +10990,7 @@ function addRoomPage(res) {
       clone.querySelector('.profile-image').src = res[i].user.profile_image;
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').textContent = res[i].description;
+      clone.querySelector('.enter-room').setAttribute('id', 'button-' + res[i].id);
 
       for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) {
         //ここの実装見直したい、、
@@ -11012,6 +11012,16 @@ function addRoomPage(res) {
     }
   }
 }
+
+var passwordForm = document.getElementById("passwordForm");
+passwordForm.addEventListener('shown.bs.modal', function (event) {
+  var button = event.relatedTarget;
+  var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+  var input = document.test.room_id;
+  input.value = room_id;
+  console.log(input.value);
+  document.getElementById('Room-password').appendChild(input);
+});
 })();
 
 /******/ })()

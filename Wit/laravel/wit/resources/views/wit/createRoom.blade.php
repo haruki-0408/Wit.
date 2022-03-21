@@ -15,8 +15,7 @@
 
                     <div class="mb-3">
                         <label for="InputTitle" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="InputTitle"
-                            aria-describedby="titleHelp">
+                        <input type="text" name="title" class="form-control" id="InputTitle">
                         <div id="titleHelp" class="form-text">シンプルかつ簡潔に書きましょう</div>
                     </div>
                     <div class="mb-3">
@@ -77,10 +76,10 @@
     function switchCheck(event) {
         if (RoomSwitch.checked) {
             password.innerHTML =
-                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
+                '<input type="text" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
         } else {
             password.innerHTML =
-                '<input type="text" name="password" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
+                '<input type="text" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
         }
     }
 

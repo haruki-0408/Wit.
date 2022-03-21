@@ -30,10 +30,10 @@ $("#Room-content").on('scroll', function () {
     if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
         var last = document.getElementById('Rooms');
         var lastli = last.lastElementChild.getAttribute('id');
-        console.log(lastli);
+
         $.ajax({
             type: "get", //HTTP通信の種類
-            url: '/getRoomInfo' +lastli , //通信したいURL
+            url: '/getRoomInfo' + lastli, //通信したいURL
             dataType: 'json',
         })
             //通信が成功したとき
@@ -49,7 +49,6 @@ $("#Room-content").on('scroll', function () {
 
 });
 
-
 function addRoomPage(res) {
     //res = JSON.parse(res);
     if ('content' in document.createElement('template')) {
@@ -61,6 +60,7 @@ function addRoomPage(res) {
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').textContent = res[i].description;
+            clone.querySelector('.enter-room').setAttribute('id', 'button-' + res[i].id);
 
 
 
@@ -78,14 +78,22 @@ function addRoomPage(res) {
                 room_tag_li.appendChild(room_tag_a);
 
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
-
-
             }
             document.getElementById('Rooms').appendChild(clone);
-
-
-
         }
 
     }
 }
+
+var passwordForm = document.getElementById("passwordForm");
+passwordForm.addEventListener('shown.bs.modal', function (event) {
+    var button = (event.relatedTarget);
+    var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+    var input = document.test.room_id;
+    input.value = room_id;
+    console.log(input.value);
+    document.getElementById('Room-password').appendChild(input);
+
+
+});
+

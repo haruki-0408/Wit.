@@ -35,17 +35,31 @@ class RoomController extends Controller
             $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
             return $rooms;
-        } 
+        }
+    }
+
+    public function authRoomPassword(Request $request)
+    {
+        $room_id = $request->room_id;
+        $room = Room::find($room_id);
+        $room_password = $room->password;
+
+        if (isset($request->enterPass) && isset($room_password)) {
+            if (Hash::check($request->enterPass, $room_password)) {
+                return redirect(route('enterRoom', [
+                    'id' => $room_id,
+                ]));
+            } else {
+                dd('passwordが間違っています');
+            }
+        }
     }
 
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-
-            if (isset($room_info->password)) {
-                return view('wit.room', ['room_info' => $room_info]);
-            }
+            return view('wit.room', ['room_info' => $room_info]);
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);
         }
@@ -81,7 +95,7 @@ class RoomController extends Controller
         if (isset($image_file)) {
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
-            //画像を保存して、そのパスを$imgに保存　第三引数に'public'を指定
+            //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
             $img = $image_file->storeAs('roomImages/RoomID:' . $room_id, 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
             return $img;
         }
@@ -105,8 +119,8 @@ class RoomController extends Controller
         $room->user_id =  Auth::user()->id;
         $room->title = $request->title;
         $room->description = $request->description;
-        if ($request->has('password')) {
-            $room->password = Hash::make('$request->password');
+        if ($request->has('createPass')) {
+            $room->password = Hash::make($request->createPass);
         };
         $room->save();
 
