@@ -194,6 +194,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
+    <script>
+        @if(session('flashmessage'));
+            alert('パスワードが間違っています');
+        @endif;
+    </script>
+
 </body>
 
 

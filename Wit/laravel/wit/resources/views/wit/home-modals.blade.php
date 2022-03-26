@@ -78,7 +78,7 @@
 <!-- Room Password Modal -->
 <div class="modal fade" id="passwordForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="password" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Room Password</h5>
@@ -86,7 +86,8 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3">
-                    <form name='test' method="post" action="/home/authPassword" id="Room-password">
+                    
+                    <form name='roomPass' method="post" action="/home/authPassword" id="Room-password">
                         @csrf
                         <input type="password" name="enterPass" class="form-control mb-3">
                         <input type="hidden" name="room_id">
@@ -97,7 +98,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="tags" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="tags" aria-hidden="true">

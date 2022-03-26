@@ -61,7 +61,7 @@ class RoomController extends Controller
                     'id' => $room_id,
                 ]));
             } else {
-                dd('passwordが間違っています');
+                return back()->with('flashmessage', 'パスワードが違います');
             }
         }
     }

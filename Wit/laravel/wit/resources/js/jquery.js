@@ -1,4 +1,3 @@
-
 $(function () {
     if (document.getElementById('Room-content')) {
         //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
@@ -17,8 +16,10 @@ $(function () {
             .fail((error) => {
                 console.log(error.statusText)
             })
+            
     }
 });
+
 
 
 $("#Room-content").on('scroll', function () {
@@ -64,7 +65,7 @@ function addRoomPage(res) {
                 clone.querySelector('.card-title').textContent = res[i].title;
                 clone.querySelector('.enter-room').remove();
                 var a = document.createElement('a');
-                a.href='/home/Room'+res[i].id;
+                a.href = '/home/Room' + res[i].id;
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
                 clone.querySelector('.btn-group').appendChild(a);
@@ -98,15 +99,17 @@ function addRoomPage(res) {
     }
 }
 
-var passwordForm = document.getElementById("passwordForm");
-passwordForm.addEventListener('shown.bs.modal', function (event) {
-    var button = (event.relatedTarget);
-    var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
-    var input = document.test.room_id;
-    input.value = room_id;
-    console.log(input.value);
-    document.getElementById('Room-password').appendChild(input);
+if (document.getElementById('passwordForm')) {
+    var passwordForm = document.getElementById("passwordForm"); //ルームパスワードを認証するとき
+    passwordForm.addEventListener('shown.bs.modal', function (event) {
+        var button = (event.relatedTarget);
+        var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+        var input = document.roomPass.room_id;
+        input.value = room_id;
+        console.log(input.value);
+        document.getElementById('Room-password').appendChild(input);
 
 
-});
+    });
+}
 

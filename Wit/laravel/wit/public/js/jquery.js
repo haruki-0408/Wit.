@@ -10946,6 +10946,10 @@ $(function () {
       console.log(error.statusText);
     });
   }
+
+  if (document.getElementById('wrongPassword')) {
+    alert('パスワードが違います');
+  }
 });
 $("#Room-content").on('scroll', function () {
   var docHeight = document.getElementById('Room-content').scrollHeight,
@@ -11028,15 +11032,18 @@ function addRoomPage(res) {
   }
 }
 
-var passwordForm = document.getElementById("passwordForm");
-passwordForm.addEventListener('shown.bs.modal', function (event) {
-  var button = event.relatedTarget;
-  var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
-  var input = document.test.room_id;
-  input.value = room_id;
-  console.log(input.value);
-  document.getElementById('Room-password').appendChild(input);
-});
+if (document.getElementById('passwordForm')) {
+  var passwordForm = document.getElementById("passwordForm"); //ルームパスワードを認証するとき
+
+  passwordForm.addEventListener('shown.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+    var input = document.roomPass.room_id;
+    input.value = room_id;
+    console.log(input.value);
+    document.getElementById('Room-password').appendChild(input);
+  });
+}
 })();
 
 /******/ })()
