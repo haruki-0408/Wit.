@@ -37,6 +37,14 @@
             overflow: scroll;
         }
 
+        #image {
+            height: 45%;
+        }
+
+        #chat {
+            height: 55%;
+        }
+
         #messageList p {
             font-size: 13px;
             padding: 10px;
@@ -73,7 +81,7 @@
 
 
         :-webkit-full-screen {
-            background-color: #f8f9fa;
+            background-color: black;
         }
 
         :-webkit-full-screen img {
@@ -255,7 +263,8 @@
                                     <strong>Room Tags</strong>
                                 </div>
                                 <div class="col-6 p-0 text-end">
-                                    <a href="#" class="btn btn-outline-primary"><i class="bi bi-plus"></i><i class="bi bi-tags-fill"></i></a>
+                                    <a href="#" class="btn btn-outline-primary"><i class="bi bi-plus"></i><i
+                                            class="bi bi-tags-fill"></i></a>
                                 </div>
                             </div>
 
@@ -279,7 +288,7 @@
                     </div>
 
                     <div id="center-content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
-                        <div id="image" class="h-50">
+                        <div id="image">
                             <div id="carouselIndicators"
                                 class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center "
                                 data-bs-interval="false">
@@ -304,11 +313,13 @@
                                     @foreach ($room_info->roomImages as $roomImage)
                                         @if ($loop->first)
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item active">
-                                                <img src=" {{ url($roomImage->image) }}" alt="">
+                                                <img src=" {{ url($roomImage->image) }}" alt="" style=""
+                                                    class="image-fluid">
                                             </div>
                                         @else
-                                            <div onclick="this.webkitRequestFullScreen();" class="carousel-item ">
-                                                <img src=" {{ url($roomImage->image) }}" alt="">
+                                            <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                                <img src=" {{ url($roomImage->image) }}" alt="" style=""
+                                                    class="image-fluid">
                                             </div>
                                         @endif
                                     @endforeach
@@ -331,7 +342,7 @@
                             </div>
                         </div>
 
-                        <div id="chat" class="card col-12 h-50">
+                        <div id="chat" class="card col-12">
                             <div class="card-body">
                                 <!-- MESSAGE -->
                                 <ul id="messageList" class="p-0 m-0 w-100 ">

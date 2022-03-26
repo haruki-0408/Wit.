@@ -10941,48 +10941,65 @@ $(function () {
     .done(function (res) {
       //resStringfy = JSON.stringify(res);
       addRoomPage(res);
+      moreGetButton();
     }) //通信が失敗したとき
     .fail(function (error) {
       console.log(error.statusText);
     });
   }
+}); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 
-  if (document.getElementById('wrongPassword')) {
-    alert('パスワードが違います');
-  }
+/*$("#Room-content").on('scroll', function () {　　　　　
+    var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
+        docSCR = $('#Room-content').scrollTop(); //一番上からスクロールされた量
+    windowHeight = document.getElementById('Room-content').clientHeight //スクロールウィンドウ部分の高さ
+    docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
+
+    if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
+        var last = document.getElementById('Rooms');
+        var lastli = last.lastElementChild.getAttribute('id');
+        console.log('底の高さ:' + docBottom);
+        console.log('スクロール量:' + docSCR);
+        console.log('底の高さをスクロール量が超えた');
+        console.log(lastli);
+
+        $.ajax({
+            type: "get", //HTTP通信の種類
+            url: '/getRoomInfo' + lastli, //通信したいURL
+            dataType: 'json',
+        })
+            //通信が成功したとき
+            .done((res) => {
+                //resStringfy = JSON.stringify(res);
+                addRoomPage(res); //1秒時間をずらすことでデータベースの混同を防ぐ
+                
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error.statusText)
+            })
+    }
+
 });
-$("#Room-content").on('scroll', function () {
-  var docHeight = document.getElementById('Room-content').scrollHeight,
-      //要素の全体の高さ
-  docSCR = $('#Room-content').scrollTop(); //一番上からスクロールされた量
+*/
 
-  windowHeight = document.getElementById('Room-content').clientHeight; //スクロールウィンドウ部分の高さ
-
-  docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
-
-  if (docBottom < docSCR) {
-    //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
-    var last = document.getElementById('Rooms');
-    var lastli = last.lastElementChild.getAttribute('id');
-    console.log('底の高さ:' + docBottom);
-    console.log('スクロール量:' + docSCR);
-    console.log('底の高さをスクロール量が超えた');
-    console.log(lastli);
-    $.ajax({
-      type: "get",
-      //HTTP通信の種類
-      url: '/getRoomInfo' + lastli,
-      //通信したいURL
-      dataType: 'json'
-    }) //通信が成功したとき
-    .done(function (res) {
-      //resStringfy = JSON.stringify(res);
-      addRoomPage(res); //1秒時間をずらすことでデータベースの混同を防ぐ
-    }) //通信が失敗したとき
-    .fail(function (error) {
-      console.log(error.statusText);
-    });
-  }
+$(document).on('click', '#moreGetButton', function () {
+  var last = document.getElementById('Rooms');
+  var lastli = last.lastElementChild.getAttribute('id');
+  $.ajax({
+    type: "get",
+    //HTTP通信の種類
+    url: '/getRoomInfo' + lastli,
+    //通信したいURL
+    dataType: 'json'
+  }) //通信が成功したとき
+  .done(function (res) {
+    //resStringfy = JSON.stringify(res);
+    addRoomPage(res); //1秒時間をずらすことでデータベースの混同を防ぐ
+  }) //通信が失敗したとき
+  .fail(function (error) {
+    console.log(error.statusText);
+  });
 });
 
 function addRoomPage(res) {
@@ -11030,6 +11047,23 @@ function addRoomPage(res) {
       document.getElementById('Rooms').appendChild(clone);
     }
   }
+
+  var last = document.getElementById('Rooms');
+  var lastli = last.lastElementChild.getAttribute('id');
+  console.log(lastli);
+
+  if (lastli === '1') {
+    console.log('id:1や');
+    document.getElementById('moreGetButton').remove();
+  }
+}
+
+function moreGetButton() {
+  var moreget = document.createElement('div');
+  moreget.setAttribute('id', 'moreGetButton');
+  moreget.className = "btn d-flex justify-content-center m-3";
+  moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
+  document.getElementById('Room-content').appendChild(moreget);
 }
 
 if (document.getElementById('passwordForm')) {
