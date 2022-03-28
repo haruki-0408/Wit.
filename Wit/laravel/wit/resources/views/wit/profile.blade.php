@@ -22,7 +22,7 @@
 
                         </div>
                         <div class="col-2 text-end">
-                            <a href="home/setting" class="link-dark"><i style="font-size:1.5rem;"class="bi bi-gear-fill"></i></a>
+                            <button class="btn"data-bs-toggle="modal" data-bs-target="#settings"><i style="font-size:1.5rem;"class="bi bi-gear-fill"></i></button>
                         </div>
                     </div>
 

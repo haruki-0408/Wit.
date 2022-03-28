@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('showProfile');
+Route::get('/home/profile/settings', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('showProfile');
 Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->name('showUser');
 Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('showRoom');
 Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('showTag');

@@ -107,7 +107,7 @@
 
         <div class="card-body p-1 row align-items-center m-0">
             <strong class="card-title"></strong>
-            <p class="card-text room-description"></p>
+            <p class="card-text room-description text-break"></p>
         </div>
 
         <div class="card-footer border-0 bg-white p-0">
@@ -163,9 +163,8 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -195,7 +194,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script>
-        @if(session('flashmessage'));
+        @if (session('flashmessage'))
+            ;
             alert('パスワードが間違っています');
         @endif;
     </script>

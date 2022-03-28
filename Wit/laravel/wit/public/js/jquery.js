@@ -10995,7 +10995,7 @@ $(document).on('click', '#moreGetButton', function () {
   }) //通信が成功したとき
   .done(function (res) {
     //resStringfy = JSON.stringify(res);
-    addRoomPage(res); //1秒時間をずらすことでデータベースの混同を防ぐ
+    addRoomPage(res);
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);

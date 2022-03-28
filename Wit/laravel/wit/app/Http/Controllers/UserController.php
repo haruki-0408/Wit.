@@ -12,4 +12,9 @@ class UserController extends Controller
         $items = User::all();
         return view('wit.ShowDatabase.showUser' ,['users' => $items]);
     }
+
+    public function settings(Request $request)
+    {
+        
+    }
 }
