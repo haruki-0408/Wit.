@@ -124,9 +124,7 @@ function addRoomPage(res) {
 
     var last = document.getElementById('Rooms');
     var lastli = last.lastElementChild.getAttribute('id');
-    console.log(lastli);
     if(lastli === '1'){
-        console.log('id:1や');
         document.getElementById('moreGetButton').remove();
     }
 
@@ -142,8 +140,8 @@ function moreGetButton() {
 
 }
 
-if (document.getElementById('passwordForm')) {
-    var passwordForm = document.getElementById("passwordForm"); //ルームパスワードを認証するとき
+if (document.getElementById('roomPasswordForm')) {
+    var passwordForm = document.getElementById("roomPasswordForm"); //ルームパスワードを認証するとき
     passwordForm.addEventListener('shown.bs.modal', function (event) {
         var button = (event.relatedTarget);
         var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');

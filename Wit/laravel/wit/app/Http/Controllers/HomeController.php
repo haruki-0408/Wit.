@@ -26,18 +26,4 @@ class HomeController extends Controller
         return view('wit.home');
     }
 
-    public function showProfile()
-    {
-        return view('wit.profile');
-    }
-
-    public function enterRoom($room_id)
-    {
-        $id = ["id" => $room_id];
-        if ($id['id'] < 3) {
-            return view('wit.room', $id);
-        } else {
-            return view('wit.room', $id);
-        };
-    }
 }
