@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $items = User::all();
-        return view('wit.ShowDatabase.showUser' ,['users' => $items]);
+        return view('wit.ShowDatabase.showUser', ['users' => $items]);
     }
 
     public function showProfile()
@@ -28,29 +28,30 @@ class UserController extends Controller
         return view('wit.profile');
     }
 
-    public function settings()
+    public function settings($query)
     {
-        $ref = 'info';
-        switch ($ref) {
+        switch ($query) { //query string によってどのページに飛ばすのか判定
             case 'info':
-                return view('wit.account-information');
+                return view('wit.Account.information-account');
             case 'change':
-                return view('wit.change-password');
+                return view('wit.Account.change-password');
             case 'delete':
-                return view('wit.delete-account');
+                return view('wit.Account.delete-account');
         }
     }
 
     protected function authUserPassword(Request $request)
     {
-        $user = Auth::user();
-        $password = $user->password;
-        $setting_password = $request->settingPass;
-        if (Hash::check($setting_password, $password)) {
-            return redirect(route('settings'));
-        } else {
-            return back()->with('flashmessage', 'パスワードが違います');
+        $query = $request->query('ref');
+        if (isset($query)) {
+            $user = Auth::user();
+            $password = $user->password;
+            $setting_password = $request->settingPass;
+            if (Hash::check($setting_password, $password)) {
+                return $this->settings($query);
+            } else {
+                return back()->with('flashmessage', 'パスワードが違います');
+            }
         }
     }
-    
 }

@@ -132,13 +132,14 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="setting-links" class="p-0 m-0 fs-5 rounded">
-                    <li><a class="dropdown-item link-dark  text-primary" data-bs-target="#userPasswordForm"
+                    <li><a class="dropdown-item link-dark  text-primary" data-bs-target="#userPasswordForm1"
                             data-bs-toggle="modal" data-bs-dismiss="modal"><i
                                 class="bi bi-info-circle-fill mx-2"></i>Account Information</a></li>
-                    <li><a class="dropdown-item link-dark  text-primary" data-bs-target="#userPasswordForm"
+                    <li><a class="dropdown-item link-dark  text-primary" data-bs-target="#userPasswordForm2"
                             data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-key-fill mx-2"></i>Change
                             Password</a></li>
-                    <li><a class="dropdown-item link-dark  text-danger"><i
+                    <li><a class="dropdown-item link-dark  text-danger" data-bs-target="#userPasswordForm3"
+                        data-bs-toggle="modal" data-bs-dismiss="modal"><i
                                 class="bi bi-exclamation-triangle-fill mx-2"></i>Delete Account</a></li>
                 </ul>
             </div>
@@ -149,18 +150,58 @@
     </div>
 </div>
 
-<div class="modal fade" id="userPasswordForm" aria-hidden="true" aria-labelledby="userPasswordForm" tabindex="-1">
+
+<!-- User Password Form From Account Information-->
+<div class="modal fade" id="userPasswordForm1" aria-hidden="true" aria-labelledby="userPasswordForm1" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel2">User Password</h5>
+                <h5 class="modal-title">User Password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="User-password" name='userPass' method="post" action="/home/profile/settings/authUserPassword">
+                <form id="User-password1" name='userPass' method="post" action="/home/profile/settings/authUserPassword?ref=info">
                     @csrf
                     <input type="password" name="settingPass" class="form-control mb-3" autocomplete=off>
-                    <button type="submit" form="User-password" class="btn btn-primary text-end">Submit</button>
+                    <button type="submit" form="User-password1" class="btn btn-primary text-end">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Password Form Change Password-->
+<div class="modal fade" id="userPasswordForm2" aria-hidden="true" aria-labelledby="userPasswordForm2" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="User-password2" name='userPass' method="post" action="/home/profile/settings/authUserPassword?ref=change">
+                    @csrf
+                    <input type="password" name="settingPass" class="form-control mb-3" autocomplete=off>
+                    <button type="submit" form="User-password2" class="btn btn-primary text-end">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Password Form Delete Account-->
+<div class="modal fade" id="userPasswordForm3" aria-hidden="true" aria-labelledby="userPasswordForm3" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="User-password3" name='userPass' method="post" action="/home/profile/settings/authUserPassword?ref=delete">
+                    @csrf
+                    <input type="password" name="settingPass" class="form-control mb-3" autocomplete=off>
+                    <button type="submit" form="User-password3" class="btn btn-primary text-end">Submit</button>
                 </form>
             </div>
         </div>
