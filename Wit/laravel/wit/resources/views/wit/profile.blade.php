@@ -7,7 +7,7 @@
 
 
     <div id="profile">
-        <div class="container-sm p-4">
+        <div class="container-sm p-3">
             <div class="row">
                 <div class="header">
                     <div class="row align-items-center">
@@ -43,15 +43,15 @@
                         </ul>
                     </div>
                 </div>
-                <hr>
+                <hr class="m-1">
                 <div class="discription">
-                    <p class="text-wrap fs-6">
+                    <p class="text-wrap m-1" style="font-size:0.4em;">
                         {{ Auth::user()->profile_message }}
                     </p>
                 </div>
-                <hr>
+                <hr class="m-1">
 
-                <div class="lists p-2">
+                <div class="lists p-0">
                     <!-- Button trigger modal -->
                     <ul style="list-style-type:disc ">
                         <li class="border-bottom">
