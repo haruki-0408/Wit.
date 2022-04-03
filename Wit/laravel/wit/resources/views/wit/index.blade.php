@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -78,7 +78,7 @@
         <div class="message-wrapper mx-auto"></div>
           <div class="row text-center"> 
             <div class="col-auto-12 m-3"><h1>Wit</h1></div>
-            <div class="col-auto-12 m-3"><h2>知識を共有するSNS型Webサービスです</h2></div>
+            <div class="col-auto-12 m-3"><h2>こんにちは</h2></div>
             <div class="col-auto-12 m-3"><h2>あなたの技術的に知りたい聞きたい</h2></div>
             <div class="col-auto-12 m-3"><h2>そんな願望を叶えてくれます</h2></div>
             <div class="col-auto-12 m-3"><h2>一人では分からない思いつかない</h2></div>

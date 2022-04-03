@@ -21,11 +21,12 @@
     <style>
         html {
             overflow: hidden;
+
         }
 
         body {
             overflow: hidden;
-            weight: 100vw;
+            width: 100vw;
             height: 100vh;
         }
 

@@ -23,6 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home/profile', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
 Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
 Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');
+Route::post('/home/profile/settings/changeProfile', [\App\Http\Controllers\UserController::class, 'changeProfile'])->name('changeProfile');
 Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->name('showUser');
 Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('showRoom');
 Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('showTag');
@@ -36,6 +37,7 @@ Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'
 Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');
 Route::get('/getRoomInfo{room_id}',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
 Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->name('getFirstRoomInfo');
+
 
 
 Auth::routes();

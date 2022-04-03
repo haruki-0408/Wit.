@@ -54,4 +54,18 @@ class UserController extends Controller
             }
         }
     }
+
+    protected function changeProfile(Request $request)
+    {
+        
+        $form=[
+            'name' => $request->name,
+            'email' => $request->email,
+            'profile_message' => $request->message,
+        ];
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $user->fill($form)->save();
+        return redirect(route("showProfile"));
+    }
 }
