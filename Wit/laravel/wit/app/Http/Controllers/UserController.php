@@ -55,17 +55,41 @@ class UserController extends Controller
         }
     }
 
+    public function storeImage($image_file)
+    {
+        if (isset($image_file)) {
+            $user_id =Auth::id();
+            //拡張子を取得
+            $extension = $image_file->getClientOriginalExtension();
+            //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
+            $img = $image_file->storeAs('/userImages/RoomID:'. $user_id,'id'. $user_id . $extension, ['disk' => 'local']);
+            //id=1なら'id1.png'とかになる
+            return $img;
+        }
+    }
+
     protected function changeProfile(Request $request)
     {
-        
-        $form=[
+        $img = $this->storeImage($request->edit_image);
+        $form = [
             'name' => $request->name,
             'email' => $request->email,
             'profile_message' => $request->message,
+            'profile_image' => $img
         ];
         $user_id = Auth::id();
         $user = User::find($user_id);
         $user->fill($form)->save();
         return redirect(route("showProfile"));
+    }
+
+    protected function changePassword(Request $request)
+    {
+        //handle   
+    }
+
+    protected function deleteAccount(Request $request)
+    {
+        //handle
     }
 }

@@ -39,5 +39,3 @@ Route::get('/getRoomInfo{room_id}',[App\Http\Controllers\RoomController::class,'
 Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->name('getFirstRoomInfo');
 
 
-
-Auth::routes();

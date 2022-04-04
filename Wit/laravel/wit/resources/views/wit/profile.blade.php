@@ -14,7 +14,7 @@
                         <div class="col-10 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
                                 <div class="profile">
-                                <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
+                                <img src="{{ asset(Auth::user()->profile_image) }}" alt="" width="70" height="70"
                                     class="rounded-circle me-2">
                                 <strong>{{ Auth::user()->name }}</strong>
                                 </div>

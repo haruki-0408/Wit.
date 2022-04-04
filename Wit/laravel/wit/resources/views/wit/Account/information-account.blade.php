@@ -6,26 +6,25 @@
 
     <div class="card border-0 m-2 overflow-auto" style="width:100%; height:83%;">
         <div id="profile-contents" class="row justify-content-center w-100">
-            <form action="/home/profile/settings/changeProfile" method="post" name='profile'>
+            <form action="/home/profile/settings/changeProfile" method="post" name='profile' enctype= 'multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
-                    <div class="text-center p-1">
-                        <img id="image" src="{{ Auth::user()->profile_image }}" style="width:100;height:100;"
-                            class="rounded-circle me-2" alt="">
+                    <div id="parent-image" class="text-center" style="position:relative;">
+                        <img id="image" src="{{ asset(Auth::user()->profile_image) }}" style="width:100;height:100;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
                     </div>
 
-                    <div id="parent0" class="row justify-content-center">
+                    <div id="parent-name" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Name</strong>
                         <p id="name" class="card-text col-10 col-md-4 text-center p-1">{{ Auth::user()->name }}</p>
                     </div>
 
-                    <div id="parent1" class="row justify-content-center">
+                    <div id="parent-email" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
                         <p id="email" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}</p>
                     </div>
 
-                    <div id="parent2" class="row justify-content-center">
+                    <div id="parent-message" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
                         <p id="message" class="card-text col-10 col-md-4 p-1" style="font-size: 0.8em;">
                             {{ Auth::user()->profile_message }}</p>
@@ -76,6 +75,14 @@
             parent_button.replaceChild(button_save, button_edit);
 
 
+            var image = document.getElementById('image');
+            image.classList.add('opacity-25');
+            var icon = document.createElement("label");
+        
+            icon.innerHTML ="<i style='font-size: 2.5rem; position:absolute; top:50; cursor:pointer;' class='bi bi-camera-fill'></i><input name='edit_image' type='file' accept='image/*' class='invisible'>";
+            
+            document.getElementById("parent-image").appendChild(icon);
+
 
             var oldNode = document.querySelectorAll('p');
 
@@ -104,11 +111,11 @@
             for (var i = 0; i < 3; i++) {
 
                 if (i === 0) {
-                    var parentNode = document.getElementById('parent0');
+                    var parentNode = document.getElementById('parent-name');
                 } else if (i === 1) {
-                    var parentNode = document.getElementById('parent1');
+                    var parentNode = document.getElementById('parent-email');
                 } else if (i === 2) {
-                    var parentNode = document.getElementById('parent2');
+                    var parentNode = document.getElementById('parent-message');
                 }
 
                 parentNode.replaceChild(newNode[i], oldNode[i]);
