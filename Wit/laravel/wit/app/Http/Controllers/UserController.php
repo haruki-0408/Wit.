@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -62,7 +63,8 @@ class UserController extends Controller
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
-            $img = $image_file->storeAs('/userImages/RoomID:'. $user_id,'id'. $user_id . $extension, ['disk' => 'local']);
+            Storage::disk('local')->deleteDirectory('/userImages/UserID:'.$user_id); //一旦中身を全削除してから新しい画像を登録
+            $img = $image_file->storeAs('/userImages/UserID:'. $user_id,'id'. $user_id .'.'.$extension, ['disk' => 'local']);
             //id=1なら'id1.png'とかになる
             return $img;
         }
