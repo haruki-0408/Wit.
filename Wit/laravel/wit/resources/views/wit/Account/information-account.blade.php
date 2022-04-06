@@ -6,11 +6,12 @@
 
     <div class="card border-0 m-2 overflow-auto" style="width:100%; height:83%;">
         <div id="profile-contents" class="row justify-content-center w-100">
-            <form action="/home/profile/settings/changeProfile" method="post" name='profile' enctype= 'multipart/form-data'>
+            <form action="/home/profile/settings/changeProfile" method="post" name='profile' enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
-                    <div id="parent-image" class="text-center" style="position:relative;">
-                        <img id="image" src="{{ asset(Auth::user()->profile_image) }}" style="width:100;height:100;" class="rounded-circle " alt="">
+                    <div id="parent-image" class="text-center">
+                        <img id="image" src="{{ asset(Auth::user()->profile_image) }}"
+                            style="width:100;height:100; position:relative;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
                     </div>
 
@@ -78,9 +79,9 @@
             var image = document.getElementById('image');
             image.classList.add('opacity-25');
             var icon = document.createElement("label");
-        
-            icon.innerHTML ="<i style='font-size: 2.5rem; position:absolute; top:50; cursor:pointer;' class='bi bi-camera-fill'></i><input name='edit_image' type='file' accept='image/*' class='invisible'>";
-            
+
+            icon.innerHTML =
+                "<i style='font-size: 2.5rem; position:absolute; top:50; cursor:pointer;' class='bi bi-camera-fill'></i><input id='image-input' name='edit_image' type='file' accept='image/*' class='invisible'>";
             document.getElementById("parent-image").appendChild(icon);
 
 
@@ -123,6 +124,32 @@
 
         }
 
+        //画像の変更プレビュー表示
+        document.addEventListener('click', function(e) { //VanillaJSで動的要素にイベント登録するための書き方
+            if (event.target.id === 'image-input') {
+                document.getElementById("image-input").addEventListener("change", function(e) {
+                    const file = e.target.files[0];
+
+                    // Only process image files.
+                    if (!file.type.match('image.*')) {
+                        return false;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = (function(theFile) {
+                        return function(e) {
+                            const imgElm = document.getElementById("image");
+                            imgElm.src = e.target.result;
+                            imgElm.classList.remove('opacity-25');
+                        }
+                    })(file);
+
+                    // Read in the image file as a data URL.
+                    reader.readAsDataURL(file);
+
+                }, false);
+            }
+        })
 
         document.addEventListener('click', function(e) {
             // id属性の値で判定
