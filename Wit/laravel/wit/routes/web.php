@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('wit.index');
-});
+})->name('index');
 
 Auth::routes();
 
@@ -24,6 +24,8 @@ Route::get('/home/profile', [App\Http\Controllers\UserController::class, 'showPr
 Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
 Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');
 Route::post('/home/profile/settings/changeProfile', [\App\Http\Controllers\UserController::class, 'changeProfile'])->name('changeProfile');
+Route::post('/home/profile/settings/changePassword', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('changePassword');
+Route::get('/home/profile/settings/deleteAccount', [App\Http\Controllers\UserController::class, 'deleteAccount'])->name('deleteAccount');
 Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->name('showUser');
 Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('showRoom');
 Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('showTag');

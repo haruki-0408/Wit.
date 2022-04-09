@@ -81,7 +81,7 @@
             var icon = document.createElement("label");
 
             icon.innerHTML =
-                "<i style='font-size: 2.5rem; position:absolute; top:50; cursor:pointer;' class='bi bi-camera-fill'><input id='image-input' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
+                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='image-input' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
             document.getElementById("parent-image").appendChild(icon);
 
 
