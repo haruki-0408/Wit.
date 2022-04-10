@@ -97,7 +97,7 @@
         <div class="card border-0">
             <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                 <div class="user">
-                    <a href="#" class="link-dark p-1 text-decoration-none d-flex align-items-center">
+                    <a href="#" class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="" alt="" width="50" height="50" class="profile-image rounded-circle me-2">
                         <strong class="user-name"></strong>
                     </a>
@@ -163,8 +163,8 @@
                                     </li>
                                 @endif
                             @else
-                                <li class="nav-item text-center dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle " href="#" role="button"
+                                <li class="nav-item dropdown d-flex align-items-center justify-content-center">
+                                    <a id="navbarUserName" class="link-dark text-decoration-none dropdown-toggle "  role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
                                     </a>

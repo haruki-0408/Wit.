@@ -25,6 +25,10 @@ class Tag extends Model
         'number',
     ];
 
+    protected $hidden = [
+        'created_at',
+    ];
+
     public function roomTags(){
         return $this->hasMany('App\Models\RoomTag');
     }

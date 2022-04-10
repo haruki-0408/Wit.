@@ -24,9 +24,16 @@ class UserController extends Controller
         return view('wit.ShowDatabase.showUser', ['users' => $items]);
     }
 
-    public function showProfile()
+    public function showProfile($user_id)
     {
-        return view('wit.profile');
+        $user = User::find($user_id);
+        $user_data = [
+        'user_id'=>$user_id,
+        'profile_image' => $user->profile_image,
+        'profile_message' => $user->profile_message,
+        'user_name' => $user->name,
+        ];
+        return view('wit.profile', $user_data);
     }
 
     public function settings($query)

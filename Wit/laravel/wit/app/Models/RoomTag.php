@@ -13,6 +13,11 @@ class RoomTag extends Model
         'id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function tag(){
         return $this->belongsTo('App\Models\Tag');
     }

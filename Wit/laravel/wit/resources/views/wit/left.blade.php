@@ -1,7 +1,6 @@
 <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div class="profile-box  ">
-        <a href="/home/profile"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <a href="/home/profile/{{ Auth::user()->id }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <i class="bi bi-person-fill mx-2"></i>
             <span class="fs-4">Profile</span>
         </a>
@@ -11,22 +10,34 @@
         <div class="dropdown mb-3">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="profile">
-                        <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
-                            class="rounded-circle me-2">
-                        <strong>{{ Auth::user()->name }}</strong>
-                    </div>
+                <div class="profile">
+                    <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
+                        class="rounded-circle me-2">
+                    <strong>{{ Auth::user()->name }}</strong>
+                </div>
             </a>
 
 
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">New Room</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="/home/profile">Profile</a></li>
+                <li><button class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#CreateRoomForm">New
+                        Room</button></li>
+                <li><button class="btn dropdown-item" data-bs-toggle="modal"
+                        data-bs-target="#settings">Settings</button></li>
+                <li><a class="dropdown-item" href="/home/profile/{{ Auth::user()->id }}">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form2').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form2" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                </li>
             </ul>
         </div>
 

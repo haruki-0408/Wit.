@@ -27,7 +27,7 @@
 
                     <div id="parent-message" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="message" class="card-text col-10 col-md-4 p-1" style="font-size: 0.8em;">
+                        <p id="message" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">
                             {{ Auth::user()->profile_message }}</p>
                     </div>
 
