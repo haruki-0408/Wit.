@@ -13,7 +13,7 @@ use App\Models\RoomTag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Crypt;
 
 class RoomController extends Controller
 {
@@ -27,6 +27,9 @@ class RoomController extends Controller
     {
         $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
         for($i=0;$i<5;$i++){
+            $rooms[$i]->user_id = Crypt::encrypt( $rooms[$i]->user_id );
+            $rooms[$i]->user->id = Crypt::encrypt($rooms[$i]->user->id);
+
             if(isset($rooms[$i]->password)){
                 $rooms[$i]->password = '7891';
             }
@@ -70,6 +73,7 @@ class RoomController extends Controller
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
+
             return view('wit.room', ['room_info' => $room_info]);
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);

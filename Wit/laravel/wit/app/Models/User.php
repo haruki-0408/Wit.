@@ -47,6 +47,8 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'remember_token',
+        'profile_message',
+        'updated_at',
         'deleted_at'
     ];
 

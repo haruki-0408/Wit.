@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
 
 
 class UserController extends Controller
@@ -66,12 +67,13 @@ class UserController extends Controller
     {
         if (isset($image_file)) {
             $user_id = Auth::id();
+            $crypted_user_id = Crypt::encrypt($user_id);
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
-            Storage::disk('local')->deleteDirectory('/userImages/UserID:' . $user_id);
+            Storage::disk('local')->deleteDirectory('/userImages/UserID:' . $crypted_user_id);
             //一旦中身を全削除してから新しい画像を登録
-            $img = $image_file->storeAs('/userImages/UserID:' . $user_id, 'id' . $user_id . '.' . $extension, ['disk' => 'local']);
+            $img = $image_file->storeAs('/userImages/UserID:' . $crypted_user_id, 'profile_image' . '.' . $extension, ['disk' => 'local']);
             //id=1なら'id1.png'とかになる
             return $img;
         }
@@ -95,7 +97,7 @@ class UserController extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
         $user->fill($form)->save();
-        return redirect(route("showProfile"));
+        return redirect(route("showProfile",['user_id' => $user_id]));
     }
 
     protected function changePassword(Request $request)
