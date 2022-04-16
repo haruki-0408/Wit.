@@ -26,11 +26,11 @@ class RoomController extends Controller
     public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
         $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
-        for($i=0;$i<5;$i++){
-            $rooms[$i]->user_id = Crypt::encrypt( $rooms[$i]->user_id );
+        for ($i = 0; $i < 5; $i++) {
+            $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
             $rooms[$i]->user->id = Crypt::encrypt($rooms[$i]->user->id);
 
-            if(isset($rooms[$i]->password)){
+            if (isset($rooms[$i]->password)) {
                 $rooms[$i]->password = '7891';
             }
         }
@@ -42,12 +42,12 @@ class RoomController extends Controller
         if (isset($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
-            for($i=0;$i<5;$i++){
-                if(isset($rooms[$i]->password)){
+            for ($i = 0; $i < 5; $i++) {
+                if (isset($rooms[$i]->password)) {
                     $rooms[$i]->password = '7891';
                 }
             }
-            
+
             return $rooms;
         }
     }
@@ -60,12 +60,14 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                return redirect(route('enterRoom', [
-                    'id' => $room_id,
-                ]));
+                $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
+
+                return view('wit.room', ['room_info' => $room_info]);
             } else {
                 return back()->with('flashmessage', 'パスワードが違います');
             }
+        }else{
+            return back()->with('flashmessage', 'パスワードが不正入力されています');
         }
     }
 
@@ -73,8 +75,11 @@ class RoomController extends Controller
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-
-            return view('wit.room', ['room_info' => $room_info]);
+            if ($room_info->password == null) {
+                return view('wit.room', ['room_info' => $room_info]);
+            } else {
+                return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
+            }
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);
         }

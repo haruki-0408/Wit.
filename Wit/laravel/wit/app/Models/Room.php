@@ -37,7 +37,6 @@ class Room extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'deleted_at',
         'created_at',
         'updated_at',
