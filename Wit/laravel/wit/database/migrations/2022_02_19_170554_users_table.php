@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class UsersTable extends Migration
 {
     /**
@@ -14,7 +15,7 @@ class UsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name',20);
             $table->string('email')->unique();
             $table->dateTime('email_verified_at')->nullable();

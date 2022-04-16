@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+//uuidを導入するために変更する
+use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -43,6 +45,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'id',
         'email',
         'email_verified_at',
         'password',

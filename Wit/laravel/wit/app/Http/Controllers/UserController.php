@@ -27,9 +27,10 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        $user = User::find($user_id);
+        $decrypted_user_id = Crypt::decrypt($user_id); 
+        $user = User::find($decrypted_user_id);
         $user_data = [
-        'user_id'=>$user_id,
+        'user_id'=>$decrypted_user_id,
         'profile_image' => $user->profile_image,
         'profile_message' => $user->profile_message,
         'user_name' => $user->name,
@@ -97,7 +98,8 @@ class UserController extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
         $user->fill($form)->save();
-        return redirect(route("showProfile",['user_id' => $user_id]));
+        $encrypted_user_id = Crypt::encrypt($user_id);
+        return redirect(route("showProfile",['user_id' => $encrypted_user_id]));
     }
 
     protected function changePassword(Request $request)
@@ -113,7 +115,8 @@ class UserController extends Controller
                 if ($new_password == $confirm_password) {
                     $user->password = Hash::make($new_password);
                     $user->save();
-                    return redirect(route("showProfile"));
+                    $encrypted_user_id = Crypt::encrypt($user_id);
+                    return redirect(route("showProfile",['user_id' => $encrypted_user_id]));
                 } else {
                     return back()->with('flashmessage', '新しいパスワードと確認用のパスワードが一致していません');
                 }

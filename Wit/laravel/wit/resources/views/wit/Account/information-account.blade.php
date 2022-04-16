@@ -6,7 +6,7 @@
 
     <div class="card border-0 m-2 overflow-auto" style="width:100%; height:83%;">
         <div id="profile-contents" class="row justify-content-center w-100">
-            <form action="/home/profile/settings/changeProfile" method="post" name='profile' enctype='multipart/form-data'>
+            <form action="/home/profile/settings/changeProfile" method="post" name='changeProfile' enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
                     <div id="parent-image" class="text-center">
@@ -80,6 +80,7 @@
             image.classList.add('opacity-25');
             var icon = document.createElement("label");
 
+            //変更後の画像プレビュー
             icon.innerHTML =
                 "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='image-input' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
             document.getElementById("parent-image").appendChild(icon);

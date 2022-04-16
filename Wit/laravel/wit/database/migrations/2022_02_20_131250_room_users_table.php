@@ -15,8 +15,8 @@ class RoomUsersTable extends Migration
     {
         Schema::create('room_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
-            $table->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->uuid('user_id')->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->uuid('room_id')->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->dateTime('entered_at')->useCurrent();
             $table->dateTime('exited_at')->nullable()->default(null)->comment('論理削除により出入りをテーブルに記録する');
         });

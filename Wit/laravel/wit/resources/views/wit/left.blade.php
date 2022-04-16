@@ -1,6 +1,6 @@
 <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div class="profile-box  ">
-        <a href="/home/profile/{{ Auth::user()->id }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <a href="/home/profile/{{ Crypt::encrypt(Auth::user()->id) }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <i class="bi bi-person-fill mx-2"></i>
             <span class="fs-4">Profile</span>
         </a>
@@ -23,7 +23,7 @@
                         Room</button></li>
                 <li><button class="btn dropdown-item" data-bs-toggle="modal"
                         data-bs-target="#settings">Settings</button></li>
-                <li><a class="dropdown-item" href="/home/profile/{{ Auth::user()->id }}">Profile</a></li>
+                <li><a class="dropdown-item" href="/home/profile/{{ Crypt::encrypt(Auth::user()->id) }}">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>

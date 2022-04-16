@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf14086919a839fe740e00554e4baff6",
+    "content-hash": "2ca34683de0607b71b68e54f7267dfa3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -571,6 +571,66 @@
                 }
             ],
             "time": "2022-02-23T14:25:13+00:00"
+        },
+        {
+            "name": "goldspecdigital/laravel-eloquent-uuid",
+            "version": "v8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/goldspecdigital/laravel-eloquent-uuid.git",
+                "reference": "e98748113e3b9de5b408cdc306e9d93e18121988"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/goldspecdigital/laravel-eloquent-uuid/zipball/e98748113e3b9de5b408cdc306e9d93e18121988",
+                "reference": "e98748113e3b9de5b408cdc306e9d93e18121988",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "ext-pdo": "*",
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GoldSpecDigital\\LaravelEloquentUUID\\UuidServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GoldSpecDigital\\LaravelEloquentUUID\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Inamdar",
+                    "email": "matt@goldspecdigital.com"
+                }
+            ],
+            "description": "A simple drop-in solution for providing UUID support for the IDs of your Eloquent models.",
+            "homepage": "https://github.com/goldspecdigital/laravel-eloquent-uuid",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "php",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/goldspecdigital/laravel-eloquent-uuid/issues",
+                "source": "https://github.com/goldspecdigital/laravel-eloquent-uuid/tree/v8.0.1"
+            },
+            "time": "2020-12-23T10:10:54+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2909,6 +2969,66 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "rorecek/laravel-ulid",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rorecek/laravel-ulid.git",
+                "reference": "66b95e1b6ae8fcb157c600e44b3b1d4f105aebfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rorecek/laravel-ulid/zipball/66b95e1b6ae8fcb157c600e44b3b1d4f105aebfa",
+                "reference": "66b95e1b6ae8fcb157c600e44b3b1d4f105aebfa",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.3|^6.0|^7.0|^8.0|^9.0",
+                "php": "^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rorecek\\Ulid\\UlidServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ulid": "Rorecek\\Ulid\\Facades\\Ulid"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rorecek\\Ulid\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pavel Rorecek",
+                    "email": "info@laravelist.com",
+                    "homepage": "https://laravelist.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel package for ULID (Universally Unique Lexicographically Sortable Identifier)",
+            "homepage": "https://github.com/rorecek/laravel-ulid",
+            "keywords": [
+                "guid",
+                "identifier",
+                "ulid",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/rorecek/laravel-ulid/issues",
+                "source": "https://github.com/rorecek/laravel-ulid/tree/v2.0.5"
+            },
+            "time": "2022-02-09T12:10:12+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

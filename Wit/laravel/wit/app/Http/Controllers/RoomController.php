@@ -28,7 +28,8 @@ class RoomController extends Controller
         $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
         for ($i = 0; $i < 5; $i++) {
             $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
-            $rooms[$i]->user->id = Crypt::encrypt($rooms[$i]->user->id);
+            $rooms[$i]->user->id = $rooms[$i]->user_id ;
+            
 
             if (isset($rooms[$i]->password)) {
                 $rooms[$i]->password = '7891';

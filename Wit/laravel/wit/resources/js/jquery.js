@@ -96,7 +96,7 @@ function addRoomPage(res) {
             } else {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
             }
-            clone.querySelector('.user-link').href = '/home/profile/' + res[i].user.id ;
+            clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id ;
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').textContent = res[i].description;
