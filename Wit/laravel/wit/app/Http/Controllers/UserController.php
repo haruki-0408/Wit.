@@ -64,6 +64,14 @@ class UserController extends Controller
         }
     }
 
+    public function showProfileImage($user_id){
+        $decrypted_user_id = Crypt::decrypt($user_id);
+        $user = User::find($decrypted_user_id);
+        $user_image_path = $user->profile_image;
+
+    
+    }
+
     public function storeImage($image_file)
     {
         if (isset($image_file)) {
@@ -72,10 +80,10 @@ class UserController extends Controller
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
-            Storage::disk('local')->deleteDirectory('/userImages/UserID:' . $crypted_user_id);
+            Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
             //一旦中身を全削除してから新しい画像を登録
-            $img = $image_file->storeAs('/userImages/UserID:' . $crypted_user_id, 'profile_image' . '.' . $extension, ['disk' => 'local']);
-            //id=1なら'id1.png'とかになる
+            $img = $image_file->storeAs('/userImages/secondary:' . $user_id, 'profile_image' . '.' . $extension, ['disk' => 'local']);
+            
             return $img;
         }
     }
@@ -131,6 +139,7 @@ class UserController extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
         $user->delete();
+        Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
         return redirect(route('index'));
     }
 }

@@ -11,8 +11,7 @@
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="profile">
-                    <img src="{{ Auth::user()->profile_image }}" alt="" width="70" height="70"
-                        class="rounded-circle me-2">
+                    <img src="{{ route('showProfileImage', ['user_id'=>Crypt::encrypt(Auth::id())]) }}" alt="" width="70" height="70" class="rounded-circle me-2">
                     <strong>{{ Auth::user()->name }}</strong>
                 </div>
             </a>
