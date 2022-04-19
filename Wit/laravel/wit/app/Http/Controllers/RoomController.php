@@ -79,7 +79,8 @@ class RoomController extends Controller
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
+            $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message', 'roomImages:id,room_id,image'])->find($room_id);
+            
             if ($room_info->password == null) {
                 return view('wit.room', ['room_info' => $room_info]);
             } else {

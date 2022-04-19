@@ -27,13 +27,12 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        $decrypted_user_id = Crypt::decrypt($user_id); 
+        $decrypted_user_id = Crypt::decrypt($user_id);
         $user = User::find($decrypted_user_id);
         $user_data = [
-        'user_id'=>$decrypted_user_id,
-        'profile_image' => $user->profile_image,
-        'profile_message' => $user->profile_message,
-        'user_name' => $user->name,
+            'user_id' => $decrypted_user_id,
+            'profile_message' => $user->profile_message,
+            'user_name' => $user->name,
         ];
         return view('wit.profile', $user_data);
     }
@@ -64,13 +63,20 @@ class UserController extends Controller
         }
     }
 
-    public function showProfileImage($user_id){
+    public function showProfileImage($user_id)
+    {
         $decrypted_user_id = Crypt::decrypt($user_id);
         $user = User::find($decrypted_user_id);
         $user_image_path = $user->profile_image;
+        if($user_image_path == 'default' && Storage::exists('userImages/default/wit.png')){
+            return response()->file(Storage::path('userImages/default/wit.png'));
+        }else if(!Storage::exists($user_image_path)){
+            abort(404);
+        }
 
-    
+        return response()->file(Storage::path($user_image_path));
     }
+
 
     public function storeImage($image_file)
     {
@@ -83,7 +89,7 @@ class UserController extends Controller
             Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
             //一旦中身を全削除してから新しい画像を登録
             $img = $image_file->storeAs('/userImages/secondary:' . $user_id, 'profile_image' . '.' . $extension, ['disk' => 'local']);
-            
+
             return $img;
         }
     }
@@ -107,7 +113,7 @@ class UserController extends Controller
         $user = User::find($user_id);
         $user->fill($form)->save();
         $encrypted_user_id = Crypt::encrypt($user_id);
-        return redirect(route("showProfile",['user_id' => $encrypted_user_id]));
+        return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
     }
 
     protected function changePassword(Request $request)
@@ -124,7 +130,7 @@ class UserController extends Controller
                     $user->password = Hash::make($new_password);
                     $user->save();
                     $encrypted_user_id = Crypt::encrypt($user_id);
-                    return redirect(route("showProfile",['user_id' => $encrypted_user_id]));
+                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
                 } else {
                     return back()->with('flashmessage', '新しいパスワードと確認用のパスワードが一致していません');
                 }

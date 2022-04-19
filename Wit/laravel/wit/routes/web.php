@@ -21,7 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home/profile/Image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
+Route::get('/home/profile/image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
 Route::get('/home/profile/{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
 Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
 Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');

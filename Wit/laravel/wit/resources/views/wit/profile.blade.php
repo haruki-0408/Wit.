@@ -13,7 +13,7 @@
                         <div class="col-10 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
                                 <div class="profile">
-                                    <img src="{{ asset($profile_image) }}" alt="" width="70" height="70"
+                                    <img src="{{ route('showProfileImage', ['user_id'=>Crypt::encrypt($user_id)] ) }}" alt="" width="70" height="70"
                                         class="rounded-circle me-2">
                                     <strong>{{ $user_name }}</strong>
                                 </div>
