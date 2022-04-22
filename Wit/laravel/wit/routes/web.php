@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Crypt;
 
+use function Ramsey\Uuid\v1;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,9 +35,10 @@ Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->n
 Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('showTag');
 Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationGet'])->name('showRoomTag');
 Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet'])->name('showRoomUser');
-Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('showRoomImage');
+//Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('showRoomImage');
 Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('showRoomChat');
-Route::get('/home/Room{id}', [App\Http\Controllers\RoomController::class,'enterRoom'])->name('enterRoom');
+Route::get('/home/Room:{id}', [App\Http\Controllers\RoomController::class,'enterRoom'])->name('enterRoom');
+Route::get('/home/Room/showRoomImage', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
 Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class,'authRoomPassword'])->name('authRoomPassword');
 Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'])->name('createRoom');
 Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');

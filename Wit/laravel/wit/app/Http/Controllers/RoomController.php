@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
@@ -79,16 +80,33 @@ class RoomController extends Controller
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message', 'roomImages:id,room_id,image'])->find($room_id);
-            
+            $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+            $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
             if ($room_info->password == null) {
-                return view('wit.room', ['room_info' => $room_info]);
+                return view('wit.room', [
+                    'room_info' => $room_info,
+                    'count_image_data' =>$count_image_data,
+                ]);
             } else {
                 return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
             }
         } else {
             return view('wit.room-error', ['room_id' => $room_id]);
         }
+    }
+
+    //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
+    public function showRoomImage($room_id ,$number)
+    {
+        $decrypted_room_id = Crypt::decrypt($room_id);
+        $room_image = RoomImage::where('room_id', $decrypted_room_id)->offset($number+1)->first('image');
+        
+            if(!Storage::exists($room_image)){
+                abort(404);
+            }
+            
+        
+        return response()->file($room_image);
     }
 
 
@@ -122,7 +140,7 @@ class RoomController extends Controller
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
-            $img = $image_file->storeAs('roomImages/RoomID:' . $room_id, 'id' . $room_id . '_' . 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
+            $img = $image_file->storeAs('roomImages/RoomID:' . $room_id, 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
             return $img;
         }
     }

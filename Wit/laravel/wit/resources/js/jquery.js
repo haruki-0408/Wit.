@@ -89,7 +89,7 @@ function addRoomPage(res) {
                 clone.querySelector('.card-title').textContent = res[i].title;
                 clone.querySelector('.enter-room').remove();
                 var a = document.createElement('a');
-                a.href = '/home/Room' + res[i].id;
+                a.href = '/home/Room:' + res[i].id;
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
                 clone.querySelector('.btn-group').appendChild(a);

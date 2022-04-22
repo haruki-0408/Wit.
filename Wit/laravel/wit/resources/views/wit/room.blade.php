@@ -219,8 +219,8 @@
                 <div class="container-fluid">
                     <div class="col-2 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
-                            <img src="{{ route('showProfileImage', ['user_id'=>Crypt::encrypt($room_info->user->id)] ) }}" alt="" width="50px" height="50px"
-                                class="rounded-circle m-1">
+                            <img src="{{ route('showProfileImage', ['user_id' => Crypt::encrypt($room_info->user->id)]) }}"
+                                alt="" width="50px" height="50px" class="rounded-circle m-1">
                             <strong class="d-flex align-items-center">{{ $room_info->user->name }}</strong>
                         </div>
                     </div>
@@ -293,36 +293,42 @@
                                 class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center "
                                 data-bs-interval="false">
                                 <div class="carousel-indicators">
-                                    @if (count($room_info->roomImages) > 1)
-                                        @foreach ($room_info->roomImages as $roomImage)
-                                            @if ($loop->first)
+                                    @if ($count_image_data > 1)
+                                        @for ($i = 0; $i < $count_image_data; $i++)
+                                            @if ($i == 0)
                                                 <button type="button" data-bs-target="#carouselIndicators"
-                                                    data-bs-slide-to="{{ $loop->index }}" class="active"
+                                                    data-bs-slide-to="{{ $i }}" class="active"
                                                     aria-current="true"
-                                                    aria-label="image {{ $loop->index }}"></button>
+                                                    aria-label="image {{ $i }}"></button>
                                             @else
                                                 <button type="button" data-bs-target="#carouselIndicators"
-                                                    data-bs-slide-to="{{ $loop->index }}"
-                                                    aria-label="image {{ $loop->index }}"></button>
+                                                    data-bs-slide-to="{{ $i }}"
+                                                    aria-label="image {{ $i }}"></button>
                                             @endif
-                                        @endforeach
+                                        @endfor
                                     @endif
                                 </div>
 
                                 <div class="carousel-inner  h-100 w-100">
-                                    @foreach ($room_info->roomImages as $roomImage)
-                                        @if ($loop->first)
+                                    @for ($i = 0; $i < $count_image_data; $i++)
+                                        @if ($i == 0)
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item active">
-                                                <img src=" {{ url($roomImage->image) }}" alt="" style=""
-                                                    class="image-fluid">
+                                                <img src=" {{ route('showRoomImage', [
+                                                    'room_id' => Crypt::encrypt($room_info->id),
+                                                    'number' => $i,
+                                                ]) }}"
+                                                    alt="" style="" class="image-fluid">
                                             </div>
                                         @else
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                                <img src=" {{ url($roomImage->image) }}" alt="" style=""
-                                                    class="image-fluid">
+                                                <img src=" {{ route('showRoomImage', [
+                                                    'room_id' => Crypt::encrypt($room_info->id),
+                                                    'number' => $i,
+                                                ]) }}"
+                                                    alt="" style="" class=" image-fluid">
                                             </div>
                                         @endif
-                                    @endforeach
+                                    @endfor
                                 </div>
 
                                 @if (count($room_info->roomImages) > 1)
