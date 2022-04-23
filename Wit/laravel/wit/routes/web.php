@@ -38,11 +38,11 @@ Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet
 //Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('showRoomImage');
 Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('showRoomChat');
 Route::get('/home/Room:{id}', [App\Http\Controllers\RoomController::class,'enterRoom'])->name('enterRoom');
-Route::get('/home/Room/showRoomImage', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
+Route::get('/home/Room:{room_id}/showRoomImage:{number}', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
 Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class,'authRoomPassword'])->name('authRoomPassword');
 Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'])->name('createRoom');
 Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');
-Route::get('/getRoomInfo{room_id}',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->name('getRoomInfo');
-Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->name('getFirstRoomInfo');
+Route::get('/getRoomInfo{room_id}',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->middleware('auth')->name('getRoomInfo');
+Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->middleware('auth')->name('getFirstRoomInfo');
 
 

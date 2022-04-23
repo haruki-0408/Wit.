@@ -314,7 +314,7 @@
                                         @if ($i == 0)
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item active">
                                                 <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => Crypt::encrypt($room_info->id),
+                                                    'room_id' => $room_info->id,
                                                     'number' => $i,
                                                 ]) }}"
                                                     alt="" style="" class="image-fluid">
@@ -322,7 +322,7 @@
                                         @else
                                             <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
                                                 <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => Crypt::encrypt($room_info->id),
+                                                    'room_id' => $room_info->id,
                                                     'number' => $i,
                                                 ]) }}"
                                                     alt="" style="" class=" image-fluid">
@@ -331,7 +331,7 @@
                                     @endfor
                                 </div>
 
-                                @if (count($room_info->roomImages) > 1)
+                                @if ($count_image_data > 1)
                                     <button class="carousel-control-prev" type="button"
                                         data-bs-target="#carouselIndicators" data-bs-slide="prev">
                                         <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"

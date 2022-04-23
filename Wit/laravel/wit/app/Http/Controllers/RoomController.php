@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
+
     public function index()
     {
         $items = Room::all();
@@ -66,15 +67,23 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user', 'roomTags', 'roomChat', 'roomImages'])->find($room_id);
-
-                return view('wit.room', ['room_info' => $room_info]);
+                $room_info = Room::with(['user', 'roomTags', 'roomChat'])->find($room_id);
+                $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+                session()->put('auth_room_id', $room_id);
+                return view('wit.room', [
+                    'room_info' => $room_info,
+                    'count_image_data' => $count_image_data,
+                ]);
             } else {
                 return back()->with('flashmessage', 'パスワードが違います');
             }
         } else {
             return back()->with('flashmessage', 'パスワードが不正入力されています');
         }
+    }
+
+    public function enterFirstRoom($room_id)
+    {
     }
 
     public function enterRoom($room_id)
@@ -85,7 +94,7 @@ class RoomController extends Controller
             if ($room_info->password == null) {
                 return view('wit.room', [
                     'room_info' => $room_info,
-                    'count_image_data' =>$count_image_data,
+                    'count_image_data' => $count_image_data,
                 ]);
             } else {
                 return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
@@ -96,17 +105,32 @@ class RoomController extends Controller
     }
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
-    public function showRoomImage($room_id ,$number)
+    public function showRoomImage($room_id, $number)
     {
-        $decrypted_room_id = Crypt::decrypt($room_id);
-        $room_image = RoomImage::where('room_id', $decrypted_room_id)->offset($number+1)->first('image');
+        $password = Room::find($room_id)->only("password");
         
-            if(!Storage::exists($room_image)){
+        if (is_null($password)) {
+            $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
+            
+            if (!Storage::exists($room_image->image)) {
                 abort(404);
             }
+
+            return response()->file(Storage::path($room_image->image));
             
-        
-        return response()->file($room_image);
+        } else {
+            if (session()->get('auth_room_id') == $room_id) {
+                $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
+
+                if (!Storage::exists($room_image->image)) {
+                    abort(404);
+                }
+
+                return response()->file(Storage::path($room_image->image));
+            } else {
+                abort(404);
+            }
+        }
     }
 
 
