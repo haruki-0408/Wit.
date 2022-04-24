@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
+use function PHPUnit\Framework\isEmpty;
+
 class RoomController extends Controller
 {
 
@@ -67,7 +69,7 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user', 'roomTags', 'roomChat'])->find($room_id);
+                $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
                 session()->put('auth_room_id', $room_id);
                 return view('wit.room', [
@@ -82,15 +84,12 @@ class RoomController extends Controller
         }
     }
 
-    public function enterFirstRoom($room_id)
-    {
-    }
-
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+            
             if ($room_info->password == null) {
                 return view('wit.room', [
                     'room_info' => $room_info,
@@ -107,9 +106,18 @@ class RoomController extends Controller
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $password = Room::find($room_id)->only("password");
+        $room = Room::find($room_id)->only("password");
+
+        if (is_null($room['password'])) {
         
-        if (is_null($password)) {
+            $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
+
+            if (!Storage::exists($room_image->image)) {
+                abort(404);
+            }
+
+            return response()->file(Storage::path($room_image->image));
+        } else if (session()->get('auth_room_id') == $room_id) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
             
             if (!Storage::exists($room_image->image)) {
@@ -117,19 +125,8 @@ class RoomController extends Controller
             }
 
             return response()->file(Storage::path($room_image->image));
-            
         } else {
-            if (session()->get('auth_room_id') == $room_id) {
-                $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
-
-                if (!Storage::exists($room_image->image)) {
-                    abort(404);
-                }
-
-                return response()->file(Storage::path($room_image->image));
-            } else {
-                abort(404);
-            }
+            abort(404);
         }
     }
 
