@@ -33,6 +33,7 @@ class UserController extends Controller
             'user_id' => $decrypted_user_id,
             'profile_message' => $user->profile_message,
             'user_name' => $user->name,
+            'profile_image' =>$user->profile_image,
         ];
         return view('wit.profile', $user_data);
     }
@@ -105,6 +106,7 @@ class UserController extends Controller
 
         if (isset($request->edit_image)) {
             $img = $this->storeImage($request->edit_image);
+            //$crypt_img = Crypt::encrypt($img);
             $form += array('profile_image' => $img);
         };
 

@@ -29,11 +29,11 @@ class RoomController extends Controller
 
     public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
-        $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
+        $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
         for ($i = 0; $i < 5; $i++) {
 
             $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
-            $rooms[$i]->user->id = $rooms[$i]->user_id;
+            //$rooms[$i]->user->id = $rooms[$i]->user_id;
 
 
             if (isset($rooms[$i]->password)) {
@@ -46,7 +46,7 @@ class RoomController extends Controller
     public function getRoomInfo($room_id) //スクロール時のルーム取得
     {
         if (isset($room_id)) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
+            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
             for ($i = 0; $i < 5; $i++) {
                 $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
