@@ -10,7 +10,7 @@
                 @csrf
                 <div class="card-body p-1">
                     <div id="parent-image" class="text-center">
-                        <img id="image" src="{{ route('showProfileImage', ['user_id'=>Crypt::encrypt(Auth::id())] ) }}"
+                        <img id="image" src="{{ asset(Auth::user()->profile_image) }}"
                             style="width:100;height:100; position:relative;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
                     </div>

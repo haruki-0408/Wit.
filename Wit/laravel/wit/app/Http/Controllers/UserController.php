@@ -27,15 +27,20 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        $decrypted_user_id = Crypt::decrypt($user_id);
-        $user = User::find($decrypted_user_id);
-        $user_data = [
-            'user_id' => $decrypted_user_id,
-            'profile_message' => $user->profile_message,
-            'user_name' => $user->name,
-            'profile_image' =>$user->profile_image,
-        ];
-        return view('wit.profile', $user_data);
+        if (Crypt::decrypt($user_id) == false){
+            $decrypted_user_id = Crypt::decrypt($user_id);
+            $user = User::find($decrypted_user_id);
+            $user_data = [
+                'user_id' => $decrypted_user_id,
+                'profile_message' => $user->profile_message,
+                'user_name' => $user->name,
+                'profile_image' => $user->profile_image,
+            ];
+            return view('wit.profile', $user_data);
+        } else {
+            
+            abort(404);
+        }
     }
 
     public function settings($query)
@@ -64,6 +69,7 @@ class UserController extends Controller
         }
     }
 
+    /* 応答が遅いのでやめた
     public function showProfileImage($user_id)
     {
         $decrypted_user_id = Crypt::decrypt($user_id);
@@ -77,6 +83,7 @@ class UserController extends Controller
 
         return response()->file(Storage::path($user_image_path));
     }
+    */
 
 
     public function storeImage($image_file)

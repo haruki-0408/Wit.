@@ -29,11 +29,25 @@ class RoomController extends Controller
 
     public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
-        $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(5)->get();
+        $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag:id,name,number'])->orderBy('id', 'desc')->take(5)->get();
         for ($i = 0; $i < 5; $i++) {
+            /*if (isset($rooms[$i]->password)) {
+               $room_data[$i] = [
+                   'room_id' => $rooms[$i]->id,
+                   'room_title' => $rooms[$i]->title,
+                   'room_description' => $rooms[$i]->description,
+                   'room_passwored' => '7891',
+                   'user_id' => Crypt::encrypt($rooms[$i]->user_id),
+                   'user_name' => $rooms[$i]->user->name,
+                   'user_image' => $rooms[$i]->user->profile_image,
+               ]
+                for($j = 0; $j < count($rooms[$i]->room_tag); $j++){
+                    //
+                }
 
+
+            }*/
             $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
-            //$rooms[$i]->user->id = $rooms[$i]->user_id;
 
 
             if (isset($rooms[$i]->password)) {
@@ -50,7 +64,6 @@ class RoomController extends Controller
             //roomTags.tag でリレーションのリレーション先まで取得できた
             for ($i = 0; $i < 5; $i++) {
                 $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
-                $rooms[$i]->user->id = $rooms[$i]->user_id;
 
                 if (isset($rooms[$i]->password)) {
                     $rooms[$i]->password = '7891';
@@ -69,7 +82,7 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+                $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
                 session()->put('auth_room_id', $room_id);
                 return view('wit.room', [
@@ -87,7 +100,7 @@ class RoomController extends Controller
     public function enterRoom($room_id)
     {
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+            $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
             
             if ($room_info->password == null) {

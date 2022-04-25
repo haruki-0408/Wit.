@@ -219,7 +219,7 @@
                 <div class="container-fluid">
                     <div class="col-2 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
-                            <img src="{{ route('showProfileImage', ['user_id' => Crypt::encrypt($room_info->user->id)]) }}"
+                            <img src="{{ asset( $room_info->user->profile_image ) }}"
                                 alt="" width="50px" height="50px" class="rounded-circle m-1">
                             <strong class="d-flex align-items-center">{{ $room_info->user->name }}</strong>
                         </div>
