@@ -27,18 +27,21 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        if (Crypt::decrypt($user_id) == false){
+        if (Crypt::decrypt($user_id) == true) {
             $decrypted_user_id = Crypt::decrypt($user_id);
-            $user = User::find($decrypted_user_id);
-            $user_data = [
-                'user_id' => $decrypted_user_id,
-                'profile_message' => $user->profile_message,
-                'user_name' => $user->name,
-                'profile_image' => $user->profile_image,
-            ];
-            return view('wit.profile', $user_data);
+            if (User::find($decrypted_user_id)->exists()) {
+                $user = User::find($decrypted_user_id);
+                $user_data = [
+                    'user_id' => $decrypted_user_id,
+                    'profile_message' => $user->profile_message,
+                    'user_name' => $user->name,
+                    'profile_image' => $user->profile_image,
+                ];
+                return view('wit.profile', $user_data);
+            } else {
+                abort(404);
+            }
         } else {
-            
             abort(404);
         }
     }

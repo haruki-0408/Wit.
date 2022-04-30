@@ -102,7 +102,7 @@ class RoomController extends Controller
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-            
+
             if ($room_info->password == null) {
                 return view('wit.room', [
                     'room_info' => $room_info,
@@ -122,21 +122,26 @@ class RoomController extends Controller
         $room = Room::find($room_id)->only("password");
 
         if (is_null($room['password'])) {
-        
+
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
-            if (!Storage::exists($room_image->image)) {
+            if (is_null($room_image)) {
+                abort(404);
+            } elseif (Storage::exists($room_image->image)) {
+                return response()->file(Storage::path($room_image->image));
+            } else{
                 abort(404);
             }
-
-            return response()->file(Storage::path($room_image->image));
         } else if (session()->get('auth_room_id') == $room_id) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
-            
-            if (!Storage::exists($room_image->image)) {
+
+            if (is_null($room_image)) {
+                abort(404);
+            } elseif (Storage::exists($room_image->image)) {
+                return response()->file(Storage::path($room_image->image));
+            } else{
                 abort(404);
             }
-
             return response()->file(Storage::path($room_image->image));
         } else {
             abort(404);
