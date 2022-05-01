@@ -15,7 +15,7 @@ class CreateSessionsTable extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->uuid('user_id')->foreignId('user_id')->references('id')->on('users')->nullable()->index();
+            $table->string('user_id')->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->text('payload');

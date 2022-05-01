@@ -15,8 +15,8 @@ class RoomChatTable extends Migration
     {
         Schema::create('room_chat', function (Blueprint $table) {
             $table->id();
-            $table->uuid('room_id')->foreignId('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
-            $table->uuid('user_id')->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignUuid('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('message'); 
             $table->string('postfile')->nullable()->comment('投稿ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();

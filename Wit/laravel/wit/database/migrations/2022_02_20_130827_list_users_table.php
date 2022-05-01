@@ -15,8 +15,8 @@ class ListUsersTable extends Migration
     {
         Schema::create('list_users', function (Blueprint $table) {
             $table->id();
-            $table->uuid('user_id')->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
-            $table->uuid('favorite_user_id')->foreignId('favorite_user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignUuid('favorite_user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->dateTime('created_at')->useCurrent();
         });
     }

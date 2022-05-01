@@ -15,7 +15,7 @@ class RoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->char('id',26)->primary(); //RoomのIDだけはULID
-            $table->uuid('user_id')->foreignId('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
+            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('title', 30);
             $table->string('description', 400);
             $table->string('password')->nullable()->default(null)->comment('private用のパスワード');

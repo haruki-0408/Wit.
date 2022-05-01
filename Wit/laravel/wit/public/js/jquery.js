@@ -10934,7 +10934,7 @@ $(function () {
     $.ajax({
       type: "get",
       //HTTP通信の種類
-      url: '/getFirstRoomInfo',
+      url: '/getRoomInfo',
       //通信したいURL
       dataType: 'json'
     }) //通信が成功したとき
@@ -11047,13 +11047,21 @@ function addRoomPage(res) {
 
       document.getElementById('Rooms').appendChild(clone);
     }
-  }
 
+    window.addEventListener('DOMContentLoaded', function () {
+      removeMoreGetButton();
+    });
+  }
+}
+
+function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
 
   if (lastli === '1') {
-    document.getElementById('moreGetButton').remove();
+    if (document.getElementById('moreGetButton')) {
+      document.getElementById('moreGetButton').remove();
+    }
   }
 }
 

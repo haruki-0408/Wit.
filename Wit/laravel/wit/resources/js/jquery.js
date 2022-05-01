@@ -4,7 +4,7 @@ $(function () {
         // ページ読み込み時に実行したい処理
         $.ajax({
             type: "get", //HTTP通信の種類
-            url: '/getFirstRoomInfo', //通信したいURL
+            url: '/getRoomInfo', //通信したいURL
             dataType: 'json'
         })
             //通信が成功したとき
@@ -57,24 +57,24 @@ $(function () {
 });
 */
 
-$(document).on('click', '#moreGetButton', function(){
-        var last = document.getElementById('Rooms');
-        var lastli = last.lastElementChild.getAttribute('id');
+$(document).on('click', '#moreGetButton', function () {
+    var last = document.getElementById('Rooms');
+    var lastli = last.lastElementChild.getAttribute('id');
 
-        $.ajax({
-            type: "get", //HTTP通信の種類
-            url: '/getRoomInfo' + lastli, //通信したいURL
-            dataType: 'json',
+    $.ajax({
+        type: "get", //HTTP通信の種類
+        url: '/getRoomInfo' + lastli, //通信したいURL
+        dataType: 'json',
+    })
+        //通信が成功したとき
+        .done((res) => {
+            //resStringfy = JSON.stringify(res);
+            addRoomPage(res);
         })
-            //通信が成功したとき
-            .done((res) => {
-                //resStringfy = JSON.stringify(res);
-                addRoomPage(res); 
-            })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
-            })
+        //通信が失敗したとき
+        .fail((error) => {
+            console.log(error.statusText)
+        })
 
 });
 
@@ -96,7 +96,7 @@ function addRoomPage(res) {
             } else {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
             }
-            clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id ;
+            clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').textContent = res[i].description;
@@ -120,21 +120,27 @@ function addRoomPage(res) {
             }
             document.getElementById('Rooms').appendChild(clone);
         }
-
+        window.addEventListener('DOMContentLoaded', function () {
+            removeMoreGetButton();
+        })
     }
 
+}
+
+function removeMoreGetButton() {
     var last = document.getElementById('Rooms');
     var lastli = last.lastElementChild.getAttribute('id');
-    if(lastli === '1'){
-        document.getElementById('moreGetButton').remove();
+    if (lastli === '1') {
+        if (document.getElementById('moreGetButton')) {
+            document.getElementById('moreGetButton').remove();
+        }
     }
-
 }
 
 
 function moreGetButton() {
     var moreget = document.createElement('div');
-    moreget.setAttribute('id','moreGetButton')
+    moreget.setAttribute('id', 'moreGetButton')
     moreget.className = "btn d-flex justify-content-center m-3"
     moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
     document.getElementById('Room-content').appendChild(moreget);

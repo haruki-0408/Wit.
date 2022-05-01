@@ -27,48 +27,55 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
     }
 
-    public function getFirstRoomInfo() //ページ読み込み時のルーム取得
+    /* public function getFirstRoomInfo() //ページ読み込み時のルーム取得
     {
         $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag:id,name,number'])->orderBy('id', 'desc')->take(5)->get();
-        for ($i = 0; $i < 5; $i++) {
-            /*if (isset($rooms[$i]->password)) {
-               $room_data[$i] = [
-                   'room_id' => $rooms[$i]->id,
-                   'room_title' => $rooms[$i]->title,
-                   'room_description' => $rooms[$i]->description,
-                   'room_passwored' => '7891',
-                   'user_id' => Crypt::encrypt($rooms[$i]->user_id),
-                   'user_name' => $rooms[$i]->user->name,
-                   'user_image' => $rooms[$i]->user->profile_image,
-               ]
-                for($j = 0; $j < count($rooms[$i]->room_tag); $j++){
-                    //
-                }
-
-
-            }*/
-            $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
-
-
-            if (isset($rooms[$i]->password)) {
-                $rooms[$i]->password = '7891';
-            }
-        }
-        return $rooms;
-    }
-
-    public function getRoomInfo($room_id) //スクロール時のルーム取得
-    {
-        if (isset($room_id)) {
-            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(5)->get();
-            //roomTags.tag でリレーションのリレーション先まで取得できた
-            for ($i = 0; $i < 5; $i++) {
+        if (count($rooms) < 1) {
+        } else {
+            for ($i = 0; $i < count($rooms); $i++) {
                 $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
 
                 if (isset($rooms[$i]->password)) {
                     $rooms[$i]->password = '7891';
                 }
             }
+        }
+        return $rooms;
+    }
+    */
+
+    public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
+    {
+        if ($room_id == null) {
+            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+            //roomTags.tag でリレーションのリレーション先まで取得できた
+            foreach ($rooms as $room) {
+                if($room == $rooms->last()){
+                    $room->id = 1;
+                }
+                $room->user_id = Crypt::encrypt($room->user_id);
+
+                if (isset($room->password)) {
+                    $room->password = '7891';
+                }
+            }
+
+            return $rooms;
+
+        } else if (isset($room_id)) {
+            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+            //roomTags.tag でリレーションのリレーション先まで取得できた
+            foreach ($rooms as $room) {
+                if($room == $rooms->last()){
+                    $room->id = 1;
+                }
+                $room->user_id = Crypt::encrypt($room->user_id);
+
+                if (isset($room->password)) {
+                    $room->password = '7891';
+                }
+            }
+
 
             return $rooms;
         }
@@ -129,7 +136,7 @@ class RoomController extends Controller
                 abort(404);
             } elseif (Storage::exists($room_image->image)) {
                 return response()->file(Storage::path($room_image->image));
-            } else{
+            } else {
                 abort(404);
             }
         } else if (session()->get('auth_room_id') == $room_id) {
@@ -139,7 +146,7 @@ class RoomController extends Controller
                 abort(404);
             } elseif (Storage::exists($room_image->image)) {
                 return response()->file(Storage::path($room_image->image));
-            } else{
+            } else {
                 abort(404);
             }
             return response()->file(Storage::path($room_image->image));
