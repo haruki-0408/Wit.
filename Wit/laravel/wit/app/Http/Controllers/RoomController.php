@@ -46,36 +46,41 @@ class RoomController extends Controller
 
     public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
+        $last_room = Room::orderBy('id', 'asc')->first();
+
         if ($room_id == null) {
             $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
             foreach ($rooms as $room) {
-                if($room == $rooms->last()){
-                    $room->id = 1;
+                if ($room == $rooms->last() && $room->id == $last_room->id) {
+                    $room->id = '01g2f34545seelfe54dhr6fi3f7';
                 }
                 $room->user_id = Crypt::encrypt($room->user_id);
 
                 if (isset($room->password)) {
-                    $room->password = '7891';
+                    $room->password = 'yes';
                 }
             }
 
             return $rooms;
-
         } else if (isset($room_id)) {
-            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
-            //roomTags.tag でリレーションのリレーション先まで取得できた
-            foreach ($rooms as $room) {
-                if($room == $rooms->last()){
-                    $room->id = 1;
-                }
-                $room->user_id = Crypt::encrypt($room->user_id);
+            if ($room_id != '01g2f34545seelfe54dhr6fi3f7') {
+                $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+                //roomTags.tag でリレーションのリレーション先まで取得できた
+                foreach ($rooms as $room) {
+                    if ($room == $rooms->last() && $room->id == $last_room->id) {
+                        $room->id = '01g2f34545seelfe54dhr6fi3f7';
+                    }
 
-                if (isset($room->password)) {
-                    $room->password = '7891';
+                    $room->user_id = Crypt::encrypt($room->user_id);
+
+                    if (isset($room->password)) {
+                        $room->password = 'yes';
+                    }
                 }
+            }else{
+                abort(404);
             }
-
 
             return $rooms;
         }
@@ -109,8 +114,13 @@ class RoomController extends Controller
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-
+            
             if ($room_info->password == null) {
+                return view('wit.room', [
+                    'room_info' => $room_info,
+                    'count_image_data' => $count_image_data,
+                ]);
+            } else if ((session()->get('auth_room_id') == $room_id)) {
                 return view('wit.room', [
                     'room_info' => $room_info,
                     'count_image_data' => $count_image_data,
@@ -118,8 +128,10 @@ class RoomController extends Controller
             } else {
                 return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
             }
+            //return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
+
         } else {
-            return view('wit.room-error', ['room_id' => $room_id]);
+            return redirect('home')->with('flashmessage', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 
@@ -140,6 +152,7 @@ class RoomController extends Controller
                 abort(404);
             }
         } else if (session()->get('auth_room_id') == $room_id) {
+            session()->forget('auth_room_id');
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
             if (is_null($room_image)) {
@@ -213,6 +226,10 @@ class RoomController extends Controller
             $room->password = Hash::make($request->createPass);
         };
         $room->save();
+
+        if ($request->has('createPass')) {
+            session()->put('auth_room_id', $room->id);
+        };
 
         //room_chatテーブルへ保存
         $room_chat = new RoomChat;

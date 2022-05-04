@@ -10941,7 +10941,6 @@ $(function () {
     .done(function (res) {
       //resStringfy = JSON.stringify(res);
       addRoomPage(res);
-      moreGetButton();
     }) //通信が失敗したとき
     .fail(function (error) {
       console.log(error.statusText);
@@ -10996,6 +10995,7 @@ $(document).on('click', '#moreGetButton', function () {
   .done(function (res) {
     //resStringfy = JSON.stringify(res);
     addRoomPage(res);
+    removeMoreGetButton();
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);
@@ -11027,7 +11027,7 @@ function addRoomPage(res) {
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
       clone.querySelector('.profile-image').src = res[i].user.profile_image;
       clone.querySelector('.user-name').textContent = res[i].user.name;
-      clone.querySelector('.room-description').textContent = res[i].description;
+      clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
 
       for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) {
         //ここの実装見直したい、、
@@ -11048,9 +11048,7 @@ function addRoomPage(res) {
       document.getElementById('Rooms').appendChild(clone);
     }
 
-    window.addEventListener('DOMContentLoaded', function () {
-      removeMoreGetButton();
-    });
+    moreGetButton();
   }
 }
 
@@ -11058,10 +11056,9 @@ function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
 
-  if (lastli === '1') {
-    if (document.getElementById('moreGetButton')) {
-      document.getElementById('moreGetButton').remove();
-    }
+  if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
+    var moreGetButton = document.getElementById('moreGetButton');
+    moreGetButton.remove();
   }
 }
 
@@ -11071,6 +11068,7 @@ function moreGetButton() {
   moreget.className = "btn d-flex justify-content-center m-3";
   moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
   document.getElementById('Room-content').appendChild(moreget);
+  removeMoreGetButton();
 }
 
 if (document.getElementById('roomPasswordForm')) {
@@ -11081,7 +11079,6 @@ if (document.getElementById('roomPasswordForm')) {
     var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
     var input = document.roomPass.room_id;
     input.value = room_id;
-    console.log(input.value);
     document.getElementById('Room-password').appendChild(input);
   });
 }

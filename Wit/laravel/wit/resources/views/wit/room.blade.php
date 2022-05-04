@@ -356,7 +356,7 @@
                                         <div class="message-wrapper">
                                             <p>
                                                 @foreach ($room_info->roomChat as $chat)
-                                                    {{ $chat->message }}
+                                                    {!! nl2br(e($chat->message)) !!}
                                                 @endforeach
                                             </p><br>
                                         </div>
