@@ -34,13 +34,13 @@
 
                     <div class="links pt-2">
                         <ul>
-                            <li>
+                            <li class="w-50">
                                 <a href="/" class="d-flex align-items-center link-dark ">
                                     <i style="font-size:2rem;" class="bi bi-link-45deg texrt-wrap"></i>
                                     https://wit.com
                                 </a>
                             </li>
-                            <li>
+                            <li class="w-50">
                                 <a href="https://google.com" class="d-flex align-items-center link-dark ">
                                     <i style="font-size:2rem;" class="bi bi-link-45deg"></i>
                                     https://google.com
