@@ -1,7 +1,7 @@
 <div class="footer d-md-none fixed-bottom bg-light mt-2">
     <nav class="navbar navbar-light bg-light justify-content-around">
         <a class="home link-dark footer-buttons" href="/home"><i class="rounded bi bi-house-door-fill"></i></a>
-        <a class="profile link-dark footer-buttons" href="/home/profile/{{ Auth::user()->id }}"><i class="bi bi-person-fill"></i></a>
+        <a class="profile link-dark footer-buttons" href="/home/profile/{{ Crypt::encrypt(Auth::user()->id) }}"><i class="bi bi-person-fill"></i></a>
         <div class="dropup">
             <a class="mylist dropup link-dark footer-buttons dropdown-toggle" data-bs-toggle="dropdown"
                 aria-expanded="false"" href=" #"><i class="bi bi-card-list"></i></a>

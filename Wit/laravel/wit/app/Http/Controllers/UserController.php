@@ -160,4 +160,15 @@ class UserController extends Controller
         Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
         return redirect(route('index'));
     }
+
+    protected function searchUser(Request $request)
+    {
+        if(isset($request->keyword)){
+        $user_name = $request->keyword;
+        $user = User::searchUserName($user_name)->get(['name','profile_image']);
+        return view('wit.home',$user);
+        }else{
+            abort(404);
+        }
+    }
 }

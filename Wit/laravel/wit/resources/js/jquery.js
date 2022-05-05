@@ -1,4 +1,4 @@
-$(function () {
+/*$(function () {
     if (document.getElementById('Room-content')) {
         //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
         // ページ読み込み時に実行したい処理
@@ -18,7 +18,7 @@ $(function () {
             })
 
     }
-});
+});*/
 
 
 //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
@@ -77,6 +77,20 @@ $(document).on('click', '#moreGetButton', function () {
         })
 
 });
+
+$(document).on('click', '#remove', function () {
+    addUserPage();
+});
+
+
+function addUserPage() {
+    /*res.forEach(function(user){
+        
+    })*/
+    document.getElementById('Room-content').removeChild();
+}
+
+
 
 function addRoomPage(res) {
     //res = JSON.parse(res);

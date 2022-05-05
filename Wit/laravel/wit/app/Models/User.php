@@ -98,4 +98,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Answer');
     }
+
+    //ユーザーの名前検索
+    public function scopeSearchUserName($query, $user_name)
+    {
+        return $query->where('name','like','%'.$user_name.'%');
+    }
+
 }

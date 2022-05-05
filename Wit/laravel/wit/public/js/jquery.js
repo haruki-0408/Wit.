@@ -10927,26 +10927,28 @@ var __webpack_exports__ = {};
   !*** ./resources/js/jquery.js ***!
   \********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-$(function () {
-  if (document.getElementById('Room-content')) {
-    //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
-    // ページ読み込み時に実行したい処理
-    $.ajax({
-      type: "get",
-      //HTTP通信の種類
-      url: '/getRoomInfo',
-      //通信したいURL
-      dataType: 'json'
-    }) //通信が成功したとき
-    .done(function (res) {
-      //resStringfy = JSON.stringify(res);
-      addRoomPage(res);
-    }) //通信が失敗したとき
-    .fail(function (error) {
-      console.log(error.statusText);
-    });
-  }
-}); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
+/*$(function () {
+    if (document.getElementById('Room-content')) {
+        //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
+        // ページ読み込み時に実行したい処理
+        $.ajax({
+            type: "get", //HTTP通信の種類
+            url: '/getRoomInfo', //通信したいURL
+            dataType: 'json'
+        })
+            //通信が成功したとき
+            .done((res) => {
+                //resStringfy = JSON.stringify(res);
+                addRoomPage(res);
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error.statusText)
+            })
+
+    }
+});*/
+//当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 
 /*$("#Room-content").on('scroll', function () {　　　　　
     var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
@@ -10981,7 +10983,6 @@ $(function () {
 
 });
 */
-
 $(document).on('click', '#moreGetButton', function () {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
@@ -11001,6 +11002,16 @@ $(document).on('click', '#moreGetButton', function () {
     console.log(error.statusText);
   });
 });
+$(document).on('click', '#remove', function () {
+  addUserPage();
+});
+
+function addUserPage() {
+  /*res.forEach(function(user){
+      
+  })*/
+  document.getElementById('Room-content').removeChild();
+}
 
 function addRoomPage(res) {
   //res = JSON.parse(res);
