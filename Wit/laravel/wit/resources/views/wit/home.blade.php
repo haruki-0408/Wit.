@@ -1,78 +1,88 @@
 @extends('layouts.app')
 
 @section('home-only')
-    <form action="/home/search" method="post" class="m-0 d-flex align-items-center mx-2">
-        @csrf
-        <input name="keyword" class="form-control mx-1" type="text">
-        <div class="btn-group">
-            <button id="remove" class="border-0 bg-light" type="submit"> <i class="btn btn-primary bi bi-search"></i></button>
+    <input id="search-keyword" class="form-control mx-1" type="text">
+    <div class="btn-group">
+        <button id="search-button" class="border-0 bg-light" type="submit"> <i
+                class="btn btn-primary bi bi-search"></i></button>
 
-            <button class="border-0 bg-light dsropdown-toggle" type="button" data-bs-toggle="dropdown"><i
-                    class="btn btn-primary bi bi-filter-square"></i></button>
-            <ul class="dropdown-menu p-2 bg-light ">
-                <table width=200>
-                    <tr>
-                        <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioUser"></th>
-                        <th class="form-check-label" for="flexRadioUser">
+        <button class="border-0 bg-light dsropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i
+                class="btn btn-primary bi bi-filter-square"></i></button>
+        <ul class="dropdown-menu p-2 bg-light" aria-labelledby="dropdown">
+            <table width=200>
+                <tr class="dropdown-item">
+                    <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioUser"></th>
+                    <th>
+                        <label class="form-check-label" for="flexRadioUser">
+                            <i class="bi bi-people-fill mx-2 "></i>
                             ユーザー検索
-                        </th>
-                    </tr>
-                    <tr>
-                        <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioRoom"
-                                checked></th>
-                        <th class="form-check-label" for="flexRadioRoom">
+                        </label>
+                    </th>
+                </tr>
+                <tr class="dropdown-item">
+                    <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioRoom" checked>
+                    </th>
+                    <th>
+                        <label class="form-check-label" for="flexRadioRoom">
+                            <i class="bi bi-house-fill mx-2 "></i>
                             ルーム検索
-                        </th>
-                    </tr>
-                </table>
+                        </label>
+                    </th>
+                </tr>
 
-                <div>
-                    <button type="button" class="btn btn-outline-primary">新規投稿順</button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-outline-primary">古い順</button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-outline-primary">チャット数が多い順</button>
-                </div>
-                <table width=200>
-                    <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadio1">
-                        </td>
-                        <td class="form-check-label" for="flexRadio1">
+                <td> <hr class="dropdown-divider"></td>
+
+                <tr class="dropdown-item">
+                    <td>
+                        <input class="form-check-input" type="checkbox" name="flexCheckImage" id="flexCheckImage">
+                    </td>
+                    <td>
+                        <label class="form-check-label" for="flexCheckImage">
                             画像なし
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadio2">
-                        </td>
-                        <td class="form-check-label" for="flexRadio2">
+                        </label>
+                    </td>
+                </tr>
+                <tr class="dropdown-item">
+                    <td>
+                        <input class="form-check-input" type="checkbox" name="flexCheckTag" id="flexCheckTag">
+                    </td>
+                    <td>
+                        <label class="form-check-label" for="flexCheckTag">
                             タグなし
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadio3">
-                        </td>
-                        <td class="form-check-label" for="flexRadio3">
+                        </label>
+                    </td>
+                </tr>
+                <tr class="dropdown-item">
+                    <td>
+                        <input class="form-check-input" type="checkbox" name="flexCheckPassword" id="flexCheckPassword">
+                    </td>
+                    <td>
+                        <label class="form-check-label" for="flexCheckPassword">
                             鍵あり
-                        </td>
+                        </label>
+                    </td>
 
-                    </tr>
-                    <tr>
-                        <th>
-                            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadio4">
-                        </th>
-                        <td class="form-check-label" for="flexRadio4">
+                </tr>
+                <tr class="dropdown-item">
+                    <th>
+                        <input class="form-check-input" type="checkbox" name="flexCheckAnswer" id="flexCheckAnswer">
+                    </th>
+                    <td>
+                        <label class="form-check-label" for="flexCheckAnswer">
                             回答済み
-                        </td>
-                    </tr>
-                </table>
-            </ul>
-        </div>
-    </form>
+                        </label>
+                    </td>
+                </tr>
+
+            </table>
+            <li><hr class="dropdown-divider"></li>
+            <div class="btn-group-vertical w-100">
+                <button id="new-row" type="button" class="btn btn-outline-primary">新規投稿順</button>
+                <button id="old-row" type="button" class="btn btn-outline-primary">古い順</button>
+                <button id="chat-row" type="button" class="btn btn-outline-primary">チャット数が多い順</button>
+            </div>
+        </ul>
+    </div>
 @endsection
 
 @component('wit.createRoom')
@@ -88,8 +98,6 @@
             @component('wit.left')
             @endcomponent
             @component('wit.room-content')
-                @slot('user')
-                @endslot
             @endcomponent
             @component('wit.right')
             @endcomponent

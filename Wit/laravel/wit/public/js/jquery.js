@@ -10927,28 +10927,26 @@ var __webpack_exports__ = {};
   !*** ./resources/js/jquery.js ***!
   \********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/*$(function () {
-    if (document.getElementById('Room-content')) {
-        //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
-        // ページ読み込み時に実行したい処理
-        $.ajax({
-            type: "get", //HTTP通信の種類
-            url: '/getRoomInfo', //通信したいURL
-            dataType: 'json'
-        })
-            //通信が成功したとき
-            .done((res) => {
-                //resStringfy = JSON.stringify(res);
-                addRoomPage(res);
-            })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
-            })
-
-    }
-});*/
-//当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
+$(function () {
+  if (document.getElementById('Room-content')) {
+    //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
+    // ページ読み込み時に実行したい処理
+    $.ajax({
+      type: "get",
+      //HTTP通信の種類
+      url: '/getRoomInfo',
+      //通信したいURL
+      dataType: 'json'
+    }) //通信が成功したとき
+    .done(function (res) {
+      //resStringfy = JSON.stringify(res);
+      addRoomPage(res);
+    }) //通信が失敗したとき
+    .fail(function (error) {
+      console.log(error.statusText);
+    });
+  }
+}); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 
 /*$("#Room-content").on('scroll', function () {　　　　　
     var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
@@ -10983,6 +10981,39 @@ var __webpack_exports__ = {};
 
 });
 */
+
+$(document).on('click', '#flexRadioUser', function () {
+  var flexCheckImage = document.getElementById('flexCheckImage');
+  var flexCheckTag = document.getElementById('flexCheckTag');
+  var flexCheckPassword = document.getElementById('flexCheckPassword');
+  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var newRow = document.getElementById('new-row');
+  var oldRow = document.getElementById('old-row');
+  var chatRow = document.getElementById('chat-row');
+  flexCheckImage.disabled = true;
+  flexCheckTag.disabled = true;
+  flexCheckPassword.disabled = true;
+  flexCheckAnswer.disabled = true;
+  newRow.disabled = true;
+  oldRow.disabled = true;
+  chatRow.disabled = true;
+});
+$(document).on('click', '#flexRadioRoom', function () {
+  var flexCheckImage = document.getElementById('flexCheckImage');
+  var flexCheckTag = document.getElementById('flexCheckTag');
+  var flexCheckPassword = document.getElementById('flexCheckPassword');
+  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var newRow = document.getElementById('new-row');
+  var oldRow = document.getElementById('old-row');
+  var chatRow = document.getElementById('chat-row');
+  flexCheckImage.disabled = false;
+  flexCheckTag.disabled = false;
+  flexCheckPassword.disabled = false;
+  flexCheckAnswer.disabled = false;
+  newRow.disabled = false;
+  oldRow.disabled = false;
+  chatRow.disabled = false;
+});
 $(document).on('click', '#moreGetButton', function () {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
@@ -11002,15 +11033,49 @@ $(document).on('click', '#moreGetButton', function () {
     console.log(error.statusText);
   });
 });
-$(document).on('click', '#remove', function () {
-  addUserPage();
+$(document).on('click', '#search-button', function () {
+  if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
+    $(document.getElementById("Rooms")).empty();
+    $(document.getElementById("moreGetButton")).empty();
+
+    if (document.getElementById("search-keyword").value) {
+      var keyword = document.getElementById("search-keyword").value;
+      $.ajax({
+        type: "get",
+        //HTTP通信の種類
+        url: '/home/search' + '?' + 'keyword=' + keyword,
+        //通信したいURL
+        dataType: 'json'
+      }) //通信が成功したとき
+      .done(function (res) {
+        //resStringfy = JSON.stringify(res);
+        console.log(res);
+        addUserPage(res);
+        removeMoreGetButton();
+      }) //通信が失敗したとき
+      .fail(function (error) {
+        console.log(error.statusText);
+      });
+    } else {
+      location.reload();
+    }
+  }
 });
 
-function addUserPage() {
-  /*res.forEach(function(user){
-      
-  })*/
-  document.getElementById('Room-content').removeChild();
+function addUserPage(res) {
+  if ('content' in document.createElement('template')) {
+    var template = document.getElementById('User-template');
+
+    for (var i = 0; i < Object.keys(res).length; i++) {
+      var clone = template.content.cloneNode(true); // template要素の内容を複製
+
+      console.log(res[i].profile_image);
+      clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
+      clone.querySelector('.profile-image').src = res[i].profile_image;
+      clone.querySelector('.user-name').textContent = res[i].name;
+      document.getElementById('Rooms').appendChild(clone);
+    }
+  }
 }
 
 function addRoomPage(res) {

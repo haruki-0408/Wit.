@@ -20,4 +20,12 @@ class RoomImage extends Model
     public function room(){
         return $this->belongsTo('App\Models\Room');
     }
+
+     //Roomの画像なし検索
+     public function scopeSearchNoneRoomImage($query, $room_id)
+     {
+         if (!$query->where('id', '=', $room_id)->exist()) {
+             return $query;
+         }
+     }
 }

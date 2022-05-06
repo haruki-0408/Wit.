@@ -91,4 +91,12 @@ class Room extends Model
         return $this->hasOne('App\Models\Answer');
     }
 
+   //Roomの鍵あり検索
+   public function scopeSearchRoomPassword($query)
+   {
+       if ($query->where('password', '!=', null)->exist()) {
+           return $query;
+       }
+   }
 }
+

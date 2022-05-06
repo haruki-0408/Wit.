@@ -163,12 +163,17 @@ class UserController extends Controller
 
     protected function searchUser(Request $request)
     {
-        if(isset($request->keyword)){
-        $user_name = $request->keyword;
-        $user = User::searchUserName($user_name)->get(['name','profile_image']);
-        return view('wit.home',$user);
-        }else{
-            abort(404);
+        if (isset($request->keyword)) {
+            $user_name = $request->keyword;
+            $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get(['id', 'name', 'profile_image']);
+
+            foreach ($users as $user) {
+                $user->id = Crypt::encrypt($user->id);
+            }
+            
+            return $users;
+        } else {
+            
         }
     }
 }

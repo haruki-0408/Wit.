@@ -32,4 +32,13 @@ class RoomTag extends Model
         $items = $this->with('Tag')->get();
         return $items->tag->name ;
     }
+
+    //Roomのタグなし検索
+    public function scopeSearchNoneRoomTag($query, $room_id)
+    {
+        if (!$query->where('id', '=', $room_id)->exist()) {
+            return $query;
+        }
+    }
 }
+

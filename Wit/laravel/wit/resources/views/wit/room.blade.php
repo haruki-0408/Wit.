@@ -81,7 +81,7 @@
 
 
         :-webkit-full-screen {
-            background-color: black;
+            background-color: white;
         }
 
         :-webkit-full-screen img {
