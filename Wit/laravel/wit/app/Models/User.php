@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 //uuidを導入するために変更する
 use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
+use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 
 class User extends Authenticatable
 {
@@ -101,7 +102,7 @@ class User extends Authenticatable
     //ユーザーの名前検索
     public function scopeSearchUserName($query, $user_name)
     {
-        return $query->where('name','like','%'.$user_name.'%');
+        return $query->whereRaw("name LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci",['%'.$user_name.'%']);
     }
 
 }

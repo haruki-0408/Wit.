@@ -11048,10 +11048,16 @@ $(document).on('click', '#search-button', function () {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
-        //resStringfy = JSON.stringify(res);
-        console.log(res);
-        addUserPage(res);
-        removeMoreGetButton();
+        if (res.length !== 0) {
+          console.log(res);
+          addUserPage(res);
+          removeMoreGetButton();
+        } else {
+          var noresult = document.createElement('h3');
+          noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+          noresult.textContent = 'No result';
+          document.getElementById('Rooms').appendChild(noresult);
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11069,7 +11075,6 @@ function addUserPage(res) {
     for (var i = 0; i < Object.keys(res).length; i++) {
       var clone = template.content.cloneNode(true); // template要素の内容を複製
 
-      console.log(res[i].profile_image);
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
       clone.querySelector('.profile-image').src = res[i].profile_image;
       clone.querySelector('.user-name').textContent = res[i].name;
