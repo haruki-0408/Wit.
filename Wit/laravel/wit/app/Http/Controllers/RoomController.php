@@ -10,6 +10,7 @@ use App\Models\RoomUser;
 use App\Models\RoomImage;
 use App\Models\RoomChat;
 use App\Models\RoomTag;
+use App\Models\Answer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,22 +28,32 @@ class RoomController extends Controller
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
     }
 
-    /* public function getFirstRoomInfo() //ページ読み込み時のルーム取得
+    protected function searchRoom(Request $request)
     {
-        $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag:id,name,number'])->orderBy('id', 'desc')->take(5)->get();
-        if (count($rooms) < 1) {
-        } else {
-            for ($i = 0; $i < count($rooms); $i++) {
-                $rooms[$i]->user_id = Crypt::encrypt($rooms[$i]->user_id);
 
-                if (isset($rooms[$i]->password)) {
-                    $rooms[$i]->password = '7891';
-                }
-            }
+        if (isset($request->keyword)) {
+            $rooms = Room::searchRoomName($request->keyword);
         }
-        return $rooms;
+
+        if ($request->checkImage){
+           $rooms = Room::doesntHave('roomImages')->get();
+        }
+        
+        if ($request->checkTag){
+            $rooms = Room::doesntHave('roomTags')->get();
+        }
+
+        if ($request->checkPassword){
+            $rooms = Room::searchRoomPassword()->get();
+        }
+
+        if ($request->checkAnswer){
+            $rooms = Room::has('answer')->get();
+        }
+
+        return dd($rooms);
+
     }
-    */
 
     public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
@@ -78,7 +89,7 @@ class RoomController extends Controller
                         $room->password = 'yes';
                     }
                 }
-            }else{
+            } else {
                 abort(404);
             }
 
@@ -114,7 +125,7 @@ class RoomController extends Controller
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-            
+
             if ($room_info->password == null) {
                 return view('wit.room', [
                     'room_info' => $room_info,

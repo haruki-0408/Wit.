@@ -91,12 +91,35 @@ class Room extends Model
         return $this->hasOne('App\Models\Answer');
     }
 
+    public function scopeSearchRoomName($query, $room_name)
+    {
+        return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci",['%'.$room_name.'%']);
+    }
+
    //Roomの鍵あり検索
    public function scopeSearchRoomPassword($query)
    {
-       if ($query->where('password', '!=', null)->exist()) {
-           return $query;
-       }
+       return $query->where('password','=','NULL');
    }
+
+   /*
+   //Roomのタグなし検索
+   public function scopeSearchNoneRoomTag($query)
+   {
+        return $query->dosentHave('roomTags');
+   }
+
+   //Roomの画像なし検索
+   public function scopeSearchNoneRoomImage($query)
+   {
+       return $query->dosentHave('roomImages');
+   }
+
+   //Roomの回答済み
+   public function scopeSearchRoomAnswered($query)
+   {
+       return $query->have('answer');
+   }
+   */
 }
 

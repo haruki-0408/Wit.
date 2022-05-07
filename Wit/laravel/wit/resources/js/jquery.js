@@ -120,16 +120,15 @@ $(document).on('click', '#search-button', function () {
             var keyword = document.getElementById("search-keyword").value;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/home/search' + '?' + 'keyword=' + keyword, //通信したいURL
+                url: '/home/searchUser' + '?' + 'keyword=' + keyword, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
                 .done((res) => {
                     if (res.length !== 0) {
-                        console.log(res);
                         addUserPage(res);
                         removeMoreGetButton();
-                    }else{
+                    } else {
                         const noresult = document.createElement('h3');
                         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                         noresult.textContent = 'No result';
@@ -143,6 +142,50 @@ $(document).on('click', '#search-button', function () {
         } else {
             location.reload();
         }
+    } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
+        $(document.getElementById("Rooms")).empty();
+        $(document.getElementById("moreGetButton")).empty();
+        
+        if (document.getElementById("search-keyword").value) {
+            keyword = document.getElementById("search-keyword").value;
+        }
+        const flexCheckImage = document.getElementById('flexCheckImage').checked;
+        const flexCheckTag = document.getElementById('flexCheckTag').checked;
+        const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+        const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+
+        $.ajax({
+            type: "post", //HTTP通信の種類
+            url: '/home/searchRoom',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {
+                "keyword": keyword,
+                "checkImage": flexCheckImage,
+                "checkTag": flexCheckTag,
+                "checkPassword": flexCheckPassword,
+                "checkAnswer": flexCheckAnswer,
+            },
+            dataType: 'json',
+        })
+            //通信が成功したとき
+            .done((res) => {
+                if (res.length !== 0) {
+                    console.log(res);
+                    addUserPage(res);
+                    removeMoreGetButton();
+                } else {
+                    const noresult = document.createElement('h3');
+                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                    noresult.textContent = 'No result';
+                    document.getElementById('Rooms').appendChild(noresult);
+                }
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error.statusText)
+            })
     }
 });
 

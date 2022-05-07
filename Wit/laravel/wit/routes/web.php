@@ -44,6 +44,7 @@ Route::post('/home/create', [App\Http\Controllers\RoomController::class,'create'
 Route::get('/getUser',[App\Http\Controllers\RoomController::class,'getUser'])->name('getUser');
 Route::get('/getRoomInfo{room_id?}',[App\Http\Controllers\RoomController::class,'getRoomInfo'])->middleware('auth')->name('getRoomInfo');
 //Route::get('/getFirstRoomInfo',[App\Http\Controllers\RoomController::class,'getFirstRoomInfo'])->middleware('auth')->name('getFirstRoomInfo');
-Route::get('/home/search',[App\Http\Controllers\UserController::class,'searchUser'])->middleware('auth')->name('searchUser');
+Route::get('/home/searchUser',[App\Http\Controllers\UserController::class,'searchUser'])->middleware('auth')->name('searchUser');
+Route::post('/home/searchRoom',[App\Http\Controllers\RoomController::class,'searchRoom'])->middleware('auth')->name('searchRoom');
 
 
