@@ -30,28 +30,30 @@ class RoomController extends Controller
 
     protected function searchRoom(Request $request)
     {
-
-        if (isset($request->keyword)) {
-            $rooms = Room::searchRoomName($request->keyword);
+        $query = Room::query();
+        if(isset($request->keyword)){
+            $query->searchRoomName($request->keyword);
         }
 
-        if ($request->checkImage){
-           $rooms = Room::doesntHave('roomImages')->get();
+        if($request->checkImage != 'false'){
+            $query->doesntHave('roomImages');
         }
+
+        if($request->checkTag != 'false'){
+            $query->doesntHave('roomTags');
+        }
+
+        if($request->checkPassword != 'false'){
+           $query->searchRoomPassword();
+        }
+
+        if($request->checkAnswer != 'false'){
+            $query->has('answer');
+        }
+
+        $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
         
-        if ($request->checkTag){
-            $rooms = Room::doesntHave('roomTags')->get();
-        }
-
-        if ($request->checkPassword){
-            $rooms = Room::searchRoomPassword()->get();
-        }
-
-        if ($request->checkAnswer){
-            $rooms = Room::has('answer')->get();
-        }
-
-        return dd($rooms);
+        return $rooms;
 
     }
 

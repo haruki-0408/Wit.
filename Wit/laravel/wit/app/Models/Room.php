@@ -99,7 +99,7 @@ class Room extends Model
    //Roomの鍵あり検索
    public function scopeSearchRoomPassword($query)
    {
-       return $query->where('password','=','NULL');
+       return $query->whereNotNull('password');
    }
 
    /*

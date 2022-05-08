@@ -172,8 +172,7 @@ $(document).on('click', '#search-button', function () {
             //通信が成功したとき
             .done((res) => {
                 if (res.length !== 0) {
-                    console.log(res);
-                    addUserPage(res);
+                    addRoomPage(res);
                     removeMoreGetButton();
                 } else {
                     const noresult = document.createElement('h3');
@@ -207,7 +206,6 @@ function addUserPage(res) {
     }
 
 }
-
 
 
 

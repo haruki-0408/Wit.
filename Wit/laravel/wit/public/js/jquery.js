@@ -11094,8 +11094,7 @@ $(document).on('click', '#search-button', function () {
     }) //通信が成功したとき
     .done(function (res) {
       if (res.length !== 0) {
-        console.log(res);
-        addUserPage(res);
+        addRoomPage(res);
         removeMoreGetButton();
       } else {
         var noresult = document.createElement('h3');
