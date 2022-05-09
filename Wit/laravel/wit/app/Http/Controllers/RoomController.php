@@ -30,31 +30,36 @@ class RoomController extends Controller
 
     protected function searchRoom(Request $request)
     {
+
         $query = Room::query();
-        if(isset($request->keyword)){
+        if (isset($request->keyword)) {
             $query->searchRoomName($request->keyword);
         }
 
-        if($request->checkImage != 'false'){
+        if ($request->checkImage != 'false') {
             $query->doesntHave('roomImages');
         }
 
-        if($request->checkTag != 'false'){
+        if ($request->checkTag != 'false') {
             $query->doesntHave('roomTags');
         }
 
-        if($request->checkPassword != 'false'){
-           $query->searchRoomPassword();
+        if ($request->checkPassword != 'false') {
+            $query->searchRoomPassword();
         }
 
-        if($request->checkAnswer != 'false'){
+        if ($request->checkAnswer != 'false') {
             $query->has('answer');
         }
 
-        $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
-        
-        return $rooms;
+        if (isset($request->room_id)) {
+            $room_id = $request->room_id;
 
+            $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+        } else {
+            $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+        }
+        return $rooms;
     }
 
     public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
