@@ -93,6 +93,10 @@ $(document).on('click', '#flexRadioRoom', function () {
 $(document).on('click', "[id^='moreGetButton']", function (event) {
     const last = document.getElementById('Rooms');
     const lastli = last.lastElementChild.getAttribute('id');
+    const flexCheckImage = document.getElementById('flexCheckImage').checked;
+    const flexCheckTag = document.getElementById('flexCheckTag').checked;
+    const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+    const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
 
     console.log(event.currentTarget.id);
     if (event.currentTarget.id === 'moreGetButtonSearch') {
@@ -105,7 +109,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
             },
             data: {
                 "room_id": lastli,
-                //"keyword": keyword,
                 "checkImage": flexCheckImage,
                 "checkTag": flexCheckTag,
                 "checkPassword": flexCheckPassword,
@@ -116,7 +119,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
             //通信が成功したとき
             .done((res) => {
                 if (res.length !== 0) {
-                    console.log("resあり")
                     addRoomPage(res);
                     removeMoreGetButton();
                 } else {
@@ -255,7 +257,9 @@ function addRoomPage(res) {
         for (var i = 0; i < Object.keys(res).length; i++) {
             var clone = template.content.cloneNode(true);  // template要素の内容を複製
             clone.querySelector('li').setAttribute('id', res[i].id);
-            if (res[i].password === null) {
+            if (res[i].password === 'yes') {
+                clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
+            } else {
                 clone.querySelector('.card-title').textContent = res[i].title;
                 clone.querySelector('.enter-room').remove();
                 var a = document.createElement('a');
@@ -263,8 +267,6 @@ function addRoomPage(res) {
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
                 clone.querySelector('.btn-group').appendChild(a);
-            } else {
-                clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
             }
             clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
             clone.querySelector('.profile-image').src = res[i].user.profile_image;

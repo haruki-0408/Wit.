@@ -27,6 +27,7 @@ class Tag extends Model
     ];
 
     protected $hidden = [
+        'id',
         'created_at',
     ];
 

@@ -52,6 +52,8 @@ class RoomController extends Controller
             $query->has('answer');
         }
 
+        $last_room = $query->orderBy('id','asc')->first();
+
         if (isset($request->room_id)) {
             $room_id = $request->room_id;
 
@@ -59,8 +61,24 @@ class RoomController extends Controller
         } else {
             $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
         }
+        
+        
+        foreach ($rooms as $room) {
+            if ($rooms->last() && $room->id == $last_room->id) {
+                $room->id = '01g2f34545seelfe54dhr6fi3f7';
+            }
+
+            $room->user_id = Crypt::encrypt($room->user_id);
+
+            if (isset($room->password)) {
+                $room->password = 'yes';
+            }
+
+        }
+
         return $rooms;
     }
+
 
     public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {

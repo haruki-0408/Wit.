@@ -11017,6 +11017,10 @@ $(document).on('click', '#flexRadioRoom', function () {
 $(document).on('click', "[id^='moreGetButton']", function (event) {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
+  var flexCheckImage = document.getElementById('flexCheckImage').checked;
+  var flexCheckTag = document.getElementById('flexCheckTag').checked;
+  var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+  var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
   console.log(event.currentTarget.id);
 
   if (event.currentTarget.id === 'moreGetButtonSearch') {
@@ -11029,7 +11033,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
       },
       data: {
         "room_id": lastli,
-        //"keyword": keyword,
         "checkImage": flexCheckImage,
         "checkTag": flexCheckTag,
         "checkPassword": flexCheckPassword,
@@ -11039,7 +11042,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
     }) //通信が成功したとき
     .done(function (res) {
       if (res.length !== 0) {
-        console.log("resあり");
         addRoomPage(res);
         removeMoreGetButton();
       } else {
@@ -11109,10 +11111,10 @@ $(document).on('click', '#search-button', function () {
       keyword = document.getElementById("search-keyword").value;
     }
 
-    var _flexCheckImage = document.getElementById('flexCheckImage').checked;
-    var _flexCheckTag = document.getElementById('flexCheckTag').checked;
-    var _flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-    var _flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    var flexCheckImage = document.getElementById('flexCheckImage').checked;
+    var flexCheckTag = document.getElementById('flexCheckTag').checked;
+    var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+    var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
     $.ajax({
       type: "post",
       //HTTP通信の種類
@@ -11122,10 +11124,10 @@ $(document).on('click', '#search-button', function () {
       },
       data: {
         "keyword": keyword,
-        "checkImage": _flexCheckImage,
-        "checkTag": _flexCheckTag,
-        "checkPassword": _flexCheckPassword,
-        "checkAnswer": _flexCheckAnswer
+        "checkImage": flexCheckImage,
+        "checkTag": flexCheckTag,
+        "checkPassword": flexCheckPassword,
+        "checkAnswer": flexCheckAnswer
       },
       dataType: 'json'
     }) //通信が成功したとき
@@ -11171,7 +11173,9 @@ function addRoomPage(res) {
 
       clone.querySelector('li').setAttribute('id', res[i].id);
 
-      if (res[i].password === null) {
+      if (res[i].password === 'yes') {
+        clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
+      } else {
         clone.querySelector('.card-title').textContent = res[i].title;
         clone.querySelector('.enter-room').remove();
         var a = document.createElement('a');
@@ -11179,8 +11183,6 @@ function addRoomPage(res) {
         a.className = "enter-room btn btn-outline-primary p-2";
         a.innerHTML = "<i class='bi bi-door-open'></i>";
         clone.querySelector('.btn-group').appendChild(a);
-      } else {
-        clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
       }
 
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
