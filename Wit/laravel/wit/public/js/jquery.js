@@ -11021,7 +11021,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
   var flexCheckTag = document.getElementById('flexCheckTag').checked;
   var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
   var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-  console.log(event.currentTarget.id);
 
   if (event.currentTarget.id === 'moreGetButtonSearch') {
     $.ajax({
@@ -11046,9 +11045,11 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
         removeMoreGetButton();
       } else {
         var noresult = document.createElement('h3');
+        noresult.id = 'noResult';
         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(noresult);
+        removeMoreGetButton();
       }
     }) //通信が失敗したとき
     .fail(function (error) {
@@ -11209,8 +11210,10 @@ function addRoomPage(res) {
       document.getElementById('Rooms').appendChild(clone);
     }
 
-    if (!document.getElementById('moreGetButton')) {
+    if (!document.getElementById('moreGetButton') && !document.getElementById('moreGetButtonSearch')) {
       moreGetButton();
+    } else {
+      console.log("もうすでにmoreGetButtonあるよ");
     }
   }
 }
@@ -11218,32 +11221,36 @@ function addRoomPage(res) {
 function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
+  console.log(lastli);
 
   if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
     $("[id^='moreGetButton']").remove();
+    $("[id^='moreGetButtonSearch']").remove();
   }
 }
 
 function moreGetButton() {
-  var moreget = document.createElement('div');
-  var flexCheckImage = document.getElementById('flexCheckImage').checked;
-  var flexCheckTag = document.getElementById('flexCheckTag').checked;
-  var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-  var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-  var check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
+  if (!document.getElementById('noResult')) {
+    var moreget = document.createElement('div');
+    var flexCheckImage = document.getElementById('flexCheckImage').checked;
+    var flexCheckTag = document.getElementById('flexCheckTag').checked;
+    var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+    var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    var check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
 
-  if (check.some(function (element) {
-    return element === true;
-  })) {
-    moreget.setAttribute('id', 'moreGetButtonSearch');
-  } else {
-    moreget.setAttribute('id', 'moreGetButton');
+    if (check.some(function (element) {
+      return element === true;
+    })) {
+      moreget.id = 'moreGetButtonSearch';
+    } else {
+      moreget.id = 'moreGetButton';
+    }
+
+    moreget.className = "btn d-flex justify-content-center m-3";
+    moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
+    document.getElementById('Room-content').appendChild(moreget);
+    removeMoreGetButton();
   }
-
-  moreget.className = "btn d-flex justify-content-center m-3";
-  moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
-  document.getElementById('Room-content').appendChild(moreget);
-  removeMoreGetButton();
 }
 
 if (document.getElementById('roomPasswordForm')) {

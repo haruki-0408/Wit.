@@ -32,35 +32,44 @@ class RoomController extends Controller
     {
 
         $query = Room::query();
+        $second_query = Room::query();
+        //queryを２つ用意しないとオーバーライドされてしまう
+
         if (isset($request->keyword)) {
             $query->searchRoomName($request->keyword);
+            $second_query->searchRoomName($request->keyword);
         }
 
         if ($request->checkImage != 'false') {
             $query->doesntHave('roomImages');
+            $second_query->doesntHave('roomImages');
         }
 
         if ($request->checkTag != 'false') {
             $query->doesntHave('roomTags');
+            $second_query->doesntHave('roomTags');
         }
 
         if ($request->checkPassword != 'false') {
             $query->searchRoomPassword();
+            $second_query->searchRoomPassword();
         }
 
         if ($request->checkAnswer != 'false') {
             $query->has('answer');
+            $second_query->has('answer');
         }
 
-        $last_room = $query->orderBy('id','asc')->first();
-
+        
         if (isset($request->room_id)) {
             $room_id = $request->room_id;
 
-            $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+            $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
         } else {
-            $rooms = $query->with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+            $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
         }
+        
+        $last_room = $second_query->orderBy('id','asc')->first();
         
         
         foreach ($rooms as $room) {
@@ -85,23 +94,21 @@ class RoomController extends Controller
         $last_room = Room::orderBy('id', 'asc')->first();
 
         if ($room_id == null) {
-            $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+            $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
             foreach ($rooms as $room) {
                 if ($room == $rooms->last() && $room->id == $last_room->id) {
                     $room->id = '01g2f34545seelfe54dhr6fi3f7';
                 }
                 $room->user_id = Crypt::encrypt($room->user_id);
-
+ 
                 if (isset($room->password)) {
                     $room->password = 'yes';
                 }
             }
-
-            return $rooms;
         } else if (isset($room_id)) {
             if ($room_id != '01g2f34545seelfe54dhr6fi3f7') {
-                $rooms = Room::with(['user:id,name,profile_image', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+                $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
                 foreach ($rooms as $room) {
                     if ($room == $rooms->last() && $room->id == $last_room->id) {
@@ -117,9 +124,8 @@ class RoomController extends Controller
             } else {
                 abort(404);
             }
-
-            return $rooms;
         }
+        return $rooms;
     }
 
     public function authRoomPassword(Request $request)
