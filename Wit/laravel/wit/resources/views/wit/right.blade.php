@@ -7,7 +7,11 @@
     </div>
 
     <hr>
-    @component('wit.tags')
-    @endcomponent
+    <ul class="mt-2">
+        @component('wit.tags',['trend_tags'=>$trend_tags])
+        @endcomponent
+    </ul>
+
+
     <hr>
 </div>

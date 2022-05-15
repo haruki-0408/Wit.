@@ -6,8 +6,8 @@
         <button id="search-button" class="border-0 bg-light" type="submit"> <i
                 class="btn btn-primary bi bi-search"></i></button>
 
-        <button class="border-0 bg-light dsropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i
-                class="btn btn-primary bi bi-filter-square"></i></button>
+        <button class="border-0 bg-light dsropdown-toggle" type="button" data-bs-toggle="dropdown"
+            data-bs-auto-close="outside" aria-expanded="false"><i class="btn btn-primary bi bi-filter-square"></i></button>
         <ul class="dropdown-menu p-2 bg-light" aria-labelledby="dropdown">
             <table width=200>
                 <tr class="dropdown-item">
@@ -30,7 +30,9 @@
                     </th>
                 </tr>
 
-                <td> <hr class="dropdown-divider"></td>
+                <td>
+                    <hr class="dropdown-divider">
+                </td>
 
                 <tr class="dropdown-item">
                     <td>
@@ -75,7 +77,9 @@
                 </tr>
 
             </table>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
             <div class="btn-group-vertical w-100">
                 <button id="new-row" type="button" class="btn btn-outline-primary">新規投稿順</button>
                 <button id="old-row" type="button" class="btn btn-outline-primary">古い順</button>
@@ -88,7 +92,7 @@
 @component('wit.createRoom')
 @endcomponent
 
-@component('wit.home-modals')
+@component('wit.home-modals',['trend_tags'=>$trend_tags])
 @endcomponent
 
 
@@ -99,7 +103,7 @@
             @endcomponent
             @component('wit.room-content')
             @endcomponent
-            @component('wit.right')
+            @component('wit.right',['trend_tags'=>$trend_tags])
             @endcomponent
 
         </div>

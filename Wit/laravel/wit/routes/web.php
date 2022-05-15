@@ -47,4 +47,5 @@ Route::get('/getRoomInfo{room_id?}',[App\Http\Controllers\RoomController::class,
 Route::get('/home/searchUser',[App\Http\Controllers\UserController::class,'searchUser'])->middleware('auth')->name('searchUser');
 Route::post('/home/searchRoom',[App\Http\Controllers\RoomController::class,'searchRoom'])->middleware('auth')->name('searchRoom');
 
+Route::get('/getTrendTags',[App\Http\Controllers\TagController::class,'getTrend'])->middleware('auth')->name('getTrendTags');
 

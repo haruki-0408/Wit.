@@ -19,4 +19,11 @@ class TagController extends Controller
         $items =RoomTag::with('Tag')->get();
         return view('wit.ShowDatabase.showRoomTag' ,['room_tags' =>$items]);
     }
+
+    public static function getTrend()
+    {
+        $trend_tags = Tag::orderBy('number','desc')->take(15)->get(['name','number']);
+        return $trend_tags; 
+    }
 }
+

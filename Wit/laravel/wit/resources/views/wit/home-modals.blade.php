@@ -110,7 +110,7 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
-                    @component('wit.tags')
+                    @component('wit.tags',['trend_tags'=>$trend_tags])
                     @endcomponent
                 </div>
             </div>
