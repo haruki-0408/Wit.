@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('wit.home-modals')
+    @component('wit.home-modals', ['trend_tags' => $trend_tags])
     @endcomponent
 
 
