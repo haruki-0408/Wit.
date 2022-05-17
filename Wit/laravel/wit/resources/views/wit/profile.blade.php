@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="header">
                     <div class="row align-items-center">
-                        <div class="col-10 text-start">
+                        <div class="col-9 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
                                 <div class="profile">
                                     <img src="{{ asset($profile_image) }}" alt="" width="70" height="70"
@@ -20,7 +20,7 @@
                             </a>
 
                         </div>
-                        <div class="col-2 text-end">
+                        <div class="col-3 text-end">
                             @if ($user_id == Auth::id())
                                 <button type="button" class="btn" data-bs-toggle="modal"
                                     data-bs-target="#settings"><i style="font-size:1.5rem;"

@@ -60,7 +60,7 @@ class RoomController extends Controller
             $second_query->has('answer');
         }
 
-        
+
         if (isset($request->room_id)) {
             $room_id = $request->room_id;
 
@@ -68,10 +68,10 @@ class RoomController extends Controller
         } else {
             $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
         }
-        
-        $last_room = $second_query->orderBy('id','asc')->first();
-        
-        
+
+        $last_room = $second_query->orderBy('id', 'asc')->first();
+
+
         foreach ($rooms as $room) {
             if ($rooms->last() && $room->id == $last_room->id) {
                 $room->id = '01g2f34545seelfe54dhr6fi3f7';
@@ -82,7 +82,6 @@ class RoomController extends Controller
             if (isset($room->password)) {
                 $room->password = 'yes';
             }
-
         }
 
         return $rooms;
@@ -96,33 +95,29 @@ class RoomController extends Controller
         if ($room_id == null) {
             $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
-            foreach ($rooms as $room) {
-                if ($room == $rooms->last() && $room->id == $last_room->id) {
-                    $room->id = '01g2f34545seelfe54dhr6fi3f7';
-                }
-                $room->user_id = Crypt::encrypt($room->user_id);
- 
-                if (isset($room->password)) {
-                    $room->password = 'yes';
-                }
-            }
+
         } else if (isset($room_id)) {
             if ($room_id != '01g2f34545seelfe54dhr6fi3f7') {
                 $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
-                foreach ($rooms as $room) {
-                    if ($room == $rooms->last() && $room->id == $last_room->id) {
-                        $room->id = '01g2f34545seelfe54dhr6fi3f7';
-                    }
 
-                    $room->user_id = Crypt::encrypt($room->user_id);
-
-                    if (isset($room->password)) {
-                        $room->password = 'yes';
-                    }
-                }
             } else {
                 abort(404);
+            }
+        } else {
+            abort(404);
+        }
+
+        foreach ($rooms as $room) {
+            if ($room == $rooms->last() && $room->id == $last_room->id) {
+                $room->id = '01g2f34545seelfe54dhr6fi3f7';
+            }
+
+            $room->user->id = Crypt::encrypt($room->user->id);
+            $room->user_id = Crypt::encrypt($room->user_id);
+
+            if (isset($room->password)) {
+                $room->password = 'yes';
             }
         }
         return $rooms;
@@ -292,7 +287,7 @@ class RoomController extends Controller
         }
 
         if ($request->has('tag')) {
-            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠%；　 -]+);/u', $request->tag, $matches);
+            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠%；　 .-]+);/u', $request->tag, $matches);
             foreach ($matches[1] as $match) {
                 $tag = $this->storeTag($match);
                 $room_tag = new RoomTag;

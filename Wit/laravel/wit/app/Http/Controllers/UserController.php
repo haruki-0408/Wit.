@@ -28,6 +28,7 @@ class UserController extends Controller
     public function showProfile($user_id)
     {
         if (Crypt::decrypt($user_id) == true) {
+            //this payload is invalid 問題解決してない
             $decrypted_user_id = Crypt::decrypt($user_id);
             if (User::find($decrypted_user_id)->exists()) {
                 $user = User::find($decrypted_user_id);
@@ -165,7 +166,7 @@ class UserController extends Controller
     {
         if (isset($request->keyword)) {
             $user_name = $request->keyword;
-            $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get(['id', 'name', 'profile_image']);
+            $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get();
 
             foreach ($users as $user) {
                 $user->id = Crypt::encrypt($user->id);

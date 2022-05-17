@@ -14,7 +14,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->text(20),
+            'name' => $this->faker->unique()->word(),
             'number' =>$this->faker->numberBetween(1,100),
         ];
     }

@@ -307,7 +307,7 @@ function addRoomPage(res) {
 function removeMoreGetButton() {
     var last = document.getElementById('Rooms');
     var lastli = last.lastElementChild.getAttribute('id');
-    console.log(lastli);
+   
     if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
         $("[id^='moreGetButton']").remove();
         $("[id^='moreGetButtonSearch']").remove();
