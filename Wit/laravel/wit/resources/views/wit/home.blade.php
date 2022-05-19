@@ -1,8 +1,16 @@
 @extends('layouts.app')
 
 @section('home-only')
-    <input id="search-keyword" class="form-control mx-1" type="text">
     <div class="btn-group">
+        <select id="searchType" class="form-select-sm btn-outline-primary text-center" aria-label="Default select example">
+            <option value="keyword" selected>キーワード</option>
+            <option value="id">ルームID</option>
+            <option value="tag">タグ</option>
+        </select>
+        <input id="search-keyword" class="form-control mx-1" type="text">
+    </div>
+    <div class="btn-group">
+        
         <button id="search-button" class="border-0 bg-light" type="submit"> <i
                 class="btn btn-primary bi bi-search"></i></button>
 
@@ -92,7 +100,7 @@
 @component('wit.createRoom')
 @endcomponent
 
-@component('wit.home-modals',['trend_tags'=>$trend_tags])
+@component('wit.home-modals', ['trend_tags' => $trend_tags])
 @endcomponent
 
 
@@ -103,7 +111,7 @@
             @endcomponent
             @component('wit.room-content')
             @endcomponent
-            @component('wit.right',['trend_tags'=>$trend_tags])
+            @component('wit.right', ['trend_tags' => $trend_tags])
             @endcomponent
 
         </div>

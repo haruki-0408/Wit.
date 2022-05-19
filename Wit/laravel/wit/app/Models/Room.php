@@ -9,7 +9,7 @@ use Rorecek\Ulid\HasUlid;
 
 class Room extends Model
 {
-    use HasFactory,HasUlid;
+    use HasFactory, HasUlid;
 
     //バリデーションルール
     public static $rules = [
@@ -17,7 +17,7 @@ class Room extends Model
         'description' => 'required|max:400',
     ];
 
-    public $incrimenting = false ;
+    public $incrimenting = false;
 
     protected $keyType = 'string';
 
@@ -93,33 +93,18 @@ class Room extends Model
 
     public function scopeSearchRoomName($query, $room_name)
     {
-        return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci",['%'.$room_name.'%']);
+        return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $room_name . '%'])
+                    ->orWhereRaw("description LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $room_name . '%']);
     }
 
-   //Roomの鍵あり検索
-   public function scopeSearchRoomPassword($query)
-   {
-       return $query->whereNotNull('password');
-   }
+    //Roomの鍵あり検索
+    public function scopeSearchRoomPassword($query)
+    {
+        return $query->whereNotNull('password');
+    }
 
-   /*
-   //Roomのタグなし検索
-   public function scopeSearchNoneRoomTag($query)
-   {
-        return $query->dosentHave('roomTags');
-   }
-
-   //Roomの画像なし検索
-   public function scopeSearchNoneRoomImage($query)
-   {
-       return $query->dosentHave('roomImages');
-   }
-
-   //Roomの回答済み
-   public function scopeSearchRoomAnswered($query)
-   {
-       return $query->have('answer');
-   }
-   */
+    public function scopeSearchRoomId($query,$room_id)
+    {
+        return $query->where('id' , '=' , '?' ,[$room_id]);
+    }
 }
-

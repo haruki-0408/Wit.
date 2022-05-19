@@ -10983,6 +10983,7 @@ $(function () {
 */
 
 $(document).on('click', '#flexRadioUser', function () {
+  var select = document.getElementById('searchType');
   var flexCheckImage = document.getElementById('flexCheckImage');
   var flexCheckTag = document.getElementById('flexCheckTag');
   var flexCheckPassword = document.getElementById('flexCheckPassword');
@@ -10990,6 +10991,7 @@ $(document).on('click', '#flexRadioUser', function () {
   var newRow = document.getElementById('new-row');
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
+  select.disabled = true;
   flexCheckImage.disabled = true;
   flexCheckTag.disabled = true;
   flexCheckPassword.disabled = true;
@@ -10999,6 +11001,7 @@ $(document).on('click', '#flexRadioUser', function () {
   chatRow.disabled = true;
 });
 $(document).on('click', '#flexRadioRoom', function () {
+  var select = document.getElementById('searchType');
   var flexCheckImage = document.getElementById('flexCheckImage');
   var flexCheckTag = document.getElementById('flexCheckTag');
   var flexCheckPassword = document.getElementById('flexCheckPassword');
@@ -11006,6 +11009,7 @@ $(document).on('click', '#flexRadioRoom', function () {
   var newRow = document.getElementById('new-row');
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
+  select.disabled = false;
   flexCheckImage.disabled = false;
   flexCheckTag.disabled = false;
   flexCheckPassword.disabled = false;
@@ -11112,10 +11116,12 @@ $(document).on('click', '#search-button', function () {
       keyword = document.getElementById("search-keyword").value;
     }
 
+    var select = document.getElementById('searchType').value;
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    console.log(select);
     $.ajax({
       type: "post",
       //HTTP通信の種類

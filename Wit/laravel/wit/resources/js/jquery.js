@@ -56,6 +56,7 @@ $(function () {
 */
 
 $(document).on('click', '#flexRadioUser', function () {
+    const select = document.getElementById('searchType');
     const flexCheckImage = document.getElementById('flexCheckImage');
     const flexCheckTag = document.getElementById('flexCheckTag');
     const flexCheckPassword = document.getElementById('flexCheckPassword');
@@ -63,6 +64,7 @@ $(document).on('click', '#flexRadioUser', function () {
     const newRow = document.getElementById('new-row');
     const oldRow = document.getElementById('old-row');
     const chatRow = document.getElementById('chat-row');
+    select.disabled = true;
     flexCheckImage.disabled = true;
     flexCheckTag.disabled = true;
     flexCheckPassword.disabled = true;
@@ -73,7 +75,7 @@ $(document).on('click', '#flexRadioUser', function () {
 })
 
 $(document).on('click', '#flexRadioRoom', function () {
-
+    const select = document.getElementById('searchType');
     const flexCheckImage = document.getElementById('flexCheckImage');
     const flexCheckTag = document.getElementById('flexCheckTag');
     const flexCheckPassword = document.getElementById('flexCheckPassword');
@@ -81,6 +83,7 @@ $(document).on('click', '#flexRadioRoom', function () {
     const newRow = document.getElementById('new-row');
     const oldRow = document.getElementById('old-row');
     const chatRow = document.getElementById('chat-row');
+    select.disabled = false;
     flexCheckImage.disabled = false;
     flexCheckTag.disabled = false;
     flexCheckPassword.disabled = false;
@@ -191,11 +194,13 @@ $(document).on('click', '#search-button', function () {
         if (document.getElementById("search-keyword").value) {
             keyword = document.getElementById("search-keyword").value;
         }
+        const select = document.getElementById('searchType').value;
         const flexCheckImage = document.getElementById('flexCheckImage').checked;
         const flexCheckTag = document.getElementById('flexCheckTag').checked;
         const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
         const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
 
+        console.log(select);
         $.ajax({
             type: "post", //HTTP通信の種類
             url: '/home/searchRoom',
@@ -203,6 +208,7 @@ $(document).on('click', '#search-button', function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             data: {
+                "searchType" : select,
                 "keyword": keyword,
                 "checkImage": flexCheckImage,
                 "checkTag": flexCheckTag,
