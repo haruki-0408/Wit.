@@ -21,7 +21,7 @@ class RoomTagFactory extends Factory
     {
         return [
             'room_id' => Room::factory(),
-            'tag_id'=> Tag::factory(),          
+            'tag_id'=> 'ac0df662-45ff-4053-aedf-de4515901373',          
         ];
     }
 }

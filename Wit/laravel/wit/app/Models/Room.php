@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Rorecek\Ulid\HasUlid;
+use App\Models\Tag;
+use App\Models\RoomTag;
 
 class Room extends Model
 {
@@ -94,7 +96,7 @@ class Room extends Model
     public function scopeSearchRoomName($query, $room_name)
     {
         return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $room_name . '%'])
-                    ->orWhereRaw("description LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $room_name . '%']);
+            ->orWhereRaw("description LIKE CAST( ? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $room_name . '%']);
     }
 
     //Roomの鍵あり検索
@@ -103,8 +105,16 @@ class Room extends Model
         return $query->whereNotNull('password');
     }
 
-    public function scopeSearchRoomId($query,$room_id)
+    public function scopeSearchRoomId($query, $room_id)
     {
-        return $query->where('id' , '=' , '?' ,[$room_id]);
+
+        return $query->whereRaw('id = ?', [$room_id]);
+    }
+
+    public function scopeSearchTagName($query, $tag_name)
+    {   
+        return $query->whereHas('roomTags.tag', function ($tag) use($tag_name) {
+            $tag->where('name' ,'=', $tag_name);
+        });
     }
 }

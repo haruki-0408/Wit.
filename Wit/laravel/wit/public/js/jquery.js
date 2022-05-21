@@ -10939,8 +10939,17 @@ $(function () {
       dataType: 'json'
     }) //通信が成功したとき
     .done(function (res) {
-      //resStringfy = JSON.stringify(res);
-      addRoomPage(res);
+      if (res.length !== 0) {
+        addRoomPage(res);
+        removeMoreGetButton();
+      } else {
+        var noresult = document.createElement('h3');
+        noresult.id = 'noResult';
+        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+        noresult.textContent = 'No result';
+        document.getElementById('Rooms').appendChild(noresult);
+        removeMoreGetButton();
+      }
     }) //通信が失敗したとき
     .fail(function (error) {
       console.log(error.statusText);
@@ -11225,8 +11234,10 @@ function addRoomPage(res) {
 function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
+  var count_child = last.childElementCount;
+  console.log(count_child);
 
-  if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
+  if (lastli === '01g2f34545seelfe54dhr6fi3f7' || count_child < 10) {
     $("[id^='moreGetButton']").remove();
     $("[id^='moreGetButtonSearch']").remove();
   }
@@ -11234,12 +11245,13 @@ function removeMoreGetButton() {
 
 function moreGetButton() {
   if (!document.getElementById('noResult')) {
+    var keyword = Boolean(document.getElementById('search-keyword').value);
     var moreget = document.createElement('div');
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-    var check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
+    var check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
 
     if (check.some(function (element) {
       return element === true;

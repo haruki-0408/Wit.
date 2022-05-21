@@ -9,8 +9,17 @@ $(function () {
         })
             //通信が成功したとき
             .done((res) => {
-                //resStringfy = JSON.stringify(res);
-                addRoomPage(res);
+                if (res.length !== 0) {
+                    addRoomPage(res);
+                    removeMoreGetButton();
+                } else {
+                    let noresult = document.createElement('h3');
+                    noresult.id = 'noResult'
+                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                    noresult.textContent = 'No result';
+                    document.getElementById('Rooms').appendChild(noresult);
+                    removeMoreGetButton();
+                }
             })
             //通信が失敗したとき
             .fail((error) => {
@@ -102,7 +111,6 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
     let flexCheckTag = document.getElementById('flexCheckTag').checked;
     let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-
     if (event.currentTarget.id === 'moreGetButtonSearch') {
         $.ajax({
             type: "post", //HTTP通信の種類
@@ -263,6 +271,7 @@ function addRoomPage(res) {
         let template = document.getElementById('Room-template');
         for (let i = 0; i < Object.keys(res).length; i++) {
             let clone = template.content.cloneNode(true);  // template要素の内容を複製
+
             clone.querySelector('li').setAttribute('id', res[i].id);
             if (res[i].password === 'yes') {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
@@ -311,8 +320,10 @@ function addRoomPage(res) {
 function removeMoreGetButton() {
     let last = document.getElementById('Rooms');
     let lastli = last.lastElementChild.getAttribute('id');
+    let count_child = last.childElementCount;
+    console.log(count_child);
 
-    if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
+    if (lastli === '01g2f34545seelfe54dhr6fi3f7' || count_child < 10) {
         $("[id^='moreGetButton']").remove();
         $("[id^='moreGetButtonSearch']").remove();
     }
@@ -320,12 +331,13 @@ function removeMoreGetButton() {
 
 function moreGetButton() {
     if (!(document.getElementById('noResult'))) {
+        let keyword = Boolean(document.getElementById('search-keyword').value);
         let moreget = document.createElement('div');
         let flexCheckImage = document.getElementById('flexCheckImage').checked;
         let flexCheckTag = document.getElementById('flexCheckTag').checked;
         let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
         let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-        let check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
+        let check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
         if (check.some((element) => element === true)) {
             moreget.id = 'moreGetButtonSearch';
         } else {

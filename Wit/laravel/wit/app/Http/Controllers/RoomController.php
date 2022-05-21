@@ -30,15 +30,40 @@ class RoomController extends Controller
 
     protected function searchRoom(Request $request)
     {
-
         $query = Room::query();
         $second_query = Room::query();
         //queryを２つ用意しないとオーバーライドされてしまう
 
-        if (isset($request->keyword)) {
-            $query->searchRoomName($request->keyword);
-            $second_query->searchRoomName($request->keyword);
+
+        switch ($request->searchType) {
+            case 'keyword':
+                if (isset($request->keyword)) {
+                    $query->searchRoomName($request->keyword);
+                    $second_query->searchRoomName($request->keyword);
+                }
+                break;
+
+            case 'id':
+                if (isset($request->keyword)) {
+                    $query->searchRoomId($request->keyword);
+                } else {
+                    $array = [];
+                    return $array;
+                }
+                break;
+            case 'tag':
+                if (isset($request->keyword)) {
+                    $query->searchTagName($request->keyword);
+                    $second_query->searchTagName($request->keyword);
+                    
+                } else {
+                    $array = [];
+                    return $array;
+                }
+                break;
         }
+
+
 
         if ($request->checkImage != 'false') {
             $query->doesntHave('roomImages');
@@ -77,13 +102,13 @@ class RoomController extends Controller
                 $room->id = '01g2f34545seelfe54dhr6fi3f7';
             }
 
+            $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
 
             if (isset($room->password)) {
                 $room->password = 'yes';
             }
         }
-
         return $rooms;
     }
 
