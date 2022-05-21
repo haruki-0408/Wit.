@@ -70,7 +70,7 @@ class RoomController extends Controller
         }
 
         $last_room = $second_query->orderBy('id', 'asc')->first();
-
+        //dd($query->toSql(),$second_query->toSql(),$last_room);
 
         foreach ($rooms as $room) {
             if ($rooms->last() && $room->id == $last_room->id) {

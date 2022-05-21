@@ -10949,14 +10949,14 @@ $(function () {
 }); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 
 /*$("#Room-content").on('scroll', function () {　　　　　
-    var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
+    let docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
         docSCR = $('#Room-content').scrollTop(); //一番上からスクロールされた量
     windowHeight = document.getElementById('Room-content').clientHeight //スクロールウィンドウ部分の高さ
     docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
 
     if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
-        var last = document.getElementById('Rooms');
-        var lastli = last.lastElementChild.getAttribute('id');
+        let last = document.getElementById('Rooms');
+        let lastli = last.lastElementChild.getAttribute('id');
         console.log('底の高さ:' + docBottom);
         console.log('スクロール量:' + docSCR);
         console.log('底の高さをスクロール量が超えた');
@@ -11019,6 +11019,8 @@ $(document).on('click', '#flexRadioRoom', function () {
   chatRow.disabled = false;
 });
 $(document).on('click', "[id^='moreGetButton']", function (event) {
+  var select = document.getElementById('searchType').value;
+  var keyword = document.getElementById('search-keyword').value;
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
   var flexCheckImage = document.getElementById('flexCheckImage').checked;
@@ -11035,6 +11037,8 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       data: {
+        "searchType": select,
+        "keyword": keyword,
         "room_id": lastli,
         "checkImage": flexCheckImage,
         "checkTag": flexCheckTag,
@@ -11111,17 +11115,12 @@ $(document).on('click', '#search-button', function () {
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
     $(document.getElementById("Rooms")).empty();
     $("[id^='moreGetButton']").remove();
-
-    if (document.getElementById("search-keyword").value) {
-      keyword = document.getElementById("search-keyword").value;
-    }
-
+    var _keyword = document.getElementById("search-keyword").value;
     var select = document.getElementById('searchType').value;
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-    console.log(select);
     $.ajax({
       type: "post",
       //HTTP通信の種類
@@ -11130,7 +11129,8 @@ $(document).on('click', '#search-button', function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       data: {
-        "keyword": keyword,
+        "searchType": select,
+        "keyword": _keyword,
         "checkImage": flexCheckImage,
         "checkTag": flexCheckTag,
         "checkPassword": flexCheckPassword,
@@ -11218,8 +11218,6 @@ function addRoomPage(res) {
 
     if (!document.getElementById('moreGetButton') && !document.getElementById('moreGetButtonSearch')) {
       moreGetButton();
-    } else {
-      console.log("もうすでにmoreGetButtonあるよ");
     }
   }
 }

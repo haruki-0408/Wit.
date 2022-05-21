@@ -22,14 +22,14 @@ $(function () {
 
 //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 /*$("#Room-content").on('scroll', function () {　　　　　
-    var docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
+    let docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
         docSCR = $('#Room-content').scrollTop(); //一番上からスクロールされた量
     windowHeight = document.getElementById('Room-content').clientHeight //スクロールウィンドウ部分の高さ
     docBottom = docHeight - windowHeight + 0.5; //要素全体の高さ - スクロールウィンドウに収まっている部分の高さ　= ページの底の高さ(スクロールによらず一定)
 
     if (docBottom < docSCR) { //スクロール量がページの底の高さを越えると = ページの下部までスクロールすると
-        var last = document.getElementById('Rooms');
-        var lastli = last.lastElementChild.getAttribute('id');
+        let last = document.getElementById('Rooms');
+        let lastli = last.lastElementChild.getAttribute('id');
         console.log('底の高さ:' + docBottom);
         console.log('スクロール量:' + docSCR);
         console.log('底の高さをスクロール量が超えた');
@@ -56,14 +56,14 @@ $(function () {
 */
 
 $(document).on('click', '#flexRadioUser', function () {
-    const select = document.getElementById('searchType');
-    const flexCheckImage = document.getElementById('flexCheckImage');
-    const flexCheckTag = document.getElementById('flexCheckTag');
-    const flexCheckPassword = document.getElementById('flexCheckPassword');
-    const flexCheckAnswer = document.getElementById('flexCheckAnswer');
-    const newRow = document.getElementById('new-row');
-    const oldRow = document.getElementById('old-row');
-    const chatRow = document.getElementById('chat-row');
+    let select = document.getElementById('searchType');
+    let flexCheckImage = document.getElementById('flexCheckImage');
+    let flexCheckTag = document.getElementById('flexCheckTag');
+    let flexCheckPassword = document.getElementById('flexCheckPassword');
+    let flexCheckAnswer = document.getElementById('flexCheckAnswer');
+    let newRow = document.getElementById('new-row');
+    let oldRow = document.getElementById('old-row');
+    let chatRow = document.getElementById('chat-row');
     select.disabled = true;
     flexCheckImage.disabled = true;
     flexCheckTag.disabled = true;
@@ -75,14 +75,14 @@ $(document).on('click', '#flexRadioUser', function () {
 })
 
 $(document).on('click', '#flexRadioRoom', function () {
-    const select = document.getElementById('searchType');
-    const flexCheckImage = document.getElementById('flexCheckImage');
-    const flexCheckTag = document.getElementById('flexCheckTag');
-    const flexCheckPassword = document.getElementById('flexCheckPassword');
-    const flexCheckAnswer = document.getElementById('flexCheckAnswer');
-    const newRow = document.getElementById('new-row');
-    const oldRow = document.getElementById('old-row');
-    const chatRow = document.getElementById('chat-row');
+    let select = document.getElementById('searchType');
+    let flexCheckImage = document.getElementById('flexCheckImage');
+    let flexCheckTag = document.getElementById('flexCheckTag');
+    let flexCheckPassword = document.getElementById('flexCheckPassword');
+    let flexCheckAnswer = document.getElementById('flexCheckAnswer');
+    let newRow = document.getElementById('new-row');
+    let oldRow = document.getElementById('old-row');
+    let chatRow = document.getElementById('chat-row');
     select.disabled = false;
     flexCheckImage.disabled = false;
     flexCheckTag.disabled = false;
@@ -94,15 +94,16 @@ $(document).on('click', '#flexRadioRoom', function () {
 })
 
 $(document).on('click', "[id^='moreGetButton']", function (event) {
-    const last = document.getElementById('Rooms');
-    const lastli = last.lastElementChild.getAttribute('id');
-    const flexCheckImage = document.getElementById('flexCheckImage').checked;
-    const flexCheckTag = document.getElementById('flexCheckTag').checked;
-    const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-    const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    let select = document.getElementById('searchType').value;
+    let keyword = document.getElementById('search-keyword').value;
+    let last = document.getElementById('Rooms');
+    let lastli = last.lastElementChild.getAttribute('id');
+    let flexCheckImage = document.getElementById('flexCheckImage').checked;
+    let flexCheckTag = document.getElementById('flexCheckTag').checked;
+    let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+    let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
 
     if (event.currentTarget.id === 'moreGetButtonSearch') {
-
         $.ajax({
             type: "post", //HTTP通信の種類
             url: '/home/searchRoom',
@@ -110,6 +111,8 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             data: {
+                "searchType": select,
+                "keyword": keyword,
                 "room_id": lastli,
                 "checkImage": flexCheckImage,
                 "checkTag": flexCheckTag,
@@ -124,7 +127,7 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
                     addRoomPage(res);
                     removeMoreGetButton();
                 } else {
-                    const noresult = document.createElement('h3');
+                    let noresult = document.createElement('h3');
                     noresult.id = 'noResult'
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
@@ -162,7 +165,7 @@ $(document).on('click', '#search-button', function () {
         $(document.getElementById("Rooms")).empty();
         $("[id^='moreGetButton']").remove();
         if (document.getElementById("search-keyword").value) {
-            var keyword = document.getElementById("search-keyword").value;
+            let keyword = document.getElementById("search-keyword").value;
             $.ajax({
                 type: "get", //HTTP通信の種類
                 url: '/home/searchUser' + '?' + 'keyword=' + keyword, //通信したいURL
@@ -174,7 +177,7 @@ $(document).on('click', '#search-button', function () {
                         addUserPage(res);
                         removeMoreGetButton();
                     } else {
-                        const noresult = document.createElement('h3');
+                        let noresult = document.createElement('h3');
                         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                         noresult.textContent = 'No result';
                         document.getElementById('Rooms').appendChild(noresult);
@@ -191,16 +194,13 @@ $(document).on('click', '#search-button', function () {
         $(document.getElementById("Rooms")).empty();
         $("[id^='moreGetButton']").remove();
 
-        if (document.getElementById("search-keyword").value) {
-            keyword = document.getElementById("search-keyword").value;
-        }
-        const select = document.getElementById('searchType').value;
-        const flexCheckImage = document.getElementById('flexCheckImage').checked;
-        const flexCheckTag = document.getElementById('flexCheckTag').checked;
-        const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-        const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+        let keyword = document.getElementById("search-keyword").value;
+        let select = document.getElementById('searchType').value;
+        let flexCheckImage = document.getElementById('flexCheckImage').checked;
+        let flexCheckTag = document.getElementById('flexCheckTag').checked;
+        let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+        let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
 
-        console.log(select);
         $.ajax({
             type: "post", //HTTP通信の種類
             url: '/home/searchRoom',
@@ -208,7 +208,7 @@ $(document).on('click', '#search-button', function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             data: {
-                "searchType" : select,
+                "searchType": select,
                 "keyword": keyword,
                 "checkImage": flexCheckImage,
                 "checkTag": flexCheckTag,
@@ -223,7 +223,7 @@ $(document).on('click', '#search-button', function () {
                     addRoomPage(res);
                     removeMoreGetButton();
                 } else {
-                    const noresult = document.createElement('h3');
+                    let noresult = document.createElement('h3');
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
@@ -239,10 +239,10 @@ $(document).on('click', '#search-button', function () {
 
 function addUserPage(res) {
     if ('content' in document.createElement('template')) {
-        const template = document.getElementById('User-template');
+        let template = document.getElementById('User-template');
 
-        for (var i = 0; i < Object.keys(res).length; i++) {
-            var clone = template.content.cloneNode(true);  // template要素の内容を複製
+        for (let i = 0; i < Object.keys(res).length; i++) {
+            let clone = template.content.cloneNode(true);  // template要素の内容を複製
             clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
             clone.querySelector('.profile-image').src = res[i].profile_image;
             clone.querySelector('.user-name').textContent = res[i].name;
@@ -260,16 +260,16 @@ function addUserPage(res) {
 function addRoomPage(res) {
     //res = JSON.parse(res);
     if ('content' in document.createElement('template')) {
-        const template = document.getElementById('Room-template');
-        for (var i = 0; i < Object.keys(res).length; i++) {
-            var clone = template.content.cloneNode(true);  // template要素の内容を複製
+        let template = document.getElementById('Room-template');
+        for (let i = 0; i < Object.keys(res).length; i++) {
+            let clone = template.content.cloneNode(true);  // template要素の内容を複製
             clone.querySelector('li').setAttribute('id', res[i].id);
             if (res[i].password === 'yes') {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
             } else {
                 clone.querySelector('.card-title').textContent = res[i].title;
                 clone.querySelector('.enter-room').remove();
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = '/home/Room:' + res[i].id;
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
@@ -282,14 +282,14 @@ function addRoomPage(res) {
 
 
 
-            for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) { //ここの実装見直したい、、
-                var room_tag_li = document.createElement("li");
+            for (let j = 0; j < Object.keys(res[i].room_tags).length; j++) { //ここの実装見直したい、、
+                let room_tag_li = document.createElement("li");
                 room_tag_li.setAttribute("class", "d-inline-block");
-                var room_tag_a = document.createElement("a");
+                let room_tag_a = document.createElement("a");
                 room_tag_a.setAttribute("class", "tag");
                 room_tag_a.href = "#";
                 room_tag_a.textContent = res[i].room_tags[j].tag.name;
-                var room_tag_span = document.createElement("span");
+                let room_tag_span = document.createElement("span");
                 room_tag_span.className = "number badge badge-light";
                 room_tag_span.textContent = res[i].room_tags[j].tag.number;
                 room_tag_a.appendChild(room_tag_span);
@@ -302,8 +302,6 @@ function addRoomPage(res) {
         }
         if (!(document.getElementById('moreGetButton')) && !(document.getElementById('moreGetButtonSearch'))) {
             moreGetButton();
-        } else {
-            console.log("もうすでにmoreGetButtonあるよ");
         }
 
     }
@@ -311,9 +309,9 @@ function addRoomPage(res) {
 }
 
 function removeMoreGetButton() {
-    var last = document.getElementById('Rooms');
-    var lastli = last.lastElementChild.getAttribute('id');
-   
+    let last = document.getElementById('Rooms');
+    let lastli = last.lastElementChild.getAttribute('id');
+
     if (lastli === '01g2f34545seelfe54dhr6fi3f7') {
         $("[id^='moreGetButton']").remove();
         $("[id^='moreGetButtonSearch']").remove();
@@ -322,12 +320,12 @@ function removeMoreGetButton() {
 
 function moreGetButton() {
     if (!(document.getElementById('noResult'))) {
-        const moreget = document.createElement('div');
-        const flexCheckImage = document.getElementById('flexCheckImage').checked;
-        const flexCheckTag = document.getElementById('flexCheckTag').checked;
-        const flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-        const flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-        const check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
+        let moreget = document.createElement('div');
+        let flexCheckImage = document.getElementById('flexCheckImage').checked;
+        let flexCheckTag = document.getElementById('flexCheckTag').checked;
+        let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+        let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+        let check = [flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
         if (check.some((element) => element === true)) {
             moreget.id = 'moreGetButtonSearch';
         } else {
@@ -343,11 +341,11 @@ function moreGetButton() {
 
 
 if (document.getElementById('roomPasswordForm')) {
-    var passwordForm = document.getElementById("roomPasswordForm"); //ルームパスワードを認証するとき
+    let passwordForm = document.getElementById("roomPasswordForm"); //ルームパスワードを認証するとき
     passwordForm.addEventListener('shown.bs.modal', function (event) {
-        var button = (event.relatedTarget);
-        var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
-        var input = document.roomPass.room_id;
+        let button = (event.relatedTarget);
+        let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+        let input = document.roomPass.room_id;
         input.value = room_id;
         document.getElementById('Room-password').appendChild(input);
 

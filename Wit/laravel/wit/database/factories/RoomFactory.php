@@ -24,7 +24,7 @@ class RoomFactory extends Factory
             'user_id'=>User::factory(),
             'title'=>$this->faker->text(20),
             'description'=>$this->faker->realText(400),
-            'password'=> '' ,
+            'password'=> null ,
         ];
     }
 }
