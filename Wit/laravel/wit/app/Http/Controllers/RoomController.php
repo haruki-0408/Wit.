@@ -70,7 +70,7 @@ class RoomController extends Controller
             $second_query->doesntHave('roomImages');
         }
 
-        if ($request->checkTag != 'false') {
+        if ($request->checkTag != 'false' && $request->searchType != 'tag') {
             $query->doesntHave('roomTags');
             $second_query->doesntHave('roomTags');
         }

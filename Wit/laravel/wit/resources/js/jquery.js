@@ -92,14 +92,88 @@ $(document).on('click', '#flexRadioRoom', function () {
     let newRow = document.getElementById('new-row');
     let oldRow = document.getElementById('old-row');
     let chatRow = document.getElementById('chat-row');
+
     select.disabled = false;
-    flexCheckImage.disabled = false;
-    flexCheckTag.disabled = false;
-    flexCheckPassword.disabled = false;
-    flexCheckAnswer.disabled = false;
-    newRow.disabled = false;
-    oldRow.disabled = false;
-    chatRow.disabled = false;
+    select = select.value;
+    switch (select) {
+        case 'keyword':
+            flexCheckImage.disabled = false;
+            flexCheckTag.disabled = false;
+            flexCheckPassword.disabled = false;
+            flexCheckAnswer.disabled = false;
+            newRow.disabled = false;
+            oldRow.disabled = false;
+            chatRow.disabled = false;
+
+            break;
+        case 'id':
+            flexCheckImage.disabled = true;
+            flexCheckTag.disabled = true;
+            flexCheckPassword.disabled = true;
+            flexCheckAnswer.disabled = true;
+            newRow.disabled = true;
+            oldRow.disabled = true;
+            chatRow.disabled = true;
+            break;
+        case 'tag':
+            flexCheckImage.disabled = false;
+            flexCheckTag.disabled = true;
+            flexCheckPassword.disabled = false;
+            flexCheckAnswer.disabled = false;
+            newRow.disabled = false;
+            oldRow.disabled = false;
+            chatRow.disabled = false;
+            break;
+        default:
+            location.reload();
+            break;
+    }
+})
+
+
+$(document).on('change', '#searchType', function () {
+    let select = document.getElementById('searchType').value;
+    let flexCheckImage = document.getElementById('flexCheckImage');
+    let flexCheckTag = document.getElementById('flexCheckTag');
+    let flexCheckPassword = document.getElementById('flexCheckPassword');
+    let flexCheckAnswer = document.getElementById('flexCheckAnswer');
+    let newRow = document.getElementById('new-row');
+    let oldRow = document.getElementById('old-row');
+    let chatRow = document.getElementById('chat-row');
+
+    switch (select) {
+        case 'keyword':
+            flexCheckImage.disabled = false;
+            flexCheckTag.disabled = false;
+            flexCheckPassword.disabled = false;
+            flexCheckAnswer.disabled = false;
+            newRow.disabled = false;
+            oldRow.disabled = false;
+            chatRow.disabled = false;
+
+            break;
+        case 'id':
+            flexCheckImage.disabled = true;
+            flexCheckTag.disabled = true;
+            flexCheckPassword.disabled = true;
+            flexCheckAnswer.disabled = true;
+            newRow.disabled = true;
+            oldRow.disabled = true;
+            chatRow.disabled = true;
+            break;
+        case 'tag':
+            flexCheckImage.disabled = false;
+            flexCheckTag.disabled = true;
+            flexCheckPassword.disabled = false;
+            flexCheckAnswer.disabled = false;
+            newRow.disabled = false;
+            oldRow.disabled = false;
+            chatRow.disabled = false;
+            break;
+        default:
+            location.reload();
+            break;
+    }
 })
 
 $(document).on('click', "[id^='moreGetButton']", function (event) {
@@ -321,7 +395,7 @@ function removeMoreGetButton() {
     let last = document.getElementById('Rooms');
     let lastli = last.lastElementChild.getAttribute('id');
     let count_child = last.childElementCount;
-    console.log(count_child);
+    
 
     if (lastli === '01g2f34545seelfe54dhr6fi3f7' || count_child < 10) {
         $("[id^='moreGetButton']").remove();

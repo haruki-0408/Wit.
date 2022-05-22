@@ -11019,13 +11019,89 @@ $(document).on('click', '#flexRadioRoom', function () {
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
   select.disabled = false;
-  flexCheckImage.disabled = false;
-  flexCheckTag.disabled = false;
-  flexCheckPassword.disabled = false;
-  flexCheckAnswer.disabled = false;
-  newRow.disabled = false;
-  oldRow.disabled = false;
-  chatRow.disabled = false;
+  select = select.value;
+
+  switch (select) {
+    case 'keyword':
+      flexCheckImage.disabled = false;
+      flexCheckTag.disabled = false;
+      flexCheckPassword.disabled = false;
+      flexCheckAnswer.disabled = false;
+      newRow.disabled = false;
+      oldRow.disabled = false;
+      chatRow.disabled = false;
+      break;
+
+    case 'id':
+      flexCheckImage.disabled = true;
+      flexCheckTag.disabled = true;
+      flexCheckPassword.disabled = true;
+      flexCheckAnswer.disabled = true;
+      newRow.disabled = true;
+      oldRow.disabled = true;
+      chatRow.disabled = true;
+      break;
+
+    case 'tag':
+      flexCheckImage.disabled = false;
+      flexCheckTag.disabled = true;
+      flexCheckPassword.disabled = false;
+      flexCheckAnswer.disabled = false;
+      newRow.disabled = false;
+      oldRow.disabled = false;
+      chatRow.disabled = false;
+      break;
+
+    default:
+      location.reload();
+      break;
+  }
+});
+$(document).on('change', '#searchType', function () {
+  var select = document.getElementById('searchType').value;
+  var flexCheckImage = document.getElementById('flexCheckImage');
+  var flexCheckTag = document.getElementById('flexCheckTag');
+  var flexCheckPassword = document.getElementById('flexCheckPassword');
+  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var newRow = document.getElementById('new-row');
+  var oldRow = document.getElementById('old-row');
+  var chatRow = document.getElementById('chat-row');
+
+  switch (select) {
+    case 'keyword':
+      flexCheckImage.disabled = false;
+      flexCheckTag.disabled = false;
+      flexCheckPassword.disabled = false;
+      flexCheckAnswer.disabled = false;
+      newRow.disabled = false;
+      oldRow.disabled = false;
+      chatRow.disabled = false;
+      break;
+
+    case 'id':
+      flexCheckImage.disabled = true;
+      flexCheckTag.disabled = true;
+      flexCheckPassword.disabled = true;
+      flexCheckAnswer.disabled = true;
+      newRow.disabled = true;
+      oldRow.disabled = true;
+      chatRow.disabled = true;
+      break;
+
+    case 'tag':
+      flexCheckImage.disabled = false;
+      flexCheckTag.disabled = true;
+      flexCheckPassword.disabled = false;
+      flexCheckAnswer.disabled = false;
+      newRow.disabled = false;
+      oldRow.disabled = false;
+      chatRow.disabled = false;
+      break;
+
+    default:
+      location.reload();
+      break;
+  }
 });
 $(document).on('click', "[id^='moreGetButton']", function (event) {
   var select = document.getElementById('searchType').value;
@@ -11235,7 +11311,6 @@ function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
   var count_child = last.childElementCount;
-  console.log(count_child);
 
   if (lastli === '01g2f34545seelfe54dhr6fi3f7' || count_child < 10) {
     $("[id^='moreGetButton']").remove();

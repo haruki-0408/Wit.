@@ -114,7 +114,7 @@ class Room extends Model
     public function scopeSearchTagName($query, $tag_name)
     {   
         return $query->whereHas('roomTags.tag', function ($tag) use($tag_name) {
-            $tag->where('name' ,'=', $tag_name);
+            $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_unicode_ci', [$tag_name]);
         });
     }
 }

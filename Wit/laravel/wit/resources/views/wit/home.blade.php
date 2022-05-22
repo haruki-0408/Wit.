@@ -2,7 +2,7 @@
 
 @section('home-only')
     <div class="btn-group">
-        <select id="searchType" class="form-select-sm btn-outline-primary text-center" aria-label="Default select example">
+        <select id="searchType" class="form-select-sm btn-outline-primary text-center" aria-label="searchType" >
             <option value="keyword" selected>キーワード</option>
             <option value="id">ルームID</option>
             <option value="tag">タグ</option>
