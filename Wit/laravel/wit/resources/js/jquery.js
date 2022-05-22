@@ -257,7 +257,6 @@ $(document).on('click', '#search-button', function () {
                 .done((res) => {
                     if (res.length !== 0) {
                         addUserPage(res);
-                        removeMoreGetButton();
                     } else {
                         let noresult = document.createElement('h3');
                         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
@@ -353,7 +352,11 @@ function addRoomPage(res) {
                 clone.querySelector('.card-title').textContent = res[i].title;
                 clone.querySelector('.enter-room').remove();
                 let a = document.createElement('a');
-                a.href = '/home/Room:' + res[i].id;
+                if (res[i].id.length > 26) {
+                    a.href = '/home/Room:' + res[i].id.slice(0,-1);
+                } else {
+                    a.href = '/home/Room:' + res[i].id;
+                }
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
                 clone.querySelector('.btn-group').appendChild(a);
@@ -395,7 +398,7 @@ function removeMoreGetButton() {
     let last = document.getElementById('Rooms');
     let lastli = last.lastElementChild.getAttribute('id');
     let count_child = last.childElementCount;
-    
+
 
     if (lastli.length === 27 || count_child < 10) {
         $("[id^='moreGetButton']").remove();
