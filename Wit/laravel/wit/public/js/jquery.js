@@ -11312,7 +11312,7 @@ function removeMoreGetButton() {
   var lastli = last.lastElementChild.getAttribute('id');
   var count_child = last.childElementCount;
 
-  if (lastli === '01g2f34545seelfe54dhr6fi3f7' || count_child < 10) {
+  if (lastli.length === 27 || count_child < 10) {
     $("[id^='moreGetButton']").remove();
     $("[id^='moreGetButtonSearch']").remove();
   }

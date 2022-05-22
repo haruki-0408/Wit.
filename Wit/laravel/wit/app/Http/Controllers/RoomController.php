@@ -55,7 +55,6 @@ class RoomController extends Controller
                 if (isset($request->keyword)) {
                     $query->searchTagName($request->keyword);
                     $second_query->searchTagName($request->keyword);
-                    
                 } else {
                     $array = [];
                     return $array;
@@ -87,9 +86,12 @@ class RoomController extends Controller
 
 
         if (isset($request->room_id)) {
-            $room_id = $request->room_id;
-
-            $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+            if (mb_strlen($request->room_id) == 26) {
+                $room_id = $request->room_id;
+                $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
+            } else {
+                abort(404);
+            }
         } else {
             $rooms = $query->with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
         }
@@ -99,7 +101,7 @@ class RoomController extends Controller
 
         foreach ($rooms as $room) {
             if ($rooms->last() && $room->id == $last_room->id) {
-                $room->id = '01g2f34545seelfe54dhr6fi3f7';
+                $room->id = $room->id . rand(0, 9);
             }
 
             $room->user->id = Crypt::encrypt($room->user->id);
@@ -122,7 +124,7 @@ class RoomController extends Controller
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
         } else if (isset($room_id)) {
-            if ($room_id != '01g2f34545seelfe54dhr6fi3f7') {
+            if (mb_strlen($room_id) == 26) {
                 $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->where('id', '<', $room_id)->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
 
@@ -135,7 +137,7 @@ class RoomController extends Controller
 
         foreach ($rooms as $room) {
             if ($room == $rooms->last() && $room->id == $last_room->id) {
-                $room->id = '01g2f34545seelfe54dhr6fi3f7';
+                $room->id = $room->id . rand(0, 9);
             }
 
             $room->user->id = Crypt::encrypt($room->user->id);
@@ -150,7 +152,13 @@ class RoomController extends Controller
 
     public function authRoomPassword(Request $request)
     {
-        $room_id = $request->room_id;
+        if (mb_strlen($request->room_id) == 26) {
+            $room_id = $request->room_id;
+        }else if(mb_strlen($request->room_id) > 26 ){
+            $room_id = substr($request->room_id ,0, -1);
+        }else{
+            return redirect('home')->with('flashmessage', 'ルーム:' . $request->room_id . 'は存在しません');
+        }
         $room = Room::find($room_id);
         $room_password = $room->password;
 
