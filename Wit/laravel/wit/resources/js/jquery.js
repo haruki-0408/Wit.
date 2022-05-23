@@ -353,10 +353,11 @@ function addRoomPage(res) {
                 clone.querySelector('.enter-room').remove();
                 let a = document.createElement('a');
                 if (res[i].id.length > 26) {
-                    a.href = '/home/Room:' + res[i].id.slice(0,-1);
+                    a.href = '/home/Room:' + res[i].id.slice(0, -1);
                 } else {
                     a.href = '/home/Room:' + res[i].id;
                 }
+
                 a.className = "enter-room btn btn-outline-primary p-2";
                 a.innerHTML = "<i class='bi bi-door-open'></i>";
                 clone.querySelector('.btn-group').appendChild(a);

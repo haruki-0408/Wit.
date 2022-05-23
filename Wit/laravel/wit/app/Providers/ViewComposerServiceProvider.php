@@ -26,5 +26,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         View::Composer('wit.home','App\Http\Composers\WitViewComposer');
         View::Composer('wit.profile','App\Http\Composers\WitViewComposer');
+        View::Composer('wit.Account.information-account','App\Http\Composers\WitViewComposer');
+        View::Composer('wit.Account.delete-account','App\Http\Composers\WitViewComposer');
     }
 }

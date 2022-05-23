@@ -119,8 +119,8 @@ class RoomController extends Controller
     {
         $last_room = Room::orderBy('id', 'asc')->first();
 
-        if ($room_id == null) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->orderBy('id', 'desc')->take(10)->get();
+        if (is_null($room_id)) {
+            $rooms = Room::orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
         } else if (isset($room_id)) {
@@ -185,7 +185,7 @@ class RoomController extends Controller
             $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
-            if ($room_info->password == null) {
+            if (is_null($room_info->password)) {
                 return view('wit.room', [
                     'room_info' => $room_info,
                     'count_image_data' => $count_image_data,
@@ -222,7 +222,7 @@ class RoomController extends Controller
                 abort(404);
             }
         } else if (session()->get('auth_room_id') == $room_id) {
-            session()->forget('auth_room_id');
+            //session()->forget('auth_room_id');
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
             if (is_null($room_image)) {
@@ -232,7 +232,7 @@ class RoomController extends Controller
             } else {
                 abort(404);
             }
-            return response()->file(Storage::path($room_image->image));
+            
         } else {
             abort(404);
         }

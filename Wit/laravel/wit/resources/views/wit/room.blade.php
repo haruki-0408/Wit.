@@ -329,6 +329,7 @@
                                             </div>
                                         @endif
                                     @endfor
+                                    
                                 </div>
 
                                 @if ($count_image_data > 1)
