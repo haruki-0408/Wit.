@@ -1,5 +1,5 @@
 <!-- Create Room Form -->
-<div class="modal fade " id="CreateRoomForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade " id="createRoomForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="CreateRoomForm" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
@@ -15,7 +15,7 @@
 
                     <div class="mb-3">
                         <label for="InputTitle" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="InputTitle">
+                        <input type="text" name="title" class="form-control" id="inputTitle">
                         <div id="titleHelp" class="form-text">シンプルかつ簡潔に書きましょう</div>
                     </div>
                     <div class="mb-3">
@@ -26,13 +26,13 @@
                     <div class="mb-3">
                         <label for="InputImages" class="form-label">Images</label>
                         <input class="form-control" name="roomImages[]" type="file" multiple accept="image/*">
-                        <div id="InputImages" class="form-text">画像は合計5MBまで複数追加できます。画像形式のみ</div>
+                        <div id="inputImages" class="form-text">画像は合計5MBまで複数追加できます。画像形式のみ</div>
                     </div>
 
 
                     <div class="mb-3">
                         <label for="InputTags" class="form-label">Tags</label>
-                        <input id="InputTags" class="form-control" type="text" name="tag" multiple>
+                        <input id="inputTags" class="form-control" type="text" name="tag" multiple>
                         <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
                         <hr>
                         <p class="form-text">登録されるタグ</p>
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="RoomSwitch">
+                        <input class="form-check-input" type="checkbox" id="roomSwitch">
                         <label class="form-check-label" for="flexSwitchCheckDefault">Private Mode</label>
                     </div>
 
@@ -64,11 +64,11 @@
 </div>
 
 <script>
-    let RoomSwitch = document.getElementById('RoomSwitch');
+    let RoomSwitch = document.getElementById('roomSwitch');
     RoomSwitch.addEventListener('change', switchCheck);
     let password = document.getElementById('password');
 
-    let InputTags = document.getElementById('InputTags');
+    let InputTags = document.getElementById('inputTags');
     InputTags.addEventListener('change', valueChange)
     let showTag = document.getElementById('showTags');
     

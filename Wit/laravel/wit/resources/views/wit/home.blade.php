@@ -100,7 +100,7 @@
 @component('wit.createRoom')
 @endcomponent
 
-@component('wit.home-modals', ['trend_tags' => $trend_tags])
+@component('wit.home-modals')
 @endcomponent
 
 
@@ -111,7 +111,7 @@
             @endcomponent
             @component('wit.room-content')
             @endcomponent
-            @component('wit.right', ['trend_tags' => $trend_tags])
+            @component('wit.right')
             @endcomponent
 
         </div>

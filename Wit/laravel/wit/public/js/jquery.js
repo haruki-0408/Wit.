@@ -11312,6 +11312,63 @@ function addRoomPage(res) {
   }
 }
 
+function addModalRoomPage(res) {
+  if ('content' in document.createElement('template')) {
+    var template = document.getElementById('Room-template');
+
+    for (var i = 0; i < Object.keys(res).length; i++) {
+      var clone = template.content.cloneNode(true); // template要素の内容を複製
+
+      clone.querySelector('li').setAttribute('id', res[i].id);
+
+      if (res[i].password === 'yes') {
+        clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
+      } else {
+        clone.querySelector('.card-title').textContent = res[i].title;
+        clone.querySelector('.enter-room').remove();
+        var a = document.createElement('a');
+
+        if (res[i].id.length > 26) {
+          a.href = '/home/Room:' + res[i].id.slice(0, -1);
+        } else {
+          a.href = '/home/Room:' + res[i].id;
+        }
+
+        a.className = "enter-room btn btn-outline-primary p-2";
+        a.innerHTML = "<i class='bi bi-door-open'></i>";
+        clone.querySelector('.btn-group').appendChild(a);
+      }
+
+      clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
+      clone.querySelector('.profile-image').src = res[i].user.profile_image;
+      clone.querySelector('.user-name').textContent = res[i].user.name;
+      clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
+
+      for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) {
+        //ここの実装見直したい、、
+        var room_tag_li = document.createElement("li");
+        room_tag_li.setAttribute("class", "d-inline-block");
+        var room_tag_a = document.createElement("a");
+        room_tag_a.setAttribute("class", "tag");
+        room_tag_a.href = "#";
+        room_tag_a.textContent = res[i].room_tags[j].tag.name;
+        var room_tag_span = document.createElement("span");
+        room_tag_span.className = "number badge badge-light";
+        room_tag_span.textContent = res[i].room_tags[j].tag.number;
+        room_tag_a.appendChild(room_tag_span);
+        room_tag_li.appendChild(room_tag_a);
+        clone.querySelector('.room_tags').appendChild(room_tag_li);
+      }
+
+      document.getElementById('Post-rooms').appendChild(clone);
+    }
+
+    if (!document.getElementById('postMoreGetButton')) {
+      postMoreGetButton();
+    }
+  }
+}
+
 function removeMoreGetButton() {
   var last = document.getElementById('Rooms');
   var lastli = last.lastElementChild.getAttribute('id');
@@ -11348,15 +11405,25 @@ function moreGetButton() {
   }
 }
 
-if (document.getElementById('roomPasswordForm')) {
-  var passwordForm = document.getElementById("roomPasswordForm"); //ルームパスワードを認証するとき
+function postMoreGetButton() {
+  if (!document.getElementById('noResult')) {
+    var moreget = document.createElement('div');
+    moteget.id = "postMoreGetButton";
+    moreget.className = "btn d-flex justify-content-center m-3";
+    moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
+    document.getElementById('Post-rooms').appendChild(moreget);
+  }
+}
+
+if (document.getElementById('roomPasswordFormModal')) {
+  var passwordForm = document.getElementById("roomPasswordFormModal"); //ルームパスワードを認証するとき
 
   passwordForm.addEventListener('shown.bs.modal', function (event) {
     var button = event.relatedTarget;
     var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
     var input = document.roomPass.room_id;
     input.value = room_id;
-    document.getElementById('Room-password').appendChild(input);
+    document.getElementById('roomPassword').appendChild(input);
   });
 }
 })();

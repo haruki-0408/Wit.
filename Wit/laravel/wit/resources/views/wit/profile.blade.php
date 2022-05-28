@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('wit.home-modals', ['trend_tags' => $trend_tags])
+    @component('wit.home-modals')
     @endcomponent
 
+    @component('wit.profile-modals', ['other_post_rooms' => $post_rooms])
+    @endcomponent
 
     <div id="profile" class="overflow-auto" style="width:100%; height:85%;">
         <div class="container-sm p-3">
@@ -23,7 +25,7 @@
                         <div class="col-3 text-end">
                             @if ($user_id == Auth::id())
                                 <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#settings"><i style="font-size:1.5rem;"
+                                    data-bs-target="#settingsModal"><i style="font-size:1.5rem;"
                                         class="bi bi-gear-fill"></i></button>
                             @else
                                 <button type="button" class="add-list-user btn btn-outline-primary"><i
@@ -59,39 +61,73 @@
 
                 <div class="lists p-0">
                     <!-- Button trigger modal -->
-                    <ul style="list-style-type:disc ">
-                        <li class="border-bottom">
-                            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#posts">
-                                <strong>Posts</strong>
-                            </a>
-                        </li>
-                        <li class="border-bottom">
-                            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#answers">
-                                <strong>Answers</strong>
-                            </a>
-                        </li>
-                        <li class="border-bottom">
-                            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#users">
-                                <strong>Users</strong>
-                            </a>
-                        </li>
-                        <li class="border-bottom">
-                            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#list-rooms">
-                                <strong>Rooms</strong>
-                            </a>
-                        </li>
-                        <li class="border-bottom">
-                            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#tags">
-                                <strong>Tags</strong>
-                            </a>
-                        </li>
-                    </ul>
-
+                    @if ($user_id == Auth::id())
+                        <ul style="list-style-type:disc ">
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#myPostModal">
+                                    <strong>Post</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#myAnswerModal">
+                                    <strong>Answer</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherListUserModal">
+                                    <strong>User</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherListRoomModal">
+                                    <strong>Rooms</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#tagsModal">
+                                    <strong>Tags</strong>
+                                </a>
+                            </li>
+                        </ul>
+                    @else
+                        <ul style="list-style-type:disc ">
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherPostModal">
+                                    <strong>Post</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherAnswerModal">
+                                    <strong>Answer</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherListUserModal">
+                                    <strong>User</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#otherListRoomModal">
+                                    <strong>Rooms</strong>
+                                </a>
+                            </li>
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#tagsModal">
+                                    <strong>Tags</strong>
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
                 </div>
 
             </div>

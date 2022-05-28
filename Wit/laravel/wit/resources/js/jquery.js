@@ -384,9 +384,25 @@ function addRoomPage(res) {
 
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
             }
-            document.getElementById('Rooms').appendChild(clone);
 
+            /*switch (type) {
+                case 'room':
+                    document.getElementById('Rooms').appendChild(clone);
+                    break;
+                case 'post':
+                    document.getElementById('myPost').appendChild(clone);
+                    break;
+
+                case 'answer':
+                    document.getElementById('myAnswer').appendChild(clone);
+                    break;
+
+                case 'list-room':
+                    document.getElementById('myListRoom').appendChild(clone);
+                    break;
+            }*/
         }
+
         if (!(document.getElementById('moreGetButton')) && !(document.getElementById('moreGetButtonSearch'))) {
             moreGetButton();
         }
@@ -394,6 +410,7 @@ function addRoomPage(res) {
     }
 
 }
+
 
 function removeMoreGetButton() {
     let last = document.getElementById('Rooms');
@@ -428,16 +445,26 @@ function moreGetButton() {
     }
 }
 
+function postMoreGetButton() {
+    if (!(document.getElementById('noResult'))) {
+        let moreget = document.createElement('div');
+        moteget.id = "postMoreGetButton";
+        moreget.className = "btn d-flex justify-content-center m-3"
+        moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
+        document.getElementById('Post-rooms').appendChild(moreget);
+    }
+}
 
 
-if (document.getElementById('roomPasswordForm')) {
-    let passwordForm = document.getElementById("roomPasswordForm"); //ルームパスワードを認証するとき
+
+if (document.getElementById('roomPasswordFormModal')) {
+    let passwordForm = document.getElementById("roomPasswordFormModal"); //ルームパスワードを認証するとき
     passwordForm.addEventListener('shown.bs.modal', function (event) {
         let button = (event.relatedTarget);
         let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
         let input = document.roomPass.room_id;
         input.value = room_id;
-        document.getElementById('Room-password').appendChild(input);
+        document.getElementById('roomPassword').appendChild(input);
 
 
     });

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('wit.home-modals',['trend_tags' => $trend_tags])
+    @component('wit.home-modals')
     @endcomponent
     <div class="card border-0 pt-5">
         <div class="card-body p-1">
@@ -45,7 +45,7 @@
 
                 <div class="text-center pt-3">
                     <button type="button" data-bs-toggle="modal"
-                    data-bs-target="#deleteAccount"class="btn btn-outline-danger">Account Delete</button>
+                    data-bs-target="#deleteAccountModal"class="btn btn-outline-danger">Account Delete</button>
                 </div>
             </div>
 

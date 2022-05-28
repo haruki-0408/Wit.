@@ -11,7 +11,7 @@
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="profile">
-                    <img src="{{ asset( Auth::user()->profile_image ) }}" alt="aaa" width="70" height="70" class="rounded-circle me-2">
+                    <img src="{{ asset( Auth::user()->profile_image ) }}" alt="" width="70" height="70" class="rounded-circle me-2">
                     <strong>{{ Auth::user()->name }}</strong>
                 </div>
             </a>
@@ -43,12 +43,12 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#posts">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myPostModal">
                     Post
                 </a>
             </li>
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#answers">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myAnswerModal">
                     Answer
                 </a>
             </li>
@@ -64,7 +64,7 @@
         <hr>
 
         <div class="user-list fs-5">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#myListUserModal">
                 <i class="bi bi-people-fill mx-2 "></i>
                 User
             </a>
@@ -72,7 +72,7 @@
 
 
         <div class="room-list fs-5 mt-3 ">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#list-rooms">
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#myListRoomModal">
                 <i class="bi bi-house-fill mx-2 "></i>
                 Room
             </a>

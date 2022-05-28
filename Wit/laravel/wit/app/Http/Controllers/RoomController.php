@@ -88,7 +88,7 @@ class RoomController extends Controller
         if (isset($request->room_id)) {
             if (mb_strlen($request->room_id) == 26) {
                 $room_id = $request->room_id;
-                $rooms = $query->where('id', '<', $room_id)->orderBy('id','DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
+                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
             } else {
                 abort(404);
             }
@@ -121,12 +121,12 @@ class RoomController extends Controller
 
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->take(10)->get();
-            
+
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
         } else if (isset($room_id)) {
             if (mb_strlen($room_id) == 26) {
-                $rooms = Room::where('id', '<', $room_id)->orderBy('id','DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
+                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
 
             } else {
@@ -155,9 +155,9 @@ class RoomController extends Controller
     {
         if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;
-        }else if(mb_strlen($request->room_id) > 26 ){
-            $room_id = substr($request->room_id ,0, -1);
-        }else{
+        } else if (mb_strlen($request->room_id) > 26) {
+            $room_id = substr($request->room_id, 0, -1);
+        } else {
             return redirect('home')->with('flashmessage', 'ルーム:' . $request->room_id . 'は存在しません');
         }
         $room = Room::find($room_id);
@@ -206,6 +206,17 @@ class RoomController extends Controller
         }
     }
 
+    public static function getPostRoom($user_id = null, $room_id = null)
+    {
+        if (is_null($user_id)) {
+            $user_id = Auth::id();
+        }
+        //$user_id が引数で取られない場合はloginしているユーザーの情報を返すことでオプショナルなメソッドをメソッドを実現している
+        
+        $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(30)->get();
+        return $post_rooms;
+    }
+
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
@@ -233,7 +244,6 @@ class RoomController extends Controller
             } else {
                 abort(404);
             }
-            
         } else {
             abort(404);
         }

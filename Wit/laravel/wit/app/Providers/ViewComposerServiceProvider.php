@@ -24,9 +24,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::Composer('wit.home','App\Http\Composers\WitViewComposer');
-        View::Composer('wit.profile','App\Http\Composers\WitViewComposer');
-        View::Composer('wit.Account.information-account','App\Http\Composers\WitViewComposer');
-        View::Composer('wit.Account.delete-account','App\Http\Composers\WitViewComposer');
+        View::Composer(['wit.tags','wit.home-modals'],'App\Http\Composers\WitViewComposer');
+        //View::composer > View::creator > view呼び出し時の引数(Controller)　の優先順位で変数渡される
     }
 }

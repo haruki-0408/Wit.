@@ -124,7 +124,7 @@
                     <button type="button" class="add-list-room btn btn-outline-primary p-2"><i
                             class="bi bi-plus"></i><i class="bi bi-card-list"></i></button>
                     <button type="button" class="enter-room btn btn-outline-primary p-2" data-bs-toggle="modal"
-                        data-bs-target="#roomPasswordForm"><i class="bi bi-door-open"></i></button>
+                        data-bs-target="#roomPasswordFormModal"><i class="bi bi-door-open"></i></button>
                 </div>
             </div>
         </div>

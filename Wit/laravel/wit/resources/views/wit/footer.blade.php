@@ -7,22 +7,22 @@
                 aria-expanded="false"" href=" #"><i class="bi bi-card-list"></i></a>
             <ul class="dropdown-menu justify-content-center p-2">
                 <li class="p-2">
-                    <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#users">
+                    <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#myListUserModal">
                         <strong>Users</strong>
                     </a>
                 </li>
                 <hr>
                 <li class="p-2">
                     <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                        data-bs-target="#list-rooms">
+                        data-bs-target="#myListRoomModal">
                         <strong>Rooms</strong>
                     </a>
                 </li>
             </ul>
         </div>
-        <a class="tags link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#tags" href="#"><i
+        <a class="tags link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#tagsModal" href="#"><i
                 class="bi bi-tag-fill"></i></a>
-        <a class="settings link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#settings"><i
+        <a class="settings link-dark footer-buttons" data-bs-toggle="modal" data-bs-target="#settingsModal"><i
                 class="bi bi-gear-fill"></i></a>
     </nav>
 </div>

@@ -1,33 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('wit.home-modals',['trend_tags' => $trend_tags])
+    @component('wit.home-modals')
     @endcomponent
 
     <div class="card border-0 m-2 overflow-auto" style="width:100%; height:83%;">
-        <div id="profile-contents" class="row justify-content-center w-100">
-            <form action="/home/profile/settings/changeProfile" method="post" name='changeProfile' enctype='multipart/form-data'>
+        <div id="profileContents" class="row justify-content-center w-100">
+            <form action="/home/profile/settings/changeProfile" method="post" name='changeProfile'
+                enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
-                    <div id="parent-image" class="text-center">
-                        <img id="image" src="{{ asset(Auth::user()->profile_image) }}"
+                    <div id="parentImage" class="text-center">
+                        <img id="childImage" src="{{ asset(Auth::user()->profile_image) }}"
                             style="width:100;height:100; position:relative;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
                     </div>
 
-                    <div id="parent-name" class="row justify-content-center">
+                    <div id="parentName" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Name</strong>
-                        <p id="name" class="card-text col-10 col-md-4 text-center p-1">{{ Auth::user()->name }}</p>
+                        <p id="childName" class="card-text col-10 col-md-4 text-center p-1">{{ Auth::user()->name }}</p>
                     </div>
 
-                    <div id="parent-email" class="row justify-content-center">
+                    <div id="parentEmail" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
-                        <p id="email" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}</p>
+                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}
+                        </p>
                     </div>
 
-                    <div id="parent-message" class="row justify-content-center">
+                    <div id="parentMessage" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="message" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">
+                        <p id="childMessage" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">
                             {{ Auth::user()->profile_message }}</p>
                     </div>
 
@@ -38,8 +40,8 @@
 
                     <div class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2"></strong>
-                        <div id="parent-button" class="col-10 col-md-4 text-end">
-                            <button type="button" id="profile-edit" class="btn btn-outline-primary">Edit</button>
+                        <div id="parentButton" class="col-10 col-md-4 text-end">
+                            <button type="button" id="profileEdit" class="btn btn-outline-primary">Edit</button>
                         </div>
                     </div>
 
@@ -56,42 +58,44 @@
 
 <script>
     window.onload = function() {
-        document.getElementById("profile-edit").onclick = function() {
+        document.getElementById("profileEdit").onclick = function() {
 
-            var parent_button = document.getElementById("parent-button");
-            var button_edit = document.getElementById("profile-edit");
+            var parent_button = document.getElementById("parentButton");
+            var button_edit = document.getElementById("profileEdit");
             var button_save = document.createElement("button");
             button_save.className = "btn btn-outline-primary"
-            button_save.setAttribute("id", "profile-save");
+            button_save.setAttribute("id", "saveButton");
             button_save.setAttribute("type", "submit");
             button_save.textContent = "Save";
 
             var button_cancel = document.createElement("button");
             button_cancel.className = "btn btn-secondary mx-2";
             button_cancel.setAttribute("type", "button");
-            button_cancel.setAttribute("id", "cancel-button");
+            button_cancel.setAttribute("id", "cancelButton");
             button_cancel.textContent = "Cancel"
 
             parent_button.appendChild(button_cancel);
             parent_button.replaceChild(button_save, button_edit);
 
 
-            var image = document.getElementById('image');
+            var image = document.getElementById('childImage');
             image.classList.add('opacity-25');
             var icon = document.createElement("label");
 
             //変更後の画像プレビュー
             icon.innerHTML =
-                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='image-input' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
-            document.getElementById("parent-image").appendChild(icon);
+                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='imageInput' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
+            document.getElementById("parentImage").appendChild(icon);
 
 
-            var oldNode = document.querySelectorAll('p');
+            var childName = document.getElementById('childName');
+            var childEmail = document.getElementById('childEmail');
+            var childMessage = document.getElementById('childMessage');
+            var oldNode = [childName,childEmail,childMessage];
 
-            var name = document.getElementById('name').innerText;
-            var email = document.getElementById('email').innerText;
-            var message = document.getElementById('message').innerText;
-
+            var name = document.getElementById('childName').innerText;
+            var email = document.getElementById('childEmail').innerText;
+            var message = document.getElementById('childMessage').innerText;
 
             var input_name = document.createElement('input');
             input_name.setAttribute('name', 'name');
@@ -113,11 +117,11 @@
             for (var i = 0; i < 3; i++) {
 
                 if (i === 0) {
-                    var parentNode = document.getElementById('parent-name');
+                    var parentNode = document.getElementById('parentName');
                 } else if (i === 1) {
-                    var parentNode = document.getElementById('parent-email');
+                    var parentNode = document.getElementById('parentEmail');
                 } else if (i === 2) {
-                    var parentNode = document.getElementById('parent-message');
+                    var parentNode = document.getElementById('parentMessage');
                 }
 
                 parentNode.replaceChild(newNode[i], oldNode[i]);
@@ -127,8 +131,8 @@
 
         //画像の変更プレビュー表示
         document.addEventListener('click', function(e) { //VanillaJSで動的要素にイベント登録するための書き方
-            if (event.target.id === 'image-input') {
-                document.getElementById("image-input").addEventListener("change", function(e) {
+            if (event.target.id === 'imageInput') {
+                document.getElementById("imageInput").addEventListener("change", function(e) {
                     const file = e.target.files[0];
 
                     // Only process image files.
@@ -139,7 +143,7 @@
                     const reader = new FileReader();
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            const imgElm = document.getElementById("image");
+                            const imgElm = document.getElementById("childImage");
                             imgElm.src = e.target.result;
                             imgElm.classList.remove('opacity-25');
                         }
@@ -154,7 +158,7 @@
 
         document.addEventListener('click', function(e) {
             // id属性の値で判定
-            if (event.target.id === 'cancel-button') {
+            if (event.target.id === 'cancelButton') {
                 window.location.reload(false);
             }
         });

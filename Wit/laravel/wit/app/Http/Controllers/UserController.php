@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Controllers\RoomController;
 
 
 class UserController extends Controller
@@ -37,7 +38,9 @@ class UserController extends Controller
                     'profile_message' => $user->profile_message,
                     'user_name' => $user->name,
                     'profile_image' => $user->profile_image,
+                    'post_rooms' => RoomController::getPostRoom($decrypted_user_id),
                 ];
+
                 return view('wit.profile', $user_data);
             } else {
                 abort(404);
