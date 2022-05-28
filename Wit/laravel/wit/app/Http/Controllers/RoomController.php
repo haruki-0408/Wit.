@@ -88,7 +88,7 @@ class RoomController extends Controller
         if (isset($request->room_id)) {
             if (mb_strlen($request->room_id) == 26) {
                 $room_id = $request->room_id;
-                $rooms = $query->with(['user', 'roomTags.tag'])->where('id', '<', $room_id)->take(10)->get();
+                $rooms = $query->where('id', '<', $room_id)->orderBy('id','DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
             } else {
                 abort(404);
             }
@@ -117,16 +117,16 @@ class RoomController extends Controller
 
     public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
-        $last_room = Room::orderBy('id', 'asc')->first();
+        $last_room = Room::orderBy('id', 'asc')->first('id');
 
         if (is_null($room_id)) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->take(10)->get(['id','user_id','title','description','password']);
+            $rooms = Room::with(['user', 'roomTags.tag'])->take(10)->get();
             
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
         } else if (isset($room_id)) {
             if (mb_strlen($room_id) == 26) {
-                $rooms = Room::with(['user', 'roomTags.tag'])->where('id', '<', $room_id)->take(10)->get();
+                $rooms = Room::where('id', '<', $room_id)->orderBy('id','DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
 
             } else {
