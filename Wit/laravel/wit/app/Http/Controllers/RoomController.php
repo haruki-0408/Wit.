@@ -212,8 +212,11 @@ class RoomController extends Controller
             $user_id = Auth::id();
         }
         //$user_id が引数で取られない場合はloginしているユーザーの情報を返すことでオプショナルなメソッドをメソッドを実現している
-        
+
         $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(30)->get();
+
+
+
         return $post_rooms;
     }
 

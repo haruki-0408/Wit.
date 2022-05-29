@@ -385,6 +385,7 @@ function addRoomPage(res) {
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
             }
 
+            document.getElementById('Rooms').appendChild(clone);
             /*switch (type) {
                 case 'room':
                     document.getElementById('Rooms').appendChild(clone);
