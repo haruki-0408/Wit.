@@ -106,4 +106,6 @@ class User extends Authenticatable
         return $query->whereRaw("name LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci",['%'.$user_name.'%']);
     }
 
+    
+
 }

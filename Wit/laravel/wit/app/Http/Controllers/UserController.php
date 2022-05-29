@@ -180,4 +180,33 @@ class UserController extends Controller
             
         }
     }
+
+    public function showModalListUser(Request $request)
+    {
+        if(isset($request->user_id)){
+            $message = ListUser::addListUser($request->user_id);
+
+            return response()->Json($message);
+        }else{
+            return dd($request->user_id);
+        }
+    }
+
+    public static function getListUser($user_id = null, $favorite_user_id =null)
+    {
+        if (is_null($user_id)){
+            $user_id = Auth::id();
+        }
+        
+        $list_rooms = Room::whereHas('listUsers', function ($query) use($user_id) {
+            $query->where('user_id', '=', $user_id);
+        })->take(30)->get();
+        
+        
+        return $list_rooms;
+
+    }
+
+
 }
+

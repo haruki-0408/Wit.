@@ -11,14 +11,14 @@ $(function () {
             .done((res) => {
                 if (res.length !== 0) {
                     addRoomPage(res);
-                    removeMoreGetButton();
+                    removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
                     noresult.id = 'noResult'
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
-                    removeMoreGetButton();
+                    removeGetMoreButton();
                 }
             })
             //通信が失敗したとき
@@ -63,6 +63,55 @@ $(function () {
 
 });
 */
+
+$(document).on('click', '.add-list-room', function () {
+    let button = $(this); 
+    console.log(button);
+    let room_id = button.parent().parent().parent().parent().attr('id');
+   
+
+    $.ajax({
+        type: "get", //HTTP通信の種類
+        url: '/home/addListRoom' + room_id, //通信したいURL
+        dataType: 'json',
+    })
+        //通信が成功したとき
+        .done((res) => {
+            //resStringfy = JSON.stringify(res);
+            console.log(res);
+            alert(res);
+        })
+        //通信が失敗したとき
+        .fail((error) => {
+            console.log(error.statusText)
+        })
+
+});
+
+$(document).on('click', '.add-user-room', function () {
+    let button = $(this); 
+    console.log(button);
+    let user_id = button.parent().parent().parent().parent().attr('id');
+   
+
+    $.ajax({
+        type: "get", //HTTP通信の種類
+        url: '/home/addListUser' + user_id, //通信したいURL
+        dataType: 'json',
+    })
+        //通信が成功したとき
+        .done((res) => {
+            //resStringfy = JSON.stringify(res);
+            console.log(res);
+            alert(res);
+        })
+        //通信が失敗したとき
+        .fail((error) => {
+            console.log(error.statusText)
+        })
+
+});
+
 
 $(document).on('click', '#flexRadioUser', function () {
     let select = document.getElementById('searchType');
@@ -176,7 +225,7 @@ $(document).on('change', '#searchType', function () {
     }
 })
 
-$(document).on('click', "[id^='moreGetButton']", function (event) {
+$(document).on('click', "[id^='getMore']", function (event) {
     let select = document.getElementById('searchType').value;
     let keyword = document.getElementById('search-keyword').value;
     let last = document.getElementById('Rooms');
@@ -185,7 +234,7 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
     let flexCheckTag = document.getElementById('flexCheckTag').checked;
     let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-    if (event.currentTarget.id === 'moreGetButtonSearch') {
+    if (event.currentTarget.id === 'getMoreSearchButton') {
         $.ajax({
             type: "post", //HTTP通信の種類
             url: '/home/searchRoom',
@@ -207,14 +256,14 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
             .done((res) => {
                 if (res.length !== 0) {
                     addRoomPage(res);
-                    removeMoreGetButton();
+                    removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
                     noresult.id = 'noResult'
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
-                    removeMoreGetButton();
+                    removeGetMoreButton();
                 }
             })
             //通信が失敗したとき
@@ -222,7 +271,7 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
                 console.log(error.statusText)
             })
 
-    } else if (event.currentTarget.id === 'moreGetButton') {
+    } else if (event.currentTarget.id === 'getMoreButton') {
 
         $.ajax({
             type: "get", //HTTP通信の種類
@@ -233,19 +282,21 @@ $(document).on('click', "[id^='moreGetButton']", function (event) {
             .done((res) => {
                 //resStringfy = JSON.stringify(res);
                 addRoomPage(res);
-                removeMoreGetButton();
+                removeGetMoreButton();
             })
             //通信が失敗したとき
             .fail((error) => {
                 console.log(error.statusText)
             })
+    } else {
+        console.log("それ以外が押されました");
     }
 });
 
 $(document).on('click', '#search-button', function () {
     if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
         $(document.getElementById("Rooms")).empty();
-        $("[id^='moreGetButton']").remove();
+        $("[id^='getMoreButton']").remove();
         if (document.getElementById("search-keyword").value) {
             let keyword = document.getElementById("search-keyword").value;
             $.ajax({
@@ -273,7 +324,7 @@ $(document).on('click', '#search-button', function () {
         }
     } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
         $(document.getElementById("Rooms")).empty();
-        $("[id^='moreGetButton']").remove();
+        $("[id^='getMoreButton']").remove();
 
         let keyword = document.getElementById("search-keyword").value;
         let select = document.getElementById('searchType').value;
@@ -302,7 +353,7 @@ $(document).on('click', '#search-button', function () {
             .done((res) => {
                 if (res.length !== 0) {
                     addRoomPage(res);
-                    removeMoreGetButton();
+                    removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
@@ -393,19 +444,19 @@ function addRoomPage(res) {
                 case 'post':
                     document.getElementById('myPost').appendChild(clone);
                     break;
-
+ 
                 case 'answer':
                     document.getElementById('myAnswer').appendChild(clone);
                     break;
-
+ 
                 case 'list-room':
                     document.getElementById('myListRoom').appendChild(clone);
                     break;
             }*/
         }
 
-        if (!(document.getElementById('moreGetButton')) && !(document.getElementById('moreGetButtonSearch'))) {
-            moreGetButton();
+        if (!(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreSearchButton'))) {
+            getMoreButton();
         }
 
     }
@@ -413,46 +464,46 @@ function addRoomPage(res) {
 }
 
 
-function removeMoreGetButton() {
+function removeGetMoreButton() {
     let last = document.getElementById('Rooms');
     let lastli = last.lastElementChild.getAttribute('id');
     let count_child = last.childElementCount;
 
 
     if (lastli.length === 27 || count_child < 10) {
-        $("[id^='moreGetButton']").remove();
-        $("[id^='moreGetButtonSearch']").remove();
+        $("[id^='getMoreButton']").remove();
+        $("[id^='getMoreSearchButton']").remove();
     }
 }
 
-function moreGetButton() {
+function getMoreButton() {
     if (!(document.getElementById('noResult'))) {
         let keyword = Boolean(document.getElementById('search-keyword').value);
-        let moreget = document.createElement('div');
+        let getmore = document.createElement('div');
         let flexCheckImage = document.getElementById('flexCheckImage').checked;
         let flexCheckTag = document.getElementById('flexCheckTag').checked;
         let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
         let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
         let check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
         if (check.some((element) => element === true)) {
-            moreget.id = 'moreGetButtonSearch';
+            getmore.id = 'getMoreSearchButton';
         } else {
-            moreget.id = 'moreGetButton';
+            getmore.id = 'getMoreButton';
         }
-        moreget.className = "btn d-flex justify-content-center m-3"
-        moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
-        document.getElementById('Room-content').appendChild(moreget);
-        removeMoreGetButton();
+        getmore.className = "btn d-flex justify-content-center m-3"
+        getmore.innerHTML = "<i class='bi bi-caret-down'></i>";
+        document.getElementById('Room-content').appendChild(getmore);
+        removeGetMoreButton();
     }
 }
 
-function postMoreGetButton() {
+function getMorePostButton() {
     if (!(document.getElementById('noResult'))) {
-        let moreget = document.createElement('div');
-        moteget.id = "postMoreGetButton";
-        moreget.className = "btn d-flex justify-content-center m-3"
-        moreget.innerHTML = "<i class='bi bi-caret-down'></i>";
-        document.getElementById('Post-rooms').appendChild(moreget);
+        let getmore = document.createElement('div');
+        getmore.id = "getMorePostButton";
+        getmore.className = "btn d-flex justify-content-center m-3"
+        getmore.innerHTML = "<i class='bi bi-caret-down'></i>";
+        document.getElementById('Post-rooms').appendChild(getmore);
     }
 }
 

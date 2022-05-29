@@ -11,6 +11,7 @@ use App\Models\RoomImage;
 use App\Models\RoomChat;
 use App\Models\RoomTag;
 use App\Models\Answer;
+use App\Models\ListRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -111,7 +112,7 @@ class RoomController extends Controller
                 $room->password = 'yes';
             }
         }
-        return $rooms;
+        return response()->Json($rooms);
     }
 
 
@@ -148,7 +149,7 @@ class RoomController extends Controller
                 $room->password = 'yes';
             }
         }
-        return $rooms;
+        return response()->Json($rooms);
     }
 
     public function authRoomPassword(Request $request)
@@ -211,13 +212,37 @@ class RoomController extends Controller
         if (is_null($user_id)) {
             $user_id = Auth::id();
         }
-        //$user_id が引数で取られない場合はloginしているユーザーの情報を返すことでオプショナルなメソッドをメソッドを実現している
+        
 
-        $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(30)->get();
-
-
+        $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(3)->get();
 
         return $post_rooms;
+    }
+
+    public function showModalListRoom(Request $request)
+    {
+        if(isset($request->room_id)){
+            $message = ListRoom::addListRoom($request->room_id);
+
+            return response()->Json($message);
+        }else{
+            return dd($request->room_id);
+        }
+    }
+
+    public static function getListRoom($user_id = null, $room_id =null)
+    {
+        if (is_null($user_id)){
+            $user_id = Auth::id();
+        }
+        
+        $list_rooms = Room::whereHas('listRooms', function ($query) use($user_id) {
+            $query->where('user_id', '=', $user_id);
+        })->with(['user', 'roomTags.tag'])->take(30)->get();
+        
+        
+        return $list_rooms;
+
     }
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
@@ -253,30 +278,7 @@ class RoomController extends Controller
     }
 
 
-    public function userGet()
-    {
-        $items = RoomUser::with('User')->get();
-        return view('wit.ShowDatabase.showRoomUser', ['room_users' => $items]);
-    }
-
-    public function getUser()
-    {
-        $users = User::select('name', 'email')->get();
-        return $users;
-    }
-
-    public function imageGet()
-    {
-        $items = RoomImage::with('Room')->get();
-        return view('wit.ShowDatabase.showRoomImage', ['room_images' => $items]);
-    }
-
-    public function chatGet()
-    {
-        $items = RoomChat::with('User')->with('Room')->get();
-        return view('wit.ShowDatabase.showRoomChat', ['room_chat' => $items]);
-    }
-
+    
     public function storeImage($image_file, $image_count, $room_id)
     {
         if (isset($image_file)) {
@@ -348,3 +350,30 @@ class RoomController extends Controller
         ]));
     }
 }
+
+
+/* テストように作ったもの　本番には不要
+public function userGet()
+    {
+        $items = RoomUser::with('User')->get();
+        return view('wit.ShowDatabase.showRoomUser', ['room_users' => $items]);
+    }
+
+    public function getUser()
+    {
+        $users = User::select('name', 'email')->get();
+        return $users;
+    }
+
+    public function imageGet()
+    {
+        $items = RoomImage::with('Room')->get();
+        return view('wit.ShowDatabase.showRoomImage', ['room_images' => $items]);
+    }
+
+    public function chatGet()
+    {
+        $items = RoomChat::with('User')->with('Room')->get();
+        return view('wit.ShowDatabase.showRoomChat', ['room_chat' => $items]);
+    }
+*/

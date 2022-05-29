@@ -10,7 +10,7 @@
             <div class="modal-body p-1">
                 <ul id="myPost" class="p-0 m-0">
                     @foreach ($post_rooms as $post_room)
-                        <li>
+                        <li id="{{ $post_room->id }}">
                             <div class="card border-0">
                                 <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                                     <div class="user">
@@ -23,12 +23,14 @@
                                     </div>
 
                                     <div class="btn-group d-flex align-items-center p-2">
-                                        <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
+                                        <button type="button" class="remove-room btn btn-outline-danger p-2"><svg
                                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                                 <path
                                                     d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                             </svg></button>
+                                        <button type="button" class="add-list-room btn btn-outline-primary p-2"><i
+                                                class="bi bi-plus"></i><i class="bi bi-card-list"></i></button>
                                         @if (isset($post_room->password))
                                             <button type="button" class="enter-room btn btn-outline-primary p-2"
                                                 data-bs-toggle="modal" data-bs-target="#roomPasswordFormModal"><i
@@ -64,6 +66,8 @@
                         </li>
                     @endforeach
                 </ul>
+                <div id="getMorePostButton" class="btn d-flex justify-content-center m-3"><i
+                        class="bi bi-caret-down"></i></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,7 +105,7 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="myListUser" class="flex-column  mb-auto fs-5 ">
-                    ここに要素をループする
+                    
                 </ul>
             </div>
             <div class="modal-footer">
@@ -121,6 +125,62 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="myListRoom" class="p-0 m-0 ">
+                    @foreach ($list_rooms as $list_room)
+                        <li id="{{ $list_room->id }}">
+                            <div class="card border-0">
+                                <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
+                                    <div class="user">
+                                        <a href="#"
+                                            class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
+                                            <img src="{{ asset($list_room->user->profile_image) }}" alt="user_image"
+                                                width="50" height="50" class="profile-image rounded-circle me-2">
+                                            <strong class="user-name">{{ $list_room->user->name }}</strong>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group d-flex align-items-center p-2">
+                                        <button type="button" class="remove-room btn btn-outline-danger p-2"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                            </svg></button>
+                                        <button type="button" class="add-list-room btn btn-outline-primary p-2"><i
+                                                class="bi bi-plus"></i><i class="bi bi-card-list"></i></button>
+                                        @if (isset($list_room->password))
+                                            <button type="button" class="enter-room btn btn-outline-primary p-2"
+                                                data-bs-toggle="modal" data-bs-target="#roomPasswordFormModal"><i
+                                                    class="bi bi-door-open"></i></button>
+                                        @else
+                                            <a href='/home/Room:{{ $list_room->id }}'
+                                                class="enter-room btn btn-outline-primary p-2"><i
+                                                    class="bi bi-door-open"></i></a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-1 row align-items-center m-0">
+                                @if (isset($list_room->password))
+                                    <strong class="card-title">{{ $list_room->title }}<i
+                                            class='bi bi-lock-fill '></i></strong>
+                                @else
+                                    <strong class="card-title">{{ $list_room->title }}</strong>
+                                @endif
+                                <p class="card-text room-description text-break">{{ $list_room->description }}</p>
+                            </div>
+
+                            <div class="card-footer border-0 bg-white p-0">
+                                <ul class="room_tags p-1">
+                                    @foreach ($list_room->roomTags as $room_tag)
+                                        <li class="d-inline-block tag">{{ $room_tag->tag->name }} <span
+                                                class="number badge badge-light">{{ $room_tag->tag->number }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="modal-footer">
