@@ -18,6 +18,7 @@ class ListUsersTable extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->foreignUuid('favorite_user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->dateTime('created_at')->useCurrent();
+            $table->unique(['user_id', 'favorite_user_id']);
         });
     }
 

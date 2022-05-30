@@ -77,8 +77,6 @@ $(document).on('click', '.add-list-room', function () {
     })
         //通信が成功したとき
         .done((res) => {
-            //resStringfy = JSON.stringify(res);
-            console.log(res);
             alert(res);
         })
         //通信が失敗したとき
@@ -88,10 +86,10 @@ $(document).on('click', '.add-list-room', function () {
 
 });
 
-$(document).on('click', '.add-user-room', function () {
+$(document).on('click', '.add-list-user', function () {
     let button = $(this); 
     console.log(button);
-    let user_id = button.parent().parent().parent().parent().attr('id');
+    let user_id = button.parent().parent().attr('id');
    
 
     $.ajax({
@@ -101,8 +99,6 @@ $(document).on('click', '.add-user-room', function () {
     })
         //通信が成功したとき
         .done((res) => {
-            //resStringfy = JSON.stringify(res);
-            console.log(res);
             alert(res);
         })
         //通信が失敗したとき
@@ -375,6 +371,7 @@ function addUserPage(res) {
 
         for (let i = 0; i < Object.keys(res).length; i++) {
             let clone = template.content.cloneNode(true);  // template要素の内容を複製
+            clone.querySelector('li').setAttribute('id', res[i].id);
             clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
             clone.querySelector('.profile-image').src = res[i].profile_image;
             clone.querySelector('.user-name').textContent = res[i].name;

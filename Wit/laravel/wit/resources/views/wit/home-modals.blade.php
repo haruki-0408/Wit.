@@ -104,8 +104,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-1">
-                <ul id="myListUser" class="flex-column  mb-auto fs-5 ">
-                    
+                <ul id="myListUser" class="fs-6 p-2">
+                    @foreach($list_users as $list_user)
+                    <li id='{{ Crypt::encrypt($list_user->id) }}' class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
+                        <div class="user">
+                            <a class="user-link link-dark text-decoration-none" href="/home/profile/{{encrypt($list_user->id)}}" alt="">
+                                <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50" class="profile-image rounded-circle me-2">
+                                <strong class="user-name">{{ $list_user->name }}</strong>
+                            </a>
+                        </div>
+                
+                        <div class="add-list-user">
+                            <button type="button" class="remove-list-user btn btn-outline-danger"><i class="bi bi-person-dash-fill"></i></button>
+                        </div>
+                    </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="modal-footer">

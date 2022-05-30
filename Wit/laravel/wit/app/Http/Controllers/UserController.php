@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ListUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -192,18 +193,16 @@ class UserController extends Controller
         }
     }
 
-    public static function getListUser($user_id = null, $favorite_user_id =null)
+    public static function getListUser($user = null, $favorite_user_id =null)
     {
-        if (is_null($user_id)){
-            $user_id = Auth::id();
+        if (is_null($user)){
+            $user = Auth::user();
         }
         
-        $list_rooms = Room::whereHas('listUsers', function ($query) use($user_id) {
-            $query->where('user_id', '=', $user_id);
-        })->take(30)->get();
+        $list_users = $user->listUsers()->take(30)->get();
         
         
-        return $list_rooms;
+        return $list_users;
 
     }
 

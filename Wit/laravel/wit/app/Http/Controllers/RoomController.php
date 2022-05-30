@@ -230,15 +230,13 @@ class RoomController extends Controller
         }
     }
 
-    public static function getListRoom($user_id = null, $room_id =null)
+    public static function getListRoom($user = null, $room_id =null)
     {
-        if (is_null($user_id)){
-            $user_id = Auth::id();
+        if (is_null($user)){
+            $user = Auth::user();
         }
         
-        $list_rooms = Room::whereHas('listRooms', function ($query) use($user_id) {
-            $query->where('user_id', '=', $user_id);
-        })->with(['user', 'roomTags.tag'])->take(30)->get();
+        $list_rooms = $user->listRooms()->with(['user', 'roomTags.tag'])->take(30)->get();
         
         
         return $list_rooms;
@@ -323,7 +321,7 @@ class RoomController extends Controller
         $room_chat->user_id = $room->user_id;
         $room_chat->message = $room->description;
         $room_chat->save();
-
+        
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
             foreach ($request->file("roomImages") as $index => $roomImage) {

@@ -11011,6 +11011,26 @@ $(document).on('click', '.add-list-room', function () {
     console.log(error.statusText);
   });
 });
+$(document).on('click', '.add-list-user', function () {
+  var button = $(this);
+  console.log(button);
+  var user_id = button.parent().parent().attr('id');
+  $.ajax({
+    type: "get",
+    //HTTP通信の種類
+    url: '/home/addListUser' + user_id,
+    //通信したいURL
+    dataType: 'json'
+  }) //通信が成功したとき
+  .done(function (res) {
+    //resStringfy = JSON.stringify(res);
+    console.log(res);
+    alert(res);
+  }) //通信が失敗したとき
+  .fail(function (error) {
+    console.log(error.statusText);
+  });
+});
 $(document).on('click', '#flexRadioUser', function () {
   var select = document.getElementById('searchType');
   var flexCheckImage = document.getElementById('flexCheckImage');
@@ -11268,6 +11288,7 @@ function addUserPage(res) {
     for (var i = 0; i < Object.keys(res).length; i++) {
       var clone = template.content.cloneNode(true); // template要素の内容を複製
 
+      clone.querySelector('li').setAttribute('id', res[i].id);
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
       clone.querySelector('.profile-image').src = res[i].profile_image;
       clone.querySelector('.user-name').textContent = res[i].name;

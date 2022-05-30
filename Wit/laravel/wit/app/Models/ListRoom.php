@@ -20,22 +20,27 @@ class ListRoom extends Model
 
     public $timestamps = false;
 
-    public function room(){
+    public function room()
+    {
         return $this->belongsTo('App\Models\Room');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\Models\User');
     }
 
     public static function addListRoom($room_id)
     {
-        $list_room = new ListRoom;
-        $list_room->user_id = Auth::id();
-        $list_room->room_id = $room_id ;
-        $list_room->save();
+        if (Room::where('id', $room_id)->exists()) {
+            $list_room = new ListRoom;
+            $list_room->user_id = Auth::id();
+            $list_room->room_id = $room_id;
+            $list_room->save();
 
-        return 'リストにルームを追加しました';
+            return 'リストにルームを追加しました';
+        }else{
+            return 'ルームID:'.$room_id.'の部屋は存在しません';
+        }
     }
-
 }

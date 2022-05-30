@@ -18,6 +18,7 @@ class ListRoomsTable extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->foreignUuid('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->dateTime('created_at')->useCurrent();
+            $table->unique(['user_id', 'room_id']);
         });
 
     }

@@ -102,9 +102,8 @@
             </a>
         </div>
 
-        <div class="add-list-user">
-            <button type="button" class="add-list-user btn btn-outline-primary"><i class="bi bi-plus"></i><i
-                    class="bi bi-person-square"></i></button>
+        <div class="btn-group d-flex align-items-center p-2">
+            <button type="button" class="add-list-user btn btn-outline-primary"><i class="bi bi-person-plus-fill"></i></button>
         </div>
     </li>
 </template>

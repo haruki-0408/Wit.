@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function listUsers()
     {
-        return $this->hasMany('App\Models\ListUser');
+        return $this->belongsToMany('App\Models\User','list_users','user_id','favorite_user_id');
     }
 
     public function favoriteUsers()
@@ -82,7 +82,7 @@ class User extends Authenticatable
 
     public function listRooms()
     {
-        return $this->hasMany('App\Models\ListRoom');
+        return $this->belongsToMany('App\Models\Room','list_rooms','user_id','room_id');
     }
 
     public function roomChat()
