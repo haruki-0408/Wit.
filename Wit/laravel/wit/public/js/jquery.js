@@ -10945,7 +10945,7 @@ $(function () {
         removeGetMoreButton();
       } else {
         var noresult = document.createElement('h3');
-        noresult.id = 'noResult';
+        noresult.setAttribute('data-room-id', 'noResult');
         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(noresult);
@@ -10993,7 +10993,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         removeGetMoreButton();
       } else {
         var noresult = document.createElement('h3');
-        noresult.id = 'noResult';
+        noresult.setAttribute('data-room-id', 'noResult');
         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(noresult);
@@ -11025,8 +11025,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
 }); //検索ボタンを押したとき
 
 $(document).on('click', '#search-button', function () {
-  document.getElementById('getMoreButton').disabled = true; //$("[id^='getMoreButton']").remove();
-
+  //document.getElementById('getMoreButton').disabled =true;
+  $("[id^='getMore']").remove();
   $(this).prop('disabled', true);
   $(document.getElementById("Rooms")).empty();
 
@@ -11045,6 +11045,7 @@ $(document).on('click', '#search-button', function () {
           addUserPage(res);
         } else {
           var noresult = document.createElement('h3');
+          noresult.setAttribute('data-room-id', 'noResult');
           noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
@@ -11086,6 +11087,7 @@ $(document).on('click', '#search-button', function () {
         removeGetMoreButton();
       } else {
         var noresult = document.createElement('h3');
+        noresult.setAttribute('data-room-id', 'noResult');
         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(noresult);
@@ -11130,10 +11132,12 @@ $(document).on('click', '#search-button', function () {
 
 });
 */
+//add-list-room ボタンを押したとき
 
 $(document).on('click', '.add-list-room', function () {
   var button = $(this);
-  var room_id = button.parent().parent().attr('data-room-id');
+  var room_id = button.parent().parent().parent().parent().attr('data-room-id');
+  button.innerHTML = "<i class='bi bi-clipboard-minus-fill'></i>";
   $.ajax({
     type: "get",
     //HTTP通信の種類
@@ -11296,10 +11300,6 @@ function addUserPage(res) {
       if (search_button.disabled) {
         search_button.disabled = false;
       }
-
-      if ($("[id^='getMoreButton']").prop('disabled', true)) {
-        $("[id^='getMoreButton']").prop('disabled', false);
-      }
     }
   }
 }
@@ -11359,10 +11359,6 @@ function addRoomPage(res) {
       if (search_button.disabled) {
         search_button.disabled = false;
       }
-
-      if ($("[id^='getMoreButton']").prop('disabled', true)) {
-        $("[id^='getMoreButton']").prop('disabled', false);
-      }
       /*switch (type) {
           case 'room':
               document.getElementById('Rooms').appendChild(clone);
@@ -11390,10 +11386,10 @@ function removeGetMoreButton() {
   var rooms = document.getElementById('Rooms');
   var lastli = rooms.lastElementChild.dataset.roomId;
   var count_child = rooms.childElementCount;
+  console.log(rooms.lastElementChild.tagName);
 
-  if (lastli.length === 27 || count_child < 10) {
-    $("[id^='getMoreButton']").remove();
-    $("[id^='getMoreSearchButton']").remove();
+  if (lastli.length === 27 || count_child < 10 || rooms.lastElementChild.tagName === 'H3') {
+    $("[id^='getMore']").remove();
   }
 }
 
@@ -11437,7 +11433,7 @@ if (document.getElementById('roomPasswordFormModal')) {
 
   passwordForm.addEventListener('shown.bs.modal', function (event) {
     var button = event.relatedTarget;
-    var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+    var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');
     var input = document.roomPass.room_id;
     input.value = room_id;
     document.getElementById('roomPassword').appendChild(input);

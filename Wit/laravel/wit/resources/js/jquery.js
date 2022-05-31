@@ -15,8 +15,8 @@ $(function () {
                     removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
-                    noresult.id = 'noResult'
-                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                    noresult.setAttribute('data-room-id','noResult');
+                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
                     removeGetMoreButton();
@@ -64,7 +64,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
-                    noresult.id = 'noResult'
+                    noresult.setAttribute('data-room-id','noResult');
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
@@ -99,8 +99,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
 //検索ボタンを押したとき
 $(document).on('click', '#search-button', function () {
-    document.getElementById('getMoreButton').disabled =true;
-    //$("[id^='getMoreButton']").remove();
+    //document.getElementById('getMoreButton').disabled =true;
+    $("[id^='getMore']").remove();
     $(this).prop('disabled',true);
     $(document.getElementById("Rooms")).empty();
 
@@ -119,6 +119,7 @@ $(document).on('click', '#search-button', function () {
                         addUserPage(res);
                     } else {
                         let noresult = document.createElement('h3');
+                        noresult.setAttribute('data-room-id','noResult');
                         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                         noresult.textContent = 'No result';
                         document.getElementById('Rooms').appendChild(noresult);
@@ -163,6 +164,7 @@ $(document).on('click', '#search-button', function () {
                     removeGetMoreButton();
                 } else {
                     let noresult = document.createElement('h3');
+                    noresult.setAttribute('data-room-id','noResult');
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
@@ -212,10 +214,11 @@ $(document).on('click', '#search-button', function () {
 });
 */
 
+//add-list-room ボタンを押したとき
 $(document).on('click', '.add-list-room', function () {
     let button = $(this); 
-    let room_id = button.parent().parent().attr('data-room-id');
-   
+    let room_id = button.parent().parent().parent().parent().attr('data-room-id');
+
 
     $.ajax({
         type: "get", //HTTP通信の種類
@@ -389,9 +392,7 @@ function addUserPage(res) {
                 search_button.disabled = false;
             }
 
-            if($("[id^='getMoreButton']").prop('disabled',true)){
-                $("[id^='getMoreButton']").prop('disabled',false);
-            }
+        
         }
 
     }
@@ -454,9 +455,6 @@ function addRoomPage(res) {
                 search_button.disabled = false;
             }
 
-            if($("[id^='getMoreButton']").prop('disabled',true)){
-                $("[id^='getMoreButton']").prop('disabled',false);
-            }
             /*switch (type) {
                 case 'room':
                     document.getElementById('Rooms').appendChild(clone);
@@ -488,10 +486,10 @@ function removeGetMoreButton() {
     let rooms = document.getElementById('Rooms');
     let lastli = rooms.lastElementChild.dataset.roomId;
     let count_child = rooms.childElementCount;
+    console.log(rooms.lastElementChild.tagName);
+    if (lastli.length === 27 || count_child < 10 || rooms.lastElementChild.tagName === 'H3') {
+        $("[id^='getMore']").remove();
 
-    if (lastli.length === 27 || count_child < 10) {
-        $("[id^='getMoreButton']").remove();
-        $("[id^='getMoreSearchButton']").remove();
     }
 }
 
@@ -532,7 +530,7 @@ if (document.getElementById('roomPasswordFormModal')) {
     let passwordForm = document.getElementById("roomPasswordFormModal"); //ルームパスワードを認証するとき
     passwordForm.addEventListener('shown.bs.modal', function (event) {
         let button = (event.relatedTarget);
-        let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+        let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');
         let input = document.roomPass.room_id;
         input.value = room_id;
         document.getElementById('roomPassword').appendChild(input);

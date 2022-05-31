@@ -10,7 +10,7 @@
             <div class="modal-body p-1">
                 <ul id="myPost" class="p-0 m-0">
                     @foreach ($post_rooms as $post_room)
-                        <li id="{{ $post_room->id }}">
+                        <li data-room-id="{{ $post_room->id }}">
                             <div class="card border-0">
                                 <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                                     <div class="user">
@@ -66,7 +66,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <div id="getMorePostButton" class="btn d-flex justify-content-center m-3"><i
+                <div id="getPostButton" class="btn d-flex justify-content-center m-3"><i
                         class="bi bi-caret-down"></i></div>
             </div>
             <div class="modal-footer">
@@ -106,7 +106,7 @@
             <div class="modal-body p-1">
                 <ul id="myListUser" class="fs-6 p-2">
                     @foreach($list_users as $list_user)
-                    <li id='{{ Crypt::encrypt($list_user->id) }}' class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
+                    <li data-user-id='{{ Crypt::encrypt($list_user->id) }}' class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
                         <div class="user">
                             <a class="user-link link-dark text-decoration-none" href="/home/profile/{{encrypt($list_user->id)}}" alt="">
                                 <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50" class="profile-image rounded-circle me-2">
@@ -139,7 +139,7 @@
             <div class="modal-body p-1">
                 <ul id="myListRoom" class="p-0 m-0 ">
                     @foreach ($list_rooms as $list_room)
-                        <li id="{{ $list_room->id }}">
+                        <li data-room-id="{{ $list_room->id }}">
                             <div class="card border-0">
                                 <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                                     <div class="user">
@@ -362,6 +362,21 @@
             </div>
             <div class="modal-body">
                 <a href="/home/profile/settings/deleteAccount" class="btn btn-primary text-end">YES</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add List Room Confirm-->
+<div class="modal fade" id="addListRoomModal" aria-hidden="true" aria-labelledby="addListRoomModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-end">
+            <div class="modal-header">
+                <h5 class="modal-title">aaaa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
