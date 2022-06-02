@@ -54,13 +54,13 @@
                                 </div>
                             </div>
 
-                            <div class="card-body p-1 row align-items-center m-0">
+                            <div class="card-body p-1 row m-0">
                                 @if (isset($post_room->password))
-                                    <strong class="card-title">{{ $post_room->title }}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                    <strong class="card-title d-flex align-items-center">{{ $post_room->title }}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                         <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
                                       </svg></strong>
                                 @else
-                                    <strong class="card-title">{{ $post_room->title }}</strong>
+                                    <strong class="card-title d-flex align-items-center">{{ $post_room->title }}</strong>
                                 @endif
                                 <p class="card-text room-description text-break">{{ $post_room->description }}</p>
                             </div>
@@ -207,7 +207,7 @@
 
                             <div class="card-body p-1 row align-items-center m-0">
                                 @if (isset($list_room->password))
-                                    <strong class="card-title">{{ $list_room->title }}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                    <strong class="card-title d-flex align-items-center">{{ $list_room->title }}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                         <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
                                       </svg></strong>
                                 @else

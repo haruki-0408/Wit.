@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -112,16 +113,18 @@ class RoomController extends Controller
                 $room->password = 'yes';
             }
         }
-        return response()->Json($rooms);
+        return $rooms;
+        //return response()->Json($rooms);
     }
 
 
-    public function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
+    public static function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
         $last_room = Room::orderBy('id', 'asc')->first('id');
 
         if (is_null($room_id)) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->take(10)->get();
+            $rooms = Room::with(['user', 'roomTags.tag'])->take(30)->get();
+            
 
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
@@ -149,7 +152,7 @@ class RoomController extends Controller
                 $room->password = 'yes';
             }
         }
-        return response()->Json($rooms);
+        return $rooms;
     }
 
     public function authRoomPassword(Request $request)

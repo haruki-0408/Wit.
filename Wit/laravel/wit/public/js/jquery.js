@@ -10928,36 +10928,38 @@ var __webpack_exports__ = {};
   \********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 //ページ読み込み時
-$(function () {
-  if (document.getElementById('Room-content')) {
-    //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
-    // ページ読み込み時に実行したい処理
-    $.ajax({
-      type: "get",
-      //HTTP通信の種類
-      url: '/getRoomInfo',
-      //通信したいURL
-      dataType: 'json'
-    }) //通信が成功したとき
-    .done(function (res) {
-      if (res.length !== 0) {
-        addRoomPage(res);
-        removeGetMoreButton();
-      } else {
-        var noresult = document.createElement('h3');
-        noresult.setAttribute('data-room-id', 'noResult');
-        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
-        noresult.textContent = 'No result';
-        document.getElementById('Rooms').appendChild(noresult);
-        removeGetMoreButton();
-      }
-    }) //通信が失敗したとき
-    .fail(function (error) {
-      console.log(error.statusText);
-    });
-  }
-}); //getMore押したとき
 
+/*$(function () {
+    if (document.getElementById('Room-content')) {
+        //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
+        // ページ読み込み時に実行したい処理
+        $.ajax({
+            type: "get", //HTTP通信の種類
+            url: '/getRoomInfo', //通信したいURL
+            dataType: 'json'
+        })
+            //通信が成功したとき
+            .done((res) => {
+                if (res.length !== 0) {
+                    addRoomPage(res);
+                    removeGetMoreButton();
+                } else {
+                    let noresult = document.createElement('h3');
+                    noresult.setAttribute('data-room-id','noResult');
+                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+                    noresult.textContent = 'No result';
+                    document.getElementById('Rooms').appendChild(noresult);
+                    removeGetMoreButton();
+                }
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error.statusText)
+            })
+    }
+});
+*/
+//getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
   var select = document.getElementById('searchType').value;
   var keyword = document.getElementById('search-keyword').value;
@@ -11049,6 +11051,11 @@ $(document).on('click', '#search-button', function () {
           noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
+          var search_button = document.getElementById("search-button");
+
+          if (search_button.disabled) {
+            search_button.disabled = false;
+          }
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11091,6 +11098,11 @@ $(document).on('click', '#search-button', function () {
         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(noresult);
+        var search_button = document.getElementById("search-button");
+
+        if (search_button.disabled) {
+          search_button.disabled = false;
+        }
       }
     }) //通信が失敗したとき
     .fail(function (error) {

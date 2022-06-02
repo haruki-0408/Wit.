@@ -24,7 +24,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::Composer(['wit.tags','wit.home-modals'],'App\Http\Composers\WitViewComposer');
+        View::Composer(['wit.tags','wit.home-modals','wit.room-content'],'App\Http\Composers\WitViewComposer');
         //View::composer > View::creator > view呼び出し時の引数(Controller)　の優先順位で変数渡される
     }
 }
