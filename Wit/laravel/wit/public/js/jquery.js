@@ -11137,7 +11137,6 @@ $(document).on('click', '#search-button', function () {
 $(document).on('click', '.add-list-room', function () {
   var button = $(this);
   var room_id = button.parent().parent().parent().parent().attr('data-room-id');
-  button.innerHTML = "<i class='bi bi-clipboard-minus-fill'></i>";
   $.ajax({
     type: "get",
     //HTTP通信の種類
@@ -11315,7 +11314,7 @@ function addRoomPage(res) {
       clone.querySelector('li').setAttribute('data-room-id', res[i].id);
 
       if (res[i].password === 'yes') {
-        clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<i class='bi bi-lock-fill '></i>";
+        clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-lock-fill' viewBox='0 0 16 16'><path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z/'></svg>";
       } else {
         clone.querySelector('.card-title').textContent = res[i].title;
         clone.querySelector('.enter-room').remove();
@@ -11328,7 +11327,7 @@ function addRoomPage(res) {
         }
 
         a.className = "enter-room btn btn-outline-primary p-2";
-        a.innerHTML = "<i class='bi bi-door-open'></i>";
+        a.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
         clone.querySelector('.btn-group').appendChild(a);
       }
 
@@ -11412,7 +11411,7 @@ function getMoreButton() {
     }
 
     getmore.className = "btn d-flex justify-content-center m-3";
-    getmore.innerHTML = "<i class='bi bi-caret-down'></i>";
+    getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
     document.getElementById('Room-content').appendChild(getmore);
     removeGetMoreButton();
   }
@@ -11423,7 +11422,7 @@ function getMorePostButton() {
     var getmore = document.createElement('div');
     getmore.id = "getMorePostButton";
     getmore.className = "btn d-flex justify-content-center m-3";
-    getmore.innerHTML = "<i class='bi bi-caret-down'></i>";
+    getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
     document.getElementById('Post-rooms').appendChild(getmore);
   }
 }
