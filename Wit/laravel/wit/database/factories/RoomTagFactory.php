@@ -20,18 +20,16 @@ class RoomTagFactory extends Factory
     public function definition()
     {
         $tag_array =[
-            '0017d9cc-c748-451b-a65f-9c3c72c2feeb',
-            '01dd0851-013e-4721-ad9d-0b67d3edb4c5',
-            '0fded48c-2819-4abf-9dff-17e50660af84',
-            '106afc6f-8baf-4102-9a34-86b814a14e39',
-            '14073e9e-1243-4cf1-9791-e516c84c0604',
-            '21f721b1-86b8-468f-8473-201d89875e40',
-            '294d294a-c9ef-4630-a161-c4ab4dbec192',
-            '2b9763cf-6a8d-48e6-bb15-19e5fb95860a',
-            '2d13768f-fecd-430f-9e4e-9ad3d25b94a2',
-            '5ec0a143-c9d4-4de4-aa21-c4a7f2ea42c1',
-            '76bb73c4-d57d-4836-8a77-610d9cb33ce4',
-            'ff3c6539-ccec-4abb-be53-e5254a21ee21',
+            '0aa14867-1129-4f16-afcd-41937ffe5538',
+            '1434de9b-5ee9-48c6-be72-a6118644f48b',
+            '166147b3-877a-4f1b-83c6-56e9e05337b3',
+            '1946ff27-2f94-4931-bde9-978807d211d6',
+            '1ed67ae4-eef2-45a5-a0aa-b368d6172e82',
+            '22460936-747d-464e-ae59-335f1004ab08',
+            '2957e413-0e89-47e0-9116-c39840202272',
+            '29753fd2-f5fd-4b73-9810-2e57a4e32fa1',
+            '6afa0578-462c-42c0-9c0c-ded06f211a0c',
+            '60072e2a-cb2c-44d8-b431-c394065efe11',
         ];
 
         $tag_id = array_rand($tag_array,1);

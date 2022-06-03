@@ -32,6 +32,8 @@
 
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
+    event.currentTarget.disabled =true;
+
     let select = document.getElementById('searchType').value;
     let keyword = document.getElementById('search-keyword').value;
     let last = document.getElementById('Rooms');
@@ -61,6 +63,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
             //通信が成功したとき
             .done((res) => {
                 if (res.length !== 0) {
+                    event.currentTarget.disabled =false;
                     addRoomPage(res);
                     removeGetMoreButton();
                 } else {
@@ -85,7 +88,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         })
             //通信が成功したとき
             .done((res) => {
-                //resStringfy = JSON.stringify(res);
+                event.currentTarget.disabled =false;
                 addRoomPage(res);
                 removeGetMoreButton();
             })

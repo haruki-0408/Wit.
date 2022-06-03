@@ -20,8 +20,7 @@
                                 <p>typeが設定されています</p>
                             @endif
 
-                            <button type="button" class="add-list-room btn btn-outline-primary p-2"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            <button type="button" class="add-list-room btn btn-outline-primary p-2"><svg width="16" height="16" fill="currentColor"
                                     class="bi bi-clipboard-plus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
@@ -32,8 +31,7 @@
                                 </svg></button>
                             @if (isset($room->password))
                                 <button type="button" class="enter-room btn btn-outline-primary p-2"
-                                    data-bs-toggle="modal" data-bs-target="#roomPasswordFormModal"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    data-bs-toggle="modal" data-bs-target="#roomPasswordFormModal"><svg width="16" height="16" fill="currentColor"
                                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
@@ -42,8 +40,7 @@
                                     </svg></button>
                             @else
                                 <a href='/home/Room:{{ $room->id }}'
-                                    class="enter-room btn btn-outline-primary p-2"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="enter-room btn btn-outline-primary p-2"><svg width="16" height="16" fill="currentColor"
                                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
@@ -58,7 +55,7 @@
                 <div class="card-body p-1 row align-items-center m-0">
                     @if (isset($room->password))
                         <strong class="card-title align-items-center d-flex">{{ $room->title }}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            <svg width="16" height="16" fill="currentColor"
                                 class="bi bi-lock-fill" viewBox="0 0 16 16">
                                 <path
                                     d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />

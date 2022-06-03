@@ -10961,6 +10961,7 @@ var __webpack_exports__ = {};
 */
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
+  event.currentTarget.disabled = true;
   var select = document.getElementById('searchType').value;
   var keyword = document.getElementById('search-keyword').value;
   var last = document.getElementById('Rooms');
@@ -10991,6 +10992,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
     }) //通信が成功したとき
     .done(function (res) {
       if (res.length !== 0) {
+        event.currentTarget.disabled = false;
         addRoomPage(res);
         removeGetMoreButton();
       } else {
@@ -11014,7 +11016,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
       dataType: 'json'
     }) //通信が成功したとき
     .done(function (res) {
-      //resStringfy = JSON.stringify(res);
+      event.currentTarget.disabled = false;
       addRoomPage(res);
       removeGetMoreButton();
     }) //通信が失敗したとき

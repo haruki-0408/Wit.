@@ -19,6 +19,7 @@ class RoomImagesTable extends Migration
             $table->string('image')->comment('画像ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
+            $table->unique(['room_id', 'image']);
         });
     }
 

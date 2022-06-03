@@ -123,7 +123,7 @@ class RoomController extends Controller
         $last_room = Room::orderBy('id', 'asc')->first('id');
 
         if (is_null($room_id)) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->take(30)->get();
+            $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
             
 
             //roomTags.tag でリレーションのリレーション先まで取得できた
