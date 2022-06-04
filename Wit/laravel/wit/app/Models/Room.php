@@ -8,6 +8,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Rorecek\Ulid\HasUlid;
 use App\Models\Tag;
 use App\Models\RoomTag;
+use Illuminate\Support\Facades\Auth;
 
 class Room extends Model
 {
@@ -124,8 +125,34 @@ class Room extends Model
             //dd($tag_name,$keyword);
             return $query->whereHas('roomTags.tag', function ($tag) use ($tag_name) {
                 $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_general_ci', [$tag_name]);
-                
             });
+        }
+    }
+
+    public static function buttonTypeJudge($room_id)
+    {
+        $user_id = Auth::id();
+        $bit_flag = 0b000; //２進数として扱うときは先頭に0bを付与
+        if (isset($room_id)) {
+            
+            //部屋の作成者かどうか判定
+            if (Room::where('id', $room_id)->value('user_id') == $user_id) {
+                $bit_flag = $bit_flag | 0b100;
+            }
+
+            //部屋がリスト登録されているかどうか判定
+            if (ListRoom::where('user_id', $user_id)->where('room_id', $room_id)->exists()) {
+                $bit_flag = $bit_flag | 0b010;
+            }
+
+            //部屋にパスワードがあるかどうか判定
+            if ((Room::where('id', $room_id)->value('password'))) {
+                $bit_flag = $bit_flag | 0b001;
+            }
+
+            $type = decbin($bit_flag);
+            //decbinは２進数として扱う
+            return $type;
         }
     }
 }

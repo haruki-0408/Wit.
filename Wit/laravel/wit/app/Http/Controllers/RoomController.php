@@ -124,7 +124,7 @@ class RoomController extends Controller
 
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
-            
+
 
             //roomTags.tag でリレーションのリレーション先まで取得できた
 
@@ -140,7 +140,14 @@ class RoomController extends Controller
             abort(404);
         }
 
+        $rooms->map(function ($each) {
+            $type = Room::buttonTypeJudge($each->id);
+            $each['type'] = $type;
+            return $each;
+        });
+
         foreach ($rooms as $room) {
+            
             if ($room == $rooms->last() && $room->id == $last_room->id) {
                 $room->id = $room->id . rand(0, 9);
             }
@@ -148,9 +155,9 @@ class RoomController extends Controller
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
 
-            if (isset($room->password)) {
+            /*if (isset($room->password)) {
                 $room->password = 'yes';
-            }
+            }*/
         }
         return $rooms;
     }
@@ -215,7 +222,7 @@ class RoomController extends Controller
         if (is_null($user_id)) {
             $user_id = Auth::id();
         }
-        
+
 
         $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(3)->get();
 
@@ -224,26 +231,31 @@ class RoomController extends Controller
 
     public function showModalListRoom(Request $request)
     {
-        if(isset($request->room_id)){
-            $message = ListRoom::addListRoom($request->room_id);
-
-            return response()->Json($message);
+        if (isset($request->room_id)) {
+            $room_id = $request->room_id;
+            $user_id = Auth::id();
+            if (ListRoom::where('user_id',$user_id)->where('room_id',$room_id)->exists())
+                $message = 'このルームは既にリストに登録されています';
+            else{
+                $message = ListRoom::addListRoom($request->room_id);
+                }
         }else{
-            return dd($request->room_id);
+            $message = 'エラーが発生しました';
         }
+
+        return response()->Json($message);
     }
 
-    public static function getListRoom($user = null, $room_id =null)
+    public static function getListRoom($user = null, $room_id = null)
     {
-        if (is_null($user)){
+        if (is_null($user)) {
             $user = Auth::user();
         }
-        
-        $list_rooms = $user->listRooms()->with(['user', 'roomTags.tag'])->take(30)->get();
-        
-        
-        return $list_rooms;
 
+        $list_rooms = $user->listRooms()->with(['user', 'roomTags.tag'])->take(30)->get();
+
+
+        return $list_rooms;
     }
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
@@ -279,7 +291,7 @@ class RoomController extends Controller
     }
 
 
-    
+
     public function storeImage($image_file, $image_count, $room_id)
     {
         if (isset($image_file)) {
@@ -324,7 +336,7 @@ class RoomController extends Controller
         $room_chat->user_id = $room->user_id;
         $room_chat->message = $room->description;
         $room_chat->save();
-        
+
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
             foreach ($request->file("roomImages") as $index => $roomImage) {
@@ -338,7 +350,7 @@ class RoomController extends Controller
 
         if ($request->has('tag')) {
             preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
-            
+
             foreach ($matches[1] as $match) {
                 $tag = $this->storeTag($match);
                 $room_tag = new RoomTag;
