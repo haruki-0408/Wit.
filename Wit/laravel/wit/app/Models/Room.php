@@ -93,11 +93,13 @@ class Room extends Model
         return $this->hasOne('App\Models\Answer');
     }
 
-    public function scopeSearchRoomName($query, $room_name)
+    public function scopeSearchRoomName($query, $room_word)
     {
-        $keyword= '%' . addcslashes($room_name, '%_\\') . '%';
-        return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_general_ci", [$keyword])
-            ->orWhereRaw("description LIKE CAST( ? as CHAR) COLLATE utf8mb4_general_ci", [$keyword]);
+        if (isset($room_word)) {
+            $keyword = '%' . addcslashes($room_word, '%_\\') . '%';
+            return $query->whereRaw("title LIKE CAST(? as CHAR) COLLATE utf8mb4_general_ci", [$keyword])
+                ->orWhereRaw("description LIKE CAST( ? as CHAR) COLLATE utf8mb4_general_ci", [$keyword]);
+        }
     }
     //照合順序　utf8mb4_general_ci ひらがなとカタカナを区別する　　　大文字と小文字は区別しない
     //照合順序　utf8mb4_unicode_ci ひらがなとカタカナを区別しない　大文字と小文字も区別しない
@@ -110,15 +112,20 @@ class Room extends Model
 
     public function scopeSearchRoomId($query, $room_id)
     {
-
-        return $query->whereRaw('id = ?', [$room_id]);
+        if (isset($room_id)) {
+            return $query->whereRaw('id = ?', [$room_id]);
+        }
     }
 
     public function scopeSearchTagName($query, $tag_name)
-    {   
-        $keyword = addcslashes($tag_name, '%_\\');
-        return $query->whereHas('roomTags.tag', function ($tag) use($keyword) {
-            $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_general_ci', [$keyword]);
-        });
+    {
+        if (isset($tag_name)) {
+            //$keyword = addcslashes($tag_name, '%_\\');
+            //dd($tag_name,$keyword);
+            return $query->whereHas('roomTags.tag', function ($tag) use ($tag_name) {
+                $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_general_ci', [$tag_name]);
+                
+            });
+        }
     }
 }
