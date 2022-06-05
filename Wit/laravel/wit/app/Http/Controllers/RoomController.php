@@ -155,9 +155,9 @@ class RoomController extends Controller
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
 
-            /*if (isset($room->password)) {
+            if (isset($room->password)) {
                 $room->password = 'yes';
-            }*/
+            }
         }
         return $rooms;
     }
@@ -166,11 +166,12 @@ class RoomController extends Controller
     {
         if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;
-        } else if (mb_strlen($request->room_id) > 26) {
+        } else if (mb_strlen($request->room_id) == 27) {
             $room_id = substr($request->room_id, 0, -1);
         } else {
-            return redirect('home')->with('flashmessage', 'ルーム:' . $request->room_id . 'は存在しません');
+            return back()->with('flashmessage', 'ルーム:' . $request->room_id . 'は存在しません');
         }
+        
         $room = Room::find($room_id);
         $room_password = $room->password;
 
