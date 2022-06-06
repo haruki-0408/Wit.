@@ -38,9 +38,9 @@ class ListRoom extends Model
             $list_room->room_id = $room_id;
             $list_room->save();
 
-            return 'リストにルームを追加しました';
+            return 1;
         }else{
-            return 'ルームID:'.$room_id.'の部屋は存在しません';
+            return 0;
         }
     }
 }

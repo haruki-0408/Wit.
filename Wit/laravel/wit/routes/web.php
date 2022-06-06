@@ -37,8 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/create', [App\Http\Controllers\RoomController::class, 'create'])->name('createRoom');
     Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
     
-    Route::get('/home/addListRoom{room_id}', [App\Http\Controllers\RoomController::class, 'showModalListRoom'])->name('showModalListRoom');
-    Route::get('/home/addListUser{user_id}', [App\Http\Controllers\UserController::class, 'showModalListUser'])->name('showModalListUser');
+    Route::get('/home/addListRoom{room_id}', [App\Http\Controllers\RoomController::class, 'actionListRoom'])->name('showModalListRoom');
+    Route::get('/home/addListUser{user_id}', [App\Http\Controllers\UserController::class, 'actionListUser'])->name('showModalListUser');
     
     //api 
     Route::get('/getRoomInfo{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');

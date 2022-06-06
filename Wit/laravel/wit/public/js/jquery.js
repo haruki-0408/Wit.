@@ -11159,7 +11159,7 @@ $(document).on('click', '.add-list-room', function () {
     dataType: 'json'
   }) //通信が成功したとき
   .done(function (res) {
-    alert(res);
+    actionSuccess(res);
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);
@@ -11177,7 +11177,7 @@ $(document).on('click', '.add-list-user', function () {
     dataType: 'json'
   }) //通信が成功したとき
   .done(function (res) {
-    alert(res);
+    actionSuccess(res);
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);
@@ -11335,7 +11335,6 @@ function addRoomPage(res) {
       }
 
       array = buttonTypeJudge(res[i].type, res[i].id);
-      console.log(array);
       array.forEach(function (value) {
         clone.querySelector('.btn-group').appendChild(value);
       });
@@ -11470,7 +11469,6 @@ function removeGetMoreButton() {
   var rooms = document.getElementById('Rooms');
   var lastli = rooms.lastElementChild.dataset.roomId;
   var count_child = rooms.childElementCount;
-  console.log(rooms.lastElementChild.tagName);
 
   if (lastli.length === 27 || count_child < 10 || rooms.lastElementChild.tagName === 'H3') {
     $("[id^='getMore']").remove();
@@ -11510,6 +11508,25 @@ function getMorePostButton() {
     getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
     document.getElementById('Post-rooms').appendChild(getmore);
   }
+}
+
+function actionSuccess(res) {
+  var action;
+  var message;
+
+  if ('message' in res) {
+    action = document.getElementById('action-message');
+    message = res['message'];
+  } else if ('error_message' in res) {
+    action = document.getElementById('error-message');
+    message = res['error_message'];
+  }
+
+  action.classList.remove("invisible");
+  $(action).children('div').text(message);
+  setTimeout(function () {
+    action.classList.add('invisible');
+  }, 3000);
 }
 
 if (document.getElementById('roomPasswordFormModal')) {

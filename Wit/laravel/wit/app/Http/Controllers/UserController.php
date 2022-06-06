@@ -72,7 +72,7 @@ class UserController extends Controller
             if (Hash::check($setting_password, $password)) {
                 return $this->settings($query);
             } else {
-                return back()->with('flashmessage', 'パスワードが違います');
+                return back()->with('error_message', 'パスワードが違います');
             }
         }
     }
@@ -149,10 +149,10 @@ class UserController extends Controller
                     $encrypted_user_id = Crypt::encrypt($user_id);
                     return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
                 } else {
-                    return back()->with('flashmessage', '新しいパスワードと確認用のパスワードが一致していません');
+                    return back()->with('error_message', '新しいパスワードと確認用のパスワードが一致していません');
                 }
             } else {
-                return back()->with('flashmessage', 'パスワードが違います');
+                return back()->with('error_message', 'パスワードが違います');
             }
         }
     }
@@ -182,7 +182,7 @@ class UserController extends Controller
         }
     }
 
-    public function showModalListUser(Request $request)
+    public function actionListUser(Request $request)
     {
         if(isset($request->user_id)){
             $message = ListUser::addListUser($request->user_id);

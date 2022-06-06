@@ -241,7 +241,7 @@ $(document).on('click', '.add-list-room', function () {
     })
         //通信が成功したとき
         .done((res) => {
-            alert(res);
+            actionSuccess(res);
         })
         //通信が失敗したとき
         .fail((error) => {
@@ -263,7 +263,7 @@ $(document).on('click', '.add-list-user', function () {
     })
         //通信が成功したとき
         .done((res) => {
-            alert(res);
+            actionSuccess(res);
         })
         //通信が失敗したとき
         .fail((error) => {
@@ -432,8 +432,8 @@ function addRoomPage(res) {
             }
 
             array = buttonTypeJudge(res[i].type, res[i].id);
-            console.log(array);
-            array.forEach(function(value){
+
+            array.forEach(function (value) {
                 clone.querySelector('.btn-group').appendChild(value);
             });
 
@@ -525,7 +525,7 @@ function buttonTypeJudge(type, room_id) {
             a2.className = "enter-room btn btn-outline-primary p-2";
             a2.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
             a2.href = '/home/Room:' + room_id;
-            return [button0,button1,a2];
+            return [button0, button1, a2];
 
         case '101':
             button0.className = "remove-room btn btn-outline-danger p-2";
@@ -536,7 +536,7 @@ function buttonTypeJudge(type, room_id) {
             button2.setAttribute("data-bs-toggle", 'modal');
             button2.setAttribute("data-bs-target", "#roomPasswordFormModal")
             button2.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
-            return [button0 ,button1 ,button2];
+            return [button0, button1, button2];
 
         case '110':
             button0.className = "remove-room btn btn-outline-danger p-2";
@@ -546,7 +546,7 @@ function buttonTypeJudge(type, room_id) {
             a2.className = "enter-room btn btn-outline-primary p-2";
             a2.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
             a2.href = '/home/Room:' + room_id;
-            return [button0 ,button1, a2];
+            return [button0, button1, a2];
 
         case '111':
             button0.className = "remove-room btn btn-outline-danger p-2";
@@ -557,18 +557,18 @@ function buttonTypeJudge(type, room_id) {
             button2.setAttribute("data-bs-toggle", 'modal');
             button2.setAttribute("data-bs-target", "#roomPasswordFormModal")
             button2.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
-            return [button0 ,button1 ,button2];
+            return [button0, button1, button2];
 
-        default :
+        default:
             break;
-        }
+    }
 }
 
 function removeGetMoreButton() {
     let rooms = document.getElementById('Rooms');
     let lastli = rooms.lastElementChild.dataset.roomId;
     let count_child = rooms.childElementCount;
-    console.log(rooms.lastElementChild.tagName);
+
     if (lastli.length === 27 || count_child < 10 || rooms.lastElementChild.tagName === 'H3') {
         $("[id^='getMore']").remove();
 
@@ -604,6 +604,22 @@ function getMorePostButton() {
         getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
         document.getElementById('Post-rooms').appendChild(getmore);
     }
+}
+
+function actionSuccess(res) {
+    let action;
+    let message;
+    if ('message' in res) {
+        action = document.getElementById('action-message');
+        message = res['message'];
+    } else if('error_message' in res) {
+        action = document.getElementById('error-message');
+        message = res['error_message'];
+    } 
+
+    action.classList.remove("invisible");
+    $(action).children('div').text(message);
+    setTimeout(() => { action.classList.add('invisible') }, 3000);
 }
 
 

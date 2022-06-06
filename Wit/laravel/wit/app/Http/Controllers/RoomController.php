@@ -99,8 +99,12 @@ class RoomController extends Controller
         }
 
         $last_room = $second_query->orderBy('id', 'asc')->first();
-        //dd($query->toSql(),$second_query->toSql(),$last_room);
 
+        $rooms->map(function ($each) {
+            $type = Room::buttonTypeJudge($each->id);
+            $each['type'] = $type;
+            return $each;
+        });
         foreach ($rooms as $room) {
             if ($rooms->last() && $room->id == $last_room->id) {
                 $room->id = $room->id . rand(0, 9);
@@ -113,8 +117,8 @@ class RoomController extends Controller
                 $room->password = 'yes';
             }
         }
-        return $rooms;
-        //return response()->Json($rooms);
+        //return $rooms;
+        return response()->Json($rooms);
     }
 
 
@@ -147,7 +151,7 @@ class RoomController extends Controller
         });
 
         foreach ($rooms as $room) {
-            
+
             if ($room == $rooms->last() && $room->id == $last_room->id) {
                 $room->id = $room->id . rand(0, 9);
             }
@@ -169,9 +173,9 @@ class RoomController extends Controller
         } else if (mb_strlen($request->room_id) == 27) {
             $room_id = substr($request->room_id, 0, -1);
         } else {
-            return back()->with('flashmessage', 'ルーム:' . $request->room_id . 'は存在しません');
+            return back()->with('error_message', 'ルーム:' . $request->room_id . 'は存在しません');
         }
-        
+
         $room = Room::find($room_id);
         $room_password = $room->password;
 
@@ -185,15 +189,21 @@ class RoomController extends Controller
                     'count_image_data' => $count_image_data,
                 ]);
             } else {
-                return back()->with('flashmessage', 'パスワードが違います');
+                return back()->with('error_message', 'パスワードが違います');
             }
         } else {
-            return back()->with('flashmessage', 'パスワードが不正入力されています');
+            return back()->with('error_message', 'パスワードが不正入力されています');
         }
     }
 
     public function enterRoom($room_id)
     {
+        if (mb_strlen($room_id) == 27) {
+            $room_id = substr($room_id, 0, -1);
+        } else if(mb_strlen($room_id) > 27){
+            return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+        }
+
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
@@ -209,12 +219,10 @@ class RoomController extends Controller
                     'count_image_data' => $count_image_data,
                 ]);
             } else {
-                return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
+                return redirect('home')->with('error_message', 'パスワード付きのルームです');
             }
-            //return redirect('home')->with('flashmessage', 'パスワード付きのルームです');
-
         } else {
-            return redirect('home')->with('flashmessage', 'ルーム:' . $room_id . 'は存在しません');
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 
@@ -227,24 +235,45 @@ class RoomController extends Controller
 
         $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(3)->get();
 
+        $post_rooms->map(function ($each) {
+            $type = Room::buttonTypeJudge($each->id);
+            $each['type'] = $type;
+            return $each;
+        });
+
         return $post_rooms;
     }
 
-    public function showModalListRoom(Request $request)
+    public function actionListRoom(Request $request)
     {
-        if (isset($request->room_id)) {
+        if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;
-            $user_id = Auth::id();
-            if (ListRoom::where('user_id',$user_id)->where('room_id',$room_id)->exists())
-                $message = 'このルームは既にリストに登録されています';
-            else{
-                $message = ListRoom::addListRoom($request->room_id);
-                }
-        }else{
-            $message = 'エラーが発生しました';
+        } else if (mb_strlen($request->room_id) == 27) {
+            $room_id = substr($request->room_id, 0, -1);
+        } else {
+            $error_message = 'ルーム:' . $request->room_id . 'は存在しません';
         }
 
-        return response()->Json($message);
+        if (isset($room_id)) {
+            $user_id = Auth::id();
+            if (ListRoom::where('user_id', $user_id)->where('room_id', $room_id)->exists())
+                $error_message = 'このルームは既にリストに登録されています';
+            else {
+                $message_type = ListRoom::addListRoom($room_id);
+                if ($message_type == 1) {
+                    $message = "リストにルームを追加しました";
+                } else if ($message_type == 0) {
+                    $error_message = "ルームID:'.$room_id.'の部屋は存在しません";
+                }
+            }
+        } else {
+            $error_message = 'エラーが発生しました';
+        }
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
+        }
     }
 
     public static function getListRoom($user = null, $room_id = null)
@@ -255,7 +284,11 @@ class RoomController extends Controller
 
         $list_rooms = $user->listRooms()->with(['user', 'roomTags.tag'])->take(30)->get();
 
-
+        $list_rooms->map(function ($each) {
+            $type = Room::buttonTypeJudge($each->id);
+            $each['type'] = $type;
+            return $each;
+        });
         return $list_rooms;
     }
 
