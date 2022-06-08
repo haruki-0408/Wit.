@@ -4,7 +4,7 @@
         <div class="card border-0">
             <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                 <div class="user">
-                    <a href="'home/profile/'{{ $room->user_id }} }}"
+                    <a href="home/profile/{{ $room->user_id }} "
                         class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="{{ asset($room->user->profile_image) }}" alt="" width="50" height="50"
                             class="profile-image rounded-circle me-2">
@@ -76,7 +76,6 @@
                         @break
 
                         @case(11)
-                            :
                             <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-clipboard-minus" viewBox="0 0 16 16">

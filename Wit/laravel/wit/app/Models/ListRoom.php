@@ -32,15 +32,23 @@ class ListRoom extends Model
 
     public static function addListRoom($room_id)
     {
-        if (Room::where('id', $room_id)->exists()) {
-            $list_room = new ListRoom;
-            $list_room->user_id = Auth::id();
-            $list_room->room_id = $room_id;
-            $list_room->save();
-
-            return 1;
-        }else{
-            return 0;
+        $auth_id = Auth::id();
+        if (isset($room_id)) {
+            if (ListRoom::where('user_id', $auth_id)->where('room_id', $room_id)->exists()) {
+                $message_type = 0;
+            } else if (Room::where('id', $room_id)->exists()) {
+                $list_room = new ListRoom;
+                $list_room->user_id = Auth::id();
+                $list_room->room_id = $room_id;
+                $list_room->save();
+                $message_type = 1;
+            } else {
+                $message_type = 2;
+            }
+        } else {
+            $message_type = 3;
         }
+
+        return $message_type;
     }
 }

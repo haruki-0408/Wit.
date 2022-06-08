@@ -250,9 +250,9 @@ $(document).on('click', '.add-list-room', function () {
 
 });
 
+//add-list-userボタンを押したとき
 $(document).on('click', '.add-list-user', function () {
     let button = $(this);
-    console.log(button);
     let user_id = button.parent().parent().attr('data-user-id');
 
 
@@ -400,6 +400,11 @@ function addUserPage(res) {
             clone.querySelector('.profile-image').src = res[i].profile_image;
             clone.querySelector('.user-name').textContent = res[i].name;
 
+            button = userButtonTypeJudge(res[i].type, res[i].id);
+            if (button !== 0) {
+                clone.querySelector('.btn-group').appendChild(button);
+            }
+
             document.getElementById('Rooms').appendChild(clone);
             let search_button = document.getElementById("search-button");
             if (search_button.disabled) {
@@ -431,7 +436,7 @@ function addRoomPage(res) {
                 clone.querySelector('.card-title').textContent = res[i].title;
             }
 
-            array = buttonTypeJudge(res[i].type, res[i].id);
+            array = roomButtonTypeJudge(res[i].type, res[i].id);
 
             array.forEach(function (value) {
                 clone.querySelector('.btn-group').appendChild(value);
@@ -476,7 +481,23 @@ function addRoomPage(res) {
 
 }
 
-function buttonTypeJudge(type, room_id) {
+function userButtonTypeJudge(type, user_id) {
+    let button = document.createElement('button');
+    switch (type) {
+        case '0':
+            return 0;
+        case '1':
+            button.className = "add-list-user btn btn-outline-primary";
+            button.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-plus-fill' viewBox='0 0 16 16'> <path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/> <path fill-rule='evenodd' d='M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z'/> </svg>"
+            return button;
+        case '10':
+            button.className = "remove-list-user btn btn-outline-danger";
+            button.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-dash-fill' viewBox='0 0 16 16'> <path fill-rule='evenodd' d='M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z'/> <path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/> </svg>"
+            return button;
+    }
+}
+
+function roomButtonTypeJudge(type, room_id) {
     let button0 = document.createElement('button');
     let button1 = document.createElement('button');
     let button2 = document.createElement('button');
@@ -612,10 +633,10 @@ function actionSuccess(res) {
     if ('message' in res) {
         action = document.getElementById('action-message');
         message = res['message'];
-    } else if('error_message' in res) {
+    } else if ('error_message' in res) {
         action = document.getElementById('error-message');
         message = res['error_message'];
-    } 
+    }
 
     action.classList.remove("invisible");
     $(action).children('div').text(message);

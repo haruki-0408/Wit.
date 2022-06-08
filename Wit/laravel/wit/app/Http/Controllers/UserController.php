@@ -172,40 +172,54 @@ class UserController extends Controller
             $user_name = $request->keyword;
             $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get();
 
+            $users->map(function ($each) {
+                $type = User::buttonTypeJudge($each->id);
+                $each['type'] = $type;
+                return $each;
+            });
+
             foreach ($users as $user) {
                 $user->id = Crypt::encrypt($user->id);
             }
-            
-            return $users;
+
+            return response()->Json($users);
         } else {
-            
         }
     }
 
     public function actionListUser(Request $request)
     {
-        if(isset($request->user_id)){
-            $message = ListUser::addListUser($request->user_id);
+        if (isset($request->user_id)) {
+            $message_type = ListUser::addListUser($request->user_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'そのユーザは存在しません';
+                    break;
+                case 1:
+                    $message = 'リストにユーザーを追加しました';
+                    break;
+                case 10:
+                    $error_message = 'そのユーザは既にリストに登録されています';
+                    break;
+            }
+        }
 
-            return response()->Json($message);
-        }else{
-            return dd($request->user_id);
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
         }
     }
 
-    public static function getListUser($user = null, $favorite_user_id =null)
+    public static function getListUser($user = null, $favorite_user_id = null)
     {
-        if (is_null($user)){
+        if (is_null($user)) {
             $user = Auth::user();
         }
-        
+
         $list_users = $user->listUsers()->take(30)->get();
-        
-        
+
+
         return $list_users;
-
     }
-
-
 }
-

@@ -96,14 +96,14 @@
 <template id="User-template">
     <li class="border-0 d-flex bg-white p-1 align-items-center justify-content-between">
         <div class="user">
-            <a class="user-link link-dark text-decoration-none" href="" alt="">
+            <a class="user-link link-dark text-decoration-none" href="#" alt="">
                 <img src="" alt="" width="50" height="50" class="profile-image rounded-circle me-2">
                 <strong class="user-name"></strong>
             </a>
         </div>
 
         <div class="btn-group d-flex align-items-center p-2">
-            <button type="button" class="add-list-user btn btn-outline-primary"><i class="bi bi-person-plus-fill"></i></button>
+
         </div>
     </li>
 </template>

@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 //uuidを導入するために変更する
 use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
 use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -72,7 +73,7 @@ class User extends Authenticatable
 
     public function listUsers()
     {
-        return $this->belongsToMany('App\Models\User','list_users','user_id','favorite_user_id');
+        return $this->belongsToMany('App\Models\User', 'list_users', 'user_id', 'favorite_user_id');
     }
 
     public function favoriteUsers()
@@ -82,7 +83,7 @@ class User extends Authenticatable
 
     public function listRooms()
     {
-        return $this->belongsToMany('App\Models\Room','list_rooms','user_id','room_id');
+        return $this->belongsToMany('App\Models\Room', 'list_rooms', 'user_id', 'room_id');
     }
 
     public function roomChat()
@@ -103,9 +104,27 @@ class User extends Authenticatable
     //ユーザーの名前検索
     public function scopeSearchUserName($query, $user_name)
     {
-        return $query->whereRaw("name LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci",['%'.$user_name.'%']);
+        return $query->whereRaw("name LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $user_name . '%']);
     }
 
-    
+    public static function buttonTypeJudge($user_id)
+    {
+        $bit_flag = 0b00; //２進数として扱うときは先頭に0bを付与
+        if (isset($user_id)) {
+            $auth_id = Auth::id();
+            //ユーザがauthユーザかどうか判定
+            if ($user_id == $auth_id) {
+                $bit_flag = $bit_flag | 0b00;
+            } elseif(ListUser::where('user_id', $auth_id)->where('favorite_user_id', $user_id)->exists()){
+                //ユーアがリストに登録されていたら
+                $bit_flag = $bit_flag | 0b10;
+            }else{
+                $bit_flag = $bit_flag | 0b01;
+            }
 
+            $type = decbin($bit_flag);
+            //decbinは２進数として扱う
+            return $type;
+        }
+    }
 }

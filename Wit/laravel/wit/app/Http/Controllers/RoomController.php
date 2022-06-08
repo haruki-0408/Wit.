@@ -200,7 +200,7 @@ class RoomController extends Controller
     {
         if (mb_strlen($room_id) == 27) {
             $room_id = substr($room_id, 0, -1);
-        } else if(mb_strlen($room_id) > 27){
+        } else if (mb_strlen($room_id) > 27) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
 
@@ -255,24 +255,26 @@ class RoomController extends Controller
         }
 
         if (isset($room_id)) {
-            $user_id = Auth::id();
-            if (ListRoom::where('user_id', $user_id)->where('room_id', $room_id)->exists())
-                $error_message = 'このルームは既にリストに登録されています';
-            else {
-                $message_type = ListRoom::addListRoom($room_id);
-                if ($message_type == 1) {
-                    $message = "リストにルームを追加しました";
-                } else if ($message_type == 0) {
-                    $error_message = "ルームID:'.$room_id.'の部屋は存在しません";
-                }
+            $message_type = ListRoom::addListRoom($room_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'このルームは既にリストに追加されています';
+                    break;
+                case 1:
+                    $message = 'リストにルームを追加しました';
+                    break;
+                case 2:
+                    $error_message = 'ルーム:' . $room_id . 'は存在しません';
+                    break;
+                case 3:
+                    $error_message = 'エラーが発生しました';
             }
-        } else {
-            $error_message = 'エラーが発生しました';
-        }
-        if (isset($message)) {
-            return response()->Json(["message" => $message]);
-        } else {
-            return response()->Json(["error_message" => $error_message]);
+
+            if (isset($message)) {
+                return response()->Json(["message" => $message]);
+            } else {
+                return response()->Json(["error_message" => $error_message]);
+            }
         }
     }
 

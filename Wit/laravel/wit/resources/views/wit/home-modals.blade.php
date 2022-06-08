@@ -78,8 +78,7 @@
                         <li data-user-id='{{ Crypt::encrypt($list_user->id) }}'
                             class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
                             <div class="user">
-                                <a class="user-link link-dark text-decoration-none"
-                                    href="/home/profile/{{ encrypt($list_user->id) }}" alt="">
+                                <a class="user-link link-dark text-decoration-none" href='/home/profile/{{ encrypt($list_user->id) }}' alt="">
                                     <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
                                         class="profile-image rounded-circle me-2">
                                     <strong class="user-name">{{ $list_user->name }}</strong>
