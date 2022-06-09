@@ -18,7 +18,17 @@
                     @component('wit.room-content')
                         @slot('rooms', $post_rooms)
                     @endcomponent
+
                 </ul>
+                @if ($post_rooms->count() == 10)
+                    <div id="getPostButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
+                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                            <path
+                                d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
+                            </path>
+                        </svg>
+                    </div>
+                @endif
                 <div id="getPostButton" class="btn d-flex justify-content-center m-3"><svg
                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -48,7 +58,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-1">
-                <ul id="myAnswer" class="p-0 m-0 ">
+                <ul id="myAnswer" class="p-1 m-0 ">
+
                 </ul>
             </div>
             <div class="modal-footer">
@@ -78,7 +89,8 @@
                         <li data-user-id='{{ Crypt::encrypt($list_user->id) }}'
                             class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
                             <div class="user">
-                                <a class="user-link link-dark text-decoration-none" href='/home/profile/{{ encrypt($list_user->id) }}' alt="">
+                                <a class="user-link link-dark text-decoration-none"
+                                    href='/home/profile/{{ encrypt($list_user->id) }}' alt="">
                                     <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
                                         class="profile-image rounded-circle me-2">
                                     <strong class="user-name">{{ $list_user->name }}</strong>
@@ -98,6 +110,15 @@
                         </li>
                     @endforeach
                 </ul>
+                @if ($list_users->count() == 30)
+                    <div id="getListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
+                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                            <path
+                                d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
+                            </path>
+                        </svg>
+                    </div>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -126,6 +147,15 @@
                         @slot('rooms', $list_rooms);
                     @endcomponent
                 </ul>
+                @if ($list_rooms->count() == 10)
+                    <div id="getListRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
+                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                            <path
+                                d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
+                            </path>
+                        </svg>
+                    </div>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -319,21 +349,6 @@
             </div>
             <div class="modal-body">
                 <a href="/home/profile/settings/deleteAccount" class="btn btn-primary text-end">YES</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add List Room Confirm-->
-<div class="modal fade" id="addListRoomModal" aria-hidden="true" aria-labelledby="addListRoomModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content text-end">
-            <div class="modal-header">
-                <h5 class="modal-title">aaaa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

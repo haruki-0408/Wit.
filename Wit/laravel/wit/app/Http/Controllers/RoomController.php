@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
 use App\Models\RoomUser;
@@ -137,8 +138,9 @@ class RoomController extends Controller
                 $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
 
-            } else {
-                abort(404);
+            } else if (mb_strlen($room_id) == 27) {
+                $room_id = substr($room_id, 0, -1);
+                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
             }
         } else {
             abort(404);
@@ -229,17 +231,30 @@ class RoomController extends Controller
     public static function getPostRoom($user_id = null, $room_id = null)
     {
         if (is_null($user_id)) {
-            $user_id = Auth::id();
+            $user = Auth::user();
         }
 
-
-        $post_rooms = Room::where('user_id', $user_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(3)->get();
+        $last_room_id = $user->rooms()->first()->value('id');
+        $post_rooms = $user->rooms()->orderBy('id','desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
         $post_rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type;
             return $each;
         });
+
+        foreach ($post_rooms as $post_room) {
+            if ($post_rooms->last() && $post_room->id == $last_room_id) {
+                $post_room->id = $post_room->id . rand(0, 9);
+            }
+
+            $post_room->user->id = Crypt::encrypt($post_room->user->id);
+            $post_room->user_id = Crypt::encrypt($post_room->user_id);
+
+            if (isset($post_room->password)) {
+                $post_room->password = 'yes';
+            }
+        }
 
         return $post_rooms;
     }
@@ -284,22 +299,36 @@ class RoomController extends Controller
             $user = Auth::user();
         }
 
-        $list_rooms = $user->listRooms()->with(['user', 'roomTags.tag'])->take(30)->get();
+        $last_room_id = $user->listRooms()->first()->value('id');
+        $list_rooms = $user->listRooms()->orderBy('list_rooms.id','desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
         $list_rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type;
             return $each;
         });
+
+        foreach ($list_rooms as $list_room) {
+            if ($list_rooms->last() && $list_room->id == $last_room_id) {
+                $list_room->id = $list_room->id . rand(0, 9);
+            }
+
+            $list_room->user->id = Crypt::encrypt($list_room->user->id);
+            $list_room->user_id = Crypt::encrypt($list_room->user_id);
+
+            if (isset($list_room->password)) {
+                $list_room->password = 'yes';
+            }
+        }
         return $list_rooms;
     }
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $room = Room::find($room_id)->only("password");
+        $room_password = Room::find($room_id)->value("password");
 
-        if (is_null($room['password'])) {
+        if (is_null($room_password)) {
 
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
@@ -311,7 +340,7 @@ class RoomController extends Controller
                 abort(404);
             }
         } else if (session()->get('auth_room_id') == $room_id) {
-            //session()->forget('auth_room_id');
+
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
             if (is_null($room_image)) {

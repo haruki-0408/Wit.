@@ -124,16 +124,18 @@
             <div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 m-0 p-2">
                 <ul id="Rooms" class="p-0 m-0 ">
                     @component('wit.room-content')
-                        @slot('rooms',$rooms);
+                        @slot('rooms', $rooms);
                     @endcomponent
                 </ul>
-                <div id="getMoreButton" class="btn d-flex justify-content-center m-3"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-caret-down" viewBox="0 0 16 16">
-                        <path
-                            d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
-                        </path>
-                    </svg></div>
+                @if ($rooms->count() == 15)
+                    <div id="getMoreButton" class="btn d-flex justify-content-center m-3"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-caret-down" viewBox="0 0 16 16">
+                            <path
+                                d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
+                            </path>
+                        </svg></div>
+                @endif
 
             </div>
             @component('wit.right')
