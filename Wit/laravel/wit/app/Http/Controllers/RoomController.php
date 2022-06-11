@@ -24,12 +24,12 @@ use function PHPUnit\Framework\isEmpty;
 
 class RoomController extends Controller
 {
-
+    /*
     public function index()
     {
         $items = Room::all();
         return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
-    }
+    }*/
 
     protected function searchRoom(Request $request)
     {
@@ -125,13 +125,8 @@ class RoomController extends Controller
 
     public static function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
-        $last_room = Room::orderBy('id', 'asc')->first('id');
-
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
-
-
-            //roomTags.tag でリレーションのリレーション先まで取得できた
 
         } else if (isset($room_id)) {
             if (mb_strlen($room_id) == 26) {
@@ -148,23 +143,23 @@ class RoomController extends Controller
 
         $rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
-            $each['type'] = $type;
+            $each['type'] = $type['type'];
+            
+            if($type['no_get_more']){
+                $each['no_get_more'] = $type['no_get_more'];
+            }
             return $each;
         });
 
         foreach ($rooms as $room) {
-
-            if ($room == $rooms->last() && $room->id == $last_room->id) {
+            if ($room == $rooms->last() && $room->no_get_more) {
                 $room->id = $room->id . rand(0, 9);
             }
 
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
-
-            if (isset($room->password)) {
-                $room->password = 'yes';
-            }
         }
+
         return $rooms;
     }
 
@@ -232,6 +227,13 @@ class RoomController extends Controller
     {
         if (is_null($user_id)) {
             $user = Auth::user();
+        }else if(isset($user_id)){
+            $user = User::find($user_id);
+        }
+
+        //ユーザが投稿を持っていない時はから配列を返す
+        if(!($user->rooms()->exists())){
+            return $post_rooms = [];
         }
 
         $last_room_id = $user->rooms()->first()->value('id');

@@ -11334,9 +11334,10 @@ function addRoomPage(res) {
 
       clone.querySelector('li').setAttribute('data-room-id', res[i].id); //鍵マーク判定
 
-      if (res[i].password === 'yes') {
+      if (res[i].type === 'yes') {
         clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<svg width='16' height='16' fill='currentColor' class='bi bi-lock-fill' viewBox='0 0 16 16'><path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z' /></svg>";
       } else {
+        console.log(res[i].type);
         clone.querySelector('.card-title').textContent = res[i].title;
       }
 
@@ -11495,7 +11496,7 @@ function removeGetMoreButton() {
   var lastli = rooms.lastElementChild.dataset.roomId;
   var count_child = rooms.childElementCount;
 
-  if (lastli.length === 27 || count_child < 10 || rooms.lastElementChild.tagName === 'H3') {
+  if (lastli.length === 27 || count_child < 15 || rooms.lastElementChild.tagName === 'H3') {
     $("[id^='getMore']").remove();
   }
 }

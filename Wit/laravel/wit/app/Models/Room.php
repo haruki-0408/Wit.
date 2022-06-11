@@ -46,6 +46,7 @@ class Room extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+        'password',
         'deleted_at',
         'created_at',
         'updated_at',
@@ -132,27 +133,32 @@ class Room extends Model
     public static function buttonTypeJudge($room_id)
     {
         $user_id = Auth::id();
-        $bit_flag = 0b000; //２進数として扱うときは先頭に0bを付与
+
+        $bit_flag = 0b0000; //２進数として扱うときは先頭に0bを付与
         if (isset($room_id)) {
-            
-            //部屋の作成者かどうか判定
+            if(Room::orderBy('id','asc')->value('id') == $room_id){
+                $no_get_more = true;
+            }else{
+                $no_get_more = false;
+            }
+
             if (Room::where('id', $room_id)->value('user_id') == $user_id) {
-                $bit_flag = $bit_flag | 0b100;
+                $bit_flag = $bit_flag | 0b0100;
             }
 
             //部屋がリスト登録されているかどうか判定
             if (ListRoom::where('user_id', $user_id)->where('room_id', $room_id)->exists()) {
-                $bit_flag = $bit_flag | 0b010;
+                $bit_flag = $bit_flag | 0b0010;
             }
 
             //部屋にパスワードがあるかどうか判定
             if ((Room::where('id', $room_id)->value('password'))) {
-                $bit_flag = $bit_flag | 0b001;
+                $bit_flag = $bit_flag | 0b0001;
             }
 
             $type = decbin($bit_flag);
             //decbinは２進数として扱う
-            return $type;
+            return ['type'=>$type,'no_get_more'=>$no_get_more];
         }
     }
 }

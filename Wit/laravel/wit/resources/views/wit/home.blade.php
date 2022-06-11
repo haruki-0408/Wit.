@@ -127,7 +127,7 @@
                         @slot('rooms', $rooms);
                     @endcomponent
                 </ul>
-                @if ($rooms->count() == 15)
+                @if (!($rooms->last()->no_get_more))
                     <div id="getMoreButton" class="btn d-flex justify-content-center m-3"><svg
                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-caret-down" viewBox="0 0 16 16">
