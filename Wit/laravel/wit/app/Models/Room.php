@@ -130,17 +130,28 @@ class Room extends Model
         }
     }
 
-    public static function buttonTypeJudge($room_id)
+    public static function buttonTypeJudge($room_id, $query = null)
     {
         $user_id = Auth::id();
 
         $bit_flag = 0b0000; //２進数として扱うときは先頭に0bを付与
         if (isset($room_id)) {
-            if(Room::orderBy('id','asc')->value('id') == $room_id){
-                $no_get_more = true;
+            if (isset($query)) {
+                //seachRoom()から飛んできたとき
+                if ($query->orderBy('id', 'asc')->value('id') == $room_id) {
+                    $no_get_more = true;
+                } else {
+                    $no_get_more = false;
+                }
             }else{
-                $no_get_more = false;
+                //getRoomInfo()から飛んできたとき
+                if (Room::orderBy('id', 'asc')->value('id') == $room_id) {
+                    $no_get_more = true;
+                } else {
+                    $no_get_more = false;
+                }
             }
+
 
             if (Room::where('id', $room_id)->value('user_id') == $user_id) {
                 $bit_flag = $bit_flag | 0b0100;
@@ -158,7 +169,7 @@ class Room extends Model
 
             $type = decbin($bit_flag);
             //decbinは２進数として扱う
-            return ['type'=>$type,'no_get_more'=>$no_get_more];
+            return ['type' => $type, 'no_get_more' => $no_get_more];
         }
     }
 }

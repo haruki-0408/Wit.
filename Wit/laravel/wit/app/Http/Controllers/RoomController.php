@@ -99,15 +99,21 @@ class RoomController extends Controller
             $rooms = $query->with(['user', 'roomTags.tag'])->take(10)->get();
         }
 
-        $last_room = $second_query->orderBy('id', 'asc')->first();
+        //$last_room = $second_query->orderBy('id', 'asc')->first();
 
-        $rooms->map(function ($each) {
-            $type = Room::buttonTypeJudge($each->id);
-            $each['type'] = $type;
+        $rooms->map(function ($each) use($second_query){
+            $type = Room::buttonTypeJudge($each->id,$second_query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
             return $each;
         });
+
+
         foreach ($rooms as $room) {
-            if ($rooms->last() && $room->id == $last_room->id) {
+            if ($rooms->last() && $room->no_get_more) {
                 $room->id = $room->id . rand(0, 9);
             }
 
@@ -127,7 +133,6 @@ class RoomController extends Controller
     {
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
-
         } else if (isset($room_id)) {
             if (mb_strlen($room_id) == 26) {
                 $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
@@ -144,8 +149,8 @@ class RoomController extends Controller
         $rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
-            
-            if($type['no_get_more']){
+
+            if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
             }
             return $each;
@@ -227,17 +232,17 @@ class RoomController extends Controller
     {
         if (is_null($user_id)) {
             $user = Auth::user();
-        }else if(isset($user_id)){
+        } else if (isset($user_id)) {
             $user = User::find($user_id);
         }
 
         //ユーザが投稿を持っていない時はから配列を返す
-        if(!($user->rooms()->exists())){
+        if (!($user->rooms()->exists())) {
             return $post_rooms = [];
         }
 
         $last_room_id = $user->rooms()->first()->value('id');
-        $post_rooms = $user->rooms()->orderBy('id','desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+        $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
         $post_rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
@@ -302,7 +307,7 @@ class RoomController extends Controller
         }
 
         $last_room_id = $user->listRooms()->first()->value('id');
-        $list_rooms = $user->listRooms()->orderBy('list_rooms.id','desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+        $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
         $list_rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
