@@ -101,8 +101,8 @@ class RoomController extends Controller
 
         //$last_room = $second_query->orderBy('id', 'asc')->first();
 
-        $rooms->map(function ($each) use($second_query){
-            $type = Room::buttonTypeJudge($each->id,$second_query);
+        $rooms->map(function ($each) use ($second_query) {
+            $type = Room::buttonTypeJudge($each->id, $second_query);
             $each['type'] = $type['type'];
 
             if ($type['no_get_more']) {
@@ -228,24 +228,25 @@ class RoomController extends Controller
         }
     }
 
-    public static function getPostRoom($user_id = null, $room_id = null)
+    public static function getPostRoom($room_id = null)
     {
-        if (is_null($user_id)) {
-            $user = Auth::user();
-        } else if (isset($user_id)) {
+        if (isset($user_id)) {
+            $user = User::find($user_id);
+        } else {
+            $user_id = Auth::id();
             $user = User::find($user_id);
         }
 
-        //ユーザが投稿を持っていない時はから配列を返す
-        if (!($user->rooms()->exists())) {
-            return $post_rooms = [];
+        $query = $user->rooms();
+
+        if (is_null($room_id)) {
+            $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+        } else {
+            $post_rooms = $user->rooms()->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         }
 
-        $query = $user->rooms();
-        $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
-
-        $post_rooms->map(function ($each) use($query) {
-            $type = Room::buttonTypeJudge($each->id,$query);
+        $post_rooms->map(function ($each) use ($query) {
+            $type = Room::buttonTypeJudge($each->id, $query);
             $each['type'] = $type['type'];
 
             if ($type['no_get_more']) {
@@ -255,16 +256,48 @@ class RoomController extends Controller
         });
 
         foreach ($post_rooms as $post_room) {
-            if ($post_rooms->last() && $post_room->id == $post_room->no_get_more) {
+            if ($post_rooms->last() && $post_room->no_get_more) {
                 $post_room->id = $post_room->id . rand(0, 9);
             }
 
             $post_room->user->id = Crypt::encrypt($post_room->user->id);
             $post_room->user_id = Crypt::encrypt($post_room->user_id);
-
         }
 
         return $post_rooms;
+    }
+
+    public static function getListRoom($room_id = null)
+    {
+        $user_id= Auth::id();
+        $user = User::find($user_id);
+
+        $join_query = $user->listRooms();
+        if (is_null($room_id)) {
+            $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+        } else if (isset($room_id)) {
+            $list_rooms = $user->listRooms()->where('rooms.id', '>', $room_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+        }
+        $list_rooms->map(function ($each) use ($join_query) {
+            $type = Room::buttonTypeJudge($each->id, null, $join_query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
+            return $each;
+        });
+
+        foreach ($list_rooms as $list_room) {
+            if ($list_rooms->last() && $list_room->no_get_more) {
+                $list_room->id = $list_room->id . rand(0, 9);
+            }
+
+            $list_room->user->id = Crypt::encrypt($list_room->user->id);
+            $list_room->user_id = Crypt::encrypt($list_room->user_id);
+
+        }
+        return $list_rooms;
     }
 
     public function actionListRoom(Request $request)
@@ -299,40 +332,6 @@ class RoomController extends Controller
                 return response()->Json(["error_message" => $error_message]);
             }
         }
-    }
-
-    public static function getListRoom($user = null, $room_id = null)
-    {
-        if (is_null($user)) {
-            $user = Auth::user();
-        }
-
-        $join_query = $user->listRooms();
-        $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
-
-        $list_rooms->map(function ($each) use($join_query) {
-            $type = Room::buttonTypeJudge($each->id,null,$join_query);
-            $each['type'] = $type['type'];
-
-            if ($type['no_get_more']) {
-                $each['no_get_more'] = $type['no_get_more'];
-            }
-            return $each;
-        });
-
-        foreach ($list_rooms as $list_room) {
-            if ($list_rooms->last() && $list_room->id == $list_room->no_get_more) {
-                $list_room->id = $list_room->id . rand(0, 9);
-            }
-
-            $list_room->user->id = Crypt::encrypt($list_room->user->id);
-            $list_room->user_id = Crypt::encrypt($list_room->user_id);
-
-            if (isset($list_room->password)) {
-                $list_room->password = 'yes';
-            }
-        }
-        return $list_rooms;
     }
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
@@ -401,7 +400,9 @@ class RoomController extends Controller
         if ($request->has('createPass')) {
             $room->password = Hash::make($request->createPass);
         };
+
         $room->save();
+
 
         if ($request->has('createPass')) {
             session()->put('auth_room_id', $room->id);
@@ -413,6 +414,7 @@ class RoomController extends Controller
         $room_chat->user_id = $room->user_id;
         $room_chat->message = $room->description;
         $room_chat->save();
+
 
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
@@ -436,6 +438,7 @@ class RoomController extends Controller
                 $room_tag->save();
             }
         }
+
         return redirect(route('enterRoom', [
             'id' => $room->id,
         ]));

@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
     
     //api 
     Route::get('/getRoomInfo{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
+    Route::get('/getPostRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
+    Route::get('/getListRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getListRoom'])->name('getListRoom');
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');
     Route::post('/home/searchRoom', [App\Http\Controllers\RoomController::class, 'searchRoom'])->name('searchRoom');
 });

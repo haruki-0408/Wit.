@@ -34,8 +34,10 @@ class UserController extends Controller
             $decrypted_user_id = Crypt::decrypt($user_id);
             if (User::find($decrypted_user_id)->exists()) {
                 $user = User::find($decrypted_user_id);
+                $type = User::buttonTypeJudge($user->id);
                 $user_data = [
                     'user_id' => $decrypted_user_id,
+                    'type' => $type,
                     'profile_message' => $user->profile_message,
                     'user_name' => $user->name,
                     'profile_image' => $user->profile_image,

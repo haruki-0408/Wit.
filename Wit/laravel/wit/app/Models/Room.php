@@ -8,6 +8,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Rorecek\Ulid\HasUlid;
 use App\Models\Tag;
 use App\Models\RoomTag;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 
 class Room extends Model
@@ -179,4 +180,6 @@ class Room extends Model
             return ['type' => $type, 'no_get_more' => $no_get_more];
         }
     }
+
+    
 }

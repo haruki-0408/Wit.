@@ -42,69 +42,120 @@ $(document).on('click', "[id^='getMore']", function (event) {
     let flexCheckTag = document.getElementById('flexCheckTag').checked;
     let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-    if (event.currentTarget.id === 'getMoreSearchButton') {
-        $.ajax({
-            type: "post", //HTTP通信の種類
-            url: '/home/searchRoom',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                "searchType": select,
-                "keyword": keyword,
-                "room_id": lastli,
-                "checkImage": flexCheckImage,
-                "checkTag": flexCheckTag,
-                "checkPassword": flexCheckPassword,
-                "checkAnswer": flexCheckAnswer,
-            },
-            dataType: 'json',
-        })
-            //通信が成功したとき
-            .done((res) => {
-                if (res.length !== 0) {
-                    event.currentTarget.disabled = false;
-                    addRoomPage(res);
-                    removeGetMoreButton();
-                } else {
-                    let noresult = document.createElement('h3');
-                    noresult.setAttribute('data-room-id', 'noResult');
-                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
-                    noresult.textContent = 'No result';
-                    document.getElementById('Rooms').appendChild(noresult);
-                    removeGetMoreButton();
-                }
+    switch (event.currentTarget.id) {
+        case 'getMoreButtonSearch':
+            $.ajax({
+                type: "post", //HTTP通信の種類
+                url: '/home/searchRoom',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                data: {
+                    "searchType": select,
+                    "keyword": keyword,
+                    "room_id": lastli,
+                    "checkImage": flexCheckImage,
+                    "checkTag": flexCheckTag,
+                    "checkPassword": flexCheckPassword,
+                    "checkAnswer": flexCheckAnswer,
+                },
+                dataType: 'json',
             })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
-            })
+                //通信が成功したとき
+                .done((res) => {
+                    if (res.length !== 0) {
+                        event.currentTarget.disabled = false;
+                        let show = 'Room';
+                        addRoomPage(res, show);
+                        removeGetMoreButton(show);
+                    } else {
+                        let noresult = document.createElement('h3');
+                        noresult.setAttribute('data-room-id', 'noResult');
+                        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                        noresult.textContent = 'No result';
+                        document.getElementById('Rooms').appendChild(noresult);
+                        removeGetMoreButton(show);
+                    }
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
 
-    } else if (event.currentTarget.id === 'getMoreButton') {
-        $.ajax({
-            type: "get", //HTTP通信の種類
-            url: '/getRoomInfo' + lastli, //通信したいURL
-            dataType: 'json',
-        })
-            //通信が成功したとき
-            .done((res) => {
-                event.currentTarget.disabled = false;
-                addRoomPage(res);
-                removeGetMoreButton();
+        case 'getMoreButton':
+            $.ajax({
+                type: "get", //HTTP通信の種類
+                url: '/getRoomInfo' + lastli, //通信したいURL
+                dataType: 'json',
             })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
+                //通信が成功したとき
+                .done((res) => {
+                    event.currentTarget.disabled = false;
+                    let show = 'Room';
+                    addRoomPage(res, show);
+                    removeGetMoreButton(show);
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
+        case 'getMorePostRoomButton':
+            last = document.getElementById('myPost');
+            lastli = last.lastElementChild.dataset.roomId;
+
+            $.ajax({
+                type: "get", //HTTP通信の種類
+                url: '/getPostRoom' + lastli, //通信したいURL
+                dataType: 'json',
             })
-    } else {
-        console.log("それ以外が押されました");
+                //通信が成功したとき
+                .done((res) => {
+                    event.currentTarget.disabled = false;
+                    let show = "myPost";
+                    addRoomPage(res, show);
+                    removeGetMoreButton(show);
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
+        case 'getMoreAnswerRoomButton':
+            console.log("getMoreAnswerRoomButtonが押されました");
+            break;
+        case 'getMoreListRoomButton':
+            last = document.getElementById('myListRoom');
+            lastli = last.lastElementChild.dataset.roomId;
+
+            $.ajax({
+                type: "get", //HTTP通信の種類
+                url: '/getListRoom' + lastli, //通信したいURL
+                dataType: 'json',
+            })
+                //通信が成功したとき
+                .done((res) => {
+                    event.currentTarget.disabled = false;
+                    let show = "myListRoom";
+                    addRoomPage(res, show);
+                    removeGetMoreButton(show);
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
+        default:
+            console.log("それ以外が押されました");
+            break;
     }
 });
 
 //検索ボタンを押したとき
 $(document).on('click', '#search-button', function () {
     //document.getElementById('getMoreButton').disabled =true;
-    $("[id^='getMore']").remove();
+    $("[id^='getMoreButton']").remove();
     $(this).prop('disabled', true);
     $(document.getElementById("Rooms")).empty();
 
@@ -169,8 +220,9 @@ $(document).on('click', '#search-button', function () {
             //通信が成功したとき
             .done((res) => {
                 if (res.length !== 0) {
-                    addRoomPage(res);
-                    removeGetMoreButton();
+                    let show = "Room";
+                    addRoomPage(res, show);
+                    removeGetMoreButton(show);
                 } else {
                     let noresult = document.createElement('h3');
                     noresult.setAttribute('data-room-id', 'noResult');
@@ -254,7 +306,6 @@ $(document).on('click', '.add-list-room', function () {
 $(document).on('click', '.add-list-user', function () {
     let button = $(this);
     let user_id = button.parent().parent().attr('data-user-id');
-
 
     $.ajax({
         type: "get", //HTTP通信の種類
@@ -419,7 +470,7 @@ function addUserPage(res) {
 
 
 
-function addRoomPage(res) {
+function addRoomPage(res, show) {
     //res = JSON.parse(res);
     if ('content' in document.createElement('template')) {
         let template = document.getElementById('Room-template');
@@ -430,10 +481,10 @@ function addRoomPage(res) {
             clone.querySelector('li').setAttribute('data-room-id', res[i].id);
 
             //鍵マーク判定
-            if (res[i].type.substr(-1,1) === '1') {
+            if (res[i].type.substr(-1, 1) === '1') {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<svg width='16' height='16' fill='currentColor' class='bi bi-lock-fill' viewBox='0 0 16 16'><path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z' /></svg>";
             } else {
-                
+
                 clone.querySelector('.card-title').textContent = res[i].title;
             }
 
@@ -465,15 +516,27 @@ function addRoomPage(res) {
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
             }
 
-            document.getElementById('Rooms').appendChild(clone);
-
+            switch (show) {
+                case 'Room':
+                    document.getElementById('Rooms').appendChild(clone);
+                    break;
+                case 'myPost':
+                    document.getElementById('myPost').appendChild(clone);
+                    break;
+                case 'myListRoom':
+                    document.getElementById('myListRoom').appendChild(clone);
+                    break;
+                default:
+                    break;
+            }
+            
             let search_button = document.getElementById("search-button");
             if (search_button.disabled) {
                 search_button.disabled = false;
             }
         }
 
-        if (!(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreSearchButton'))) {
+        if (show === 'Room' && !(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreButtonSearch'))) {
             getMoreButton();
         }
 
@@ -585,13 +648,32 @@ function roomButtonTypeJudge(type, room_id) {
     }
 }
 
-function removeGetMoreButton() {
-    let rooms = document.getElementById('Rooms');
+function removeGetMoreButton(show) {
+    let rooms;
+    let button;
+    switch (show) {
+        case 'Room':
+            rooms = document.getElementById('Rooms');
+            button = $("[id^='getMoreButton']");
+            console.log(button);
+            break;
+        case 'myPost':
+            rooms = document.getElementById('myPost');
+            button = document.getElementById('getMorePostRoomButton');
+            break;
+        case 'myListRoom':
+            rooms = document.getElementById('myListRoom');
+            button = document.getElementById('getMoreListRoomButton');
+            break;
+        default:
+            break;
+    }
+    
     let lastli = rooms.lastElementChild.dataset.roomId;
-    let count_child = rooms.childElementCount;
+    //let count_child = rooms.childElementCount;
 
-    if (lastli.length === 27  || rooms.lastElementChild.tagName === 'H3') {
-        $("[id^='getMore']").remove();
+    if (lastli.length === 27 || rooms.lastElementChild.tagName === 'H3') {
+        button.remove();
     }
 }
 
@@ -605,14 +687,13 @@ function getMoreButton() {
         let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
         let check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
         if (check.some((element) => element === true)) {
-            getmore.id = 'getMoreSearchButton';
+            getmore.id = 'getMoreButtonSearch';
         } else {
             getmore.id = 'getMoreButton';
         }
         getmore.className = "btn d-flex justify-content-center m-3";
         getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
         document.getElementById('Room-content').appendChild(getmore);
-        removeGetMoreButton();
     }
 }
 

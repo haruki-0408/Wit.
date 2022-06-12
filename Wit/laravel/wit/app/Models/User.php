@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function rooms()
     {
-        return $this->hasMany('App\Models\Room','user_id');
+        return $this->hasMany('App\Models\Room');
     }
 
     public function listUsers()
