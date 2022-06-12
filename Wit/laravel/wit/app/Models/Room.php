@@ -130,7 +130,7 @@ class Room extends Model
         }
     }
 
-    public static function buttonTypeJudge($room_id, $query = null)
+    public static function buttonTypeJudge($room_id, $query = null, $join_query = null)
     {
         $user_id = Auth::id();
 
@@ -143,7 +143,14 @@ class Room extends Model
                 } else {
                     $no_get_more = false;
                 }
-            }else{
+            } else if (isset($join_query)) {
+                //getListRoom()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
+                if ($join_query->orderBy('list_rooms.id', 'asc')->value('rooms.id') == $room_id) {
+                    $no_get_more = true;
+                } else {
+                    $no_get_more = false;
+                }
+            } else {
                 //getRoomInfo()から飛んできたとき
                 if (Room::orderBy('id', 'asc')->value('id') == $room_id) {
                     $no_get_more = true;

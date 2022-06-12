@@ -241,26 +241,27 @@ class RoomController extends Controller
             return $post_rooms = [];
         }
 
-        $last_room_id = $user->rooms()->first()->value('id');
+        $query = $user->rooms();
         $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
-        $post_rooms->map(function ($each) {
-            $type = Room::buttonTypeJudge($each->id);
-            $each['type'] = $type;
+        $post_rooms->map(function ($each) use($query) {
+            $type = Room::buttonTypeJudge($each->id,$query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
             return $each;
         });
 
         foreach ($post_rooms as $post_room) {
-            if ($post_rooms->last() && $post_room->id == $last_room_id) {
+            if ($post_rooms->last() && $post_room->id == $post_room->no_get_more) {
                 $post_room->id = $post_room->id . rand(0, 9);
             }
 
             $post_room->user->id = Crypt::encrypt($post_room->user->id);
             $post_room->user_id = Crypt::encrypt($post_room->user_id);
 
-            if (isset($post_room->password)) {
-                $post_room->password = 'yes';
-            }
         }
 
         return $post_rooms;
@@ -306,17 +307,21 @@ class RoomController extends Controller
             $user = Auth::user();
         }
 
-        $last_room_id = $user->listRooms()->first()->value('id');
+        $join_query = $user->listRooms();
         $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
 
-        $list_rooms->map(function ($each) {
-            $type = Room::buttonTypeJudge($each->id);
-            $each['type'] = $type;
+        $list_rooms->map(function ($each) use($join_query) {
+            $type = Room::buttonTypeJudge($each->id,null,$join_query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
             return $each;
         });
 
         foreach ($list_rooms as $list_room) {
-            if ($list_rooms->last() && $list_room->id == $last_room_id) {
+            if ($list_rooms->last() && $list_room->id == $list_room->no_get_more) {
                 $list_room->id = $list_room->id . rand(0, 9);
             }
 

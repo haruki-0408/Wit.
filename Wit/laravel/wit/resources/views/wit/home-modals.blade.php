@@ -20,7 +20,7 @@
                     @endcomponent
 
                 </ul>
-                @if ($post_rooms->count() == 10)
+                @if (!$post_rooms->last()->no_get_more)
                     <div id="getPostButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
                             fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
@@ -29,12 +29,6 @@
                         </svg>
                     </div>
                 @endif
-                <div id="getPostButton" class="btn d-flex justify-content-center m-3"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-caret-down" viewBox="0 0 16 16">
-                        <path
-                            d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
-                    </svg></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -111,8 +105,8 @@
                     @endforeach
                 </ul>
                 @if ($list_users->count() == 30)
-                    <div id="getListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
-                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                    <div id="getListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16"
+                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
@@ -147,9 +141,9 @@
                         @slot('rooms', $list_rooms);
                     @endcomponent
                 </ul>
-                @if ($list_rooms->count() == 10)
-                    <div id="getListRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
-                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                @if (!$list_rooms->last()->no_get_more)
+                    <div id="getListRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16"
+                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
