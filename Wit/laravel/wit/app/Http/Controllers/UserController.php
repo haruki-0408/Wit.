@@ -174,9 +174,15 @@ class UserController extends Controller
             $user_name = $request->keyword;
             $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get();
 
-            $users->map(function ($each) {
-                $type = User::buttonTypeJudge($each->id);
-                $each['type'] = $type;
+            $search_query = User::searchUsername($user_name);
+
+            $users->map(function ($each) use ($search_query) {
+                $type = User::buttonTypeJudge($each->id, $search_query);
+                $each['type'] = $type['type'];
+
+                if ($type['no_get_more']) {
+                    $each['no_get_more'] = $type['no_get_more'];
+                }
                 return $each;
             });
 
@@ -186,6 +192,7 @@ class UserController extends Controller
 
             return response()->Json($users);
         } else {
+            abort(404);
         }
     }
 
@@ -219,8 +226,18 @@ class UserController extends Controller
             $user = Auth::user();
         }
 
+        $list_query = $user->listUsers();
         $list_users = $user->listUsers()->take(30)->get();
 
+        $list_users->map(function ($each) use ($list_query) {
+            $type = User::buttonTypeJudge($each->id, null, $list_query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
+            return $each;
+        });
 
         return $list_users;
     }

@@ -11100,7 +11100,8 @@ $(document).on('click', '#search-button', function () {
       }) //通信が成功したとき
       .done(function (res) {
         if (res.length !== 0) {
-          addUserPage(res);
+          var _show2 = 'Room';
+          addUserPage(res, _show2);
         } else {
           var noresult = document.createElement('h3');
           noresult.setAttribute('data-room-id', 'noResult');
@@ -11118,7 +11119,16 @@ $(document).on('click', '#search-button', function () {
         console.log(error.statusText);
       });
     } else {
-      location.reload();
+      var noresult = document.createElement('h3');
+      noresult.setAttribute('data-room-id', 'noResult');
+      noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+      noresult.textContent = 'No result';
+      document.getElementById('Rooms').appendChild(noresult);
+      var search_button = document.getElementById("search-button");
+
+      if (search_button.disabled) {
+        search_button.disabled = false;
+      }
     }
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
     var _keyword = document.getElementById("search-keyword").value;
@@ -11146,19 +11156,22 @@ $(document).on('click', '#search-button', function () {
     }) //通信が成功したとき
     .done(function (res) {
       if (res.length !== 0) {
-        var _show2 = "Room";
-        addRoomPage(res, _show2);
-        removeGetMoreButton(_show2);
+        var _show3 = "Room";
+        addRoomPage(res, _show3);
+        removeGetMoreButton(_show3);
       } else {
-        var noresult = document.createElement('h3');
-        noresult.setAttribute('data-room-id', 'noResult');
-        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
-        noresult.textContent = 'No result';
-        document.getElementById('Rooms').appendChild(noresult);
-        var search_button = document.getElementById("search-button");
+        var _noresult = document.createElement('h3');
 
-        if (search_button.disabled) {
-          search_button.disabled = false;
+        _noresult.setAttribute('data-room-id', 'noResult');
+
+        _noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+        _noresult.textContent = 'No result';
+        document.getElementById('Rooms').appendChild(_noresult);
+
+        var _search_button = document.getElementById("search-button");
+
+        if (_search_button.disabled) {
+          _search_button.disabled = false;
         }
       }
     }) //通信が失敗したとき
@@ -11237,7 +11250,8 @@ $(document).on('click', '.add-list-user', function () {
   .fail(function (error) {
     console.log(error.statusText);
   });
-});
+}); //検索タイプをユーザ検索に切り替えたとき
+
 $(document).on('click', '#flexRadioUser', function () {
   var select = document.getElementById('searchType');
   var flexCheckImage = document.getElementById('flexCheckImage');
@@ -11255,7 +11269,8 @@ $(document).on('click', '#flexRadioUser', function () {
   newRow.disabled = true;
   oldRow.disabled = true;
   chatRow.disabled = true;
-});
+}); //検索タイプをルーム検索に切り替えたとき
+
 $(document).on('click', '#flexRadioRoom', function () {
   var select = document.getElementById('searchType');
   var flexCheckImage = document.getElementById('flexCheckImage');
@@ -11303,7 +11318,8 @@ $(document).on('click', '#flexRadioRoom', function () {
       location.reload();
       break;
   }
-});
+}); //キーワード、ルームID、タグ　検索タイプを切り替えたとき
+
 $(document).on('change', '#searchType', function () {
   var select = document.getElementById('searchType').value;
   var flexCheckImage = document.getElementById('flexCheckImage');
@@ -11351,7 +11367,7 @@ $(document).on('change', '#searchType', function () {
   }
 });
 
-function addUserPage(res) {
+function addUserPage(res, show) {
   if ('content' in document.createElement('template')) {
     var template = document.getElementById('User-template');
 
@@ -11374,6 +11390,10 @@ function addUserPage(res) {
       if (search_button.disabled) {
         search_button.disabled = false;
       }
+    }
+
+    if (show === 'Room' && !document.getElementById('getMoreUserButton')) {
+      getMoreUserButton();
     }
   }
 }
@@ -11449,7 +11469,7 @@ function addRoomPage(res, show) {
     }
 
     if (show === 'Room' && !document.getElementById('getMoreButton') && !document.getElementById('getMoreButtonSearch')) {
-      getMoreButton();
+      getMoreRoomButton();
     }
   }
 }
@@ -11593,7 +11613,7 @@ function removeGetMoreButton(show) {
   }
 }
 
-function getMoreButton() {
+function getMoreRoomButton() {
   if (!document.getElementById('noResult')) {
     var keyword = Boolean(document.getElementById('search-keyword').value);
     var getmore = document.createElement('div');
@@ -11612,7 +11632,17 @@ function getMoreButton() {
     }
 
     getmore.className = "btn d-flex justify-content-center m-3";
-    getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+    getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+    document.getElementById('Room-content').appendChild(getmore);
+  }
+}
+
+function getMoreUserButton() {
+  if (!document.getElementById('noResult')) {
+    var getmore = document.createElement('div');
+    getmore.id = "getMoreUserButton";
+    getmore.className = "btn d-flex justify-content-center m-3";
+    getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
     document.getElementById('Room-content').appendChild(getmore);
   }
 }
@@ -11622,7 +11652,7 @@ function getMorePostButton() {
     var getmore = document.createElement('div');
     getmore.id = "getMorePostButton";
     getmore.className = "btn d-flex justify-content-center m-3";
-    getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+    getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
     document.getElementById('Post-rooms').appendChild(getmore);
   }
 }
@@ -11644,11 +11674,11 @@ function actionSuccess(res) {
   setTimeout(function () {
     action.classList.add('invisible');
   }, 3000);
-}
+} //ルームパスワードを認証するとき
+
 
 if (document.getElementById('roomPasswordFormModal')) {
-  var passwordForm = document.getElementById("roomPasswordFormModal"); //ルームパスワードを認証するとき
-
+  var passwordForm = document.getElementById("roomPasswordFormModal");
   passwordForm.addEventListener('shown.bs.modal', function (event) {
     var button = event.relatedTarget;
     var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');

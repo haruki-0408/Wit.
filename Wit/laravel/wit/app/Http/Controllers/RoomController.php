@@ -99,7 +99,6 @@ class RoomController extends Controller
             $rooms = $query->with(['user', 'roomTags.tag'])->take(10)->get();
         }
 
-        //$last_room = $second_query->orderBy('id', 'asc')->first();
 
         $rooms->map(function ($each) use ($second_query) {
             $type = Room::buttonTypeJudge($each->id, $second_query);
@@ -272,14 +271,14 @@ class RoomController extends Controller
         $user_id= Auth::id();
         $user = User::find($user_id);
 
-        $join_query = $user->listRooms();
+        $list_query = $user->listRooms();
         if (is_null($room_id)) {
             $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         } else if (isset($room_id)) {
-            $list_rooms = $user->listRooms()->where('rooms.id', '>', $room_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $list_rooms = $user->listRooms()->where('rooms.id', '<', $room_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         }
-        $list_rooms->map(function ($each) use ($join_query) {
-            $type = Room::buttonTypeJudge($each->id, null, $join_query);
+        $list_rooms->map(function ($each) use ($list_query) {
+            $type = Room::buttonTypeJudge($each->id, null, $list_query);
             $each['type'] = $type['type'];
 
             if ($type['no_get_more']) {

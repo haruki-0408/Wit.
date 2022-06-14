@@ -107,24 +107,44 @@ class User extends Authenticatable
         return $query->whereRaw("name LIKE CAST(? as CHAR) COLLATE utf8mb4_unicode_ci", ['%' . $user_name . '%']);
     }
 
-    public static function buttonTypeJudge($user_id)
+    public static function buttonTypeJudge($user_id, $search_query = null, $list_query = null)
     {
         $bit_flag = 0b00; //２進数として扱うときは先頭に0bを付与
         if (isset($user_id)) {
             $auth_id = Auth::id();
-            //ユーザがauthユーザかどうか判定
+
+            if (isset($searh_query)) {
+                //seachUser()から飛んできたとき
+                if ($searh_query->orderBy('created_at', 'asc')->value('id') == $user_id) {
+                    $no_get_more = true;
+                } else {
+                    $no_get_more = false;
+                }
+            } else if (isset($list_query)) {
+                //getListUser()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
+                if ($list_query->orderBy('list_users.created_at', 'asc')->value('users.id') == $user_id) {
+                    $no_get_more = true;
+                } else {
+                    $no_get_more = false;
+                }
+            } else {
+                $no_get_more = false;
+            }
+
+            //ユーザーがauthユーザーかどうか判定
             if ($user_id == $auth_id) {
                 $bit_flag = $bit_flag | 0b00;
-            } elseif(ListUser::where('user_id', $auth_id)->where('favorite_user_id', $user_id)->exists()){
-                //ユーアがリストに登録されていたら
+            } elseif (ListUser::where('user_id', $auth_id)->where('favorite_user_id', $user_id)->exists()) {
+                //ユーザーがリストに登録されていたら
                 $bit_flag = $bit_flag | 0b10;
-            }else{
+            } else {
+                //ユーザがリストに登録されていなかったら
                 $bit_flag = $bit_flag | 0b01;
             }
 
             $type = decbin($bit_flag);
             //decbinは２進数として扱う
-            return $type;
+            return ['type' => $type, 'no_get_more' => $no_get_more];
         }
     }
 }

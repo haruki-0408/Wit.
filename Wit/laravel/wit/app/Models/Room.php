@@ -131,22 +131,22 @@ class Room extends Model
         }
     }
 
-    public static function buttonTypeJudge($room_id, $query = null, $join_query = null)
+    public static function buttonTypeJudge($room_id, $search_query = null, $list_query = null)
     {
         $user_id = Auth::id();
 
         $bit_flag = 0b0000; //２進数として扱うときは先頭に0bを付与
         if (isset($room_id)) {
-            if (isset($query)) {
-                //seachRoom()から飛んできたとき
-                if ($query->orderBy('id', 'asc')->value('id') == $room_id) {
+            if (isset($search_query)) {
+                //getPostRoom(),seachRoom()から飛んできたとき
+                if ($search_query->orderBy('id', 'asc')->value('id') == $room_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;
                 }
-            } else if (isset($join_query)) {
+            } else if (isset($list_query)) {
                 //getListRoom()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
-                if ($join_query->orderBy('list_rooms.id', 'asc')->value('rooms.id') == $room_id) {
+                if ($list_query->orderBy('list_rooms.id', 'asc')->value('rooms.id') == $room_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;
@@ -160,7 +160,7 @@ class Room extends Model
                 }
             }
 
-
+            //部屋の作成者なら
             if (Room::where('id', $room_id)->value('user_id') == $user_id) {
                 $bit_flag = $bit_flag | 0b0100;
             }

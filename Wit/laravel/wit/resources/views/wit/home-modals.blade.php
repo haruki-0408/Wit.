@@ -104,7 +104,7 @@
                         </li>
                     @endforeach
                 </ul>
-                @if ($list_users->count() == 30)
+                @if (!(isset($list_users->last()->no_get_more)) && $list_users->isNotEmpty())
                     <div id="getMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16"
                             height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path

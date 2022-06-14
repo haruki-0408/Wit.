@@ -171,7 +171,8 @@ $(document).on('click', '#search-button', function () {
                 //通信が成功したとき
                 .done((res) => {
                     if (res.length !== 0) {
-                        addUserPage(res);
+                        let  show = 'Room';
+                        addUserPage(res,show);
                     } else {
                         let noresult = document.createElement('h3');
                         noresult.setAttribute('data-room-id', 'noResult');
@@ -190,7 +191,16 @@ $(document).on('click', '#search-button', function () {
                     console.log(error.statusText)
                 })
         } else {
-            location.reload();
+            let noresult = document.createElement('h3');
+            noresult.setAttribute('data-room-id', 'noResult');
+            noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+            noresult.textContent = 'No result';
+            document.getElementById('Rooms').appendChild(noresult);
+
+            let search_button = document.getElementById("search-button");
+            if (search_button.disabled) {
+                search_button.disabled = false;
+            }
         }
     } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
 
@@ -323,7 +333,7 @@ $(document).on('click', '.add-list-user', function () {
 
 });
 
-
+//検索タイプをユーザ検索に切り替えたとき
 $(document).on('click', '#flexRadioUser', function () {
     let select = document.getElementById('searchType');
     let flexCheckImage = document.getElementById('flexCheckImage');
@@ -343,6 +353,7 @@ $(document).on('click', '#flexRadioUser', function () {
     chatRow.disabled = true;
 })
 
+//検索タイプをルーム検索に切り替えたとき
 $(document).on('click', '#flexRadioRoom', function () {
     let select = document.getElementById('searchType');
     let flexCheckImage = document.getElementById('flexCheckImage');
@@ -390,7 +401,7 @@ $(document).on('click', '#flexRadioRoom', function () {
     }
 })
 
-
+//キーワード、ルームID、タグ　検索タイプを切り替えたとき
 $(document).on('change', '#searchType', function () {
     let select = document.getElementById('searchType').value;
     let flexCheckImage = document.getElementById('flexCheckImage');
@@ -437,10 +448,7 @@ $(document).on('change', '#searchType', function () {
 })
 
 
-
-
-
-function addUserPage(res) {
+function addUserPage(res,show) {
     if ('content' in document.createElement('template')) {
         let template = document.getElementById('User-template');
 
@@ -464,6 +472,10 @@ function addUserPage(res) {
 
         }
 
+        if (show === 'Room' && !(document.getElementById('getMoreUserButton'))) {
+            getMoreUserButton();
+        }
+
     }
 
 }
@@ -484,7 +496,6 @@ function addRoomPage(res, show) {
             if (res[i].type.substr(-1, 1) === '1') {
                 clone.querySelector('.card-title').innerHTML = res[i].title + '' + "<svg width='16' height='16' fill='currentColor' class='bi bi-lock-fill' viewBox='0 0 16 16'><path d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z' /></svg>";
             } else {
-
                 clone.querySelector('.card-title').textContent = res[i].title;
             }
 
@@ -497,8 +508,6 @@ function addRoomPage(res, show) {
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
-
-
 
             for (let j = 0; j < Object.keys(res[i].room_tags).length; j++) { //ここの実装見直したい、、
                 let room_tag_li = document.createElement("li");
@@ -529,7 +538,7 @@ function addRoomPage(res, show) {
                 default:
                     break;
             }
-            
+
             let search_button = document.getElementById("search-button");
             if (search_button.disabled) {
                 search_button.disabled = false;
@@ -537,7 +546,7 @@ function addRoomPage(res, show) {
         }
 
         if (show === 'Room' && !(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreButtonSearch'))) {
-            getMoreButton();
+            getMoreRoomButton();
         }
 
     }
@@ -668,7 +677,7 @@ function removeGetMoreButton(show) {
         default:
             break;
     }
-    
+
     let lastli = rooms.lastElementChild.dataset.roomId;
     //let count_child = rooms.childElementCount;
 
@@ -677,7 +686,7 @@ function removeGetMoreButton(show) {
     }
 }
 
-function getMoreButton() {
+function getMoreRoomButton() {
     if (!(document.getElementById('noResult'))) {
         let keyword = Boolean(document.getElementById('search-keyword').value);
         let getmore = document.createElement('div');
@@ -692,7 +701,17 @@ function getMoreButton() {
             getmore.id = 'getMoreButton';
         }
         getmore.className = "btn d-flex justify-content-center m-3";
-        getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+        getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+        document.getElementById('Room-content').appendChild(getmore);
+    }
+}
+
+function getMoreUserButton() {
+    if (!(document.getElementById('noResult'))) {
+        let getmore = document.createElement('div');
+        getmore.id = "getMoreUserButton";
+        getmore.className = "btn d-flex justify-content-center m-3";
+        getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
         document.getElementById('Room-content').appendChild(getmore);
     }
 }
@@ -702,7 +721,7 @@ function getMorePostButton() {
         let getmore = document.createElement('div');
         getmore.id = "getMorePostButton";
         getmore.className = "btn d-flex justify-content-center m-3";
-        getmore.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
+        getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
         document.getElementById('Post-rooms').appendChild(getmore);
     }
 }
@@ -724,9 +743,9 @@ function actionSuccess(res) {
 }
 
 
-
+//ルームパスワードを認証するとき
 if (document.getElementById('roomPasswordFormModal')) {
-    let passwordForm = document.getElementById("roomPasswordFormModal"); //ルームパスワードを認証するとき
+    let passwordForm = document.getElementById("roomPasswordFormModal");
     passwordForm.addEventListener('shown.bs.modal', function (event) {
         let button = (event.relatedTarget);
         let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');
