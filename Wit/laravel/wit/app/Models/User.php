@@ -113,9 +113,9 @@ class User extends Authenticatable
         if (isset($user_id)) {
             $auth_id = Auth::id();
 
-            if (isset($searh_query)) {
+            if (isset($search_query)) {
                 //seachUser()から飛んできたとき
-                if ($searh_query->orderBy('created_at', 'asc')->value('id') == $user_id) {
+                if ($search_query->orderBy('name', 'desc')->value('id') == $user_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;
