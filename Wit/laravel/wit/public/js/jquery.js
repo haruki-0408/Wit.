@@ -11034,6 +11034,34 @@ $(document).on('click', "[id^='getMore']", function (event) {
       console.log("getMoreAnswerRoomButtonが押されました");
       break;
 
+    case 'getMoreListUserButton':
+      last = document.getElementById('myListUser');
+      lastli = last.lastElementChild.dataset.userId;
+      $.ajax({
+        type: "get",
+        //HTTP通信の種類
+        url: '/getListUser' + lastli,
+        //通信したいURL
+        dataType: 'json'
+      }) //通信が成功したとき
+      .done(function (res) {
+        var show = "myListUser";
+
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addUserPage(res, show);
+          removeGetMoreButton(show, last_get_more);
+        } else {
+          var _last_get_more4 = 'none_res';
+          removeGetMoreButton(show, _last_get_more4);
+        }
+      }) //通信が失敗したとき
+      .fail(function (error) {
+        console.log(error.statusText);
+      });
+      break;
+
     case 'getMoreListRoomButton':
       last = document.getElementById('myListRoom');
       lastli = last.lastElementChild.dataset.roomId;
@@ -11053,8 +11081,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
           addRoomPage(res, show);
           removeGetMoreButton(show, last_get_more);
         } else {
-          var _last_get_more4 = 'none_res';
-          removeGetMoreButton(show, _last_get_more4);
+          var _last_get_more5 = 'none_res';
+          removeGetMoreButton(show, _last_get_more5);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11085,8 +11113,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
           */
-          var _last_get_more5 = 'none_res';
-          removeGetMoreButton(show, _last_get_more5);
+          var _last_get_more6 = 'none_res';
+          removeGetMoreButton(show, _last_get_more6);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11184,7 +11212,7 @@ $(document).on('click', '#search-button', function () {
       } else {
         var _noresult = document.createElement('h3');
 
-        var _last_get_more6 = 'none_res';
+        var _last_get_more7 = 'none_res';
 
         _noresult.setAttribute('data-room-id', 'noResult');
 
@@ -11408,7 +11436,20 @@ function addUserPage(res, show) {
         clone.querySelector('.btn-group').appendChild(button);
       }
 
-      document.getElementById('Rooms').appendChild(clone);
+      switch (show) {
+        case 'User':
+          document.getElementById('Rooms').appendChild(clone);
+          break;
+
+        case 'myListUser':
+          document.getElementById('myListUser').appendChild(clone);
+          break;
+
+        default:
+          console.log('show:その他');
+          break;
+      }
+
       var search_button = document.getElementById("search-button");
 
       if (search_button.disabled) {

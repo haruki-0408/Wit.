@@ -80,11 +80,11 @@
             <div class="modal-body p-1">
                 <ul id="myListUser" class="fs-6 p-2">
                     @foreach ($list_users as $list_user)
-                        <li data-user-id='{{ Crypt::encrypt($list_user->id) }}'
+                        <li data-user-id='{{ $list_user->id }}'
                             class="border-0 d-flex bg-white p-0 align-items-center justify-content-between">
                             <div class="user">
                                 <a class="user-link link-dark text-decoration-none"
-                                    href='/home/profile/{{ encrypt($list_user->id) }}' alt="">
+                                    href='/home/profile/{{ $list_user->id }}' alt="">
                                     <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
                                         class="profile-image rounded-circle me-2">
                                     <strong class="user-name">{{ $list_user->name }}</strong>
@@ -104,6 +104,7 @@
                         </li>
                     @endforeach
                 </ul>
+                
                 @if (!(isset($list_users->last()->no_get_more)) && $list_users->isNotEmpty())
                     <div id="getMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16"
                             height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">

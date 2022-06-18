@@ -121,6 +121,7 @@ class User extends Authenticatable
                     $no_get_more = false;
                 }
             } else if (isset($list_query)) {
+                //dd($user_id,$list_query->orderBy('users.id', 'asc')->value('users.name'),$list_query->orderBy('users.id', 'asc')->value('users.id'));
                 //getListUser()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
                 if ($list_query->orderBy('list_users.created_at', 'asc')->value('users.id') == $user_id) {
                     $no_get_more = true;

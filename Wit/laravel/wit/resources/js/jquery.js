@@ -103,6 +103,33 @@ $(document).on('click', "[id^='getMore']", function (event) {
         case 'getMoreAnswerRoomButton':
             console.log("getMoreAnswerRoomButtonが押されました");
             break;
+        case 'getMoreListUserButton':
+            last = document.getElementById('myListUser');
+            lastli = last.lastElementChild.dataset.userId;
+
+            $.ajax({
+                type: "get", //HTTP通信の種類
+                url: '/getListUser' + lastli, //通信したいURL
+                dataType: 'json',
+            })
+                //通信が成功したとき
+                .done((res) => {
+                    let show = "myListUser";
+                    if (res.length !== 0) {
+                        event.currentTarget.disabled = false;
+                        let last_get_more = res[Object.keys(res).length - 1].no_get_more;
+                        addUserPage(res, show);
+                        removeGetMoreButton(show, last_get_more);
+                    } else {
+                        let last_get_more = 'none_res';
+                        removeGetMoreButton(show, last_get_more);
+                    }
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
         case 'getMoreListRoomButton':
             last = document.getElementById('myListRoom');
             lastli = last.lastElementChild.dataset.roomId;
@@ -488,7 +515,18 @@ function addUserPage(res, show) {
                 clone.querySelector('.btn-group').appendChild(button);
             }
 
-            document.getElementById('Rooms').appendChild(clone);
+            switch (show) {
+                case 'User':
+                    document.getElementById('Rooms').appendChild(clone);
+                    break;
+                case 'myListUser':
+                    document.getElementById('myListUser').appendChild(clone);
+                    break;
+                default:
+                    console.log('show:その他');
+                    break;
+            }
+
             let search_button = document.getElementById("search-button");
             if (search_button.disabled) {
                 search_button.disabled = false;

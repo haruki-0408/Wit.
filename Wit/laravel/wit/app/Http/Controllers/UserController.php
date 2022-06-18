@@ -29,9 +29,11 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        if (Crypt::decrypt($user_id) == true) {
+        if (isset($user_id)) {
             //this payload is invalid 問題解決してない
+
             $decrypted_user_id = Crypt::decrypt($user_id);
+           
             if (User::find($decrypted_user_id)->exists()) {
                 $user = User::find($decrypted_user_id);
                 $type = User::buttonTypeJudge($user->id);
@@ -173,11 +175,11 @@ class UserController extends Controller
         if (isset($request->keyword)) {
             $user_name = $request->keyword;
             if (isset($request->user_id)) {
-                if($request->user_id == 'undefined'){
+                if ($request->user_id == 'undefined') {
                     abort(404);
                 }
                 $user_id = Crypt::decrypt($request->user_id);
-                $users = User::searchUserName($user_name)->orderby('id', 'asc')->where('id' ,'>', $user_id)->take(30)->get();
+                $users = User::searchUserName($user_name)->orderby('id', 'asc')->where('id', '>', $user_id)->take(30)->get();
             } else {
                 $users = User::searchUserName($user_name)->orderby('id', 'asc')->take(30)->get();
             }
@@ -228,14 +230,25 @@ class UserController extends Controller
         }
     }
 
-    public static function getListUser($user = null, $favorite_user_id = null)
+    public static function getListUser($favorite_user_id = null)
     {
-        if (is_null($user)) {
+        if (isset($user_id)) {
+            $user_id = Crypt::decrypt($user_id);
+            $user = User::find($user_id);
+        } else {
             $user = Auth::user();
         }
 
         $list_query = $user->listUsers();
-        $list_users = $user->listUsers()->take(30)->get();
+        
+
+        if (isset($favorite_user_id)) {
+            $favorite_user_id = Crypt::decrypt($favorite_user_id);
+            $created_at = $user->listUsers()->where('favorite_user_id',$favorite_user_id)->value('list_users.created_at');
+            $list_users = $user->listUsers()->where('list_users.created_at', '<', $created_at)->orderBy('list_users.created_at','desc')->take(30)->get();
+        } else {
+            $list_users = $user->listUsers()->orderBy('list_users.created_at','desc')->take(30)->get();
+        }
 
         $list_users->map(function ($each) use ($list_query) {
             $type = User::buttonTypeJudge($each->id, null, $list_query);
@@ -246,6 +259,10 @@ class UserController extends Controller
             }
             return $each;
         });
+
+        foreach ($list_users as $list_user) {
+            $list_user->id = Crypt::encrypt($list_user->id);
+        }
 
         return $list_users;
     }

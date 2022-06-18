@@ -49,6 +49,7 @@ class RoomController extends Controller
             case 'id':
                 if (isset($request->keyword)) {
                     $query->searchRoomId($request->keyword);
+                    $second_query->searchRoomId($request->keyword);
                 } else {
                     $array = [];
                     return $array;
@@ -89,14 +90,14 @@ class RoomController extends Controller
 
 
         if (isset($request->room_id)) {
-            if (mb_strlen($request->room_id) == 26) {
+            if (mb_strlen($request->room_id) == 6) {
                 $room_id = $request->room_id;
-                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
+                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
             } else {
                 abort(404);
             }
         } else {
-            $rooms = $query->with(['user', 'roomTags.tag'])->take(15)->get();
+            $rooms = $query->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(15)->get();
         }
 
 
