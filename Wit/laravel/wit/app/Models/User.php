@@ -115,7 +115,7 @@ class User extends Authenticatable
 
             if (isset($search_query)) {
                 //seachUser()から飛んできたとき
-                if ($search_query->orderBy('name', 'desc')->value('id') == $user_id) {
+                if ($search_query->orderBy('id', 'desc')->value('id') == $user_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;

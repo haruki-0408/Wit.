@@ -173,10 +173,13 @@ class UserController extends Controller
         if (isset($request->keyword)) {
             $user_name = $request->keyword;
             if (isset($request->user_id)) {
+                if($request->user_id == 'undefined'){
+                    abort(404);
+                }
                 $user_id = Crypt::decrypt($request->user_id);
-                $users = User::searchUserName($user_name)->orderby('name', 'asc')->where('id' ,'>', $user_id)->take(30)->get();
+                $users = User::searchUserName($user_name)->orderby('id', 'asc')->where('id' ,'>', $user_id)->take(30)->get();
             } else {
-                $users = User::searchUserName($user_name)->orderby('name', 'asc')->take(30)->get();
+                $users = User::searchUserName($user_name)->orderby('id', 'asc')->take(30)->get();
             }
 
             $search_query = User::searchUsername($user_name);

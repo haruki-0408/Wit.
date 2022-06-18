@@ -10927,38 +10927,6 @@ var __webpack_exports__ = {};
   !*** ./resources/js/jquery.js ***!
   \********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-//ページ読み込み時
-
-/*$(function () {
-    if (document.getElementById('Room-content')) {
-        //DOMツリーの構築だけでなく、画像などの関連データの読み込みが完了しないと処理を実行しない。
-        // ページ読み込み時に実行したい処理
-        $.ajax({
-            type: "get", //HTTP通信の種類
-            url: '/getRoomInfo', //通信したいURL
-            dataType: 'json'
-        })
-            //通信が成功したとき
-            .done((res) => {
-                if (res.length !== 0) {
-                    addRoomPage(res);
-                    removeGetMoreButton();
-                } else {
-                    let noresult = document.createElement('h3');
-                    noresult.setAttribute('data-room-id','noResult');
-                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
-                    noresult.textContent = 'No result';
-                    document.getElementById('Rooms').appendChild(noresult);
-                    removeGetMoreButton();
-                }
-            })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
-            })
-    }
-});
-*/
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
   event.currentTarget.disabled = true;
@@ -10992,18 +10960,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
+        var show = 'Room';
+
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var _show = 'Room';
-          addRoomPage(res, _show);
-          removeGetMoreButton(_show);
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addRoomPage(res, show);
+          removeGetMoreButton(show, last_get_more);
         } else {
-          var noresult = document.createElement('h3');
-          noresult.setAttribute('data-room-id', 'noResult');
-          noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
-          noresult.textContent = 'No result';
-          document.getElementById('Rooms').appendChild(noresult);
-          removeGetMoreButton(show);
+          var _last_get_more = 'none_res';
+          removeGetMoreButton(show, _last_get_more);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11020,10 +10986,17 @@ $(document).on('click', "[id^='getMore']", function (event) {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
-        event.currentTarget.disabled = false;
         var show = 'Room';
-        addRoomPage(res, show);
-        removeGetMoreButton(show);
+
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addRoomPage(res, show);
+          removeGetMoreButton(show, last_get_more);
+        } else {
+          var _last_get_more2 = 'none_res';
+          removeGetMoreButton(show, _last_get_more2);
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11041,10 +11014,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
-        event.currentTarget.disabled = false;
-        var show = "myPost";
-        addRoomPage(res, show);
-        removeGetMoreButton(show);
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var _show = "myPost";
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addRoomPage(res, _show);
+          removeGetMoreButton(_show, last_get_more);
+        } else {
+          var _last_get_more3 = 'none_res';
+          removeGetMoreButton(show, _last_get_more3);
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11066,18 +11045,21 @@ $(document).on('click', "[id^='getMore']", function (event) {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
-        event.currentTarget.disabled = false;
         var show = "myListRoom";
-        addRoomPage(res, show);
-        removeGetMoreButton(show);
+
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addRoomPage(res, show);
+          removeGetMoreButton(show, last_get_more);
+        } else {
+          var _last_get_more4 = 'none_res';
+          removeGetMoreButton(show, _last_get_more4);
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
       });
-      break;
-
-    default:
-      console.log("それ以外が押されました");
       break;
 
     case 'getMoreUserButton':
@@ -11089,22 +11071,31 @@ $(document).on('click', "[id^='getMore']", function (event) {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
+        var show = 'User';
+
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var _show2 = 'Room';
-          addUserPage(res, _show2);
-          removeGetMoreButton(_show2);
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addUserPage(res, show);
+          removeGetMoreButton(show, last_get_more);
         } else {
-          var noresult = document.createElement('h3');
+          /*let noresult = document.createElement('h3');
           noresult.setAttribute('data-room-id', 'noResult');
-          noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+          noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
+          */
+          var _last_get_more5 = 'none_res';
+          removeGetMoreButton(show, _last_get_more5);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
       });
+      break;
+
+    default:
+      console.log("それ以外が押されました");
       break;
   }
 }); //検索ボタンを押したとき
@@ -11112,6 +11103,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 $(document).on('click', '#search-button', function () {
   //document.getElementById('getMoreButton').disabled =true;
   $("[id^='getMoreButton']").remove();
+  $("[id^='getMoreUserButton']").remove();
   $(this).prop('disabled', true);
   $(document.getElementById("Rooms")).empty();
 
@@ -11126,9 +11118,10 @@ $(document).on('click', '#search-button', function () {
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
+        var show = 'User';
+
         if (res.length !== 0) {
-          var _show3 = 'Room';
-          addUserPage(res, _show3);
+          addUserPage(res, show); //removeGetMoreButton(show,last_get_more);
         } else {
           var noresult = document.createElement('h3');
           noresult.setAttribute('data-room-id', 'noResult');
@@ -11182,12 +11175,16 @@ $(document).on('click', '#search-button', function () {
       dataType: 'json'
     }) //通信が成功したとき
     .done(function (res) {
+      var show = "Room";
+
       if (res.length !== 0) {
-        var _show4 = "Room";
-        addRoomPage(res, _show4);
-        removeGetMoreButton(_show4);
+        var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+        addRoomPage(res, show);
+        removeGetMoreButton(show, last_get_more);
       } else {
         var _noresult = document.createElement('h3');
+
+        var _last_get_more6 = 'none_res';
 
         _noresult.setAttribute('data-room-id', 'noResult');
 
@@ -11419,7 +11416,7 @@ function addUserPage(res, show) {
       }
     }
 
-    if (show === 'Room') {
+    if (show === 'User') {
       var last_get_more = res[Object.keys(res).length - 1].no_get_more;
 
       if (!document.getElementById('getMoreUserButton') && !last_get_more) {
@@ -11476,6 +11473,10 @@ function addRoomPage(res, show) {
           document.getElementById('Rooms').appendChild(clone);
           break;
 
+        case 'User':
+          document.getElementById('Rooms').appendChild(clone);
+          break;
+
         case 'myPost':
           document.getElementById('myPost').appendChild(clone);
           break;
@@ -11485,6 +11486,7 @@ function addRoomPage(res, show) {
           break;
 
         default:
+          console.log('show:その他');
           break;
       }
 
@@ -11612,14 +11614,19 @@ function roomButtonTypeJudge(type, room_id) {
   }
 }
 
-function removeGetMoreButton(show) {
+function removeGetMoreButton(show, last_get_more) {
   var rooms;
   var button;
 
   switch (show) {
     case 'Room':
       rooms = document.getElementById('Rooms');
-      button = $("[id^='getMore']");
+      button = $("[id^='getMoreButton']");
+      break;
+
+    case 'User':
+      rooms = document.getElementById('Rooms');
+      button = document.getElementById('getMoreUserButton');
       break;
 
     case 'myPost':
@@ -11632,13 +11639,15 @@ function removeGetMoreButton(show) {
       button = document.getElementById('getMoreListRoomButton');
       break;
 
+    case 'myListUser':
+      rooms = document.getElementById('myListUser');
+      button = document.getElementById('getMoreListUserButton');
+
     default:
       break;
   }
 
-  var lastli = rooms.lastElementChild.dataset.roomId; //let count_child = rooms.childElementCount;
-
-  if (lastli.length === 27 || rooms.lastElementChild.tagName === 'H3') {
+  if (last_get_more === 'none_res' || last_get_more === true || rooms.lastElementChild.tagName === 'H3') {
     button.remove();
   }
 }
@@ -11676,16 +11685,6 @@ function getMoreUserButton() {
     document.getElementById('Room-content').appendChild(getmore);
   }
 }
-/*function getMorePostButton() {
-    if (!(document.getElementById('noResult'))) {
-        let getmore = document.createElement('div');
-        getmore.id = "getMorePostButton";
-        getmore.className = "btn d-flex justify-content-center m-3";
-        getmore.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-caret-down' viewBox='0 0 16 16'><path d='M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z'/></svg>";
-        document.getElementById('Post-rooms').appendChild(getmore);
-    }
-}*/
-
 
 function actionSuccess(res) {
   var action;

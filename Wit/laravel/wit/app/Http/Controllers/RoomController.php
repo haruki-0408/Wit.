@@ -96,7 +96,7 @@ class RoomController extends Controller
                 abort(404);
             }
         } else {
-            $rooms = $query->with(['user', 'roomTags.tag'])->take(10)->get();
+            $rooms = $query->with(['user', 'roomTags.tag'])->take(15)->get();
         }
 
 
@@ -110,11 +110,7 @@ class RoomController extends Controller
             return $each;
         });
 
-
         foreach ($rooms as $room) {
-            if ($rooms->last() && $room->no_get_more) {
-                $room->id = $room->id . rand(0, 9);
-            }
 
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
@@ -132,17 +128,13 @@ class RoomController extends Controller
     {
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
-        } else if (isset($room_id)) {
+        } else {
             if (mb_strlen($room_id) == 26) {
                 $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
                 //roomTags.tag でリレーションのリレーション先まで取得できた
-
-            } else if (mb_strlen($room_id) == 27) {
-                $room_id = substr($room_id, 0, -1);
-                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
+            } else {
+                abort(404);
             }
-        } else {
-            abort(404);
         }
 
         $rooms->map(function ($each) {
@@ -156,10 +148,6 @@ class RoomController extends Controller
         });
 
         foreach ($rooms as $room) {
-            if ($room == $rooms->last() && $room->no_get_more) {
-                $room->id = $room->id . rand(0, 9);
-            }
-
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
         }
@@ -171,8 +159,6 @@ class RoomController extends Controller
     {
         if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;
-        } else if (mb_strlen($request->room_id) == 27) {
-            $room_id = substr($request->room_id, 0, -1);
         } else {
             return back()->with('error_message', 'ルーム:' . $request->room_id . 'は存在しません');
         }
@@ -199,9 +185,7 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
-        if (mb_strlen($room_id) == 27) {
-            $room_id = substr($room_id, 0, -1);
-        } else if (mb_strlen($room_id) > 27) {
+        if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
 
@@ -255,10 +239,6 @@ class RoomController extends Controller
         });
 
         foreach ($post_rooms as $post_room) {
-            if ($post_rooms->last() && $post_room->no_get_more) {
-                $post_room->id = $post_room->id . rand(0, 9);
-            }
-
             $post_room->user->id = Crypt::encrypt($post_room->user->id);
             $post_room->user_id = Crypt::encrypt($post_room->user_id);
         }
@@ -268,7 +248,7 @@ class RoomController extends Controller
 
     public static function getListRoom($room_id = null)
     {
-        $user_id= Auth::id();
+        $user_id = Auth::id();
         $user = User::find($user_id);
 
         $list_query = $user->listRooms();
@@ -288,13 +268,8 @@ class RoomController extends Controller
         });
 
         foreach ($list_rooms as $list_room) {
-            if ($list_rooms->last() && $list_room->no_get_more) {
-                $list_room->id = $list_room->id . rand(0, 9);
-            }
-
             $list_room->user->id = Crypt::encrypt($list_room->user->id);
             $list_room->user_id = Crypt::encrypt($list_room->user_id);
-
         }
         return $list_rooms;
     }
@@ -303,9 +278,7 @@ class RoomController extends Controller
     {
         if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;
-        } else if (mb_strlen($request->room_id) == 27) {
-            $room_id = substr($request->room_id, 0, -1);
-        } else {
+        }  else {
             $error_message = 'ルーム:' . $request->room_id . 'は存在しません';
         }
 
