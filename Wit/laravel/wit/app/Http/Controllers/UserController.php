@@ -39,7 +39,7 @@ class UserController extends Controller
                 $type = User::buttonTypeJudge($user->id);
                 $user_data = [
                     'user_id' => $decrypted_user_id,
-                    'type' => $type,
+                    'type' => $type['type'],
                     'profile_message' => $user->profile_message,
                     'user_name' => $user->name,
                     'profile_image' => $user->profile_image,
@@ -179,9 +179,10 @@ class UserController extends Controller
                     abort(404);
                 }
                 $user_id = Crypt::decrypt($request->user_id);
-                $users = User::searchUserName($user_name)->orderby('id', 'asc')->where('id', '>', $user_id)->take(30)->get();
+                $ref_user_name = User::find($user_id)->value('name');
+                $users = User::searchUserName($user_name)->where('id', '>', $user_id)->take(30)->get();
             } else {
-                $users = User::searchUserName($user_name)->orderby('id', 'asc')->take(30)->get();
+                $users = User::searchUserName($user_name)->take(30)->get();
             }
 
             $search_query = User::searchUsername($user_name);
