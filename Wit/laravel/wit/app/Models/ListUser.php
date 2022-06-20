@@ -50,4 +50,22 @@ class ListUser extends Model
             return $message_type;
         }
     }
+
+    public static function removeListUser($user_id)
+    {
+        $auth_id = Auth::id();
+        $decrypted_user_id = Crypt::decrypt($user_id);
+        if (ListUser::where('user_id',$auth_id)->where('favorite_user_id',$decrypted_user_id)->doesntExist()){
+            $message_type = 10;
+            return $message_type;
+        } elseif (User::where('id', $decrypted_user_id)->exists()) {
+            $list_user = new ListUser;
+            $list_user->where('user_id', $auth_id)->where('favorite_user_id',$decrypted_user_id)->delete();
+            $message_type = 1;
+            return $message_type;
+        }else{
+            $message_type = 0;
+            return $message_type;
+        }
+    }
 }

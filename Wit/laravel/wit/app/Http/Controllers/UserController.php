@@ -207,10 +207,10 @@ class UserController extends Controller
         }
     }
 
-    public function actionListUser(Request $request)
+    public function actionAddListUser($user_id)
     {
-        if (isset($request->user_id)) {
-            $message_type = ListUser::addListUser($request->user_id);
+        if (isset($user_id)) {
+            $message_type = ListUser::addListUser($user_id);
             switch ($message_type) {
                 case 0:
                     $error_message = 'そのユーザは存在しません';
@@ -230,6 +230,32 @@ class UserController extends Controller
             return response()->Json(["error_message" => $error_message]);
         }
     }
+
+    public function actionRemoveListUser($user_id)
+    {
+        if (isset($user_id)) {
+            $message_type = ListUser::removeListUser($user_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'そのユーザは存在しません';
+                    break;
+                case 1:
+                    $message = 'リストからユーザーを削除しました';
+                    break;
+                case 10:
+                    $error_message = 'そのユーザはリストに登録されていません';
+                    break;
+            }
+        }
+
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
+        }
+    }
+
+
 
     public static function getListUser($favorite_user_id = null)
     {

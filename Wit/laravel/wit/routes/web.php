@@ -37,9 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/create', [App\Http\Controllers\RoomController::class, 'create'])->name('createRoom');
     Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
     
-    Route::get('/home/addListRoom{room_id}', [App\Http\Controllers\RoomController::class, 'actionListRoom'])->name('showModalListRoom');
-    Route::get('/home/addListUser{user_id}', [App\Http\Controllers\UserController::class, 'actionListUser'])->name('showModalListUser');
-    
+    Route::get('/home/addListRoom{room_id}', [App\Http\Controllers\RoomController::class, 'actionAddListRoom'])->name('actionAddListRoom');
+    Route::get('/home/removeListRoom{room_id}', [App\Http\Controllers\RoomController::class, 'actionRemoveListRoom'])->name('actionRemoveListRoom');
+    Route::get('/home/addListUser{user_id}', [App\Http\Controllers\UserController::class, 'actionAddListUser'])->name('actioAddListUser');
+    Route::get('/home/removeListUser{user_id}', [App\Http\Controllers\UserController::class, 'actionRemoveListUser'])->name('actionRemoveListUser');
     //api 
     Route::get('/getRoomInfo{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
     Route::get('/getPostRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');

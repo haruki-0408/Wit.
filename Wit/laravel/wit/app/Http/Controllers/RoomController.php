@@ -275,12 +275,12 @@ class RoomController extends Controller
         return $list_rooms;
     }
 
-    public function actionListRoom(Request $request)
+    public function actionAddListRoom($add_room_id)
     {
-        if (mb_strlen($request->room_id) == 26) {
-            $room_id = $request->room_id;
+        if (mb_strlen($add_room_id) == 26) {
+            $room_id = $add_room_id;
         }  else {
-            $error_message = 'ルーム:' . $request->room_id . 'は存在しません';
+            $error_message = 'ルーム:' . $add_room_id . 'は存在しません';
         }
 
         if (isset($room_id)) {
@@ -306,6 +306,40 @@ class RoomController extends Controller
             }
         }
     }
+
+    public function actionRemoveListRoom($remove_room_id)
+    {
+        if (mb_strlen($remove_room_id) == 26) {
+            $room_id = $remove_room_id;
+        }  else {
+            $error_message = 'ルーム:' . $remove_room_id . 'は存在しません';
+        }
+
+        if (isset($room_id)) {
+            $message_type = ListRoom::removeListRoom($room_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'このルームはリストに登録されていません';
+                    break;
+                case 1:
+                    $message = 'リストからルームを削除しました';
+                    break;
+                case 2:
+                    $error_message = 'ルーム:' . $room_id . 'は存在しません';
+                    break;
+                case 3:
+                    $error_message = 'エラーが発生しました';
+            }
+
+            if (isset($message)) {
+                return response()->Json(["message" => $message]);
+            } else {
+                return response()->Json(["error_message" => $error_message]);
+            }
+        }
+    }
+
+
 
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)

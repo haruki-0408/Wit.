@@ -11270,6 +11270,7 @@ $(document).on('click', '#search-button', function () {
 
 $(document).on('click', '.add-list-room', function () {
   var button = $(this);
+  button.addClass('disabled');
   var room_id = button.parent().parent().parent().parent().attr('data-room-id');
   $.ajax({
     type: "get",
@@ -11280,14 +11281,48 @@ $(document).on('click', '.add-list-room', function () {
   }) //通信が成功したとき
   .done(function (res) {
     actionSuccess(res);
+    button.removeClass('add-list-room');
+    button.removeClass('btn-outline-primary');
+    button.addClass('remove-list-room');
+    button.addClass('btn-outline-danger');
+    button.html("<svg width = '16' height = '16' fill = 'currentColor' class='bi bi-clipboard-minus' viewBox = '0 0 16 16'> <path fill-rule='evenodd' d='M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z' /> <path d='M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z' /> <path d='M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z' /> </svg>");
+    button.removeClass('disabled');
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);
+    button.removeClass('disabled');
+  });
+}); //remove-list-roomボタンを押したとき
+
+$(document).on('click', '.remove-list-room', function () {
+  var button = $(this);
+  button.addClass('disabled');
+  var room_id = button.parent().parent().parent().parent().attr('data-room-id');
+  $.ajax({
+    type: "get",
+    //HTTP通信の種類
+    url: '/home/removeListRoom' + room_id,
+    //通信したいURL
+    dataType: 'json'
+  }) //通信が成功したとき
+  .done(function (res) {
+    actionSuccess(res);
+    button.removeClass('remove-list-room');
+    button.removeClass('btn-outline-danger');
+    button.addClass('add-list-room');
+    button.addClass('btn-outline-primary');
+    button.html("<svg width='16' height='16' fill='currentColor' class='bi bi-clipboard-plus' viewBox='0 0 16 16'> <path fill-rule='evenodd' d='M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z' /> <path d='M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z' /> <path d='M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z' /> </svg>");
+    button.removeClass('disabled');
+  }) //通信が失敗したとき
+  .fail(function (error) {
+    console.log(error.statusText);
+    button.removeClass('disabled');
   });
 }); //add-list-userボタンを押したとき
 
 $(document).on('click', '.add-list-user', function () {
   var button = $(this);
+  button.addClass('disabled');
   var user_id = button.parent().parent().attr('data-user-id');
   $.ajax({
     type: "get",
@@ -11298,9 +11333,42 @@ $(document).on('click', '.add-list-user', function () {
   }) //通信が成功したとき
   .done(function (res) {
     actionSuccess(res);
+    button.removeClass('add-list-user');
+    button.removeClass('btn-outline-primary');
+    button.addClass('remove-list-user');
+    button.addClass('btn-outline-danger');
+    button.html("<svg width='16' height='16' fill='currentColor' class='bi bi-person-dash-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z'></path><path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'></path></svg>");
+    button.removeClass('disabled');
   }) //通信が失敗したとき
   .fail(function (error) {
     console.log(error.statusText);
+    button.removeClass('disabled');
+  });
+}); //remove-list-userボタンを押したとき
+
+$(document).on('click', '.remove-list-user', function () {
+  var button = $(this);
+  button.addClass('disabled');
+  var user_id = button.parent().parent().attr('data-user-id');
+  $.ajax({
+    type: "get",
+    //HTTP通信の種類
+    url: '/home/removeListUser' + user_id,
+    //通信したいURL
+    dataType: 'json'
+  }) //通信が成功したとき
+  .done(function (res) {
+    actionSuccess(res);
+    button.removeClass('remove-list-user');
+    button.removeClass('btn-outline-danger');
+    button.addClass('add-list-user');
+    button.addClass('btn-outline-primary');
+    button.html("<svg width='16' height='16' fill='currentColor' class='bi bi-person-plus-fill' viewBox='0 0 16 16'> <path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/> <path fill-rule='evenodd' d='M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z'/> </svg>");
+    button.removeClass('disabled');
+  }) //通信が失敗したとき
+  .fail(function (error) {
+    console.log(error.statusText);
+    button.removeClass('disabled');
   });
 }); //検索タイプをユーザ検索に切り替えたとき
 
