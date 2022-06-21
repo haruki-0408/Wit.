@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/removeListUser{user_id}', [App\Http\Controllers\UserController::class, 'actionRemoveListUser'])->name('actionRemoveListUser');
     //api 
     Route::get('/getRoomInfo{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
-    Route::get('/getPostRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
+    Route::get('/getPostRoom{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
     Route::get('/getListUser{favorite_user_id?}', [App\Http\Controllers\UserController::class, 'getListUser'])->name('getListUser');
     Route::get('/getListRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getListRoom'])->name('getListRoom');
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');

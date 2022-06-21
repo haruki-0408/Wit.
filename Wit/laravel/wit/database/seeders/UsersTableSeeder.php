@@ -18,8 +18,8 @@ class UsersTableSeeder extends Seeder
     {
         //User::factory()->count(10)->create();
         User::factory()
-            ->count(30)
-            ->has(Room::factory()->count(1))
+            ->count(10)
+            ->has(Room::factory()->count(3))
             ->create();
     }
 }

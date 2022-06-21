@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                <h5 class="modal-title"><svg width="16" height="16"
                         fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
@@ -42,7 +42,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                <h5 class="modal-title"><svg width="16" height="16"
                         fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
@@ -68,7 +68,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                <h5 class="modal-title"><svg width="16" height="16"
                         fill="currentColor" class="bi bi-people-fill mx-2" viewBox="0 0 16 16">
                         <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         <path fill-rule="evenodd"
@@ -93,7 +93,7 @@
 
                             <div class="btn-group d-flex align-items-center p-2">
                                 <button type="button" class="remove-list-user btn btn-outline-danger"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        width="16" height="16" fill="currentColor"
                                         class="bi bi-person-dash-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
@@ -127,7 +127,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                <h5 class="modal-title"><svg width="16" height="16"
                         fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />

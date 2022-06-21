@@ -78,7 +78,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getPostRoom' + lastli, //通信したいURL
+                url: '/getPostRoom' + lastli , //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -197,6 +197,47 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
     }
 });
+
+$(document).on('click', "[id^='otherMore']", function (event) {
+    event.currentTarget.disabled = true;
+    let last;
+    let lastli;
+    let user_id = document.getElementById('targetUser').dataset.userId;
+    switch (event.currentTarget.id) {
+        case 'otherMorePostRoomButton':
+            last = document.getElementById('otherPost');
+            lastli = last.lastElementChild.dataset.roomId;
+            $.ajax({
+                type: "get", //HTTP通信の種類
+                url: '/getPostRoom'+ lastli + '/' + user_id,
+                dataType: 'json',
+            })
+                //通信が成功したとき
+                .done((res) => {
+                    let show = 'otherPost';
+                    if (res.length !== 0) {
+                        event.currentTarget.disabled = false;
+                        let last_get_more = res[Object.keys(res).length - 1].no_get_more;
+                        addRoomPage(res, show);
+                        removeGetMoreButton(show, last_get_more);
+                    } else {
+                        let last_get_more = 'none_res';
+                        removeGetMoreButton(show, last_get_more);
+                    }
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+            break;
+
+        default:
+            console.log("それ以外が押されました");
+            break;
+
+    }
+});
+
 
 //検索ボタンを押したとき
 $(document).on('click', '#search-button', function () {

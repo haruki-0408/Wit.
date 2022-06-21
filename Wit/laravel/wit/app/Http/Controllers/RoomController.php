@@ -212,10 +212,11 @@ class RoomController extends Controller
         }
     }
 
-    public static function getPostRoom($room_id = null)
+    public static function getPostRoom($room_id = null,$user_id = null)
     {
         if (isset($user_id)) {
-            $user = User::find($user_id);
+            $decrypted_user_id = Crypt::decrypt($user_id);
+            $user = User::find($decrypted_user_id);
         } else {
             $user_id = Auth::id();
             $user = User::find($user_id);

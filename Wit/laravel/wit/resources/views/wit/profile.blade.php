@@ -4,14 +4,15 @@
     @component('wit.home-modals')
     @endcomponent
 
-    @component('wit.profile-modals', ['other_post_rooms' => $post_rooms])
+    @component('wit.profile-modals',['o_post_rooms'=>$o_post_rooms])
     @endcomponent
+
 
     <div id="profile" class="overflow-auto" style="width:100%; height:85%;">
         <div class="container-sm p-3">
             <div class="row">
                 <div class="header">
-                    <div data-user-id={{ Crypt::encrypt($user_id) }} class="row align-items-center">
+                    <div id="targetUser" data-user-id={{ Crypt::encrypt($user_id) }} class="row align-items-center">
                         <div class="col-9 text-start">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none text-start">
                                 <div class="profile">
@@ -110,13 +111,13 @@
                             </li>
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#otherListUserModal">
+                                    data-bs-target="#myListUserModal">
                                     <strong>List User</strong>
                                 </a>
                             </li>
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#otherListRoomModal">
+                                    data-bs-target="#myListRoomModal">
                                     <strong>List Room</strong>
                                 </a>
                             </li>
