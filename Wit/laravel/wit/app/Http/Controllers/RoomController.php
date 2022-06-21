@@ -90,7 +90,7 @@ class RoomController extends Controller
 
 
         if (isset($request->room_id)) {
-            if (mb_strlen($request->room_id) == 6) {
+            if (mb_strlen($request->room_id) == 26) {
                 $room_id = $request->room_id;
                 $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
             } else {
@@ -256,7 +256,8 @@ class RoomController extends Controller
         if (is_null($room_id)) {
             $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         } else if (isset($room_id)) {
-            $list_rooms = $user->listRooms()->where('rooms.id', '<', $room_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $list_rooms_id = $user->listRooms()->where('room_id',$room_id)->value('list_rooms.id');
+            $list_rooms = $user->listRooms()->where('list_rooms.id', '<', $list_rooms_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         }
         $list_rooms->map(function ($each) use ($list_query) {
             $type = Room::buttonTypeJudge($each->id, null, $list_query);
