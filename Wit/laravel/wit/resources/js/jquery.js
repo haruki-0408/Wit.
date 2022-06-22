@@ -1,17 +1,18 @@
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
     event.currentTarget.disabled = true;
-
-    let select = document.getElementById('searchType').value;
-    let keyword = document.getElementById('search-keyword').value;
-    let last = document.getElementById('Rooms');
-    let lastli = last.lastElementChild.dataset.roomId;
-    let flexCheckImage = document.getElementById('flexCheckImage').checked;
-    let flexCheckTag = document.getElementById('flexCheckTag').checked;
-    let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-    let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    let last;
+    let lastli;
     switch (event.currentTarget.id) {
         case 'getMoreButtonSearch':
+            last = document.getElementById('Rooms');
+            lastli = last.lastElementChild.dataset.roomId;
+            let select = document.getElementById('searchType').value;
+            let keyword = document.getElementById('search-keyword').value;
+            let flexCheckImage = document.getElementById('flexCheckImage').checked;
+            let flexCheckTag = document.getElementById('flexCheckTag').checked;
+            let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+            let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
             $.ajax({
                 type: "post", //HTTP通信の種類
                 url: '/home/searchRoom',
@@ -49,6 +50,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
             break;
 
         case 'getMoreButton':
+            last = document.getElementById('Rooms');
+            lastli = last.lastElementChild.dataset.roomId;
             $.ajax({
                 type: "get", //HTTP通信の種類
                 url: '/getRoomInfo' + lastli, //通信したいURL
@@ -78,7 +81,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getPostRoom' + lastli , //通信したいURL
+                url: '/getPostRoom' + lastli, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -160,7 +163,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         case 'getMoreUserButton':
             last_user_id = last.lastElementChild.dataset.userId;
-            let keyword = document.getElementById("search-keyword").value;
+            keyword = document.getElementById("search-keyword").value;
             $.ajax({
                 type: "get",
                 url: '/home/searchUser' + '?' + 'keyword=' + keyword + '&' + 'user_id=' + last_user_id,
@@ -198,6 +201,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
     }
 });
 
+//otherMoreを押したとき
 $(document).on('click', "[id^='otherMore']", function (event) {
     event.currentTarget.disabled = true;
     let last;
@@ -209,7 +213,7 @@ $(document).on('click', "[id^='otherMore']", function (event) {
             lastli = last.lastElementChild.dataset.roomId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getPostRoom'+ lastli + '/' + user_id,
+                url: '/getPostRoom' + lastli + '/' + user_id,
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -641,9 +645,11 @@ function addUserPage(res, show) {
                     break;
             }
 
-            let search_button = document.getElementById("search-button");
-            if (search_button.disabled) {
-                search_button.disabled = false;
+            if (document.getElementById("search-button")) {
+                let search_button = document.getElementById("search-button");
+                if (search_button.disabled) {
+                    search_button.disabled = false;
+                }
             }
 
         }
@@ -686,6 +692,7 @@ function addRoomPage(res, show) {
 
             clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
             clone.querySelector('.profile-image').src = res[i].user.profile_image;
+            console.log(res[i].user.profile_image);
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
 
@@ -718,14 +725,22 @@ function addRoomPage(res, show) {
                 case 'myListRoom':
                     document.getElementById('myListRoom').appendChild(clone);
                     break;
+                case 'otherPost':
+                    document.getElementById('otherPost').appendChild(clone);
+                    break;
+                case 'otherListRoom':
+                    document.getElementById('otherListRoom').appendChild(clone);
+                    break;
                 default:
                     console.log('show:その他');
                     break;
             }
 
-            let search_button = document.getElementById("search-button");
-            if (search_button.disabled) {
-                search_button.disabled = false;
+            if (document.getElementById("search-button")) {
+                let search_button = document.getElementById("search-button");
+                if (search_button.disabled) {
+                    search_button.disabled = false;
+                }
             }
         }
 
@@ -864,6 +879,11 @@ function removeGetMoreButton(show, last_get_more) {
         case 'myListUser':
             rooms = document.getElementById('myListUser');
             button = document.getElementById('getMoreListUserButton');
+            break;
+        case 'otherPost':
+            rooms = document.getElementById('otherPost');
+            button = document.getElementById('otherMorePostRoomButton');
+            break;
         default:
             break;
     }

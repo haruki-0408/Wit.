@@ -10930,17 +10930,19 @@ var __webpack_exports__ = {};
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
   event.currentTarget.disabled = true;
-  var select = document.getElementById('searchType').value;
-  var keyword = document.getElementById('search-keyword').value;
-  var last = document.getElementById('Rooms');
-  var lastli = last.lastElementChild.dataset.roomId;
-  var flexCheckImage = document.getElementById('flexCheckImage').checked;
-  var flexCheckTag = document.getElementById('flexCheckTag').checked;
-  var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-  var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+  var last;
+  var lastli;
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
+      last = document.getElementById('Rooms');
+      lastli = last.lastElementChild.dataset.roomId;
+      var select = document.getElementById('searchType').value;
+      var keyword = document.getElementById('search-keyword').value;
+      var flexCheckImage = document.getElementById('flexCheckImage').checked;
+      var flexCheckTag = document.getElementById('flexCheckTag').checked;
+      var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
+      var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
       $.ajax({
         type: "post",
         //HTTP通信の種類
@@ -10950,7 +10952,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         },
         data: {
           "searchType": select,
-          "keyword": _keyword,
+          "keyword": keyword,
           "room_id": lastli,
           "checkImage": flexCheckImage,
           "checkTag": flexCheckTag,
@@ -10978,6 +10980,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
       break;
 
     case 'getMoreButton':
+      last = document.getElementById('Rooms');
+      lastli = last.lastElementChild.dataset.roomId;
       $.ajax({
         type: "get",
         //HTTP通信の種類
@@ -11092,10 +11096,10 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
     case 'getMoreUserButton':
       last_user_id = last.lastElementChild.dataset.userId;
-      var _keyword = document.getElementById("search-keyword").value;
+      keyword = document.getElementById("search-keyword").value;
       $.ajax({
         type: "get",
-        url: '/home/searchUser' + '?' + 'keyword=' + _keyword + '&' + 'user_id=' + last_user_id,
+        url: '/home/searchUser' + '?' + 'keyword=' + keyword + '&' + 'user_id=' + last_user_id,
         dataType: 'json'
       }) //通信が成功したとき
       .done(function (res) {
@@ -11126,7 +11130,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
       console.log("それ以外が押されました");
       break;
   }
-});
+}); //otherMoreを押したとき
+
 $(document).on('click', "[id^='otherMore']", function (event) {
   event.currentTarget.disabled = true;
   var last;
@@ -11218,7 +11223,7 @@ $(document).on('click', '#search-button', function () {
       }
     }
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
-    var _keyword2 = document.getElementById("search-keyword").value;
+    var _keyword = document.getElementById("search-keyword").value;
     var select = document.getElementById('searchType').value;
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
@@ -11233,7 +11238,7 @@ $(document).on('click', '#search-button', function () {
       },
       data: {
         "searchType": select,
-        "keyword": _keyword2,
+        "keyword": _keyword,
         "checkImage": flexCheckImage,
         "checkTag": flexCheckTag,
         "checkPassword": flexCheckPassword,
@@ -11557,10 +11562,12 @@ function addUserPage(res, show) {
           break;
       }
 
-      var search_button = document.getElementById("search-button");
+      if (document.getElementById("search-button")) {
+        var search_button = document.getElementById("search-button");
 
-      if (search_button.disabled) {
-        search_button.disabled = false;
+        if (search_button.disabled) {
+          search_button.disabled = false;
+        }
       }
     }
 
@@ -11597,6 +11604,7 @@ function addRoomPage(res, show) {
       });
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
       clone.querySelector('.profile-image').src = res[i].user.profile_image;
+      console.log(res[i].user.profile_image);
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
 
@@ -11633,15 +11641,25 @@ function addRoomPage(res, show) {
           document.getElementById('myListRoom').appendChild(clone);
           break;
 
+        case 'otherPost':
+          document.getElementById('otherPost').appendChild(clone);
+          break;
+
+        case 'otherListRoom':
+          document.getElementById('otherListRoom').appendChild(clone);
+          break;
+
         default:
           console.log('show:その他');
           break;
       }
 
-      var search_button = document.getElementById("search-button");
+      if (document.getElementById("search-button")) {
+        var search_button = document.getElementById("search-button");
 
-      if (search_button.disabled) {
-        search_button.disabled = false;
+        if (search_button.disabled) {
+          search_button.disabled = false;
+        }
       }
     };
 
@@ -11790,6 +11808,12 @@ function removeGetMoreButton(show, last_get_more) {
     case 'myListUser':
       rooms = document.getElementById('myListUser');
       button = document.getElementById('getMoreListUserButton');
+      break;
+
+    case 'otherPost':
+      rooms = document.getElementById('otherPost');
+      button = document.getElementById('otherMorePostRoomButton');
+      break;
 
     default:
       break;
