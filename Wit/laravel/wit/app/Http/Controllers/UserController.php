@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
-
+use App\Models\Room;
 
 class UserController extends Controller
 {
@@ -33,7 +33,7 @@ class UserController extends Controller
             //this payload is invalid 問題解決してない
 
             $decrypted_user_id = Crypt::decrypt($user_id);
-           
+
             if (User::find($decrypted_user_id)->exists()) {
                 $user = User::find($decrypted_user_id);
                 $type = User::buttonTypeJudge($user->id);
@@ -43,9 +43,14 @@ class UserController extends Controller
                     'profile_message' => $user->profile_message,
                     'user_name' => $user->name,
                     'profile_image' => $user->profile_image,
-                    'o_post_rooms' => RoomController::getPostRoom(null,$user_id),
                 ];
-
+            
+                if ($user != Auth::user()) {
+                    $user_data += array('o_post_rooms'=>RoomController::getPostRoom(null,$user_id));
+                    $user_data += array('o_list_users'=>Self::getListUser(null,$user_id));
+                    $user_data += array('o_list_rooms'=>RoomController::getListRoom(null,$user_id));
+                } 
+                
                 return view('wit.profile', $user_data);
             } else {
                 abort(404);
@@ -257,24 +262,25 @@ class UserController extends Controller
 
 
 
-    public static function getListUser($favorite_user_id = null)
+    public static function getListUser($favorite_user_id = null,$user_id = null)
     {
         if (isset($user_id)) {
             $user_id = Crypt::decrypt($user_id);
             $user = User::find($user_id);
         } else {
-            $user = Auth::user();
+            $user_id = Auth::id();
+            $user = User::find($user_id);
         }
 
         $list_query = $user->listUsers();
-        
+
 
         if (isset($favorite_user_id)) {
             $favorite_user_id = Crypt::decrypt($favorite_user_id);
-            $created_at = $user->listUsers()->where('favorite_user_id',$favorite_user_id)->value('list_users.created_at');
-            $list_users = $user->listUsers()->where('list_users.created_at', '<', $created_at)->orderBy('list_users.created_at','desc')->take(30)->get();
+            $created_at = $user->listUsers()->where('favorite_user_id', $favorite_user_id)->value('list_users.created_at');
+            $list_users = $user->listUsers()->where('list_users.created_at', '<', $created_at)->orderBy('list_users.created_at', 'desc')->take(30)->get();
         } else {
-            $list_users = $user->listUsers()->orderBy('list_users.created_at','desc')->take(30)->get();
+            $list_users = $user->listUsers()->orderBy('list_users.created_at', 'desc')->take(30)->get();
         }
 
         $list_users->map(function ($each) use ($list_query) {
@@ -291,6 +297,7 @@ class UserController extends Controller
             $list_user->id = Crypt::encrypt($list_user->id);
         }
 
+        
         return $list_users;
     }
 }

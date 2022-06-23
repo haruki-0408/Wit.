@@ -248,10 +248,15 @@ class RoomController extends Controller
         return $post_rooms;
     }
 
-    public static function getListRoom($room_id = null)
+    public static function getListRoom($room_id = null,$user_id = null)
     {
-        $user_id = Auth::id();
-        $user = User::find($user_id);
+        if (isset($user_id)) {
+            $decrypted_user_id = Crypt::decrypt($user_id);
+            $user = User::find($decrypted_user_id);
+        } else {
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+        }
 
         $list_query = $user->listRooms();
         if (is_null($room_id)) {

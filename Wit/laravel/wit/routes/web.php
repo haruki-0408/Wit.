@@ -23,8 +23,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home/profile/image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
-    Route::get('/home/profile/image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
+    //Route::get('/home/profile/image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
     Route::get('/home/profile/{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
     Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');
@@ -44,8 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     //api 
     Route::get('/getRoomInfo{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
     Route::get('/getPostRoom{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
-    Route::get('/getListUser{favorite_user_id?}', [App\Http\Controllers\UserController::class, 'getListUser'])->name('getListUser');
-    Route::get('/getListRoom{room_id?}', [App\Http\Controllers\RoomController::class, 'getListRoom'])->name('getListRoom');
+    Route::get('/getListUser{favorite_user_id?}/{user_id?}', [App\Http\Controllers\UserController::class, 'getListUser'])->name('getListUser');
+    Route::get('/getListRoom{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getListRoom'])->name('getListRoom');
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');
     Route::post('/home/searchRoom', [App\Http\Controllers\RoomController::class, 'searchRoom'])->name('searchRoom');
 });

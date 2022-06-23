@@ -11166,6 +11166,65 @@ $(document).on('click', "[id^='otherMore']", function (event) {
       });
       break;
 
+    case 'otherMoreAnswerRoomButton':
+      console.log('otherMoreAnswerRoomButtonが押されました');
+      break;
+
+    case 'otherMoreListUserButton':
+      last = document.getElementById('otherListUser');
+      lastli = last.lastElementChild.dataset.userId;
+      $.ajax({
+        type: "get",
+        //HTTP通信の種類
+        url: '/getListUser' + lastli + '/' + user_id,
+        dataType: 'json'
+      }) //通信が成功したとき
+      .done(function (res) {
+        var show = 'otherListUser';
+
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          console.log(last_get_more);
+          addUserPage(res, show);
+          removeGetMoreButton(show, last_get_more);
+        } else {
+          var _last_get_more8 = 'none_res';
+          removeGetMoreButton(show, _last_get_more8);
+        }
+      }) //通信が失敗したとき
+      .fail(function (error) {
+        console.log(error.statusText);
+      });
+      break;
+
+    case 'otherMoreListRoomButton':
+      last = document.getElementById('otherListRoom');
+      lastli = last.lastElementChild.dataset.roomId;
+      $.ajax({
+        type: "get",
+        //HTTP通信の種類
+        url: '/getListRoom' + lastli + '/' + user_id,
+        dataType: 'json'
+      }) //通信が成功したとき
+      .done(function (res) {
+        var show = 'otherListRoom';
+
+        if (res.length !== 0) {
+          event.currentTarget.disabled = false;
+          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          addRoomPage(res, show);
+          removeGetMoreButton(show, last_get_more);
+        } else {
+          var _last_get_more9 = 'none_res';
+          removeGetMoreButton(show, _last_get_more9);
+        }
+      }) //通信が失敗したとき
+      .fail(function (error) {
+        console.log(error.statusText);
+      });
+      break;
+
     default:
       console.log("それ以外が押されました");
       break;
@@ -11256,7 +11315,7 @@ $(document).on('click', '#search-button', function () {
       } else {
         var _noresult = document.createElement('h3');
 
-        var _last_get_more8 = 'none_res';
+        var _last_get_more10 = 'none_res';
 
         _noresult.setAttribute('data-room-id', 'noResult');
 
@@ -11540,7 +11599,7 @@ function addUserPage(res, show) {
 
       clone.querySelector('li').setAttribute('data-user-id', res[i].id);
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
-      clone.querySelector('.profile-image').src = res[i].profile_image;
+      clone.querySelector('.profile-image').src = '/' + res[i].profile_image;
       clone.querySelector('.user-name').textContent = res[i].name;
       button = userButtonTypeJudge(res[i].type, res[i].id);
 
@@ -11555,6 +11614,10 @@ function addUserPage(res, show) {
 
         case 'myListUser':
           document.getElementById('myListUser').appendChild(clone);
+          break;
+
+        case 'otherListUser':
+          document.getElementById('otherListUser').appendChild(clone);
           break;
 
         default:
@@ -11603,7 +11666,7 @@ function addRoomPage(res, show) {
         clone.querySelector('.btn-group').appendChild(value);
       });
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
-      clone.querySelector('.profile-image').src = res[i].user.profile_image;
+      clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
       console.log(res[i].user.profile_image);
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
@@ -11813,6 +11876,16 @@ function removeGetMoreButton(show, last_get_more) {
     case 'otherPost':
       rooms = document.getElementById('otherPost');
       button = document.getElementById('otherMorePostRoomButton');
+      break;
+
+    case 'otherListUser':
+      rooms = document.getElementById('otherListUser');
+      button = document.getElementById('otherMoreListUserButton');
+      break;
+
+    case 'otherListRoom':
+      rooms = document.getElementById('otherListRoom');
+      button = document.getElementById('otherMoreListRoomButton');
       break;
 
     default:
