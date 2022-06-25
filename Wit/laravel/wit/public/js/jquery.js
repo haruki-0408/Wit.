@@ -10932,17 +10932,18 @@ $(document).on('click', "[id^='getMore']", function (event) {
   event.currentTarget.disabled = true;
   var last;
   var lastli;
+  var searchButton = document.getElementById('search-button');
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
       last = document.getElementById('Rooms');
       lastli = last.lastElementChild.dataset.roomId;
-      var select = document.getElementById('searchType').value;
-      var keyword = document.getElementById('search-keyword').value;
-      var flexCheckImage = document.getElementById('flexCheckImage').checked;
-      var flexCheckTag = document.getElementById('flexCheckTag').checked;
-      var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-      var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+      var select = searchButton.dataset.select;
+      var keyword = searchButton.dataset.keyword;
+      var flexCheckImage = searchButton.dataset.flexCheckImage;
+      var flexCheckTag = searchButton.dataset.flexCheckTag;
+      var flexCheckPassword = searchButton.dataset.flexCheckPassword;
+      var flexCheckAnswer = searchButton.dataset.flexCheckAnswer;
       $.ajax({
         type: "post",
         //HTTP通信の種類
@@ -10966,12 +10967,12 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
-          removeGetMoreButton(show, last_get_more);
-        } else {
-          var _last_get_more = 'none_res';
           removeGetMoreButton(show, _last_get_more);
+        } else {
+          var _last_get_more2 = 'none_res';
+          removeGetMoreButton(show, _last_get_more2);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -10994,12 +10995,12 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more3 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more3);
         } else {
-          var _last_get_more2 = 'none_res';
-          removeGetMoreButton(show, _last_get_more2);
+          var _last_get_more4 = 'none_res';
+          removeGetMoreButton(show, _last_get_more4);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11021,12 +11022,12 @@ $(document).on('click', "[id^='getMore']", function (event) {
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
           var _show = "myPost";
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more5 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, _show);
-          removeGetMoreButton(_show, last_get_more);
+          removeGetMoreButton(_show, _last_get_more5);
         } else {
-          var _last_get_more3 = 'none_res';
-          removeGetMoreButton(show, _last_get_more3);
+          var _last_get_more6 = 'none_res';
+          removeGetMoreButton(show, _last_get_more6);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11053,12 +11054,12 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more7 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more7);
         } else {
-          var _last_get_more4 = 'none_res';
-          removeGetMoreButton(show, _last_get_more4);
+          var _last_get_more8 = 'none_res';
+          removeGetMoreButton(show, _last_get_more8);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11081,12 +11082,12 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more9 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more9);
         } else {
-          var _last_get_more5 = 'none_res';
-          removeGetMoreButton(show, _last_get_more5);
+          var _last_get_more10 = 'none_res';
+          removeGetMoreButton(show, _last_get_more10);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11095,8 +11096,9 @@ $(document).on('click', "[id^='getMore']", function (event) {
       break;
 
     case 'getMoreUserButton':
+      last = document.getElementById('Rooms');
       last_user_id = last.lastElementChild.dataset.userId;
-      keyword = document.getElementById("search-keyword").value;
+      keyword = searchButton.dataset.keyword;
       $.ajax({
         type: "get",
         url: '/home/searchUser' + '?' + 'keyword=' + keyword + '&' + 'user_id=' + last_user_id,
@@ -11107,9 +11109,9 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more11 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more11);
         } else {
           /*let noresult = document.createElement('h3');
           noresult.setAttribute('data-room-id', 'noResult');
@@ -11117,8 +11119,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
           */
-          var _last_get_more6 = 'none_res';
-          removeGetMoreButton(show, _last_get_more6);
+          var _last_get_more12 = 'none_res';
+          removeGetMoreButton(show, _last_get_more12);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11153,12 +11155,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more13 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more13);
         } else {
-          var _last_get_more7 = 'none_res';
-          removeGetMoreButton(show, _last_get_more7);
+          var _last_get_more14 = 'none_res';
+          removeGetMoreButton(show, _last_get_more14);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11184,13 +11186,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
-          console.log(last_get_more);
+          var _last_get_more15 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more15);
         } else {
-          var _last_get_more8 = 'none_res';
-          removeGetMoreButton(show, _last_get_more8);
+          var _last_get_more16 = 'none_res';
+          removeGetMoreButton(show, _last_get_more16);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11212,12 +11213,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
 
         if (res.length !== 0) {
           event.currentTarget.disabled = false;
-          var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+          var _last_get_more17 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
-          removeGetMoreButton(show, last_get_more);
+          removeGetMoreButton(show, _last_get_more17);
         } else {
-          var _last_get_more9 = 'none_res';
-          removeGetMoreButton(show, _last_get_more9);
+          var _last_get_more18 = 'none_res';
+          removeGetMoreButton(show, _last_get_more18);
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11241,6 +11242,10 @@ $(document).on('click', '#search-button', function () {
   if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
     if (document.getElementById("search-keyword").value) {
       var keyword = document.getElementById("search-keyword").value;
+
+      var _searchButton = document.getElementById("search-button");
+
+      _searchButton.dataset.keyword = keyword;
       $.ajax({
         type: "get",
         //HTTP通信の種類
@@ -11259,10 +11264,9 @@ $(document).on('click', '#search-button', function () {
           noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
-          var search_button = document.getElementById("search-button");
 
-          if (search_button.disabled) {
-            search_button.disabled = false;
+          if (_searchButton.disabled) {
+            _searchButton.disabled = false;
           }
         }
       }) //通信が失敗したとき
@@ -11275,19 +11279,26 @@ $(document).on('click', '#search-button', function () {
       noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
       noresult.textContent = 'No result';
       document.getElementById('Rooms').appendChild(noresult);
-      var search_button = document.getElementById("search-button");
 
-      if (search_button.disabled) {
-        search_button.disabled = false;
+      if (searchButton.disabled) {
+        searchButton.disabled = false;
       }
     }
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
+    var _searchButton2 = document.getElementById("search-button");
+
     var _keyword = document.getElementById("search-keyword").value;
     var select = document.getElementById('searchType').value;
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
     var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    _searchButton2.dataset.select = select;
+    _searchButton2.dataset.keyword = _keyword;
+    _searchButton2.dataset.flexCheckImage = flexCheckImage;
+    _searchButton2.dataset.flexCheckTag = flexCheckTag;
+    _searchButton2.dataset.flexCheckPassword = flexCheckPassword;
+    _searchButton2.dataset.flexCheckAnswer = flexCheckAnswer;
     $.ajax({
       type: "post",
       //HTTP通信の種類
@@ -11309,13 +11320,13 @@ $(document).on('click', '#search-button', function () {
       var show = "Room";
 
       if (res.length !== 0) {
-        var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+        var _last_get_more19 = res[Object.keys(res).length - 1].no_get_more;
         addRoomPage(res, show);
-        removeGetMoreButton(show, last_get_more);
+        removeGetMoreButton(show, _last_get_more19);
       } else {
         var _noresult = document.createElement('h3');
 
-        var _last_get_more10 = 'none_res';
+        last_get_more = 'none_res';
 
         _noresult.setAttribute('data-room-id', 'noResult');
 
@@ -11323,10 +11334,8 @@ $(document).on('click', '#search-button', function () {
         _noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(_noresult);
 
-        var _search_button = document.getElementById("search-button");
-
-        if (_search_button.disabled) {
-          _search_button.disabled = false;
+        if (_searchButton2.disabled) {
+          _searchButton2.disabled = false;
         }
       }
     }) //通信が失敗したとき
@@ -11621,23 +11630,22 @@ function addUserPage(res, show) {
           break;
 
         default:
-          console.log('show:その他');
           break;
       }
 
       if (document.getElementById("search-button")) {
-        var search_button = document.getElementById("search-button");
+        var _searchButton3 = document.getElementById("search-button");
 
-        if (search_button.disabled) {
-          search_button.disabled = false;
+        if (_searchButton3.disabled) {
+          _searchButton3.disabled = false;
         }
       }
     }
 
     if (show === 'User') {
-      var last_get_more = res[Object.keys(res).length - 1].no_get_more;
+      var _last_get_more20 = res[Object.keys(res).length - 1].no_get_more;
 
-      if (!document.getElementById('getMoreUserButton') && !last_get_more) {
+      if (!document.getElementById('getMoreUserButton') && !_last_get_more20) {
         getMoreUserButton();
       }
     }
@@ -11667,7 +11675,6 @@ function addRoomPage(res, show) {
       });
       clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
       clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
-      console.log(res[i].user.profile_image);
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
 
@@ -11713,15 +11720,14 @@ function addRoomPage(res, show) {
           break;
 
         default:
-          console.log('show:その他');
           break;
       }
 
       if (document.getElementById("search-button")) {
-        var search_button = document.getElementById("search-button");
+        var _searchButton4 = document.getElementById("search-button");
 
-        if (search_button.disabled) {
-          search_button.disabled = false;
+        if (_searchButton4.disabled) {
+          _searchButton4.disabled = false;
         }
       }
     };
@@ -11737,7 +11743,6 @@ function addRoomPage(res, show) {
 }
 
 function userButtonTypeJudge(type, user_id) {
-  console.log(type);
   var button = document.createElement('button');
 
   switch (type) {

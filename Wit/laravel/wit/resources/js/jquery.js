@@ -3,16 +3,18 @@ $(document).on('click', "[id^='getMore']", function (event) {
     event.currentTarget.disabled = true;
     let last;
     let lastli;
+    let searchButton = document.getElementById('search-button');
     switch (event.currentTarget.id) {
         case 'getMoreButtonSearch':
             last = document.getElementById('Rooms');
             lastli = last.lastElementChild.dataset.roomId;
-            let select = document.getElementById('searchType').value;
-            let keyword = document.getElementById('search-keyword').value;
-            let flexCheckImage = document.getElementById('flexCheckImage').checked;
-            let flexCheckTag = document.getElementById('flexCheckTag').checked;
-            let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-            let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+            let select = searchButton.dataset.select;
+            let keyword = searchButton.dataset.keyword;
+            let flexCheckImage = searchButton.dataset.flexCheckImage;
+            let flexCheckTag = searchButton.dataset.flexCheckTag;
+            let flexCheckPassword = searchButton.dataset.flexCheckPassword;
+            let flexCheckAnswer = searchButton.dataset.flexCheckAnswer;
+           
             $.ajax({
                 type: "post", //HTTP通信の種類
                 url: '/home/searchRoom',
@@ -162,8 +164,9 @@ $(document).on('click', "[id^='getMore']", function (event) {
             break;
 
         case 'getMoreUserButton':
+            last = document.getElementById('Rooms');
             last_user_id = last.lastElementChild.dataset.userId;
-            keyword = document.getElementById("search-keyword").value;
+            keyword = searchButton.dataset.keyword;
             $.ajax({
                 type: "get",
                 url: '/home/searchUser' + '?' + 'keyword=' + keyword + '&' + 'user_id=' + last_user_id,
@@ -251,7 +254,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                     if (res.length !== 0) {
                         event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
-                        console.log(last_get_more);
                         addUserPage(res, show);
                         removeGetMoreButton(show, last_get_more);
                     } else {
@@ -305,11 +307,14 @@ $(document).on('click', '#search-button', function () {
     $("[id^='getMoreUserButton']").remove();
     $(this).prop('disabled', true);
     $(document.getElementById("Rooms")).empty();
-
+    
     if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
 
         if (document.getElementById("search-keyword").value) {
             let keyword = document.getElementById("search-keyword").value;
+            let searchButton = document.getElementById("search-button");
+            searchButton.dataset.keyword = keyword;
+
             $.ajax({
                 type: "get", //HTTP通信の種類
                 url: '/home/searchUser' + '?' + 'keyword=' + keyword, //通信したいURL
@@ -328,9 +333,8 @@ $(document).on('click', '#search-button', function () {
                         noresult.textContent = 'No result';
                         document.getElementById('Rooms').appendChild(noresult);
 
-                        let search_button = document.getElementById("search-button");
-                        if (search_button.disabled) {
-                            search_button.disabled = false;
+                        if (searchButton.disabled) {
+                            searchButton.disabled = false;
                         }
                     }
                 })
@@ -345,19 +349,25 @@ $(document).on('click', '#search-button', function () {
             noresult.textContent = 'No result';
             document.getElementById('Rooms').appendChild(noresult);
 
-            let search_button = document.getElementById("search-button");
-            if (search_button.disabled) {
-                search_button.disabled = false;
+            if (searchButton.disabled) {
+                searchButton.disabled = false;
             }
         }
     } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
 
+        let searchButton = document.getElementById("search-button");
         let keyword = document.getElementById("search-keyword").value;
         let select = document.getElementById('searchType').value;
         let flexCheckImage = document.getElementById('flexCheckImage').checked;
         let flexCheckTag = document.getElementById('flexCheckTag').checked;
         let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
         let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+        searchButton.dataset.select = select;
+        searchButton.dataset.keyword = keyword;
+        searchButton.dataset.flexCheckImage = flexCheckImage;
+        searchButton.dataset.flexCheckTag = flexCheckTag;
+        searchButton.dataset.flexCheckPassword = flexCheckPassword;
+        searchButton.dataset.flexCheckAnswer = flexCheckAnswer;
 
         $.ajax({
             type: "post", //HTTP通信の種類
@@ -384,15 +394,14 @@ $(document).on('click', '#search-button', function () {
                     removeGetMoreButton(show, last_get_more);
                 } else {
                     let noresult = document.createElement('h3');
-                    let last_get_more = 'none_res';
+                    last_get_more = 'none_res';
                     noresult.setAttribute('data-room-id', 'noResult');
                     noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
 
-                    let search_button = document.getElementById("search-button");
-                    if (search_button.disabled) {
-                        search_button.disabled = false;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
                     }
 
                 }
@@ -699,14 +708,13 @@ function addUserPage(res, show) {
                     document.getElementById('otherListUser').appendChild(clone);
                     break;
                 default:
-                    console.log('show:その他');
                     break;
             }
 
             if (document.getElementById("search-button")) {
-                let search_button = document.getElementById("search-button");
-                if (search_button.disabled) {
-                    search_button.disabled = false;
+                let searchButton = document.getElementById("search-button");
+                if (searchButton.disabled) {
+                    searchButton.disabled = false;
                 }
             }
 
@@ -750,7 +758,6 @@ function addRoomPage(res, show) {
 
             clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
             clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
-            console.log(res[i].user.profile_image);
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
 
@@ -790,14 +797,13 @@ function addRoomPage(res, show) {
                     document.getElementById('otherListRoom').appendChild(clone);
                     break;
                 default:
-                    console.log('show:その他');
                     break;
             }
 
             if (document.getElementById("search-button")) {
-                let search_button = document.getElementById("search-button");
-                if (search_button.disabled) {
-                    search_button.disabled = false;
+                let searchButton = document.getElementById("search-button");
+                if (searchButton.disabled) {
+                    searchButton.disabled = false;
                 }
             }
         }

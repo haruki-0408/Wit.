@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         //User::factory()->count(10)->create();
         User::factory()
             ->count(10)
-            ->has(Room::factory()->count(3))
+            ->has(Room::factory()->has(RoomTag::factory()->count(1))->count(3))
             ->create();
     }
 }
