@@ -19,7 +19,6 @@ class WitViewComposer
     {
         $trend_tags = TagController::getTrend();
         $post_rooms = RoomController::getPostRoom();
-        
         $list_rooms = RoomController::getListRoom();
         $list_users = UserController::getListUser();
         $rooms = RoomController::getRoomInfo();

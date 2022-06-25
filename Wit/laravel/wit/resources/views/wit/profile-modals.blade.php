@@ -92,22 +92,42 @@
                             </div>
 
                             <div class="btn-group d-flex align-items-center p-2">
-                                <button type="button" class="remove-list-user btn btn-outline-danger"><svg
-                                        width="16" height="16" fill="currentColor"
-                                        class="bi bi-person-dash-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
-                                        <path
-                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg></button>
+                                @switch($o_list_user->type)
+                                    @case(0)
+                                    @break
+
+                                    @case(1)
+                                        <button class="add-list-user btn btn-outline-primary"><svg width="16"
+                                                height="16" fill="currentColor" class="bi bi-person-plus-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z">
+                                                </path>
+                                                <path fill-rule="evenodd"
+                                                    d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z">
+                                                </path>
+                                            </svg></button>
+                                    @break;
+                                    @case(10)
+                                        <button type="button" class="remove-list-user btn btn-outline-danger"><svg
+                                                width="16" height="16" fill="currentColor"
+                                                class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                                <path
+                                                    d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg></button>
+                                    @break
+                                @endswitch
                             </div>
                         </li>
                     @endforeach
                 </ul>
 
                 @if (!isset($o_list_users->last()->no_get_more) && $o_list_users->isNotEmpty())
-                    <div id="otherMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16"
-                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                    <div id="otherMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg
+                            width="16" height="16" fill="currentColor" class="bi bi-caret-down"
+                            viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>

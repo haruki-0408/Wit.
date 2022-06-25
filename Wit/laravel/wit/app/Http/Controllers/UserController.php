@@ -184,7 +184,6 @@ class UserController extends Controller
                     abort(404);
                 }
                 $user_id = Crypt::decrypt($request->user_id);
-                $ref_user_name = User::find($user_id)->value('name');
                 $users = User::searchUserName($user_name)->where('id', '>', $user_id)->take(30)->get();
             } else {
                 $users = User::searchUserName($user_name)->take(30)->get();
@@ -265,8 +264,8 @@ class UserController extends Controller
     public static function getListUser($favorite_user_id = null,$user_id = null)
     {
         if (isset($user_id)) {
-            $user_id = Crypt::decrypt($user_id);
-            $user = User::find($user_id);
+            $decrypted_user_id = Crypt::decrypt($user_id);
+            $user = User::find($decrypted_user_id);
         } else {
             $user_id = Auth::id();
             $user = User::find($user_id);

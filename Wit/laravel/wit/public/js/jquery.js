@@ -11737,6 +11737,7 @@ function addRoomPage(res, show) {
 }
 
 function userButtonTypeJudge(type, user_id) {
+  console.log(type);
   var button = document.createElement('button');
 
   switch (type) {

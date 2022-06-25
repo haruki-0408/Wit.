@@ -4,7 +4,7 @@
     @component('wit.home-modals')
     @endcomponent
 
-    <div class="card border-0 m-2 overflow-auto" style="width:100%; height:83%;">
+    <div class="card border-0 overflow-auto" style="width:100%; height:83%;">
         <div id="profileContents" class="row justify-content-center w-100">
             <form action="/home/profile/settings/changeProfile" method="post" name='changeProfile'
                 enctype='multipart/form-data'>
