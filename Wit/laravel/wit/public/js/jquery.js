@@ -11343,6 +11343,61 @@ $(document).on('click', '#search-button', function () {
       console.log(error.statusText);
     });
   }
+}); //tagボタンを押したとき
+
+$(document).on('click', '.tag', function (event) {
+  var searchTagName = event.currentTarget.children[0].textContent;
+  var searchButton = document.getElementById('search-button');
+
+  if (document.getElementById('Rooms')) {
+    var _searchButton3 = document.getElementById("search-button");
+
+    var keyword = document.getElementById("search-keyword").value;
+    _searchButton3.dataset.select = 'tag';
+    _searchButton3.dataset.keyword = searchTagName;
+    _searchButton3.dataset.flexCheckImage = 'false';
+    _searchButton3.dataset.flexCheckTag = 'false';
+    _searchButton3.dataset.flexCheckPassword = 'false';
+    _searchButton3.dataset.flexCheckAnswer = 'false';
+    $("[id^='getMoreButton']").remove();
+    $("[id^='getMoreUserButton']").remove();
+    $(document.getElementById("Rooms")).empty();
+    $.ajax({
+      type: "post",
+      //HTTP通信の種類
+      url: '/home/searchRoom',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        "searchType": 'tag',
+        "keyword": searchTagName,
+        "checkImage": 'false',
+        "checkTag": 'false',
+        "checkPassword": 'false',
+        "checkAnswer": 'false'
+      },
+      dataType: 'json'
+    }) //通信が成功したとき
+    .done(function (res) {
+      var show = 'Room';
+
+      if (res.length !== 0) {
+        event.currentTarget.disabled = false;
+        var _last_get_more20 = res[Object.keys(res).length - 1].no_get_more;
+        addRoomPage(res, show);
+        $("[id^='getMoreButton']").remove();
+        getMoreRoomButton(1);
+        removeGetMoreButton(show, _last_get_more20);
+      } else {
+        var _last_get_more21 = 'none_res';
+        removeGetMoreButton(show, _last_get_more21);
+      }
+    }) //通信が失敗したとき
+    .fail(function (error) {
+      console.log(error.statusText);
+    });
+  }
 }); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
 
 /*$("#Room-content").on('scroll', function () {　　　　　
@@ -11634,18 +11689,18 @@ function addUserPage(res, show) {
       }
 
       if (document.getElementById("search-button")) {
-        var _searchButton3 = document.getElementById("search-button");
+        var _searchButton4 = document.getElementById("search-button");
 
-        if (_searchButton3.disabled) {
-          _searchButton3.disabled = false;
+        if (_searchButton4.disabled) {
+          _searchButton4.disabled = false;
         }
       }
     }
 
     if (show === 'User') {
-      var _last_get_more20 = res[Object.keys(res).length - 1].no_get_more;
+      var _last_get_more22 = res[Object.keys(res).length - 1].no_get_more;
 
-      if (!document.getElementById('getMoreUserButton') && !_last_get_more20) {
+      if (!document.getElementById('getMoreUserButton') && !_last_get_more22) {
         getMoreUserButton();
       }
     }
@@ -11685,11 +11740,14 @@ function addRoomPage(res, show) {
         var room_tag_a = document.createElement("a");
         room_tag_a.setAttribute("class", "tag");
         room_tag_a.href = "#";
-        room_tag_a.textContent = res[i].room_tags[j].tag.name;
-        var room_tag_span = document.createElement("span");
-        room_tag_span.className = "number badge badge-light";
-        room_tag_span.textContent = res[i].room_tags[j].tag.number;
-        room_tag_a.appendChild(room_tag_span);
+        var room_tag_name_span = document.createElement("span");
+        room_tag_name_span.className = "tag-name";
+        room_tag_name_span.textContent = res[i].room_tags[j].tag.name;
+        var room_tag_number_span = document.createElement("span");
+        room_tag_number_span.className = "tag-number badge badge-light";
+        room_tag_number_span.textContent = res[i].room_tags[j].tag.number;
+        room_tag_a.appendChild(room_tag_name_span);
+        room_tag_a.appendChild(room_tag_number_span);
         room_tag_li.appendChild(room_tag_a);
         clone.querySelector('.room_tags').appendChild(room_tag_li);
       }
@@ -11724,10 +11782,10 @@ function addRoomPage(res, show) {
       }
 
       if (document.getElementById("search-button")) {
-        var _searchButton4 = document.getElementById("search-button");
+        var _searchButton5 = document.getElementById("search-button");
 
-        if (_searchButton4.disabled) {
-          _searchButton4.disabled = false;
+        if (_searchButton5.disabled) {
+          _searchButton5.disabled = false;
         }
       }
     };
@@ -11737,7 +11795,7 @@ function addRoomPage(res, show) {
     }
 
     if (show === 'Room' && !document.getElementById('getMoreButton') && !document.getElementById('getMoreButtonSearch')) {
-      getMoreRoomButton();
+      getMoreRoomButton(0);
     }
   }
 }
@@ -11903,7 +11961,7 @@ function removeGetMoreButton(show, last_get_more) {
   }
 }
 
-function getMoreRoomButton() {
+function getMoreRoomButton(tag) {
   if (!document.getElementById('noResult')) {
     var keyword = Boolean(document.getElementById('search-keyword').value);
     var getmore = document.createElement('div');
@@ -11915,7 +11973,7 @@ function getMoreRoomButton() {
 
     if (check.some(function (element) {
       return element === true;
-    })) {
+    }) || tag === 1) {
       getmore.id = 'getMoreButtonSearch';
     } else {
       getmore.id = 'getMoreButton';

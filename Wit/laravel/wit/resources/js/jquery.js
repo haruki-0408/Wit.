@@ -14,7 +14,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
             let flexCheckTag = searchButton.dataset.flexCheckTag;
             let flexCheckPassword = searchButton.dataset.flexCheckPassword;
             let flexCheckAnswer = searchButton.dataset.flexCheckAnswer;
-           
+
             $.ajax({
                 type: "post", //HTTP通信の種類
                 url: '/home/searchRoom',
@@ -307,7 +307,7 @@ $(document).on('click', '#search-button', function () {
     $("[id^='getMoreUserButton']").remove();
     $(this).prop('disabled', true);
     $(document.getElementById("Rooms")).empty();
-    
+
     if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
 
         if (document.getElementById("search-keyword").value) {
@@ -404,6 +404,60 @@ $(document).on('click', '#search-button', function () {
                         searchButton.disabled = false;
                     }
 
+                }
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error.statusText)
+            })
+    }
+});
+
+//tagボタンを押したとき
+$(document).on('click', '.tag', function (event) {
+    let searchTagName = event.currentTarget.children[0].textContent;
+    let searchButton = document.getElementById('search-button');
+    if (document.getElementById('Rooms')) {
+        let searchButton = document.getElementById("search-button");
+        let keyword = document.getElementById("search-keyword").value;
+        searchButton.dataset.select = 'tag';
+        searchButton.dataset.keyword = searchTagName;
+        searchButton.dataset.flexCheckImage = 'false';
+        searchButton.dataset.flexCheckTag = 'false';
+        searchButton.dataset.flexCheckPassword = 'false';
+        searchButton.dataset.flexCheckAnswer = 'false';
+        $("[id^='getMoreButton']").remove();
+        $("[id^='getMoreUserButton']").remove();
+        $(document.getElementById("Rooms")).empty();
+        $.ajax({
+            type: "post", //HTTP通信の種類
+            url: '/home/searchRoom',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {
+                "searchType": 'tag',
+                "keyword": searchTagName,
+                "checkImage": 'false',
+                "checkTag": 'false',
+                "checkPassword": 'false',
+                "checkAnswer": 'false',
+            },
+            dataType: 'json',
+        })
+            //通信が成功したとき
+            .done((res) => {
+                let show = 'Room';
+                if (res.length !== 0) {
+                    event.currentTarget.disabled = false;
+                    let last_get_more = res[Object.keys(res).length - 1].no_get_more;
+                    addRoomPage(res, show);
+                    $("[id^='getMoreButton']").remove();
+                    getMoreRoomButton(1);
+                    removeGetMoreButton(show, last_get_more);
+                } else {
+                    let last_get_more = 'none_res';
+                    removeGetMoreButton(show, last_get_more);
                 }
             })
             //通信が失敗したとき
@@ -767,11 +821,14 @@ function addRoomPage(res, show) {
                 let room_tag_a = document.createElement("a");
                 room_tag_a.setAttribute("class", "tag");
                 room_tag_a.href = "#";
-                room_tag_a.textContent = res[i].room_tags[j].tag.name;
-                let room_tag_span = document.createElement("span");
-                room_tag_span.className = "number badge badge-light";
-                room_tag_span.textContent = res[i].room_tags[j].tag.number;
-                room_tag_a.appendChild(room_tag_span);
+                let room_tag_name_span = document.createElement("span");
+                room_tag_name_span.className = "tag-name"
+                room_tag_name_span.textContent = res[i].room_tags[j].tag.name;
+                let room_tag_number_span = document.createElement("span");
+                room_tag_number_span.className = "tag-number badge badge-light";
+                room_tag_number_span.textContent = res[i].room_tags[j].tag.number;
+                room_tag_a.appendChild(room_tag_name_span);
+                room_tag_a.appendChild(room_tag_number_span);
                 room_tag_li.appendChild(room_tag_a);
 
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
@@ -809,7 +866,7 @@ function addRoomPage(res, show) {
         }
 
         if (show === 'Room' && !(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreButtonSearch'))) {
-            getMoreRoomButton();
+            getMoreRoomButton(0);
         }
 
     }
@@ -965,7 +1022,7 @@ function removeGetMoreButton(show, last_get_more) {
     }
 }
 
-function getMoreRoomButton() {
+function getMoreRoomButton(tag) {
     if (!(document.getElementById('noResult'))) {
         let keyword = Boolean(document.getElementById('search-keyword').value);
         let getmore = document.createElement('div');
@@ -974,7 +1031,7 @@ function getMoreRoomButton() {
         let flexCheckPassword = document.getElementById('flexCheckPassword').checked;
         let flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
         let check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
-        if (check.some((element) => element === true)) {
+        if (check.some((element) => element === true) || tag === 1) {
             getmore.id = 'getMoreButtonSearch';
         } else {
             getmore.id = 'getMoreButton';
