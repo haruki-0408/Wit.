@@ -11116,12 +11116,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
           getMoreUserButton();
           removeGetMoreButton(show, _last_get_more11);
         } else {
-          /*let noresult = document.createElement('h3');
-          noresult.setAttribute('data-room-id', 'noResult');
-          noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
-          noresult.textContent = 'No result';
-          document.getElementById('Rooms').appendChild(noresult);
-          */
           var _last_get_more12 = 'none_res';
           removeGetMoreButton(show, _last_get_more12);
         }
@@ -11350,7 +11344,9 @@ $(document).on('click', '#search-button', function () {
 }); //tagボタンを押したとき
 
 $(document).on('click', '.tag', function (event) {
-  if (document.getElementById('Rooms')) {
+  var preview = event.currentTarget.classList.contains('preview');
+
+  if (!preview && document.getElementById('Rooms')) {
     var searchTagName = event.currentTarget.children[0].textContent;
 
     var _searchButton3 = document.getElementById("search-button");
@@ -11391,6 +11387,12 @@ $(document).on('click', '.tag', function (event) {
         getMoreRoomButton(1);
         removeGetMoreButton(show, _last_get_more20);
       } else {
+        var noresult = document.createElement('h3');
+        _last_get_more21 = 'none_res';
+        noresult.setAttribute('data-room-id', 'noResult');
+        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
+        noresult.textContent = 'No result';
+        document.getElementById('Rooms').appendChild(noresult);
         var _last_get_more21 = 'none_res';
         removeGetMoreButton(show, _last_get_more21);
       }

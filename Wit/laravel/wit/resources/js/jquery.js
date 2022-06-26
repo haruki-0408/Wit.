@@ -184,12 +184,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         getMoreUserButton();
                         removeGetMoreButton(show, last_get_more);
                     } else {
-                        /*let noresult = document.createElement('h3');
-                        noresult.setAttribute('data-room-id', 'noResult');
-                        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
-                        noresult.textContent = 'No result';
-                        document.getElementById('Rooms').appendChild(noresult);
-                        */
+                        
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
@@ -419,8 +414,8 @@ $(document).on('click', '#search-button', function () {
 
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
-    
-    if (document.getElementById('Rooms')) {
+    let preview = event.currentTarget.classList.contains('preview');
+    if (!(preview) && document.getElementById('Rooms')) {
         let searchTagName = event.currentTarget.children[0].textContent;
         let searchButton = document.getElementById("search-button");
         searchButton.dataset.select = 'tag';
@@ -458,6 +453,13 @@ $(document).on('click', '.tag', function (event) {
                     getMoreRoomButton(1);
                     removeGetMoreButton(show, last_get_more);
                 } else {
+                    let noresult = document.createElement('h3');
+                    last_get_more = 'none_res';
+                    noresult.setAttribute('data-room-id', 'noResult');
+                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                    noresult.textContent = 'No result';
+                    document.getElementById('Rooms').appendChild(noresult);
+                    
                     let last_get_more = 'none_res';
                     removeGetMoreButton(show, last_get_more);
                 }

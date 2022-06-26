@@ -395,7 +395,8 @@ class RoomController extends Controller
 
     public function storeTag($match)
     {
-        $tag = Tag::UpdateOrCreate(['name' => $match], ['name' => $match, 'number' => DB::raw('number + 1')]);
+        $match_trim = trim($match);
+        $tag = Tag::UpdateOrCreate(['name' => $match_trim], ['name' => $match_trim, 'number' => DB::raw('number + 1')]);
         return $tag;
     }
 
