@@ -32,6 +32,7 @@
 
         .tag {
             display: inline-block;
+            border:none;
             margin: 0 .1em .6em .2em;
             padding: .5em;
             color: #fff;

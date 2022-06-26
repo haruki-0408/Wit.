@@ -10969,6 +10969,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
           event.currentTarget.disabled = false;
           var _last_get_more = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
+          getMoreRoomButton(1);
           removeGetMoreButton(show, _last_get_more);
         } else {
           var _last_get_more2 = 'none_res';
@@ -10997,6 +10998,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
           event.currentTarget.disabled = false;
           var _last_get_more3 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
+          getMoreRoomButton(0);
           removeGetMoreButton(show, _last_get_more3);
         } else {
           var _last_get_more4 = 'none_res';
@@ -11111,6 +11113,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
           event.currentTarget.disabled = false;
           var _last_get_more11 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
+          getMoreUserButton();
           removeGetMoreButton(show, _last_get_more11);
         } else {
           /*let noresult = document.createElement('h3');
@@ -11322,6 +11325,7 @@ $(document).on('click', '#search-button', function () {
       if (res.length !== 0) {
         var _last_get_more19 = res[Object.keys(res).length - 1].no_get_more;
         addRoomPage(res, show);
+        getMoreRoomButton(1);
         removeGetMoreButton(show, _last_get_more19);
       } else {
         var _noresult = document.createElement('h3');
@@ -11346,13 +11350,11 @@ $(document).on('click', '#search-button', function () {
 }); //tagボタンを押したとき
 
 $(document).on('click', '.tag', function (event) {
-  var searchTagName = event.currentTarget.children[0].textContent;
-  var searchButton = document.getElementById('search-button');
-
   if (document.getElementById('Rooms')) {
+    var searchTagName = event.currentTarget.children[0].textContent;
+
     var _searchButton3 = document.getElementById("search-button");
 
-    var keyword = document.getElementById("search-keyword").value;
     _searchButton3.dataset.select = 'tag';
     _searchButton3.dataset.keyword = searchTagName;
     _searchButton3.dataset.flexCheckImage = 'false';
@@ -11386,7 +11388,6 @@ $(document).on('click', '.tag', function (event) {
         event.currentTarget.disabled = false;
         var _last_get_more20 = res[Object.keys(res).length - 1].no_get_more;
         addRoomPage(res, show);
-        $("[id^='getMoreButton']").remove();
         getMoreRoomButton(1);
         removeGetMoreButton(show, _last_get_more20);
       } else {
@@ -11708,7 +11709,6 @@ function addUserPage(res, show) {
 }
 
 function addRoomPage(res, show) {
-  //res = JSON.parse(res);
   if ('content' in document.createElement('template')) {
     var template = document.getElementById('Room-template');
     var array = new Array();
@@ -11737,18 +11737,18 @@ function addRoomPage(res, show) {
         //ここの実装見直したい、、
         var room_tag_li = document.createElement("li");
         room_tag_li.setAttribute("class", "d-inline-block");
-        var room_tag_a = document.createElement("a");
-        room_tag_a.setAttribute("class", "tag");
-        room_tag_a.href = "#";
+        var room_tag_button = document.createElement("button");
+        room_tag_button.setAttribute("class", "tag");
+        room_tag_button.type = "button";
         var room_tag_name_span = document.createElement("span");
         room_tag_name_span.className = "tag-name";
         room_tag_name_span.textContent = res[i].room_tags[j].tag.name;
         var room_tag_number_span = document.createElement("span");
         room_tag_number_span.className = "tag-number badge badge-light";
         room_tag_number_span.textContent = res[i].room_tags[j].tag.number;
-        room_tag_a.appendChild(room_tag_name_span);
-        room_tag_a.appendChild(room_tag_number_span);
-        room_tag_li.appendChild(room_tag_a);
+        room_tag_button.appendChild(room_tag_name_span);
+        room_tag_button.appendChild(room_tag_number_span);
+        room_tag_li.appendChild(room_tag_button);
         clone.querySelector('.room_tags').appendChild(room_tag_li);
       }
 
@@ -11793,14 +11793,10 @@ function addRoomPage(res, show) {
     for (var i = 0; i < Object.keys(res).length; i++) {
       _loop(i);
     }
-
-    if (show === 'Room' && !document.getElementById('getMoreButton') && !document.getElementById('getMoreButtonSearch')) {
-      getMoreRoomButton(0);
-    }
   }
 }
 
-function userButtonTypeJudge(type, user_id) {
+function userButtonTypeJudge(type) {
   var button = document.createElement('button');
 
   switch (type) {
@@ -11962,7 +11958,7 @@ function removeGetMoreButton(show, last_get_more) {
 }
 
 function getMoreRoomButton(tag) {
-  if (!document.getElementById('noResult')) {
+  if (!document.getElementById('getMoreButton') && !document.getElementById('getMoreButtonSearch') && !document.getElementById('noResult')) {
     var keyword = Boolean(document.getElementById('search-keyword').value);
     var getmore = document.createElement('div');
     var flexCheckImage = document.getElementById('flexCheckImage').checked;

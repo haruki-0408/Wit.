@@ -39,6 +39,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
+                        getMoreRoomButton(1);
                         removeGetMoreButton(show, last_get_more);
                     } else {
                         let last_get_more = 'none_res';
@@ -66,6 +67,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
+                        getMoreRoomButton(0);
                         removeGetMoreButton(show, last_get_more);
                     } else {
                         let last_get_more = 'none_res';
@@ -179,6 +181,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addUserPage(res, show);
+                        getMoreUserButton();
                         removeGetMoreButton(show, last_get_more);
                     } else {
                         /*let noresult = document.createElement('h3');
@@ -391,6 +394,7 @@ $(document).on('click', '#search-button', function () {
                 if (res.length !== 0) {
                     let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                     addRoomPage(res, show);
+                    getMoreRoomButton(1);
                     removeGetMoreButton(show, last_get_more);
                 } else {
                     let noresult = document.createElement('h3');
@@ -415,11 +419,10 @@ $(document).on('click', '#search-button', function () {
 
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
-    let searchTagName = event.currentTarget.children[0].textContent;
-    let searchButton = document.getElementById('search-button');
+    
     if (document.getElementById('Rooms')) {
+        let searchTagName = event.currentTarget.children[0].textContent;
         let searchButton = document.getElementById("search-button");
-        let keyword = document.getElementById("search-keyword").value;
         searchButton.dataset.select = 'tag';
         searchButton.dataset.keyword = searchTagName;
         searchButton.dataset.flexCheckImage = 'false';
@@ -452,7 +455,6 @@ $(document).on('click', '.tag', function (event) {
                     event.currentTarget.disabled = false;
                     let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                     addRoomPage(res, show);
-                    $("[id^='getMoreButton']").remove();
                     getMoreRoomButton(1);
                     removeGetMoreButton(show, last_get_more);
                 } else {
@@ -787,9 +789,7 @@ function addUserPage(res, show) {
 }
 
 
-
 function addRoomPage(res, show) {
-    //res = JSON.parse(res);
     if ('content' in document.createElement('template')) {
         let template = document.getElementById('Room-template');
         let array = new Array;
@@ -818,18 +818,18 @@ function addRoomPage(res, show) {
             for (let j = 0; j < Object.keys(res[i].room_tags).length; j++) { //ここの実装見直したい、、
                 let room_tag_li = document.createElement("li");
                 room_tag_li.setAttribute("class", "d-inline-block");
-                let room_tag_a = document.createElement("a");
-                room_tag_a.setAttribute("class", "tag");
-                room_tag_a.href = "#";
+                let room_tag_button = document.createElement("button");
+                room_tag_button.setAttribute("class", "tag");
+                room_tag_button.type = "button";
                 let room_tag_name_span = document.createElement("span");
                 room_tag_name_span.className = "tag-name"
                 room_tag_name_span.textContent = res[i].room_tags[j].tag.name;
                 let room_tag_number_span = document.createElement("span");
                 room_tag_number_span.className = "tag-number badge badge-light";
                 room_tag_number_span.textContent = res[i].room_tags[j].tag.number;
-                room_tag_a.appendChild(room_tag_name_span);
-                room_tag_a.appendChild(room_tag_number_span);
-                room_tag_li.appendChild(room_tag_a);
+                room_tag_button.appendChild(room_tag_name_span);
+                room_tag_button.appendChild(room_tag_number_span);
+                room_tag_li.appendChild(room_tag_button);
 
                 clone.querySelector('.room_tags').appendChild(room_tag_li);
             }
@@ -864,16 +864,12 @@ function addRoomPage(res, show) {
                 }
             }
         }
-
-        if (show === 'Room' && !(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreButtonSearch'))) {
-            getMoreRoomButton(0);
-        }
-
     }
 
 }
 
-function userButtonTypeJudge(type, user_id) {
+
+function userButtonTypeJudge(type) {
     let button = document.createElement('button');
     switch (type) {
         case '0':
@@ -1023,7 +1019,7 @@ function removeGetMoreButton(show, last_get_more) {
 }
 
 function getMoreRoomButton(tag) {
-    if (!(document.getElementById('noResult'))) {
+    if (!(document.getElementById('getMoreButton')) && !(document.getElementById('getMoreButtonSearch')) && !(document.getElementById('noResult'))) {
         let keyword = Boolean(document.getElementById('search-keyword').value);
         let getmore = document.createElement('div');
         let flexCheckImage = document.getElementById('flexCheckImage').checked;

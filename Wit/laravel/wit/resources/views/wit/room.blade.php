@@ -99,6 +99,7 @@
 
         .tag {
             display: inline-block;
+            border: none;
             margin: 0 .1em .6em .2em;
             padding: .6em;
             line-height: 1;
@@ -123,7 +124,6 @@
         ul {
             list-style: none;
         }
-
     </style>
 
     <!-- Bootstrap CSS -->
@@ -138,7 +138,8 @@
     aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <div id="offcanvasRightLabel">
-            <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30" class="rounded-circle me-2">
+            <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
+                class="rounded-circle me-2">
         </div>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -154,8 +155,8 @@
         </div>
 
         <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-tags-fill"
-                viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                class="bi bi-tags-fill" viewBox="0 0 16 16">
                 <path
                     d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                 <path
@@ -191,8 +192,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="users"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title" id="users"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -230,8 +231,10 @@
                 <div class="d-flex flex-column p-3  ">
                     <ul>
                         @foreach ($room_info->roomTags as $roomTag)
-                            <li><a class="tag" href="#">{{ $roomTag->tag->name }}<span
-                                        class="badge badge-light">{{ $roomTag->tag->number }}</span></a></li>
+                            <li>
+                                <div class="tag"><span class="tag-name">{{ $roomTag->tag->name }}</span><span
+                                        class="tag-number badge badge-light">{{ $roomTag->tag->number }}</span></div>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
@@ -250,8 +253,8 @@
                 <div class="container-fluid">
                     <div class="col-2 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
-                            <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px" height="50px"
-                                class="rounded-circle m-1">
+                            <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
+                                height="50px" class="rounded-circle m-1">
                             <strong class="d-flex align-items-center">{{ $room_info->user->name }}</strong>
                         </div>
                     </div>
@@ -264,8 +267,8 @@
                     <div class="exitRoomButton col-2 d-none d-md-block d-flex justify-content-center ">
                         <a style="width:42px; height:30px;" href="/home"
                             class="d-flex justify-content-center btn btn-outline-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
                                 <path fill-rule="evenodd"
@@ -296,8 +299,8 @@
 
                             <div class="row roomTags">
                                 <div class="col-6 p-0 text-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
                                         <path
                                             d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                                         <path
@@ -312,8 +315,11 @@
                                 <div class="Room-tag fs-5">
                                     <ul>
                                         @foreach ($room_info->roomTags as $roomTag)
-                                            <li><a class="tag" href="#">{{ $roomTag->tag->name }}<span
-                                                        class="badge badge-light">{{ $roomTag->tag->number }}</span></a>
+                                            <li>
+                                                <div class="tag">
+                                                    <span class="tag-name">{{ $roomTag->tag->name }}</span>
+                                                    <span class="tag-number badge badge-light">{{ $roomTag->tag->number }}</span>
+                                                </div>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -352,7 +358,8 @@
                                 <div class="carousel-inner  h-100 w-100">
                                     @for ($i = 0; $i < $count_image_data; $i++)
                                         @if ($i == 0)
-                                            <div onclick="this.webkitRequestFullScreen();" class="carousel-item active">
+                                            <div onclick="this.webkitRequestFullScreen();"
+                                                class="carousel-item active">
                                                 <img src=" {{ route('showRoomImage', [
                                                     'room_id' => $room_info->id,
                                                     'number' => $i,
@@ -405,9 +412,8 @@
                                     </li>
 
                                     <li class="opponent">
-                                        <img class=""
-                                            src="{{ asset($room_info->user->profile_image) }}" alt="" width="20"
-                                            height="20" class="rounded-circle">
+                                        <img class="" src="{{ asset($room_info->user->profile_image) }}"
+                                            alt="" width="20" height="20" class="rounded-circle">
                                         <strong>haruki</strong>
                                         <p>test message!</p>
                                         <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
@@ -423,8 +429,8 @@
                                     </li>
 
                                     <li class="opponent">
-                                        <img class="" src="{{ asset('images/sample02.PNG') }}" alt=""
-                                            width="20" height="20" class="rounded-circle">
+                                        <img class="" src="{{ asset('images/sample02.PNG') }}"
+                                            alt="" width="20" height="20" class="rounded-circle">
                                         <strong>test2</strong>
                                         <p>test message!</p>
                                         <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
@@ -471,8 +477,8 @@
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
                         <div class="row h-100">
                             <div class="onlineUsers col-12 d-flex align-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                                     <path
