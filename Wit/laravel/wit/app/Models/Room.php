@@ -49,7 +49,6 @@ class Room extends Model
     protected $hidden = [
         'password',
         'deleted_at',
-        'created_at',
         'updated_at',
     ];
 
@@ -181,6 +180,4 @@ class Room extends Model
             return ['type' => $type, 'no_get_more' => $no_get_more];
         }
     }
-
-    
 }

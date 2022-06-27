@@ -184,7 +184,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         getMoreUserButton();
                         removeGetMoreButton(show, last_get_more);
                     } else {
-                        
+
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
@@ -412,62 +412,68 @@ $(document).on('click', '#search-button', function () {
     }
 });
 
+//グローバル変数としてclick flag を宣言
+let clickFlag = true;
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
-    if (!(preview) && document.getElementById('Rooms')) {
-        let searchTagName = event.currentTarget.children[0].textContent;
-        let searchButton = document.getElementById("search-button");
-        searchButton.dataset.select = 'tag';
-        searchButton.dataset.keyword = searchTagName;
-        searchButton.dataset.flexCheckImage = 'false';
-        searchButton.dataset.flexCheckTag = 'false';
-        searchButton.dataset.flexCheckPassword = 'false';
-        searchButton.dataset.flexCheckAnswer = 'false';
-        $("[id^='getMoreButton']").remove();
-        $("[id^='getMoreUserButton']").remove();
-        $(document.getElementById("Rooms")).empty();
-        $.ajax({
-            type: "post", //HTTP通信の種類
-            url: '/home/searchRoom',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                "searchType": 'tag',
-                "keyword": searchTagName,
-                "checkImage": 'false',
-                "checkTag": 'false',
-                "checkPassword": 'false',
-                "checkAnswer": 'false',
-            },
-            dataType: 'json',
-        })
-            //通信が成功したとき
-            .done((res) => {
-                let show = 'Room';
-                if (res.length !== 0) {
-                    event.currentTarget.disabled = false;
-                    let last_get_more = res[Object.keys(res).length - 1].no_get_more;
-                    addRoomPage(res, show);
-                    getMoreRoomButton(1);
-                    removeGetMoreButton(show, last_get_more);
-                } else {
-                    let noresult = document.createElement('h3');
-                    last_get_more = 'none_res';
-                    noresult.setAttribute('data-room-id', 'noResult');
-                    noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
-                    noresult.textContent = 'No result';
-                    document.getElementById('Rooms').appendChild(noresult);
-                    
-                    let last_get_more = 'none_res';
-                    removeGetMoreButton(show, last_get_more);
-                }
+    if (clickFlag){
+        clickFlag = false;
+        if (!(preview) && document.getElementById('Rooms')) {
+            let searchTagName = event.currentTarget.children[0].textContent;
+            let searchButton = document.getElementById("search-button");
+            searchButton.dataset.select = 'tag';
+            searchButton.dataset.keyword = searchTagName;
+            searchButton.dataset.flexCheckImage = 'false';
+            searchButton.dataset.flexCheckTag = 'false';
+            searchButton.dataset.flexCheckPassword = 'false';
+            searchButton.dataset.flexCheckAnswer = 'false';
+            $("[id^='getMoreButton']").remove();
+            $("[id^='getMoreUserButton']").remove();
+            $(document.getElementById("Rooms")).empty();
+            $.ajax({
+                type: "post", //HTTP通信の種類
+                url: '/home/searchRoom',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                data: {
+                    "searchType": 'tag',
+                    "keyword": searchTagName,
+                    "checkImage": 'false',
+                    "checkTag": 'false',
+                    "checkPassword": 'false',
+                    "checkAnswer": 'false',
+                },
+                dataType: 'json',
             })
-            //通信が失敗したとき
-            .fail((error) => {
-                console.log(error.statusText)
-            })
+                //通信が成功したとき
+                .done((res) => {
+                    let show = 'Room';
+                    if (res.length !== 0) {
+                        event.currentTarget.disabled = false;
+                        let last_get_more = res[Object.keys(res).length - 1].no_get_more;
+                        addRoomPage(res, show);
+                        getMoreRoomButton(1);
+                        removeGetMoreButton(show, last_get_more);
+                    } else {
+                        let noresult = document.createElement('h3');
+                        last_get_more = 'none_res';
+                        noresult.setAttribute('data-room-id', 'noResult');
+                        noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
+                        noresult.textContent = 'No result';
+                        document.getElementById('Rooms').appendChild(noresult);
+
+                        let last_get_more = 'none_res';
+                        removeGetMoreButton(show, last_get_more);
+                    }
+                    clickFlag = true;
+                })
+                //通信が失敗したとき
+                .fail((error) => {
+                    console.log(error.statusText)
+                })
+        }
     }
 });
 
@@ -816,6 +822,7 @@ function addRoomPage(res, show) {
             clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
+            clone.querySelector('.created_at').textContent = res[i].created_at;
 
             for (let j = 0; j < Object.keys(res[i].room_tags).length; j++) { //ここの実装見直したい、、
                 let room_tag_li = document.createElement("li");

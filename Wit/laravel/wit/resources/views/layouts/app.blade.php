@@ -126,9 +126,10 @@
             </div>
         </div>
 
-        <div class="card-body p-1 row align-items-center m-0">
+        <div class="card-body p-1 row d-flex align-items-center m-0">
             <strong class="card-title"></strong>
-            <p class="card-text room-description text-break"></p>
+            <p class="card-text room-description text-break m-0"></p>
+            <small class="d-block text-end text-muted created_at"></small>
         </div>
 
         <div class="card-footer border-0 bg-white p-0">
