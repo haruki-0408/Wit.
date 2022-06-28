@@ -334,6 +334,23 @@
     </div>
 </div>
 
+<!--Delete Room Confirm-->
+<div class="modal fade" id="removeRoomModal" aria-hidden="true" aria-labelledby="removeRoom" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-end">
+            <div class="modal-header">
+                <h5 class="modal-title">ルームを削除しますか?
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a href="/home/remove:" class="btn btn-primary text-end">YES</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--Delete Account Confirm-->
 <div class="modal fade" id="deleteAccountModal" aria-hidden="true" aria-labelledby="deleteAccount" tabindex="-1">
     <div class="modal-dialog">

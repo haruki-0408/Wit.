@@ -212,7 +212,7 @@ class RoomController extends Controller
         }
     }
 
-    public static function getPostRoom($room_id = null,$user_id = null)
+    public static function getPostRoom($room_id = null, $user_id = null)
     {
         if (isset($user_id)) {
             $decrypted_user_id = Crypt::decrypt($user_id);
@@ -248,7 +248,7 @@ class RoomController extends Controller
         return $post_rooms;
     }
 
-    public static function getListRoom($room_id = null,$user_id = null)
+    public static function getListRoom($room_id = null, $user_id = null)
     {
         if (isset($user_id)) {
             $decrypted_user_id = Crypt::decrypt($user_id);
@@ -262,7 +262,7 @@ class RoomController extends Controller
         if (is_null($room_id)) {
             $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         } else if (isset($room_id)) {
-            $list_rooms_id = $user->listRooms()->where('room_id',$room_id)->value('list_rooms.id');
+            $list_rooms_id = $user->listRooms()->where('room_id', $room_id)->value('list_rooms.id');
             $list_rooms = $user->listRooms()->where('list_rooms.id', '<', $list_rooms_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
         }
         $list_rooms->map(function ($each) use ($list_query) {
@@ -286,7 +286,7 @@ class RoomController extends Controller
     {
         if (mb_strlen($add_room_id) == 26) {
             $room_id = $add_room_id;
-        }  else {
+        } else {
             $error_message = 'ルーム:' . $add_room_id . 'は存在しません';
         }
 
@@ -318,7 +318,7 @@ class RoomController extends Controller
     {
         if (mb_strlen($remove_room_id) == 26) {
             $room_id = $remove_room_id;
-        }  else {
+        } else {
             $error_message = 'ルーム:' . $remove_room_id . 'は存在しません';
         }
 
@@ -401,7 +401,7 @@ class RoomController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function createRoom(Request $request)
     {
         //$this->validate($request, Room::$rules);
         //$this->validate($request, Tag::$rules);
@@ -458,8 +458,22 @@ class RoomController extends Controller
             'id' => $room->id,
         ]));
     }
-}
 
+
+    public function removeRoom($room_id)
+    {
+        if(Room::find($room_id)->exists()){
+            $room = Room::find($room_id);
+            if($room->user_id == Auth::id()){
+                $room->delete();
+                Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
+                return back()->with('action_message','ルーム:'.$room_id.'が削除されました');
+            }else{
+                return back()->with('error_message','ログインユーザーとルームの作成者が一致しません');
+            }
+        }
+    }
+}
 
 /* テストように作ったもの　本番には不要
 public function userGet()

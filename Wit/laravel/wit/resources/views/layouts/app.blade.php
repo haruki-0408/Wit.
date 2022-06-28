@@ -240,6 +240,12 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script>
+        @if (session('action_message'))
+            action = document.getElementById("action-message")
+            action.classList.remove('invisible');
+            setTimeout(() => {action.classList.add('invisible')}, 3000);
+        @endif
+
         @if (session('error_message'))
             error = document.getElementById("error-message")
             error.classList.remove('invisible');

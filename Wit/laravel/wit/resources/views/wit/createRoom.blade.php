@@ -3,7 +3,7 @@
     aria-labelledby="CreateRoomForm" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
-            <form action="/home/create" enctype="multipart/form-data" method="post">
+            <form action="/home/createRoom" enctype="multipart/form-data" method="post">
                 @csrf
 
                 <div class="modal-header">
