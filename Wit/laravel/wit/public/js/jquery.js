@@ -11744,7 +11744,7 @@ function addRoomPage(res, show) {
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
       clone.querySelector('.created_at').textContent = res[i].created_at;
 
-      for (var j = 0; j < Object.keys(res[i].room_tags).length; j++) {
+      for (var j = 0; j < Object.keys(res[i].tags).length; j++) {
         //ここの実装見直したい、、
         var room_tag_li = document.createElement("li");
         room_tag_li.setAttribute("class", "d-inline-block");
@@ -11753,10 +11753,10 @@ function addRoomPage(res, show) {
         room_tag_button.type = "button";
         var room_tag_name_span = document.createElement("span");
         room_tag_name_span.className = "tag-name";
-        room_tag_name_span.textContent = res[i].room_tags[j].tag.name;
+        room_tag_name_span.textContent = res[i].tags[j].name;
         var room_tag_number_span = document.createElement("span");
         room_tag_number_span.className = "tag-number badge badge-light";
-        room_tag_number_span.textContent = res[i].room_tags[j].tag.number;
+        room_tag_number_span.textContent = res[i].tags[j].number;
         room_tag_button.appendChild(room_tag_name_span);
         room_tag_button.appendChild(room_tag_number_span);
         room_tag_li.appendChild(room_tag_button);
