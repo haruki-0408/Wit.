@@ -81,10 +81,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\User','list_users','user_id');
     }
-    /*public function listUsers()
-    {
-        return $this->belongsToMany('App\Models\User', 'favorite_user_id');
-    }*/
 
     public function listRooms()
     {

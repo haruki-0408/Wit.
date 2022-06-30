@@ -11113,7 +11113,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
           event.currentTarget.disabled = false;
           var _last_get_more11 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
-          getMoreUserButton();
           removeGetMoreButton(show, _last_get_more11);
         } else {
           var _last_get_more12 = 'none_res';
@@ -11972,7 +11971,7 @@ function removeGetMoreButton(show, last_get_more) {
   }
 
   if (last_get_more === 'none_res' || last_get_more === true || rooms.lastElementChild.tagName === 'H3') {
-    button.remove();
+    $(button).remove();
   }
 }
 
