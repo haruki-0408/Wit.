@@ -20,8 +20,8 @@ class RoomTag extends Model
         'updated_at',
     ];
 
-    public function tag(){
-        return $this->belongsTo('App\Models\Tag');
+    public function tags(){
+        return $this->belongsToMany('App\Models\Tag','room_tags');
     }
 
     public function room(){

@@ -31,7 +31,7 @@ class Tag extends Model
         'created_at',
     ];
 
-    public function roomTags(){
-        return $this->hasMany('App\Models\RoomTag');
+    public function rooms(){
+        return $this->belongsToMany('App\Models\Room','room_tags');
     }
 }

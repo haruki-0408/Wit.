@@ -230,10 +230,10 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
                     <ul>
-                        @foreach ($room_info->roomTags as $roomTag)
+                        @foreach ($room_info->tags as $roomTag)
                             <li>
-                                <div class="tag"><span class="tag-name">{{ $roomTag->tag->name }}</span><span
-                                        class="tag-number badge badge-light">{{ $roomTag->tag->number }}</span></div>
+                                <div class="tag"><span class="tag-name">{{ $roomTag->name }}</span><span
+                                        class="tag-number badge badge-light">{{ $roomTag->number }}</span></div>
                             </li>
                         @endforeach
                     </ul>
@@ -314,11 +314,11 @@
                             <div class="roomTagsList col-12 fs-5 h-25">
                                 <div class="Room-tag fs-5">
                                     <ul>
-                                        @foreach ($room_info->roomTags as $roomTag)
+                                        @foreach ($room_info->tags as $roomTag)
                                             <li>
                                                 <div class="tag">
-                                                    <span class="tag-name">{{ $roomTag->tag->name }}</span>
-                                                    <span class="tag-number badge badge-light">{{ $roomTag->tag->number }}</span>
+                                                    <span class="tag-name">{{ $roomTag->name }}</span>
+                                                    <span class="tag-number badge badge-light">{{ $roomTag->number }}</span>
                                                 </div>
                                             </li>
                                         @endforeach

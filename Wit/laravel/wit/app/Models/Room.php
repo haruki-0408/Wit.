@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Rorecek\Ulid\HasUlid;
 use App\Models\Tag;
-use App\Models\RoomTag;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,9 +79,9 @@ class Room extends Model
         return $this->hasMany('App\Models\RoomUser');
     }
 
-    public function roomTags()
+    public function tags()
     {
-        return $this->hasMany('App\Models\RoomTag');
+        return $this->belongsToMany('App\Models\Tag','room_tags');
     }
 
     public function roomImages()
@@ -124,7 +123,7 @@ class Room extends Model
         if (isset($tag_name)) {
             //$keyword = addcslashes($tag_name, '%_\\');
             //dd($tag_name,$keyword);
-            return $query->whereHas('roomTags.tag', function ($tag) use ($tag_name) {
+            return $query->whereHas('tags', function ($tag) use ($tag_name) {
                 $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_general_ci', [$tag_name]);
             });
         }

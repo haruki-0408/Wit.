@@ -222,10 +222,10 @@
 
         <div class="card-footer border-0 bg-white p-0">
             <ul class="room_tags p-1">
-                @foreach ($room->roomTags as $roomtag)
+                @foreach ($room->tags as $roomtag)
                     <li class="d-inline-block"><button class="tag" type="button"><span
-                                class="tag-name">{{ $roomtag->tag->name }}</span><span
-                                class="tag-number badge badge-light">{{ $roomtag->tag->number }}</span></button>
+                                class="tag-name">{{ $roomtag->name }}</span><span
+                                class="tag-number badge badge-light">{{ $roomtag->number }}</span></button>
                     </li>
                 @endforeach
             </ul>

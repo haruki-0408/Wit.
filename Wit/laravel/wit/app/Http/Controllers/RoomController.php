@@ -10,7 +10,6 @@ use App\Models\Tag;
 use App\Models\RoomUser;
 use App\Models\RoomImage;
 use App\Models\RoomChat;
-use App\Models\RoomTag;
 use App\Models\Answer;
 use App\Models\ListRoom;
 use Illuminate\Support\Facades\Auth;
@@ -74,8 +73,8 @@ class RoomController extends Controller
         }
 
         if ($request->checkTag != 'false' && $request->searchType != 'tag') {
-            $query->doesntHave('roomTags');
-            $second_query->doesntHave('roomTags');
+            $query->doesntHave('tags');
+            $second_query->doesntHave('tags');
         }
 
         if ($request->checkPassword != 'false') {
@@ -92,12 +91,12 @@ class RoomController extends Controller
         if (isset($request->room_id)) {
             if (mb_strlen($request->room_id) == 26) {
                 $room_id = $request->room_id;
-                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
             } else {
                 abort(404);
             }
         } else {
-            $rooms = $query->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(15)->get();
+            $rooms = $query->orderBy('id', 'desc')->with(['user', 'tags'])->take(15)->get();
         }
 
 
@@ -128,11 +127,10 @@ class RoomController extends Controller
     public static function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
         if (is_null($room_id)) {
-            $rooms = Room::with(['user', 'roomTags.tag'])->take(15)->get();
+            $rooms = Room::with(['user', 'tags'])->take(15)->get();
         } else {
             if (mb_strlen($room_id) == 26) {
-                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'roomTags.tag'])->take(10)->get();
-                //roomTags.tag でリレーションのリレーション先まで取得できた
+                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'tags'])->take(10)->get();
             } else {
                 abort(404);
             }
@@ -169,7 +167,7 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat:id,room_id,user_id,message',])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
                 session()->put('auth_room_id', $room_id);
                 return view('wit.room', [
@@ -191,7 +189,7 @@ class RoomController extends Controller
         }
 
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name,profile_image', 'roomTags:id,room_id,tag_id', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat:id,room_id,user_id,message',])->find($room_id);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
             if (is_null($room_info->password)) {
@@ -225,9 +223,9 @@ class RoomController extends Controller
         $query = $user->rooms();
 
         if (is_null($room_id)) {
-            $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
         } else {
-            $post_rooms = $user->rooms()->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $post_rooms = $user->rooms()->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
         }
 
         $post_rooms->map(function ($each) use ($query) {
@@ -260,10 +258,10 @@ class RoomController extends Controller
 
         $list_query = $user->listRooms();
         if (is_null($room_id)) {
-            $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $list_rooms = $user->listRooms()->orderBy('list_rooms.id', 'desc')->with(['user', 'tags'])->take(10)->get();
         } else if (isset($room_id)) {
             $list_rooms_id = $user->listRooms()->where('room_id', $room_id)->value('list_rooms.id');
-            $list_rooms = $user->listRooms()->where('list_rooms.id', '<', $list_rooms_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'roomTags.tag'])->take(10)->get();
+            $list_rooms = $user->listRooms()->where('list_rooms.id', '<', $list_rooms_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'tags'])->take(10)->get();
         }
         $list_rooms->map(function ($each) use ($list_query) {
             $type = Room::buttonTypeJudge($each->id, null, $list_query);
@@ -415,6 +413,14 @@ class RoomController extends Controller
         if ($request->has('createPass')) {
             $room->password = Hash::make($request->createPass);
         };
+         if ($request->has('tag')) {
+            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
+
+            foreach ($matches[1] as $match) {
+                $tag = $this->storeTag($match);
+                $room->tags()->syncWithoutDetaching($tag->id);
+            }
+        }
 
         $room->save();
 
@@ -442,18 +448,6 @@ class RoomController extends Controller
             }
         }
 
-        if ($request->has('tag')) {
-            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
-
-            foreach ($matches[1] as $match) {
-                $tag = $this->storeTag($match);
-                $room_tag = new RoomTag;
-                $room_tag->room_id = $room->id;
-                $room_tag->tag_id = $tag->id;
-                $room_tag->save();
-            }
-        }
-
         return redirect(route('enterRoom', [
             'id' => $room->id,
         ]));
@@ -465,6 +459,9 @@ class RoomController extends Controller
         if(Room::find($room_id)->exists()){
             $room = Room::find($room_id);
             if($room->user_id == Auth::id()){
+                $room_tags = $room->tags()->get();
+
+                dd($room_tags);
                 $room->delete();
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
                 return back()->with('action_message','ルーム:'.$room_id.'が削除されました');

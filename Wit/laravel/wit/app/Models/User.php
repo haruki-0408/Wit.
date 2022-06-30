@@ -122,7 +122,7 @@ class User extends Authenticatable
                 }
             } else if (isset($list_query)) {
                 //getListUser()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
-                if ($list_query->orderBy('list_users.created_at', 'asc')->value('users.id') == $user_id) {
+                if ($list_query->orderBy('list_users.id', 'asc')->value('users.id') == $user_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;

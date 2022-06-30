@@ -276,10 +276,10 @@ class UserController extends Controller
 
         if (isset($favorite_user_id)) {
             $favorite_user_id = Crypt::decrypt($favorite_user_id);
-            $created_at = $user->listUsers()->where('favorite_user_id', $favorite_user_id)->value('list_users.created_at');
-            $list_users = $user->listUsers()->where('list_users.created_at', '<', $created_at)->orderBy('list_users.created_at', 'desc')->take(30)->get();
+            $list_user_id = $user->listUsers()->where('favorite_user_id', $favorite_user_id)->value('list_users.id');
+            $list_users = $user->listUsers()->where('list_users.id', '<', $list_user_id)->orderBy('list_users.id', 'desc')->take(30)->get();
         } else {
-            $list_users = $user->listUsers()->orderBy('list_users.created_at', 'desc')->take(30)->get();
+            $list_users = $user->listUsers()->orderBy('list_users.id', 'desc')->take(30)->get();
         }
 
         $list_users->map(function ($each) use ($list_query) {
