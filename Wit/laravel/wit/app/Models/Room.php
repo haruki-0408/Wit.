@@ -71,7 +71,7 @@ class Room extends Model
 
     public function roomChat() //ここだけChatsとは言わないので複数形の意味だけどChat
     {
-        return $this->belongsToMany('App\Models\user','room_chat','user_id','room_id');
+        return $this->belongsToMany('App\Models\User','room_chat','user_id','room_id');
     }
 
     public function roomUsers()

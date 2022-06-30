@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
 use App\Models\RoomImage;
-use App\Models\RoomChat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -164,7 +163,7 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat'])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
                 session()->put('auth_room_id', $room_id);
                 return view('wit.room', [
@@ -186,7 +185,8 @@ class RoomController extends Controller
         }
 
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat:id,room_id,user_id,message',])->find($room_id);
+            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'chat:id,room_id,message',])->find($room_id);
+            dd($room_info);
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
             if (is_null($room_info->password)) {
@@ -419,12 +419,8 @@ class RoomController extends Controller
         };
 
         //room_chatテーブルへ保存
-        $room_chat = new RoomChat;
-        $room_chat->room_id = $room->id;
-        $room_chat->user_id = $room->user_id;
-        $room_chat->message = $room->description;
-        $room_chat->save();
-
+        $user = User::find($room->user_id);
+        $user->roomChat()->attach($room->id,['message' => $room->description]);
 
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
@@ -455,17 +451,17 @@ class RoomController extends Controller
 
     public function removeRoom($room_id)
     {
-        if(Room::find($room_id)->exists()){
+        if (Room::find($room_id)->exists()) {
             $room = Room::find($room_id);
-            if($room->user_id == Auth::id()){
+            if ($room->user_id == Auth::id()) {
                 $room_tags = $room->tags()->get();
 
                 dd($room_tags);
                 $room->delete();
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
-                return back()->with('action_message','ルーム:'.$room_id.'が削除されました');
-            }else{
-                return back()->with('error_message','ログインユーザーとルームの作成者が一致しません');
+                return back()->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
+            } else {
+                return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
             }
         }
     }
