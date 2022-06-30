@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
 use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -76,10 +77,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\User', 'list_users', 'user_id', 'favorite_user_id');
     }
 
-    public function favoriteUsers()
+    public function users()
     {
-        return $this->hasMany('App\Models\ListUser', 'favorite_user_id');
+        return $this->belongsToMany('App\Models\User','list_users','user_id');
     }
+    /*public function listUsers()
+    {
+        return $this->belongsToMany('App\Models\User', 'favorite_user_id');
+    }*/
 
     public function listRooms()
     {
@@ -112,6 +117,7 @@ class User extends Authenticatable
         $bit_flag = 0b00; //２進数として扱うときは先頭に0bを付与
         if (isset($user_id)) {
             $auth_id = Auth::id();
+            $user = User::find($auth_id);
 
             if (isset($search_query)) {
                 //seachUser()から飛んできたとき
@@ -134,7 +140,7 @@ class User extends Authenticatable
             //ユーザーがauthユーザーかどうか判定
             if ($user_id == $auth_id) {
                 $bit_flag = $bit_flag | 0b00;
-            } elseif (ListUser::where('user_id', $auth_id)->where('favorite_user_id', $user_id)->exists()) {
+            } elseif ($user->listUsers()->where('favorite_user_id', $user_id)->exists()) {
                 //ユーザーがリストに登録されていたら
                 $bit_flag = $bit_flag | 0b10;
             } else {
@@ -147,4 +153,43 @@ class User extends Authenticatable
             return ['type' => $type, 'no_get_more' => $no_get_more];
         }
     }
+
+    public static function addListUser($user_id)
+    {
+        $auth_id = Auth::id();
+        $decrypted_user_id = Crypt::decrypt($user_id);
+        $user = User::find($auth_id);
+        if ($user->listUsers()->where('favorite_user_id',$decrypted_user_id)->exists()){
+            $message_type = 10;
+            return $message_type;
+        } elseif (User::where('id', $decrypted_user_id)->exists()) {
+            $user->listusers()->syncWithoutDetaching($decrypted_user_id);
+            $message_type = 1;
+            return $message_type;
+        }else{
+            $message_type = 0;
+            return $message_type;
+        }
+    }
+
+    public static function removeListUser($user_id)
+    {
+        $auth_id = Auth::id();
+        $decrypted_user_id = Crypt::decrypt($user_id);
+        $user = User::find($auth_id);
+        if ($user->listUsers()->where('favorite_user_id',$decrypted_user_id)->doesntExist()){
+            $message_type = 10;
+            return $message_type;
+        } elseif (User::where('id', $decrypted_user_id)->exists()) {
+            //$list_user = new ListUser;
+            //$list_user->where('user_id', $auth_id)->where('favorite_user_id',$decrypted_user_id)->delete();
+            $user->listUsers()->where('favorite_user_id',$decrypted_user_id)->delete();
+            $message_type = 1;
+            return $message_type;
+        }else{
+            $message_type = 0;
+            return $message_type;
+        }
+    }
+
 }

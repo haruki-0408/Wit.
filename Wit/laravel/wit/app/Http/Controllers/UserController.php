@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ListUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
-use App\Models\Room;
 
 class UserController extends Controller
 {
@@ -214,7 +212,7 @@ class UserController extends Controller
     public function actionAddListUser($user_id)
     {
         if (isset($user_id)) {
-            $message_type = ListUser::addListUser($user_id);
+            $message_type = User::addListUser($user_id);
             switch ($message_type) {
                 case 0:
                     $error_message = 'そのユーザは存在しません';
@@ -238,7 +236,7 @@ class UserController extends Controller
     public function actionRemoveListUser($user_id)
     {
         if (isset($user_id)) {
-            $message_type = ListUser::removeListUser($user_id);
+            $message_type = User::removeListUser($user_id);
             switch ($message_type) {
                 case 0:
                     $error_message = 'そのユーザは存在しません';
