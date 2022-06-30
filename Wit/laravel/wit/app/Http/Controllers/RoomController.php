@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
-use App\Models\RoomUser;
 use App\Models\RoomImage;
 use App\Models\RoomChat;
-use App\Models\Answer;
-use App\Models\ListRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -289,7 +286,7 @@ class RoomController extends Controller
         }
 
         if (isset($room_id)) {
-            $message_type = ListRoom::addListRoom($room_id);
+            $message_type = Room::addListRoom($room_id);
             switch ($message_type) {
                 case 0:
                     $error_message = 'このルームは既にリストに追加されています';
@@ -321,7 +318,7 @@ class RoomController extends Controller
         }
 
         if (isset($room_id)) {
-            $message_type = ListRoom::removeListRoom($room_id);
+            $message_type = Room::removeListRoom($room_id);
             switch ($message_type) {
                 case 0:
                     $error_message = 'このルームはリストに登録されていません';
@@ -413,14 +410,6 @@ class RoomController extends Controller
         if ($request->has('createPass')) {
             $room->password = Hash::make($request->createPass);
         };
-         if ($request->has('tag')) {
-            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
-
-            foreach ($matches[1] as $match) {
-                $tag = $this->storeTag($match);
-                $room->tags()->syncWithoutDetaching($tag->id);
-            }
-        }
 
         $room->save();
 
@@ -445,6 +434,16 @@ class RoomController extends Controller
                 $room_image->room_id = $room->id;
                 $room_image->image = $this->storeImage($roomImage, $image_count, $room->id);
                 $room_image->save();
+            }
+        }
+
+
+        if ($request->has('tag')) {
+            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
+
+            foreach ($matches[1] as $match) {
+                $tag = $this->storeTag($match);
+                $room->tags()->syncWithoutDetaching($tag->id);
             }
         }
 

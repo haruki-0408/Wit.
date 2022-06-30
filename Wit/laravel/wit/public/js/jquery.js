@@ -11263,6 +11263,7 @@ $(document).on('click', '#search-button', function () {
 
           if (_searchButton.disabled) {
             _searchButton.disabled = false;
+            console.log('disabled 解除');
           }
         }
       }) //通信が失敗したとき

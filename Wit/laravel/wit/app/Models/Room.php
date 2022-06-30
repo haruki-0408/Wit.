@@ -66,17 +66,17 @@ class Room extends Model
 
     public function listRooms()
     {
-        return $this->hasMany('App\Models\ListRoom');
+        return $this->belongsToMany('App\Models\User','list_rooms','user_id','room_id');
     }
 
-    public function roomChat()
+    public function roomChat() //ここだけChatsとは言わないので複数形の意味だけどChat
     {
-        return $this->hasMany('App\Models\RoomChat');
+        return $this->belongsToMany('App\Models\user','room_chat','user_id','room_id');
     }
 
     public function roomUsers()
     {
-        return $this->hasMany('App\Models\RoomUser');
+        return $this->belongsToMany('App\Models\User','room_users','user_id','room_id');
     }
 
     public function tags()
@@ -178,5 +178,45 @@ class Room extends Model
             //decbinは２進数として扱う
             return ['type' => $type, 'no_get_more' => $no_get_more];
         }
+    }
+
+    public static function addListRoom($room_id)
+    {
+        $auth_id = Auth::id();
+        $user = User::find($auth_id);
+        if (isset($room_id)) {
+            if ($user->listRooms()->where('room_id', $room_id)->exists()) {
+                $message_type = 0;
+            } else if (Room::where('id', $room_id)->exists()) {
+                $user->listRooms()->syncWithoutDetaching($room_id);
+                $message_type = 1;
+            } else {
+                $message_type = 2;
+            }
+        } else {
+            $message_type = 3;
+        }
+
+        return $message_type;
+    }
+
+    public static function removeListRoom($room_id)
+    {
+        $auth_id = Auth::id();
+        $user = User::find($auth_id);
+        if (isset($room_id)) {
+            if ($user->listRooms()->where('room_id', $room_id)->doesntExist()) {
+                $message_type = 0;
+            } else if (Room::where('id', $room_id)->exists()) {
+                $user->listRooms()->where('room_id',$room_id)->delete();
+                $message_type = 1;
+            } else {
+                $message_type = 2;
+            }
+        } else {
+            $message_type = 3;
+        }
+
+        return $message_type;
     }
 }

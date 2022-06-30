@@ -331,6 +331,7 @@ $(document).on('click', '#search-button', function () {
 
                         if (searchButton.disabled) {
                             searchButton.disabled = false;
+                            console.log('disabled 解除')
                         }
                     }
                 })

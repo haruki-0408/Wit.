@@ -30,45 +30,5 @@ class ListRoom extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public static function addListRoom($room_id)
-    {
-        $auth_id = Auth::id();
-        if (isset($room_id)) {
-            if (ListRoom::where('user_id', $auth_id)->where('room_id', $room_id)->exists()) {
-                $message_type = 0;
-            } else if (Room::where('id', $room_id)->exists()) {
-                $list_room = new ListRoom;
-                $list_room->user_id = Auth::id();
-                $list_room->room_id = $room_id;
-                $list_room->save();
-                $message_type = 1;
-            } else {
-                $message_type = 2;
-            }
-        } else {
-            $message_type = 3;
-        }
-
-        return $message_type;
-    }
-
-    public static function removeListRoom($room_id)
-    {
-        $auth_id = Auth::id();
-        if (isset($room_id)) {
-            if (ListRoom::where('user_id', $auth_id)->where('room_id', $room_id)->doesntExist()) {
-                $message_type = 0;
-            } else if (Room::where('id', $room_id)->exists()) {
-                $list_room = new ListRoom;
-                $list_room->where('user_id',$auth_id)->where('room_id',$room_id)->delete();
-                $message_type = 1;
-            } else {
-                $message_type = 2;
-            }
-        } else {
-            $message_type = 3;
-        }
-
-        return $message_type;
-    }
+    
 }

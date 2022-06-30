@@ -77,10 +77,6 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\User', 'list_users', 'user_id', 'favorite_user_id');
     }
 
-    public function users()
-    {
-        return $this->belongsToMany('App\Models\User','list_users','user_id');
-    }
 
     public function listRooms()
     {
@@ -89,12 +85,12 @@ class User extends Authenticatable
 
     public function roomChat()
     {
-        return $this->hasMany('App\Models\RoomChat');
+        return $this->belongsToMany('App\Models\Room','room_chat','user_id','room_id');
     }
 
     public function roomUsers()
     {
-        return $this->hasMany('App\Models\RoomUser');
+        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id');
     }
 
     public function answers()
