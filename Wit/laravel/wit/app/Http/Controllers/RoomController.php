@@ -186,7 +186,7 @@ class RoomController extends Controller
 
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-            
+
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
             if (is_null($room_info->password)) {
@@ -420,7 +420,7 @@ class RoomController extends Controller
 
         //room_chatテーブルへ保存
         $user = User::find($room->user_id);
-        $user->roomChat()->attach($room->id,['message' => $room->description]);
+        $user->roomChat()->attach($room->id, ['message' => $room->description]);
 
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
@@ -451,18 +451,35 @@ class RoomController extends Controller
 
     public function removeRoom($room_id)
     {
-        if (Room::find($room_id)->exists()) {
+        if (Room::where('id', $room_id)->exists()) {
             $room = Room::find($room_id);
             if ($room->user_id == Auth::id()) {
                 $room_tags = $room->tags()->get();
 
-                dd($room_tags);
+                foreach ($room_tags as $room_tag) {
+                    if (Tag::where('id', $room_tag->pivot->tag_id)->exists()) {
+                        $tag = Tag::find($room_tag->pivot->tag_id);
+                        if ($tag->number < 1) {
+                            $tag->delete();
+                        } else {
+                            $tag->update([
+                                'number' => $tag->number - 1
+                            ]);
+                        }
+                    } else {
+                        return back()->with('error_message', 'tag エラー');
+                    }
+                }
+
                 $room->delete();
+    
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
                 return back()->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
             } else {
                 return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
             }
+        } else {
+            return back()->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 }

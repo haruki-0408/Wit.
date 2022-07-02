@@ -629,6 +629,15 @@ $(document).on('click', '.remove-list-user', function () {
 
 });
 
+//removeRoom Modalを開いたとき
+$(document).on('click', '.remove-room', function (event) {
+    let button = $(this);
+    let remove_room_id = button.parent().parent().parent().parent().attr('data-room-id');
+    let remove_room_link = document.getElementById('removeRoomLink');
+    remove_room_link.href = '/home/removeRoom:' + remove_room_id;
+    console.log(remove_room_link.href);
+});
+
 //検索タイプをユーザ検索に切り替えたとき
 $(document).on('click', '#flexRadioUser', function () {
     let select = document.getElementById('searchType');

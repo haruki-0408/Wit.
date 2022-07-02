@@ -11548,6 +11548,14 @@ $(document).on('click', '.remove-list-user', function () {
     console.log(error.statusText);
     button.removeClass('disabled');
   });
+}); //removeRoom Modalを開いたとき
+
+$(document).on('click', '.remove-room', function (event) {
+  var button = $(this);
+  var remove_room_id = button.parent().parent().parent().parent().attr('data-room-id');
+  var remove_room_link = document.getElementById('removeRoomLink');
+  remove_room_link.href = '/home/removeRoom:' + remove_room_id;
+  console.log(remove_room_link.href);
 }); //検索タイプをユーザ検索に切り替えたとき
 
 $(document).on('click', '#flexRadioUser', function () {
