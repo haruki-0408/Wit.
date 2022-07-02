@@ -57,7 +57,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
             lastli = last.lastElementChild.dataset.roomId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getRoomInfo' + lastli, //通信したいURL
+                url: '/getRoomInfo:' + lastli, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -85,7 +85,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getPostRoom' + lastli, //通信したいURL
+                url: '/getPostRoom:' + lastli, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -116,7 +116,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getListUser' + lastli, //通信したいURL
+                url: '/getListUser:' + lastli, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -143,7 +143,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getListRoom' + lastli, //通信したいURL
+                url: '/getListRoom:' + lastli, //通信したいURL
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -212,7 +212,7 @@ $(document).on('click', "[id^='otherMore']", function (event) {
             lastli = last.lastElementChild.dataset.roomId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getPostRoom' + lastli + '/' + user_id,
+                url: '/getPostRoom:' + lastli + '/' + user_id,
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -241,7 +241,7 @@ $(document).on('click', "[id^='otherMore']", function (event) {
             lastli = last.lastElementChild.dataset.userId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getListUser' + lastli + '/' + user_id,
+                url: '/getListUser:' + lastli + '/' + user_id,
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -267,7 +267,7 @@ $(document).on('click', "[id^='otherMore']", function (event) {
             lastli = last.lastElementChild.dataset.roomId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getListRoom' + lastli + '/' + user_id,
+                url: '/getListRoom:' + lastli + '/' + user_id,
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -522,7 +522,7 @@ $(document).on('click', '.add-list-room', function () {
 
     $.ajax({
         type: "get", //HTTP通信の種類
-        url: '/home/addListRoom' + room_id, //通信したいURL
+        url: '/home/addListRoom:' + room_id, //通信したいURL
         dataType: 'json',
     })
         //通信が成功したとき
@@ -552,7 +552,7 @@ $(document).on('click', '.remove-list-room', function () {
 
     $.ajax({
         type: "get", //HTTP通信の種類
-        url: '/home/removeListRoom' + room_id, //通信したいURL
+        url: '/home/removeListRoom:' + room_id, //通信したいURL
         dataType: 'json',
     })
         //通信が成功したとき
@@ -580,7 +580,7 @@ $(document).on('click', '.add-list-user', function () {
     let user_id = button.parent().parent().attr('data-user-id');
     $.ajax({
         type: "get", //HTTP通信の種類
-        url: '/home/addListUser' + user_id, //通信したいURL
+        url: '/home/addListUser:' + user_id, //通信したいURL
         dataType: 'json',
     })
         //通信が成功したとき
@@ -608,7 +608,7 @@ $(document).on('click', '.remove-list-user', function () {
     let user_id = button.parent().parent().attr('data-user-id');
     $.ajax({
         type: "get", //HTTP通信の種類
-        url: '/home/removeListUser' + user_id, //通信したいURL
+        url: '/home/removeListUser:' + user_id, //通信したいURL
         dataType: 'json',
     })
         //通信が成功したとき
