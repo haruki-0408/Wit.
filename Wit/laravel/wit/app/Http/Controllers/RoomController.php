@@ -163,7 +163,7 @@ class RoomController extends Controller
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'roomChat'])->find($room_id);
+                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
                 session()->put('auth_room_id', $room_id);
                 return view('wit.room', [
@@ -185,8 +185,8 @@ class RoomController extends Controller
         }
 
         if (DB::table('rooms')->where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number', 'chat:id,room_id,message',])->find($room_id);
-            dd($room_info);
+            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+            
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
             if (is_null($room_info->password)) {

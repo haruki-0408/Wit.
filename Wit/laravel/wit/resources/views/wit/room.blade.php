@@ -318,7 +318,8 @@
                                             <li>
                                                 <div class="tag">
                                                     <span class="tag-name">{{ $roomTag->name }}</span>
-                                                    <span class="tag-number badge badge-light">{{ $roomTag->number }}</span>
+                                                    <span
+                                                        class="tag-number badge badge-light">{{ $roomTag->number }}</span>
                                                 </div>
                                             </li>
                                         @endforeach
@@ -401,15 +402,13 @@
                             <div class="card-body">
                                 <!-- MESSAGE -->
                                 <ul id="messageList" class="p-0 m-0 w-100 ">
-                                    <li class="myself">
-                                        <div class="message-wrapper">
-                                            <p>
-                                                @foreach ($room_info->roomChat as $chat)
-                                                    {!! nl2br(e($chat->message)) !!}
-                                                @endforeach
-                                            </p><br>
-                                        </div>
-                                    </li>
+                                    @foreach ($room_info->roomChat as $chat)
+                                        <li class="myself">
+                                            <div class="message-wrapper">
+                                                <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach
 
                                     <li class="opponent">
                                         <img class="" src="{{ asset($room_info->user->profile_image) }}"

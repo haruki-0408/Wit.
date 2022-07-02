@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function roomChat()
     {
-        return $this->belongsToMany('App\Models\Room','room_chat','user_id','room_id');
+        return $this->belongsToMany('App\Models\Room','room_chat','user_id');
     }
 
     public function roomUsers()
