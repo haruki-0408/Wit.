@@ -175,7 +175,7 @@ class User extends Authenticatable
         } elseif (User::where('id', $decrypted_user_id)->exists()) {
             //$list_user = new ListUser;
             //$list_user->where('user_id', $auth_id)->where('favorite_user_id',$decrypted_user_id)->delete();
-            $user->listUsers()->where('favorite_user_id',$decrypted_user_id)->delete();
+            $user->listUsers()->detach($decrypted_user_id);
             $message_type = 1;
             return $message_type;
         }else{

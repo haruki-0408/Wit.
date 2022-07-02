@@ -132,6 +132,7 @@ class Room extends Model
     public static function buttonTypeJudge($room_id, $search_query = null, $list_query = null)
     {
         $user_id = Auth::id();
+        $user = User::find($user_id);
 
         $bit_flag = 0b0000; //２進数として扱うときは先頭に0bを付与
         if (isset($room_id)) {
@@ -165,7 +166,7 @@ class Room extends Model
             }
 
             //部屋がリスト登録されているかどうか判定
-            if (ListRoom::where('user_id', $user_id)->where('room_id', $room_id)->exists()) {
+            if ($user->listRooms()->where('room_id', $room_id)->exists()) {
                 $bit_flag = $bit_flag | 0b0010;
             }
 
@@ -208,7 +209,7 @@ class Room extends Model
             if ($user->listRooms()->where('room_id', $room_id)->doesntExist()) {
                 $message_type = 0;
             } else if (Room::where('id', $room_id)->exists()) {
-                $user->listRooms()->where('room_id',$room_id)->delete();
+                $user->listRooms()->detach($room_id);
                 $message_type = 1;
             } else {
                 $message_type = 2;
