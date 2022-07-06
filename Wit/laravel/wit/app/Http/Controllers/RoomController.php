@@ -435,10 +435,8 @@ class RoomController extends Controller
         }
 
 
-        if ($request->has('tag')) {
-            preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $request->tag, $matches);
-
-            foreach ($matches[1] as $match) {
+        if ($request->has('matches')) {
+            foreach ($request->matches as $match) {
                 $tag = $this->storeTag($match);
                 $room->tags()->syncWithoutDetaching($tag->id);
             }

@@ -22,7 +22,7 @@
                     <div class="mb-3">
                         <label for="InputTitle" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" id="inputTitle">
-                        <div id="titleHelp" class="form-text">シンプルかつ簡潔に書きましょう</div>
+                        <div id="titleHelp" class="form-text">Titleは全角半角問わず30文字まで記載できます</div>
                         @error('title')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
@@ -32,6 +32,7 @@
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                         <textarea class="form-control" type="text" name="description" rows="3"></textarea>
+                        <div id="descriptionHelp" class="form-text">Descriptionは400文字まで記載できます</div>
                         @error('description')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
@@ -41,9 +42,14 @@
 
                     <div class="mb-3">
                         <label for="InputImages" class="form-label">Images</label>
-                        <input class="form-control" name="roomImages[]" type="file" multiple accept="image/*">
+                        <input class="form-control" name="roomImages[]" type="file" accept="image/*" multiple>
                         <div id="inputImages" class="form-text">画像は合計5MBまで複数追加できます。画像形式のみ</div>
-                        @error('roomImages[]')
+                        @error('sumImageSize')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                        @error('roomImages.*')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
@@ -55,13 +61,15 @@
                         <label for="InputTags" class="form-label">Tags</label>
                         <input id="inputTags" class="form-control" type="text" name="tag" multiple>
                         <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
-                        @error('tag')
+                        <div class="form-text">全角数字記号,全角スペース,中括弧'[]'は登録されず無視されます</div>
+
+                        @error('matches.*')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
                         <hr>
-                        <p class="form-text">登録されるタグ</p>
+                        <p class="form-text">Tag Preview</p>
                         <div id="showTags">
 
 
@@ -75,10 +83,16 @@
 
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label"></label>
-                        <div id="password">
+                        <div id="password" class="mb-2">
 
                         </div>
-                        @error('password')
+                        <div id="confirm-password" class="mb-0">
+                        
+
+                        </div>
+                        <div id="passwordHelp" class="form-text"></div>
+
+                        @error('createPass')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
@@ -98,6 +112,8 @@
     let RoomSwitch = document.getElementById('roomSwitch');
     RoomSwitch.addEventListener('change', switchCheck);
     let password = document.getElementById('password');
+    let confirm_password = document.getElementById('confirm-password');
+    let password_help = document.getElementById('passwordHelp');
 
     let InputTags = document.getElementById('inputTags');
     InputTags.addEventListener('change', valueChange)
@@ -106,10 +122,15 @@
     function switchCheck(event) {
         if (RoomSwitch.checked) {
             password.innerHTML =
-                '<input type="text" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
+                '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
+            confirm_password.innerHTML = 
+                '<input type="password" name="createPass_confirmation" class="form-control" placeholder="confirm password" autocomplete="off">';
+            password_help.textContent = 'passwordは8文字以上255文字以下で半角英数字&記号が使用できます';
         } else {
             password.innerHTML =
-                '<input type="text" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
+                '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
+            confirm_password.innerHTML = 
+                '<input type="password" name="createPass_confirmation" class="form-control" placeholder="confirm password" autocomplete="off" disabled>';
         }
     }
 

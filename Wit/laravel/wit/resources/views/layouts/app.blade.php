@@ -260,10 +260,10 @@
             }, 3000);
         @endif
 
-        @error('title')
+        @if(count($errors) > 0)
             let myModal = document.getElementById('pc');
             myModal.click();
-        @enderror
+        @endif
     </script>
 
     <noscript>
