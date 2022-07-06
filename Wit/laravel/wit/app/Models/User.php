@@ -69,7 +69,7 @@ class User extends Authenticatable
 
     public function rooms()
     {
-        return $this->hasMany('App\Models\Room');
+        return $this->hasMany('App\Models\Room','user_id');
     }
 
     public function listUsers()

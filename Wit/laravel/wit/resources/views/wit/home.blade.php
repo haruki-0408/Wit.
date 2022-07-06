@@ -127,7 +127,7 @@
                         @slot('rooms', $rooms);
                     @endcomponent
                 </ul>
-                @if (!(isset($rooms->last()->no_get_more)) && $rooms->isNotEmpty())
+                @if (!isset($rooms->last()->no_get_more) && $rooms->isNotEmpty())
                     <div id="getMoreButton" class="btn d-flex justify-content-center m-3"><svg
                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -144,7 +144,7 @@
         </div>
     </div>
     <div id="CreateRoomButton">
-        <button type="button" class="d-lg-none align-items-center btn-room-create"
+        <button id="pc" type="button" class="d-lg-none align-items-center btn-room-create"
             style="position:fixed; right:40px; bottom:40px; z-index:5;" data-bs-toggle="modal"
             data-bs-target="#CreateRoomForm"><span>+</span></button>
         <button type="button" class="d-none d-lg-block align-items-center btn-room-create"

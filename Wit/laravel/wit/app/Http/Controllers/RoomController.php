@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateRoomRequest;
 use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Room;
@@ -222,7 +223,7 @@ class RoomController extends Controller
         if (is_null($room_id)) {
             $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
         } else {
-            $post_rooms = $user->rooms()->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
+            $post_rooms = $user->rooms()->orderBy('id', 'desc')->where('id', '<', $room_id)->with(['user', 'tags'])->take(10)->get();
         }
 
         $post_rooms->map(function ($each) use ($query) {
@@ -396,7 +397,7 @@ class RoomController extends Controller
     }
 
 
-    public function createRoom(Request $request)
+    public function createRoom(CreateRoomRequest $request)
     {
         //$this->validate($request, Room::$rules);
         //$this->validate($request, Tag::$rules);

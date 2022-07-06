@@ -416,7 +416,7 @@ let clickFlag = true;
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
-    if (clickFlag){
+    if (clickFlag) {
         clickFlag = false;
         if (!(preview) && document.getElementById('Rooms')) {
             let searchTagName = event.currentTarget.children[0].textContent;
