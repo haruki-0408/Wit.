@@ -49,6 +49,11 @@
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
+                        @error('sumImageCount')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                         @error('roomImages.*')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>

@@ -32,6 +32,7 @@ class CreateRoomRequest extends FormRequest
             'description' => 'required|max:400|string',
             'roomImages.*' => 'image',
             'sumImageSize' => 'int|max:5120000',
+            'sumImageCount' => 'int|max:30',
             //ここはサイズではなくintの整数値で判断しているからサイズなら5120でいい
             'matches.*' => 'max:20',
             'createPass' => 'max:255|confirmed|min:8'
@@ -46,6 +47,7 @@ class CreateRoomRequest extends FormRequest
             'description.required' => 'Descriptionを入力してください',
             'description.max' => 'Descriptionは400文字以内です',
             'sumImageSize.max' => '画像サイズは合計5MBまでです',
+            'sumImageCount.max' => '画像枚数は最大30枚までです',
             'roomImages.*.image' => '画像形式以外はアップロードできません',
             'matches.*.max' => '1タグにつき最大20文字までです',
             'createPass.max' => 'passwordは最大255文字です',
@@ -64,17 +66,24 @@ class CreateRoomRequest extends FormRequest
         return $this->all();
     }
 
+    
     public function validationData()
     {
         if ($this->has('roomImages')) {
             $sum_image_size = 0;
+            $sum_image_count = count($this['roomImages']);
+            
             foreach ($this['roomImages'] as $roomImage) {
                 $sum_image_size += filesize($roomImage);
             }
 
-            $this->merge(['sumImageSize' => $sum_image_size]);
+            $this->merge([
+                'sumImageSize' => $sum_image_size,
+                'sumImageCount' => $sum_image_count,
+            ]);
         }
 
         return $this->all();
     }
+    
 }
