@@ -156,7 +156,5 @@
                 startpoint = endpoint + 1;
             }
         }
-
-
     }
 </script>

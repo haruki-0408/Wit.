@@ -14,23 +14,41 @@
                         <img id="childImage" src="{{ asset(Auth::user()->profile_image) }}"
                             style="width:100;height:100; position:relative;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
+                        @error('image')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
 
                     <div id="parentName" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Name</strong>
                         <p id="childName" class="card-text col-10 col-md-4 text-center p-1">{{ Auth::user()->name }}</p>
+                        @error('name')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
 
                     <div id="parentEmail" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
-                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}
-                        </p>
+                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}</p>
+                        @error('email')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
 
                     <div id="parentMessage" class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="childMessage" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">
-                            {{ Auth::user()->profile_message }}</p>
+                        <p id="childMessage" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">{{ Auth::user()->profile_message }}</p>
+                        @error('message')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="row justify-content-center">

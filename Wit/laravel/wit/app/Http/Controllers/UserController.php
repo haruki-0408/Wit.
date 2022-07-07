@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
+use App\Http\Requests\ChengeProfileRequest;
 
 class UserController extends Controller
 {
@@ -117,7 +118,7 @@ class UserController extends Controller
         }
     }
 
-    protected function changeProfile(Request $request)
+    protected function changeProfile(ChangeProfileRequest $request)
     {
         $form = [
             'name' => $request->name,
