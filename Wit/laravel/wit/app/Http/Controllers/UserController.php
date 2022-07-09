@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
-use App\Http\Requests\ChengeProfileRequest;
+use App\Http\Requests\ChangeProfileRequest;
 
 class UserController extends Controller
 {
@@ -19,6 +19,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+
 
     public function index()
     {
@@ -30,7 +31,6 @@ class UserController extends Controller
     {
         if (isset($user_id)) {
             //this payload is invalid 問題解決してない
-
             $decrypted_user_id = Crypt::decrypt($user_id);
 
             if (User::find($decrypted_user_id)->exists()) {
@@ -59,14 +59,16 @@ class UserController extends Controller
         }
     }
 
-    public function settings($query)
+    public function settings(Request $request)
     {
-        switch ($query) { //query string によってどのページに飛ばすのか判定
+        switch ($request->query('ref')) { //query string によってどのページに飛ばすのか判定
             case 'info':
                 return view('wit.Account.information-account');
 
             case 'delete':
                 return view('wit.Account.delete-account');
+            default:
+                return redirect('home')->with('error_message','エラーが起きました');
         }
     }
 
@@ -78,7 +80,7 @@ class UserController extends Controller
             $password = $user->password;
             $setting_password = $request->settingPass;
             if (Hash::check($setting_password, $password)) {
-                return $this->settings($query);
+                return $this->settings($request);
             } else {
                 return back()->with('error_message', 'パスワードが違います');
             }
@@ -124,11 +126,10 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'profile_message' => $request->message,
-
         ];
 
-        if (isset($request->edit_image)) {
-            $img = $this->storeImage($request->edit_image);
+        if (isset($request->image)) {
+            $img = $this->storeImage($request->image);
             //$crypt_img = Crypt::encrypt($img);
             $form += array('profile_image' => $img);
         };

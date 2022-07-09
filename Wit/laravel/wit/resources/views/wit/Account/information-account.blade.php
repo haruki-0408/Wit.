@@ -21,37 +21,45 @@
                         @enderror
                     </div>
 
-                    <div id="parentName" class="row justify-content-center">
+                    <div id="parentName" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Name</strong>
-                        <p id="childName" class="card-text col-10 col-md-4 text-center p-1">{{ Auth::user()->name }}</p>
+                        <p id="childName" class="card-text col-10 col-md-4 text-center p-1 m-0">{{ Auth::user()->name }}</p>
                         @error('name')
-                            <div class="text-danger">
+                            <div class="col-0 col-md-4">
+                            </div>
+                            <div class="col-8 col-md-4 text-center text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
                     </div>
 
-                    <div id="parentEmail" class="row justify-content-center">
+                    <div id="parentEmail" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
-                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1">{{ Auth::user()->email }}</p>
+                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1 m-0">{{ Auth::user()->email }}
+                        </p>
                         @error('email')
-                            <div class="text-danger">
+                            <div class="col-0 col-md-4">
+                            </div>
+                            <div class="col-8 col-md-4 text-center text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
                     </div>
 
-                    <div id="parentMessage" class="row justify-content-center">
+                    <div id="parentMessage" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="childMessage" class="card-text col-10 col-md-4 p-1" style="font-size: 0.9em;">{{ Auth::user()->profile_message }}</p>
+                        <p id="childMessage" class="card-text col-10 text-center col-md-4 p-1 m-0" style="font-size: 0.9em;">
+                            {{ Auth::user()->profile_message }}</p>
                         @error('message')
-                            <div class="text-danger">
+                            <div class="col-0 col-md-4">
+                            </div>
+                            <div class="col-8 col-md-4 text-center text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
                     </div>
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2">Created Date</strong>
                         <h6 class="card-text col-10 col-md-4 text-center p-0">{{ Auth::user()->created_at }}</h6>
                     </div>
@@ -102,14 +110,14 @@
 
             //変更後の画像プレビュー
             icon.innerHTML =
-                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='imageInput' name='edit_image' type='file' accept='image/*' class='invisible'></i>";
+                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='imageInput' name='image' type='file' accept='image/*' class='invisible'></i>";
             document.getElementById("parentImage").appendChild(icon);
 
 
             var childName = document.getElementById('childName');
             var childEmail = document.getElementById('childEmail');
             var childMessage = document.getElementById('childMessage');
-            var oldNode = [childName,childEmail,childMessage];
+            var oldNode = [childName, childEmail, childMessage];
 
             var name = document.getElementById('childName').innerText;
             var email = document.getElementById('childEmail').innerText;

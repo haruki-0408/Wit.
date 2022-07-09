@@ -4,7 +4,7 @@
         <div class="card border-0">
             <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
                 <div class="user">
-                    <a href="home/profile/{{ $room->user_id }} "
+                    <a href="home/profile:{{ $room->user_id }} "
                         class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="{{ asset($room->user->profile_image) }}" alt="" width="50" height="50"
                             class="profile-image rounded-circle me-2">

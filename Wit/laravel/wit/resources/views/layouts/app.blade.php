@@ -260,9 +260,11 @@
             }, 3000);
         @endif
 
-        @if(count($errors) > 0)
-            let myModal = document.getElementById('pc');
-            myModal.click();
+        @if (count($errors) > 0)
+            if (document.getElementById('pc')) {
+                let myModal = document.getElementById('pc');
+                myModal.click();
+            }
         @endif
     </script>
 

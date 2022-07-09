@@ -11681,7 +11681,7 @@ function addUserPage(res, show) {
       var clone = template.content.cloneNode(true); // template要素の内容を複製
 
       clone.querySelector('li').setAttribute('data-user-id', res[i].id);
-      clone.querySelector('.user-link').href = '/home/profile/' + res[i].id;
+      clone.querySelector('.user-link').href = '/home/profile:' + res[i].id;
       clone.querySelector('.profile-image').src = '/' + res[i].profile_image;
       clone.querySelector('.user-name').textContent = res[i].name;
       button = userButtonTypeJudge(res[i].type, res[i].id);
@@ -11746,7 +11746,7 @@ function addRoomPage(res, show) {
       array.forEach(function (value) {
         clone.querySelector('.btn-group').appendChild(value);
       });
-      clone.querySelector('.user-link').href = '/home/profile/' + res[i].user_id;
+      clone.querySelector('.user-link').href = '/home/profilekokokoo:' + res[i].user_id;
       clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');

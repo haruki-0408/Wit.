@@ -65,7 +65,7 @@ class RegisterController extends Controller
             'email.unique' => 'このメールアドレスは既に使用されています',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードは半角英数字8文字以上必要です',
-            'password.max' => 'パスワードは半角英数字255文字以内です',
+            'password.max' => 'パスワードは半角英数字最大255文字以内です',
             'password.confirmed' => 'パスワードが一致しませんでした',
         ];
 

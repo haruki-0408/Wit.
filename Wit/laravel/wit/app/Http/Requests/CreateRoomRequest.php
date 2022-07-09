@@ -43,14 +43,14 @@ class CreateRoomRequest extends FormRequest
     {
         return [
             'title.required' => 'Titleを入力してください',
-            'title.max' => 'Titleは30文字以内です',
+            'title.max' => 'Titleは最大30文字以内です',
             'description.required' => 'Descriptionを入力してください',
-            'description.max' => 'Descriptionは400文字以内です',
+            'description.max' => 'Descriptionは最大400文字以内です',
             'sumImageSize.max' => '画像サイズは合計5MBまでです',
             'sumImageCount.max' => '画像枚数は最大30枚までです',
             'roomImages.*.image' => '画像形式以外はアップロードできません',
             'matches.*.max' => '1タグにつき最大20文字までです',
-            'createPass.max' => 'passwordは最大255文字です',
+            'createPass.max' => 'passwordは最大255文字以内です',
             'createPass.min' => 'passwordは最小8文字からです',
             'createPass.confirmed' => 'passwordが一致しませんでした',
         ];

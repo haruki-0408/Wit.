@@ -1,6 +1,6 @@
 <div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div class="profile-box  ">
-        <a href="/home/profile/{{ Crypt::encrypt(Auth::user()->id) }}"
+        <a href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
@@ -27,7 +27,7 @@
                         Room</button></li>
                 <li><button class="btn dropdown-item" data-bs-toggle="modal"
                         data-bs-target="#settings">Settings</button></li>
-                <li><a class="dropdown-item" href="/home/profile/{{ Crypt::encrypt(Auth::user()->id) }}">Profile</a>
+                <li><a class="dropdown-item" href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}">Profile</a>
                 </li>
                 <li>
                     <hr class="dropdown-divider">
