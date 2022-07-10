@@ -10927,12 +10927,16 @@ var __webpack_exports__ = {};
   !*** ./resources/js/jquery.js ***!
   \********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-//getMore押したとき
+//グローバル変数としてclick flag を宣言
+var clickFlag = true; //getMore押したとき
+
 $(document).on('click', "[id^='getMore']", function (event) {
   event.currentTarget.disabled = true;
+  clickFlag = false;
   var last;
   var lastli;
   var searchButton = document.getElementById('search-button');
+  searchButton.disabled = true;
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
@@ -10966,7 +10970,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
         var show = 'Room';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
           getMoreRoomButton(1);
@@ -10974,6 +10977,13 @@ $(document).on('click', "[id^='getMore']", function (event) {
         } else {
           var _last_get_more2 = 'none_res';
           removeGetMoreButton(show, _last_get_more2);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -10995,7 +11005,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
         var show = 'Room';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more3 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
           getMoreRoomButton(0);
@@ -11003,6 +11012,13 @@ $(document).on('click', "[id^='getMore']", function (event) {
         } else {
           var _last_get_more4 = 'none_res';
           removeGetMoreButton(show, _last_get_more4);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11022,7 +11038,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
       }) //通信が成功したとき
       .done(function (res) {
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _show = "myPost";
           var _last_get_more5 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, _show);
@@ -11030,6 +11045,13 @@ $(document).on('click', "[id^='getMore']", function (event) {
         } else {
           var _last_get_more6 = 'none_res';
           removeGetMoreButton(show, _last_get_more6);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11055,13 +11077,19 @@ $(document).on('click', "[id^='getMore']", function (event) {
         var show = "myListUser";
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more7 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
           removeGetMoreButton(show, _last_get_more7);
         } else {
           var _last_get_more8 = 'none_res';
           removeGetMoreButton(show, _last_get_more8);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11083,13 +11111,19 @@ $(document).on('click', "[id^='getMore']", function (event) {
         var show = "myListRoom";
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more9 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
           removeGetMoreButton(show, _last_get_more9);
         } else {
           var _last_get_more10 = 'none_res';
           removeGetMoreButton(show, _last_get_more10);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11110,13 +11144,19 @@ $(document).on('click', "[id^='getMore']", function (event) {
         var show = 'User';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more11 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
           removeGetMoreButton(show, _last_get_more11);
         } else {
           var _last_get_more12 = 'none_res';
           removeGetMoreButton(show, _last_get_more12);
+        }
+
+        event.currentTarget.disabled = false;
+        clickFlag = true;
+
+        if (searchButton.disabled) {
+          searchButton.disabled = false;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11150,7 +11190,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
         var show = 'otherPost';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more13 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
           removeGetMoreButton(show, _last_get_more13);
@@ -11158,6 +11197,8 @@ $(document).on('click', "[id^='otherMore']", function (event) {
           var _last_get_more14 = 'none_res';
           removeGetMoreButton(show, _last_get_more14);
         }
+
+        event.currentTarget.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11181,7 +11222,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
         var show = 'otherListUser';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more15 = res[Object.keys(res).length - 1].no_get_more;
           addUserPage(res, show);
           removeGetMoreButton(show, _last_get_more15);
@@ -11189,6 +11229,8 @@ $(document).on('click', "[id^='otherMore']", function (event) {
           var _last_get_more16 = 'none_res';
           removeGetMoreButton(show, _last_get_more16);
         }
+
+        event.currentTarget.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11208,7 +11250,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
         var show = 'otherListRoom';
 
         if (res.length !== 0) {
-          event.currentTarget.disabled = false;
           var _last_get_more17 = res[Object.keys(res).length - 1].no_get_more;
           addRoomPage(res, show);
           removeGetMoreButton(show, _last_get_more17);
@@ -11216,6 +11257,8 @@ $(document).on('click', "[id^='otherMore']", function (event) {
           var _last_get_more18 = 'none_res';
           removeGetMoreButton(show, _last_get_more18);
         }
+
+        event.currentTarget.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11233,6 +11276,7 @@ $(document).on('click', '#search-button', function () {
   $("[id^='getMoreButton']").remove();
   $("[id^='getMoreUserButton']").remove();
   $(this).prop('disabled', true);
+  clickFlag = false;
   $(document.getElementById("Rooms")).empty();
 
   if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
@@ -11263,8 +11307,9 @@ $(document).on('click', '#search-button', function () {
 
           if (_searchButton.disabled) {
             _searchButton.disabled = false;
-            console.log('disabled 解除');
           }
+
+          clickFlag = true;
         }
       }) //通信が失敗したとき
       .fail(function (error) {
@@ -11280,6 +11325,8 @@ $(document).on('click', '#search-button', function () {
       if (searchButton.disabled) {
         searchButton.disabled = false;
       }
+
+      clickFlag = true;
     }
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
     var _searchButton2 = document.getElementById("search-button");
@@ -11321,6 +11368,7 @@ $(document).on('click', '#search-button', function () {
         addRoomPage(res, show);
         getMoreRoomButton(1);
         removeGetMoreButton(show, _last_get_more19);
+        clickFlag = true;
       } else {
         var _noresult = document.createElement('h3');
 
@@ -11335,27 +11383,27 @@ $(document).on('click', '#search-button', function () {
         if (_searchButton2.disabled) {
           _searchButton2.disabled = false;
         }
+
+        clickFlag = true;
       }
     }) //通信が失敗したとき
     .fail(function (error) {
       console.log(error.statusText);
     });
   }
-}); //グローバル変数としてclick flag を宣言
-
-var clickFlag = true; //tagボタンを押したとき
+}); //tagボタンを押したとき
 
 $(document).on('click', '.tag', function (event) {
   var preview = event.currentTarget.classList.contains('preview');
 
   if (clickFlag) {
+    var _searchButton3 = document.getElementById("search-button");
+
+    _searchButton3.disabled = true;
     clickFlag = false;
 
     if (!preview && document.getElementById('Rooms')) {
       var searchTagName = event.currentTarget.children[0].textContent;
-
-      var _searchButton3 = document.getElementById("search-button");
-
       _searchButton3.dataset.select = 'tag';
       _searchButton3.dataset.keyword = searchTagName;
       _searchButton3.dataset.flexCheckImage = 'false';
@@ -11403,6 +11451,7 @@ $(document).on('click', '.tag', function (event) {
         }
 
         clickFlag = true;
+        _searchButton3.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11746,7 +11795,7 @@ function addRoomPage(res, show) {
       array.forEach(function (value) {
         clone.querySelector('.btn-group').appendChild(value);
       });
-      clone.querySelector('.user-link').href = '/home/profilekokokoo:' + res[i].user_id;
+      clone.querySelector('.user-link').href = '/home/profile:' + res[i].user_id;
       clone.querySelector('.profile-image').src = '/' + res[i].user.profile_image;
       clone.querySelector('.user-name').textContent = res[i].user.name;
       clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');

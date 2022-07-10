@@ -261,9 +261,12 @@
         @endif
 
         @if (count($errors) > 0)
-            if (document.getElementById('pc')) {
-                let myModal = document.getElementById('pc');
+            if (document.getElementById('createRoomModalButton')) {
+                let myModal = document.getElementById('createRoomModalButton');
                 myModal.click();
+            }else if(document.getElementById('changePasswordModalButton')){
+                let change_password_button = document.getElementById('changePasswordModalButton');
+                change_password_button.click();
             }
         @endif
     </script>

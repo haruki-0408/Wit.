@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
 use App\Http\Requests\ChangeProfileRequest;
+use App\Http\Requests\ChangePasswordRequest;
 
 class UserController extends Controller
 {
@@ -142,21 +143,21 @@ class UserController extends Controller
         return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
     }
 
-    protected function changePassword(Request $request)
+    protected function changePassword(ChangePasswordRequest $request)
     {
-        if (isset($request->currentPass) && isset($request->newPass) && isset($request->confirmPass)) {
+        if (isset($request->currentPass) && isset($request->newPass) && isset($request->newPass_confirmation)) {
             $user_id = Auth::id();
             $user = User::find($user_id);
             $password = $user->password;
             $current_password = $request->currentPass;
             $new_password = $request->newPass;
-            $confirm_password = $request->confirmPass;
+            $confirm_password = $request->newPass_confirmation;
             if (Hash::check($current_password, $password)) {
                 if ($new_password == $confirm_password) {
                     $user->password = Hash::make($new_password);
                     $user->save();
                     $encrypted_user_id = Crypt::encrypt($user_id);
-                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
+                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message','パスワードを変更しました');
                 } else {
                     return back()->with('error_message', '新しいパスワードと確認用のパスワードが一致していません');
                 }

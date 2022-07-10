@@ -1,9 +1,14 @@
+//グローバル変数としてclick flag を宣言
+let clickFlag = true;
+
 //getMore押したとき
 $(document).on('click', "[id^='getMore']", function (event) {
     event.currentTarget.disabled = true;
+    clickFlag = false;
     let last;
     let lastli;
     let searchButton = document.getElementById('search-button');
+    searchButton.disabled = true;
     switch (event.currentTarget.id) {
         case 'getMoreButtonSearch':
             last = document.getElementById('Rooms');
@@ -36,7 +41,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 .done((res) => {
                     let show = 'Room';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
                         getMoreRoomButton(1);
@@ -45,11 +49,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
 
         case 'getMoreButton':
@@ -64,7 +73,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 .done((res) => {
                     let show = 'Room';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
                         getMoreRoomButton(0);
@@ -73,16 +81,20 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         case 'getMorePostRoomButton':
             last = document.getElementById('myPost');
             lastli = last.lastElementChild.dataset.roomId;
-
             $.ajax({
                 type: "get", //HTTP通信の種類
                 url: '/getPostRoom:' + lastli, //通信したいURL
@@ -91,7 +103,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 //通信が成功したとき
                 .done((res) => {
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let show = "myPost";
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
@@ -100,12 +111,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
-
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         case 'getMoreAnswerRoomButton':
             console.log("getMoreAnswerRoomButtonが押されました");
@@ -123,7 +138,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 .done((res) => {
                     let show = "myListUser";
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addUserPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -131,11 +145,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         case 'getMoreListRoomButton':
             last = document.getElementById('myListRoom');
@@ -150,7 +169,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 .done((res) => {
                     let show = "myListRoom";
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -158,11 +176,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
 
         case 'getMoreUserButton':
@@ -178,7 +201,6 @@ $(document).on('click', "[id^='getMore']", function (event) {
                 .done((res) => {
                     let show = 'User';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addUserPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -186,11 +208,16 @@ $(document).on('click', "[id^='getMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
+                    clickFlag = true;
+                    if (searchButton.disabled) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
 
         default:
@@ -219,7 +246,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                 .done((res) => {
                     let show = 'otherPost';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -227,11 +253,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         case 'otherMoreAnswerRoomButton':
             console.log('otherMoreAnswerRoomButtonが押されました');
@@ -248,7 +275,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                 .done((res) => {
                     let show = 'otherListUser';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addUserPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -256,11 +282,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         case 'otherMoreListRoomButton':
             last = document.getElementById('otherListRoom');
@@ -274,7 +301,6 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                 .done((res) => {
                     let show = 'otherListRoom';
                     if (res.length !== 0) {
-                        event.currentTarget.disabled = false;
                         let last_get_more = res[Object.keys(res).length - 1].no_get_more;
                         addRoomPage(res, show);
                         removeGetMoreButton(show, last_get_more);
@@ -282,11 +308,12 @@ $(document).on('click', "[id^='otherMore']", function (event) {
                         let last_get_more = 'none_res';
                         removeGetMoreButton(show, last_get_more);
                     }
+                    event.currentTarget.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
                     console.log(error.statusText)
-                })
+                });
             break;
         default:
             console.log("それ以外が押されました");
@@ -302,6 +329,7 @@ $(document).on('click', '#search-button', function () {
     $("[id^='getMoreButton']").remove();
     $("[id^='getMoreUserButton']").remove();
     $(this).prop('disabled', true);
+    clickFlag = false;
     $(document.getElementById("Rooms")).empty();
 
     if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
@@ -331,8 +359,8 @@ $(document).on('click', '#search-button', function () {
 
                         if (searchButton.disabled) {
                             searchButton.disabled = false;
-                            console.log('disabled 解除')
                         }
+                        clickFlag = true;
                     }
                 })
                 //通信が失敗したとき
@@ -349,6 +377,7 @@ $(document).on('click', '#search-button', function () {
             if (searchButton.disabled) {
                 searchButton.disabled = false;
             }
+            clickFlag = true;
         }
     } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
 
@@ -390,6 +419,7 @@ $(document).on('click', '#search-button', function () {
                     addRoomPage(res, show);
                     getMoreRoomButton(1);
                     removeGetMoreButton(show, last_get_more);
+                    clickFlag = true;
                 } else {
                     let noresult = document.createElement('h3');
                     last_get_more = 'none_res';
@@ -401,7 +431,7 @@ $(document).on('click', '#search-button', function () {
                     if (searchButton.disabled) {
                         searchButton.disabled = false;
                     }
-
+                    clickFlag = true;
                 }
             })
             //通信が失敗したとき
@@ -411,16 +441,16 @@ $(document).on('click', '#search-button', function () {
     }
 });
 
-//グローバル変数としてclick flag を宣言
-let clickFlag = true;
+
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
     if (clickFlag) {
+        let searchButton = document.getElementById("search-button");
+        searchButton.disabled = true;
         clickFlag = false;
         if (!(preview) && document.getElementById('Rooms')) {
             let searchTagName = event.currentTarget.children[0].textContent;
-            let searchButton = document.getElementById("search-button");
             searchButton.dataset.select = 'tag';
             searchButton.dataset.keyword = searchTagName;
             searchButton.dataset.flexCheckImage = 'false';
@@ -467,6 +497,7 @@ $(document).on('click', '.tag', function (event) {
                         removeGetMoreButton(show, last_get_more);
                     }
                     clickFlag = true;
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {

@@ -4,8 +4,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                         <path fill-rule="evenodd"
@@ -20,9 +20,9 @@
                     @endcomponent
 
                 </ul>
-                @if (!(isset($post_rooms->last()->no_get_more)) && $post_rooms->isNotEmpty())
-                    <div id="getMorePostRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16" height="16"
-                            fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                @if (!isset($post_rooms->last()->no_get_more) && $post_rooms->isNotEmpty())
+                    <div id="getMorePostRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16"
+                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
@@ -42,8 +42,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                         <path fill-rule="evenodd"
@@ -68,8 +68,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-people-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-people-fill mx-2" viewBox="0 0 16 16">
                         <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         <path fill-rule="evenodd"
                             d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
@@ -85,8 +85,8 @@
                             <div class="user">
                                 <a class="user-link link-dark text-decoration-none"
                                     href='/home/profile:{{ $list_user->id }}' alt="">
-                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
-                                        class="profile-image rounded-circle me-2">
+                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50"
+                                        height="50" class="profile-image rounded-circle me-2">
                                     <strong class="user-name">{{ $list_user->name }}</strong>
                                 </a>
                             </div>
@@ -104,8 +104,8 @@
                         </li>
                     @endforeach
                 </ul>
-                
-                @if (!(isset($list_users->last()->no_get_more)) && $list_users->isNotEmpty())
+
+                @if (!isset($list_users->last()->no_get_more) && $list_users->isNotEmpty())
                     <div id="getMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg width="16"
                             height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
@@ -127,8 +127,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                         <path fill-rule="evenodd"
@@ -142,7 +142,7 @@
                         @slot('rooms', $list_rooms);
                     @endcomponent
                 </ul>
-                @if (!(isset($list_rooms->last()->no_get_more)) &&  $list_rooms->isNotEmpty())
+                @if (!isset($list_rooms->last()->no_get_more) && $list_rooms->isNotEmpty())
                     <div id="getMoreListRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16"
                             height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
@@ -160,8 +160,8 @@
 </div>
 
 <!-- Room Password Modal -->
-<div class="modal fade" id="roomPasswordFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="roomPasswordForm" aria-hidden="true">
+<div class="modal fade" id="roomPasswordFormModal" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="roomPasswordForm" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -230,28 +230,26 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="setting-links" class="p-0 m-0 fs-5 rounded">
-                    <li><a class="dropdown-item link-dark fw-bold" data-bs-target="#userPasswordForm1"
-                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill mx-2"
-                                viewBox="0 0 16 16">
+                    <li><button class="dropdown-item fw-bold" data-bs-target="#userPasswordForm1"
+                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg width="16" height="16"
+                                fill="currentColor" class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                            </svg>Account Information</a></li>
-                    <li><a class="dropdown-item link-dark fw-bold" data-bs-target="#userPasswordForm2"
-                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg"
+                            </svg>Account Information</button></li>
+                    <li><button id="changePasswordModalButton" type="button" class="dropdown-item fw-bold"
+                            data-bs-target="#userPasswordForm2" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
                                 width="16" height="16" fill="currentColor" class="bi bi-key-fill mx-2"
                                 viewBox="0 0 16 16">
                                 <path
                                     d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>Change
-                            Password</a></li>
-                    <li><a class="dropdown-item link-dark  fw-bold text-danger" data-bs-target="#userPasswordForm3"
-                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill mx-2"
-                                viewBox="0 0 16 16">
+                            Password</button></li>
+                    <li><button class="dropdown-item fw-bold text-danger" data-bs-target="#userPasswordForm3"
+                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg width="16" height="16"
+                                fill="currentColor" class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                            </svg>Delete Account</a></li>
+                            </svg>Delete Account</button></li>
                 </ul>
             </div>
             <div class="modal-footer">
@@ -263,7 +261,8 @@
 
 
 <!-- User Password Form From Account Information-->
-<div class="modal fade" id="userPasswordForm1" aria-hidden="true" aria-labelledby="userPasswordForm1" tabindex="-1">
+<div class="modal fade" id="userPasswordForm1" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm1"
+    tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -285,7 +284,7 @@
 </div>
 
 <!-- User Password Form Change Password-->
-<div class="modal fade" id="userPasswordForm2" aria-hidden="true" aria-labelledby="userPasswordForm2"
+<div class="modal fade" id="userPasswordForm2" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm2"
     tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -294,15 +293,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="userPassword2" name='userPass' method="post" action="/home/profile/settings/changePassword">
+                <form id="userPassword2" name='userPass' method="post"
+                    action="/home/profile/settings/changePassword">
                     @csrf
                     Current Password
-                    <input type="password" name="currentPass" class="form-control mb-3" autocomplete=off>
+                    <input type="password" name="currentPass" class="form-control " autocomplete=off>
+                    @error('currentPass')
+                        <div class="text-danger">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                     New Password
-                    <input type="password" name="newPass" class="form-control mb-3" autocomplete=off>
+                    <input type="password" name="newPass" class="form-control " autocomplete=off>
+                    @error('newPass')
+                        <div class="text-danger">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                     Confirm Password
-                    <input type="password" name="confirmPass" class="form-control mb-3" autocomplete=off>
-                    <div class="text-end">
+                    <input type="password" name="newPass_confirmation" class="form-control " autocomplete=off>
+                    <div class="text-end mt-3">
                         <button type="submit" form="userPassword2" class="btn btn-outline-primary">Save</button>
                     </div>
                 </form>
@@ -312,7 +322,7 @@
 </div>
 
 <!-- User Password Form Delete Account-->
-<div class="modal fade" id="userPasswordForm3" aria-hidden="true" aria-labelledby="userPasswordForm3"
+<div class="modal fade" id="userPasswordForm3" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm3"
     tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -335,7 +345,7 @@
 </div>
 
 <!--Delete Room Confirm-->
-<div class="modal fade" id="removeRoomModal" aria-hidden="true" aria-labelledby="removeRoom" tabindex="-1">
+<div class="modal fade" id="removeRoomModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeRoom" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header">
@@ -352,7 +362,7 @@
 
 
 <!--Delete Account Confirm-->
-<div class="modal fade" id="deleteAccountModal" aria-hidden="true" aria-labelledby="deleteAccount" tabindex="-1">
+<div class="modal fade" id="deleteAccountModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="deleteAccount" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header">

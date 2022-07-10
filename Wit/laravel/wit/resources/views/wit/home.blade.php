@@ -144,7 +144,7 @@
         </div>
     </div>
     <div id="CreateRoomButton">
-        <button id="pc" type="button" class="d-lg-none align-items-center btn-room-create"
+        <button id="createRoomModalButton" type="button" class="d-lg-none align-items-center btn-room-create"
             style="position:fixed; right:40px; bottom:40px; z-index:5;" data-bs-toggle="modal"
             data-bs-target="#CreateRoomForm"><span>+</span></button>
         <button type="button" class="d-none d-lg-block align-items-center btn-room-create"
