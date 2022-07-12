@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
 use App\Http\Requests\ChangeProfileRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\AuthPasswordRequest;
 
 class UserController extends Controller
 {
@@ -73,7 +74,7 @@ class UserController extends Controller
         }
     }
 
-    protected function authUserPassword(Request $request)
+    protected function authUserPassword(AuthPasswordRequest $request)
     {
         $query = $request->query('ref');
         if (isset($query)) {

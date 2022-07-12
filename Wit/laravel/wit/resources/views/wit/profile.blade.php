@@ -28,7 +28,7 @@
                         <div class="col-3 text-end">
                             @switch($type)
                                 @case(0)
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                                    <button id="settingsModalButton" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
                                         <svg width="24" height="24" fill="currentColor" class="bi bi-gear-fill"
                                             viewBox="0 0 16 16">
                                             <path

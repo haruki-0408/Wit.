@@ -270,7 +270,18 @@
                 let change_password_button = document.getElementById('changePasswordModalButton');
                 change_password_button.click();
             }
+        @elseif ($errors->has('settingPass'))
+            if (document.getElementById('settingsModalButton')) {
+                let settings_button = document.getElementById('settingsModalButton');
+                settings_button.click();
+            }else if(document.getElementById('settingsModalButtonFooter')) {
+                let settings_button2 = document.getElementById('settingsModalButtonFooter');
+                settings_button2.click();
+            }
+        @elseif ($errors->has('enterPass'))
         @endif
+
+        //settingのinformationかdeleteかどっちクリックするか見分けるのと enterのpassmodalもどのmodal開くか見分けるアルゴリズムつくる-
     </script>
 
     <noscript>
