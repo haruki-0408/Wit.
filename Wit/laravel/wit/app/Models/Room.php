@@ -14,12 +14,6 @@ class Room extends Model
 {
     use HasFactory, HasUlid;
 
-    //バリデーションルール
-    public static $rules = [
-        'title' => 'required|max:5',
-        'description' => 'required|max:400',
-    ];
-
     public $incrimenting = false;
 
     protected $keyType = 'string';

@@ -4,9 +4,9 @@
     @component('wit.home-modals')
     @endcomponent
 
-    <div class="card border-0 overflow-auto" style="width:100%; height:83%;">
+    <div class="card border-0 overflow-auto w-100" style="height:83%;">
         <div id="profileContents" class="row justify-content-center w-100">
-            <form action="/home/profile/settings/changeProfile" method="post" name='changeProfile'
+            <form class="m-0 p-0" action="/home/profile/settings/changeProfile" method="post" name='changeProfile'
                 enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
@@ -66,7 +66,7 @@
 
                     <div class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2"></strong>
-                        <div id="parentButton" class="col-10 col-md-4 text-end">
+                        <div id="parentButton" class="col-10 col-md-4 text-end mt-2">
                             <button type="button" id="profileEdit" class="btn btn-outline-primary">Edit</button>
                         </div>
                     </div>

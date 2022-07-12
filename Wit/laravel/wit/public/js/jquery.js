@@ -10936,7 +10936,10 @@ $(document).on('click', "[id^='getMore']", function (event) {
   var last;
   var lastli;
   var searchButton = document.getElementById('search-button');
-  searchButton.disabled = true;
+
+  if (searchButton) {
+    searchButton.disabled = true;
+  }
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
@@ -10982,7 +10985,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11017,7 +11020,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11050,7 +11053,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11088,7 +11091,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11122,7 +11125,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11155,7 +11158,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
         event.currentTarget.disabled = false;
         clickFlag = true;
 
-        if (searchButton.disabled) {
+        if (searchButton) {
           searchButton.disabled = false;
         }
       }) //通信が失敗したとき
@@ -11305,7 +11308,7 @@ $(document).on('click', '#search-button', function () {
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
 
-          if (_searchButton.disabled) {
+          if (_searchButton) {
             _searchButton.disabled = false;
           }
 
@@ -11322,7 +11325,7 @@ $(document).on('click', '#search-button', function () {
       noresult.textContent = 'No result';
       document.getElementById('Rooms').appendChild(noresult);
 
-      if (searchButton.disabled) {
+      if (searchButton) {
         searchButton.disabled = false;
       }
 
@@ -11380,7 +11383,7 @@ $(document).on('click', '#search-button', function () {
         _noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(_noresult);
 
-        if (_searchButton2.disabled) {
+        if (_searchButton2) {
           _searchButton2.disabled = false;
         }
 
@@ -11399,7 +11402,10 @@ $(document).on('click', '.tag', function (event) {
   if (clickFlag) {
     var _searchButton3 = document.getElementById("search-button");
 
-    _searchButton3.disabled = true;
+    if (_searchButton3) {
+      _searchButton3.disabled = true;
+    }
+
     clickFlag = false;
 
     if (!preview && document.getElementById('Rooms')) {
@@ -11451,7 +11457,10 @@ $(document).on('click', '.tag', function (event) {
         }
 
         clickFlag = true;
-        _searchButton3.disabled = false;
+
+        if (_searchButton3) {
+          _searchButton3.disabled = false;
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11759,7 +11768,7 @@ function addUserPage(res, show) {
       if (document.getElementById("search-button")) {
         var _searchButton4 = document.getElementById("search-button");
 
-        if (_searchButton4.disabled) {
+        if (_searchButton4) {
           _searchButton4.disabled = false;
         }
       }
@@ -11852,7 +11861,7 @@ function addRoomPage(res, show) {
       if (document.getElementById("search-button")) {
         var _searchButton5 = document.getElementById("search-button");
 
-        if (_searchButton5.disabled) {
+        if (_searchButton5) {
           _searchButton5.disabled = false;
         }
       }

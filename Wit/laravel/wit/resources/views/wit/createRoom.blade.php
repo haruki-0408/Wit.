@@ -21,7 +21,7 @@
 
                     <div class="mb-3">
                         <label for="InputTitle" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="inputTitle">
+                        <input type="text" name="title" value="{{ old('title') }}"class="form-control" id="inputTitle">
                         <div id="titleHelp" class="form-text">Titleは全角半角問わず30文字まで記載できます</div>
                         @error('title')
                             <div class="text-danger">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea class="form-control" type="text" name="description" rows="3"></textarea>
+                        <textarea class="form-control" type="text" name="description" rows="3">{{ old('description') }}</textarea>
                         <div id="descriptionHelp" class="form-text">Descriptionは400文字まで記載できます</div>
                         @error('description')
                             <div class="text-danger">
@@ -64,7 +64,7 @@
 
                     <div class="mb-3">
                         <label for="InputTags" class="form-label">Tags</label>
-                        <input id="inputTags" class="form-control" type="text" name="tag" multiple>
+                        <input id="inputTags" class="form-control" type="text" name="tag" value="{{ old('tag') }}" multiple>
                         <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
                         <div class="form-text">全角数字記号,全角スペース,中括弧'[]'は登録されず無視されます</div>
 

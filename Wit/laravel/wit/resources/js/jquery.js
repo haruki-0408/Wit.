@@ -8,7 +8,9 @@ $(document).on('click', "[id^='getMore']", function (event) {
     let last;
     let lastli;
     let searchButton = document.getElementById('search-button');
-    searchButton.disabled = true;
+    if (searchButton) {
+        searchButton.disabled = true;
+    }
     switch (event.currentTarget.id) {
         case 'getMoreButtonSearch':
             last = document.getElementById('Rooms');
@@ -51,7 +53,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -83,7 +85,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -113,7 +115,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -147,7 +149,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -178,7 +180,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -210,7 +212,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                 })
@@ -357,7 +359,7 @@ $(document).on('click', '#search-button', function () {
                         noresult.textContent = 'No result';
                         document.getElementById('Rooms').appendChild(noresult);
 
-                        if (searchButton.disabled) {
+                        if (searchButton) {
                             searchButton.disabled = false;
                         }
                         clickFlag = true;
@@ -374,7 +376,7 @@ $(document).on('click', '#search-button', function () {
             noresult.textContent = 'No result';
             document.getElementById('Rooms').appendChild(noresult);
 
-            if (searchButton.disabled) {
+            if (searchButton) {
                 searchButton.disabled = false;
             }
             clickFlag = true;
@@ -428,7 +430,7 @@ $(document).on('click', '#search-button', function () {
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
 
-                    if (searchButton.disabled) {
+                    if (searchButton) {
                         searchButton.disabled = false;
                     }
                     clickFlag = true;
@@ -447,7 +449,9 @@ $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
     if (clickFlag) {
         let searchButton = document.getElementById("search-button");
-        searchButton.disabled = true;
+        if (searchButton) {
+            searchButton.disabled = true;
+        }
         clickFlag = false;
         if (!(preview) && document.getElementById('Rooms')) {
             let searchTagName = event.currentTarget.children[0].textContent;
@@ -497,7 +501,9 @@ $(document).on('click', '.tag', function (event) {
                         removeGetMoreButton(show, last_get_more);
                     }
                     clickFlag = true;
-                    searchButton.disabled = false;
+                    if (searchButton) {
+                        searchButton.disabled = false;
+                    }
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -816,7 +822,7 @@ function addUserPage(res, show) {
 
             if (document.getElementById("search-button")) {
                 let searchButton = document.getElementById("search-button");
-                if (searchButton.disabled) {
+                if (searchButton) {
                     searchButton.disabled = false;
                 }
             }
@@ -907,7 +913,7 @@ function addRoomPage(res, show) {
 
             if (document.getElementById("search-button")) {
                 let searchButton = document.getElementById("search-button");
-                if (searchButton.disabled) {
+                if (searchButton) {
                     searchButton.disabled = false;
                 }
             }

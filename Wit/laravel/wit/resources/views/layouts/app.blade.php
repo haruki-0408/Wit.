@@ -260,11 +260,13 @@
             }, 3000);
         @endif
 
-        @if (count($errors) > 0)
+        @if ($errors->hasAny(['title', 'description', 'sumImageSize', 'sumImageCount', 'roomImages.*', 'matches.*', 'createPass']))
             if (document.getElementById('createRoomModalButton')) {
                 let myModal = document.getElementById('createRoomModalButton');
                 myModal.click();
-            }else if(document.getElementById('changePasswordModalButton')){
+            }
+        @elseif ($errors->hasAny(['currentPass', 'newPass']))
+            if (document.getElementById('changePasswordModalButton')) {
                 let change_password_button = document.getElementById('changePasswordModalButton');
                 change_password_button.click();
             }
