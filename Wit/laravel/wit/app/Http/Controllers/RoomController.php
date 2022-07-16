@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
+use App\Http\Requests\AuthPasswordRequest;
 use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Room;
@@ -151,7 +152,7 @@ class RoomController extends Controller
         return $rooms;
     }
 
-    public function authRoomPassword(Request $request)
+    public function authRoomPassword(AuthPasswordRequest $request)
     {
         if (mb_strlen($request->room_id) == 26) {
             $room_id = $request->room_id;

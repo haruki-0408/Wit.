@@ -286,9 +286,13 @@
                 const delete_password_button2 = document.getElementById('deleteAccountPasswordModalButtonFooter');
                 delete_password_button2.click();
             }
+        @elseif($errors->has('enterPass'))
+            const room_id = '{{ old('room_id') }}';
+            const room = document.querySelector('[data-room-id="'+room_id+'"]');
+            const enter_password_button =room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
+            enter_password_button.click();
+            console.log(enter_password_button);
         @endif
-
-        //settingのinformationかdeleteかどっちクリックするか見分けるのと enterのpassmodalもどのmodal開くか見分けるアルゴリズムつくる-
     </script>
 
     <noscript>

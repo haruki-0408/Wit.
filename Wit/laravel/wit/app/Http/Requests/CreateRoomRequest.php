@@ -69,6 +69,7 @@ class CreateRoomRequest extends FormRequest
     
     public function validationData()
     {
+        $data = $this->all();
         if ($this->has('roomImages')) {
             $sum_image_size = 0;
             $sum_image_count = count($this['roomImages']);
@@ -76,14 +77,11 @@ class CreateRoomRequest extends FormRequest
             foreach ($this['roomImages'] as $roomImage) {
                 $sum_image_size += filesize($roomImage);
             }
-
-            $this->merge([
-                'sumImageSize' => $sum_image_size,
-                'sumImageCount' => $sum_image_count,
-            ]);
+            $data['sumImageSize'] = $sum_image_size;
+            $data['sumImageCount'] = $sum_image_count;
         }
 
-        return $this->all();
+        return $data;
     }
     
 }

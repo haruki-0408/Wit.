@@ -179,7 +179,14 @@
                         @csrf
                         <input type="password" name="enterPass" class="form-control mb-3" autocomplete=off>
                         <input type="hidden" name="room_id">
-                        <button type="submit" form="roomPassword" class="btn btn-primary text-end">Submit</button>
+                        @error('enterPass')
+                            <div class="text-danger">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                        <div class="text-end">
+                            <button type="submit" form="roomPassword" class="btn btn-primary ">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
