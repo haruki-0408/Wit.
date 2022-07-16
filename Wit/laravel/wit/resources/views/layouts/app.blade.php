@@ -262,23 +262,30 @@
 
         @if ($errors->hasAny(['title', 'description', 'sumImageSize', 'sumImageCount', 'roomImages.*', 'matches.*', 'createPass']))
             if (document.getElementById('createRoomModalButton')) {
-                let myModal = document.getElementById('createRoomModalButton');
+                const myModal = document.getElementById('createRoomModalButton');
                 myModal.click();
             }
-        @elseif ($errors->hasAny(['currentPass', 'newPass']))
+        @elseif($errors->hasAny(['currentPass', 'newPass']))
             if (document.getElementById('changePasswordModalButton')) {
-                let change_password_button = document.getElementById('changePasswordModalButton');
+                const change_password_button = document.getElementById('changePasswordModalButton');
                 change_password_button.click();
             }
-        @elseif ($errors->has('settingPass'))
-            if (document.getElementById('settingsModalButton')) {
-                let settings_button = document.getElementById('settingsModalButton');
-                settings_button.click();
-            }else if(document.getElementById('settingsModalButtonFooter')) {
-                let settings_button2 = document.getElementById('settingsModalButtonFooter');
-                settings_button2.click();
+        @elseif($errors->has('infoPass'))
+            if (document.getElementById('informationPasswordModalButton')) {
+                const info_password_button = document.getElementById('informationPasswordModalButton');
+                info_password_button.click();
+            } else if (document.getElementById('informationPasswordModalButtonFooter')) {
+                const info_password_button2 = document.getElementById('informationPasswordModalButtonFooter');
+                info_password_button2.click();
             }
-        @elseif ($errors->has('enterPass'))
+        @elseif($errors->has('deletePass'))
+            if (document.getElementById('deleteAccountPasswordModalButton')) {
+                const delete_password_button = document.getElementById('deleteAccountPasswordModalButton');
+                delete_password_button.click();
+            } else if (document.getElementById('deleteAccountPasswordModalButtonFooter')) {
+                const delete_password_button2 = document.getElementById('deleteAccountPasswordModalButtonFooter');
+                delete_password_button2.click();
+            }
         @endif
 
         //settingのinformationかdeleteかどっちクリックするか見分けるのと enterのpassmodalもどのmodal開くか見分けるアルゴリズムつくる-

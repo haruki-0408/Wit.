@@ -230,9 +230,10 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="setting-links" class="p-0 m-0 fs-5 rounded">
-                    <li><button class="dropdown-item fw-bold" data-bs-target="#userPasswordForm1"
-                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg width="16" height="16"
-                                fill="currentColor" class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
+                    <li><button id="informationPasswordModalButton" class="dropdown-item fw-bold"
+                            data-bs-target="#userPasswordForm1" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
+                                width="16" height="16" fill="currentColor"
+                                class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </svg>Account Information</button></li>
@@ -244,9 +245,10 @@
                                     d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>Change
                             Password</button></li>
-                    <li><button class="dropdown-item fw-bold text-danger" data-bs-target="#userPasswordForm3"
-                            data-bs-toggle="modal" data-bs-dismiss="modal"><svg width="16" height="16"
-                                fill="currentColor" class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
+                    <li><button id="deleteAccountPasswordModalButton" class="dropdown-item fw-bold text-danger"
+                            data-bs-target="#userPasswordForm3" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
+                                width="16" height="16" fill="currentColor"
+                                class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </svg>Delete Account</button></li>
@@ -261,8 +263,8 @@
 
 
 <!-- User Password Form From Account Information-->
-<div class="modal fade" id="userPasswordForm1" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm1"
-    tabindex="-1">
+<div class="modal fade" id="userPasswordForm1" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="userPasswordForm1" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -273,7 +275,12 @@
                 <form id="userPassword1" name='userPass' method="post"
                     action="/home/profile/settings/authUserPassword?ref=info">
                     @csrf
-                    <input type="password" name="settingPass" class="form-control mb-3" autocomplete=off>
+                    <input type="password" name="infoPass" class="form-control mb-1" autocomplete=off>
+                    @error('infoPass')
+                        <div class="text-danger mb-1">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                     <div class="text-end">
                         <button type="submit" form="userPassword1" class="btn btn-primary">Submit</button>
                     </div>
@@ -284,8 +291,8 @@
 </div>
 
 <!-- User Password Form Change Password-->
-<div class="modal fade" id="userPasswordForm2" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm2"
-    tabindex="-1">
+<div class="modal fade" id="userPasswordForm2" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="userPasswordForm2" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -322,8 +329,8 @@
 </div>
 
 <!-- User Password Form Delete Account-->
-<div class="modal fade" id="userPasswordForm3" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="userPasswordForm3"
-    tabindex="-1">
+<div class="modal fade" id="userPasswordForm3" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="userPasswordForm3" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -334,7 +341,12 @@
                 <form id="userPassword3" name='userPass' method="post"
                     action="/home/profile/settings/authUserPassword?ref=delete">
                     @csrf
-                    <input type="password" name="settingPass" class="form-control mb-3" autocomplete=off>
+                    <input type="password" name="deletePass" class="form-control mb-1" autocomplete=off>
+                    @error('deletePass')
+                        <div class="text-danger mb-1">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                     <div class="text-end">
                         <button type="submit" form="userPassword3" class="btn btn-primary text-end">Submit</button>
                     </div>
@@ -345,7 +357,8 @@
 </div>
 
 <!--Delete Room Confirm-->
-<div class="modal fade" id="removeRoomModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeRoom" tabindex="-1">
+<div class="modal fade" id="removeRoomModal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="removeRoom" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header">
@@ -362,7 +375,8 @@
 
 
 <!--Delete Account Confirm-->
-<div class="modal fade" id="deleteAccountModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="deleteAccount" tabindex="-1">
+<div class="modal fade" id="deleteAccountModal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="deleteAccount" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header">

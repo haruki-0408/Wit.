@@ -45,13 +45,13 @@ class UserController extends Controller
                     'user_name' => $user->name,
                     'profile_image' => $user->profile_image,
                 ];
-            
+
                 if ($user != Auth::user()) {
-                    $user_data += array('o_post_rooms'=>RoomController::getPostRoom(null,$user_id));
-                    $user_data += array('o_list_users'=>Self::getListUser(null,$user_id));
-                    $user_data += array('o_list_rooms'=>RoomController::getListRoom(null,$user_id));
-                } 
-                
+                    $user_data += array('o_post_rooms' => RoomController::getPostRoom(null, $user_id));
+                    $user_data += array('o_list_users' => Self::getListUser(null, $user_id));
+                    $user_data += array('o_list_rooms' => RoomController::getListRoom(null, $user_id));
+                }
+
                 return view('wit.profile', $user_data);
             } else {
                 abort(404);
@@ -70,17 +70,24 @@ class UserController extends Controller
             case 'delete':
                 return view('wit.Account.delete-account');
             default:
-                return redirect('home')->with('error_message','エラーが起きました');
+                return redirect('home')->with('error_message', 'エラーが起きました');
         }
     }
 
     protected function authUserPassword(AuthPasswordRequest $request)
     {
         $query = $request->query('ref');
+        
         if (isset($query)) {
             $user = Auth::user();
             $password = $user->password;
-            $setting_password = $request->settingPass;
+            
+            if ($request->has('infoPass')) {
+                $setting_password = $request->infoPass;
+            } else if ($request->has('deletePass')) {
+                $setting_password = $request->deletePass;
+            }
+
             if (Hash::check($setting_password, $password)) {
                 return $this->settings($request);
             } else {
@@ -158,7 +165,7 @@ class UserController extends Controller
                     $user->password = Hash::make($new_password);
                     $user->save();
                     $encrypted_user_id = Crypt::encrypt($user_id);
-                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message','パスワードを変更しました');
+                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message', 'パスワードを変更しました');
                 } else {
                     return back()->with('error_message', '新しいパスワードと確認用のパスワードが一致していません');
                 }
@@ -263,7 +270,7 @@ class UserController extends Controller
 
 
 
-    public static function getListUser($favorite_user_id = null,$user_id = null)
+    public static function getListUser($favorite_user_id = null, $user_id = null)
     {
         if (isset($user_id)) {
             $decrypted_user_id = Crypt::decrypt($user_id);
@@ -298,7 +305,7 @@ class UserController extends Controller
             $list_user->id = Crypt::encrypt($list_user->id);
         }
 
-        
+
         return $list_users;
     }
 }
