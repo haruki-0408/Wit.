@@ -363,18 +363,36 @@
     </div>
 </div>
 
+<!--Enter Room Confirm-->
+<div class="modal fade" id="enterRoomModal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="enterRoom" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-end">
+            <div class="modal-header border">
+                <h5 class="modal-title">ルームに入場しますか?
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a id="enterRoomLink" href="" class="btn btn-outline-primary text-end">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--Delete Room Confirm-->
 <div class="modal fade" id="removeRoomModal" data-bs-backdrop="static" aria-hidden="true"
     aria-labelledby="removeRoom" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
-            <div class="modal-header">
+            <div class="modal-header border">
                 <h5 class="modal-title">ルームを削除しますか?
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a id="removeRoomLink" href="" class="btn btn-primary text-end">YES</a>
+                <a id="removeRoomLink" href="" class="btn btn-outline-primary text-end">Yes</a>
             </div>
         </div>
     </div>
@@ -387,11 +405,11 @@
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header">
-                <h5 class="modal-title">削除しますか</h5>
+                <h5 class="modal-title">アカウントを削除しますか</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a href="/home/profile/settings/deleteAccount" class="btn btn-primary text-end">YES</a>
+                <a href="/home/profile/settings/deleteAccount" class="btn btn-outline-primary text-end">Yes</a>
             </div>
         </div>
     </div>

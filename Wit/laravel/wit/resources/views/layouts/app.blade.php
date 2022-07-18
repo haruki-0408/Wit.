@@ -291,7 +291,6 @@
             const room = document.querySelector('[data-room-id="'+room_id+'"]');
             const enter_password_button =room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
             enter_password_button.click();
-            console.log(enter_password_button);
         @endif
     </script>
 

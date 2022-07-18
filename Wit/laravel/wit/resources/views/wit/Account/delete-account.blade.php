@@ -21,7 +21,7 @@
                     <textarea class="w-100 bg-light" rows="5" name="" autocorrect="off" autocapitalize="off" placeholder=""></textarea>
 
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="mt-2 btn btn-outline-primary">Submit</button>
                     </div>
                 </div>
             </div>

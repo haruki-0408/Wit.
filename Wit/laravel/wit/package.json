@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "bootstrap-icons": "^1.7.2",
-        "jquery": "^3.6.0"
+        "jquery": "^3.6.0",
+        "laravel-echo": "^1.12.1",
+        "pusher-js": "^7.2.0"
     }
 }
