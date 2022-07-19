@@ -1,8 +1,9 @@
 <?php
 
+use App\Events\UserSessionChanged;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Crypt;
-use function Ramsey\Uuid\v1;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/getListRoom:{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getListRoom'])->name('getListRoom');
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');
     Route::post('/home/searchRoom', [App\Http\Controllers\RoomController::class, 'searchRoom'])->name('searchRoom');
+
+    /*Route::get('/tasks', function () {
+        $type = 'success';
+        $message = "New Comer";
+        event(new UserSessionChanged($type,$message));
+    });*/
 });
 
 

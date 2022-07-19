@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use Illuminate\Support\Collection;
+use App\Events\UserSessionChanged;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
@@ -182,6 +183,10 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
+        $type = 'success';
+        $message = "New Comer";
+        event(new UserSessionChanged($type,$message));
+
         if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }

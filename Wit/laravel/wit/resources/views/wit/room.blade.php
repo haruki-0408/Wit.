@@ -498,6 +498,14 @@
         </main>
     </div>
 
+
+    <script>
+        Echo.channel('room-user-notifications')
+            .listen('UserSessionChanged', (e) => {
+                console.log('received a message');
+                console.log(e);
+            });
+    </script>
 </body>
 
 </html>

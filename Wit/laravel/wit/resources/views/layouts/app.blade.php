@@ -292,6 +292,12 @@
             const enter_password_button =room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
             enter_password_button.click();
         @endif
+
+        Echo.channel('room-user-notifications')
+		   .listen('UserSessionChanged',(e) => {
+			  console.log('received a message');
+			  console.log(e);
+			});
     </script>
 
     <noscript>
