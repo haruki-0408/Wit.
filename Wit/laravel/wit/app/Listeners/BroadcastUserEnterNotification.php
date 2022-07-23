@@ -26,6 +26,6 @@ class BroadcastUserEnterNotification
      */
     public function handle(UserSessionChanged $event)
     {
-        \Log::debug([$event->message,$event->type]);
+        \Log::debug([$event->room_id,$event->type]);
     }
 }

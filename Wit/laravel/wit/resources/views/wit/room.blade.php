@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/room.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -497,15 +498,6 @@
             </div>
         </main>
     </div>
-
-
-    <script>
-        Echo.channel('room-user-notifications')
-            .listen('UserSessionChanged', (e) => {
-                console.log('received a message');
-                console.log(e);
-            });
-    </script>
 </body>
 
 </html>

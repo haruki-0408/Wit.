@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\UserSessionChanged;
 use App\Listeners\BroadcastUserEnterNotification;
 use App\Listeners\BroadcastUserExitNotification;
-use App\Events\Enter;
-use App\Events\Exited;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,12 +22,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        Enter::class => [
-            BroadcastUserEnterNotification::class
+        UserSessionChanged::class => [
+            BroadcastUserEnterNotification::class,
+            //BroadcastUserExitNotification::class
         ],
-        Exited::class => [
-            BroadcastUserExitNotification::class
-        ]
     ];
 
     /**

@@ -183,9 +183,8 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
-        $type = 'success';
-        $message = "New Comer";
-        event(new UserSessionChanged($type,$message));
+        $type = 'online';
+        event(new UserSessionChanged($type,$room_id));
 
         if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');

@@ -16,7 +16,7 @@ class UserSessionChanged implements ShouldBroadcast
 
 
     public $type;
-    public $message;
+    public $room_id;
 
 
     /**
@@ -24,10 +24,10 @@ class UserSessionChanged implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($message, $type)
+    public function __construct($room_id, $type)
     {
+        $this->room_id = $room_id;
         $this->type = $type;
-        $this->message = $message;
     }
 
     /**
@@ -37,6 +37,6 @@ class UserSessionChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('room-user-notifications');
+        return new privateChannel('room-user-notifications.'.$this->room_id);
     }
 }
