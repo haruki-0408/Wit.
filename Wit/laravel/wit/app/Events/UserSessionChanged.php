@@ -37,6 +37,13 @@ class UserSessionChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new privateChannel('room-user-notifications.'.$this->room_id);
+        return new PrivateChannel('room-user-notifications.'.$this->room_id);
     }
+
+    /*public function broadcastWith()
+    {
+        return [
+            $type = "broadcastWith テスト",
+        ];
+    }*/
 }

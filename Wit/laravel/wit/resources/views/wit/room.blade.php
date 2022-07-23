@@ -247,7 +247,7 @@
     </div>
 </div>
 
-<body>
+<body id='{{ $room_info->id }}'>
     <div id="app">
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
@@ -429,8 +429,8 @@
                                     </li>
 
                                     <li class="opponent">
-                                        <img class="" src="{{ asset('images/sample02.PNG') }}"
-                                            alt="" width="20" height="20" class="rounded-circle">
+                                        <img class="" src="{{ asset('images/sample02.PNG') }}" alt=""
+                                            width="20" height="20" class="rounded-circle">
                                         <strong>test2</strong>
                                         <p>test message!</p>
                                         <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>

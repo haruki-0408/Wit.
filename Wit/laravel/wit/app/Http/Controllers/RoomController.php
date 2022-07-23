@@ -183,8 +183,8 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
-        $type = 'online';
-        event(new UserSessionChanged($type,$room_id));
+        $type = $this->subscribeRoomUser($room_id);
+        event(new UserSessionChanged($room_id,$type));
 
         if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
@@ -210,6 +210,17 @@ class RoomController extends Controller
             }
         } else {
             return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+        }
+    }
+
+    public function subscribeRoomUser($room_id)
+    {
+        $room = new Room;
+        $auth_id = Auth::id();
+        if($room->find($room_id)->exists()){
+            $room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
+            $type = "online";
+            return $type;
         }
     }
 
