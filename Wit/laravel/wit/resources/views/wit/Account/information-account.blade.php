@@ -48,7 +48,8 @@
 
                     <div id="parentMessage" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="childMessage" class="card-text col-10 text-center col-md-4 p-1 m-0" style="font-size: 0.9em;">
+                        <p id="childMessage" class="card-text col-10 text-center col-md-4 p-1 m-0"
+                            style="font-size: 0.9em;">
                             {{ Auth::user()->profile_message }}</p>
                         @error('message')
                             <div class="col-0 col-md-4">
@@ -93,6 +94,7 @@
             button_save.setAttribute("id", "saveButton");
             button_save.setAttribute("type", "submit");
             button_save.textContent = "Save";
+            button_save.setAttribute("onclick","window.onbeforeunload = null;")
 
             var button_cancel = document.createElement("button");
             button_cancel.className = "btn btn-secondary mx-2";
@@ -188,5 +190,10 @@
                 window.location.reload(false);
             }
         });
+    }
+</script>
+<script>
+    window.onbeforeunload = function(e) {
+        e.returnValue = "ページを離れようとしています。よろしいですか？";
     }
 </script>

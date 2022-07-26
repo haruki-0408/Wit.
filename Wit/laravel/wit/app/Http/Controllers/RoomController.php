@@ -183,14 +183,13 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
-        $type = $this->subscribeRoomUser($room_id);
-        event(new UserSessionChanged($room_id,$type));
+        event(new UserSessionChanged($room_id));
 
         if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
 
-        if (DB::table('rooms')->where('id', $room_id)->exists()) {
+        if (Room::where('id', $room_id)->exists()) {
             $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
 
             $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
@@ -213,16 +212,37 @@ class RoomController extends Controller
         }
     }
 
-    public function subscribeRoomUser($room_id)
+    public function exitRoom($room_id)
+    {
+        if (Room::where('id', $room_id)->exists()) {
+            $type = $this->describeRoomUser($room_id);
+            event(new UserSessionChanged($room_id, $type));
+            session()->forget('auth_room_id');
+        }
+        return response()->with('action_message', '退出しました');
+        //return redirect('home');
+    }
+
+    /*public function subscribeRoomUser($room_id)
     {
         $room = new Room;
         $auth_id = Auth::id();
-        if($room->find($room_id)->exists()){
+        if ($room->where('id', $room_id)->exists()) {
             $room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
             $type = "online";
-            return $type;
         }
+        return $type;
     }
+
+    public function describeRoomUser($room_id)
+    {
+        $room = new Room;
+        $auth_id = Auth::id();
+        if ($room->find($room_id)->roomUsers()->find($auth_id) !== null) {
+            $room->find($room_id)->roomUsers()->detach($auth_id);
+            $type = "offline";
+        }
+    }*/
 
     public static function getPostRoom($room_id = null, $user_id = null)
     {
@@ -487,7 +507,7 @@ class RoomController extends Controller
                 }
 
                 $room->delete();
-    
+
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
                 return back()->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
             } else {

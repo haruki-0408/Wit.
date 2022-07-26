@@ -369,7 +369,7 @@
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">
-                <h5 class="modal-title">ルームに入場しますか?
+                <h5 class="modal-title">ルームへ入室しますか?
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

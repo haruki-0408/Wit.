@@ -17,7 +17,12 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('room-user-notifications.{room_id}', function ($room_id) {
-    //return $room_id !== null;
-    return true;
+Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_id) {
+    if($user->roomUsers->contains($room_id) ){
+        //$user->id = Crypt::encrypt($user->id);
+        return $user;
+        //return ['id'=>Crypt::encrypt($user->id),'name'=>$user->name,'profile_image'=>$user->profile_image];
+    }else{
+        return ['message'=>'false'];
+    }
 });

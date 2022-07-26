@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/Room:{id}', [App\Http\Controllers\RoomController::class, 'enterRoom'])->name('enterRoom');
     Route::get('/home/Room:{room_id}/showRoomImage:{number}', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
     Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class, 'authRoomPassword'])->name('authRoomPassword');
+    Route::get('/home/exitRoom:{room_id}',[App\Http\Controllers\RoomController::class, 'exitRoom'])->name('exitRoom');
     Route::post('/home/createRoom', [App\Http\Controllers\RoomController::class, 'createRoom'])->name('createRoom');
     Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
     

@@ -26,7 +26,7 @@
                 <li><button class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#CreateRoomForm">New
                         Room</button></li>
                 <li><button class="btn dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#settings">Settings</button></li>
+                        data-bs-target="#settingsModal">Settings</button></li>
                 <li><a class="dropdown-item" href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}">Profile</a>
                 </li>
                 <li>

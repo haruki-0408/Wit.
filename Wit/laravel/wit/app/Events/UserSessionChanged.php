@@ -24,10 +24,9 @@ class UserSessionChanged implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($room_id, $type)
+    public function __construct($room_id)
     {
         $this->room_id = $room_id;
-        $this->type = $type;
     }
 
     /**
@@ -37,13 +36,13 @@ class UserSessionChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('room-user-notifications.'.$this->room_id);
+        return new PresenceChannel('room-user-notifications.'.$this->room_id);
     }
 
     /*public function broadcastWith()
     {
         return [
-            $type = "broadcastWith テスト",
+            $user->id = Crypted::encrypt($user->id),
         ];
     }*/
 }
