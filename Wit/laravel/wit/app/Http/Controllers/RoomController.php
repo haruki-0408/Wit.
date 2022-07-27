@@ -7,6 +7,7 @@ use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use Illuminate\Support\Collection;
 use App\Events\UserSessionChanged;
+use App\Events\SendMessage;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
@@ -223,26 +224,23 @@ class RoomController extends Controller
         //return redirect('home');
     }
 
-    /*public function subscribeRoomUser($room_id)
+    public function receiveMessage(Request $request)
     {
-        $room = new Room;
-        $auth_id = Auth::id();
-        if ($room->where('id', $room_id)->exists()) {
-            $room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
-            $type = "online";
-        }
-        return $type;
-    }
+        $auth_user = Auth::user();
+        $rules = [
+            'message' => 'required|max:400',
+        ];
 
-    public function describeRoomUser($room_id)
-    {
-        $room = new Room;
-        $auth_id = Auth::id();
-        if ($room->find($room_id)->roomUsers()->find($auth_id) !== null) {
-            $room->find($room_id)->roomUsers()->detach($auth_id);
-            $type = "offline";
-        }
-    }*/
+        $message = [
+            'message.required' => 'メッセージを入力して下さい',
+            'message.max' => 'メッセージは最大400文字までです',
+        ];
+
+        $request->validate($rules,$message);
+        event(new SendMessage($request->room_id,$request->user(),$auth_user,$request->message));
+        return response()->Json('Message broadcast');
+
+    }
 
     public static function getPostRoom($room_id = null, $user_id = null)
     {

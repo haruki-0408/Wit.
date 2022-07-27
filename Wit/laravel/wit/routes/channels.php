@@ -26,3 +26,13 @@ Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_i
         return ['message'=>'false'];
     }
 });
+
+Broadcast::channel('send-message.{room_id}', function ($user, $room_id) {
+    if($user->roomUsers->contains($room_id) ){
+        //$user->id = Crypt::encrypt($user->id);
+        return $user;
+        //return ['id'=>Crypt::encrypt($user->id),'name'=>$user->name,'profile_image'=>$user->profile_image];
+    }else{
+        return ['message'=>'false'];
+    }
+});

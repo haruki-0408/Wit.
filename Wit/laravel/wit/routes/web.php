@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/addListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionAddListUser'])->name('actioAddListUser');
     Route::get('/home/removeListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionRemoveListUser'])->name('actionRemoveListUser');
     //api 
+    Route::post('/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->name('receiveMessage');
     Route::get('/getRoomInfo:{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
     Route::get('/getPostRoom:{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
     Route::get('/getListUser:{favorite_user_id?}/{user_id?}', [App\Http\Controllers\UserController::class, 'getListUser'])->name('getListUser');

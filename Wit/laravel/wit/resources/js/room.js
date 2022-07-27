@@ -1,4 +1,15 @@
 const room_id = document.querySelector('body').id;
+const message_value = document.getElementById('message');
+const send_button = document.getElementById('send');
+
+send_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.axios.post('/room/chat/message',{
+        room_id : room_id,
+        message : message_value.value,
+    });
+    message.value  = "";
+});
 
 //ページ離脱防止禁止
 window.onbeforeunload = function (e) {
@@ -15,11 +26,7 @@ if (document.getElementById('exitRoomModal')) {
     });
 }
 
-/*Echo.private('room-user-notifications.'+room_id)
-    .listen('UserSessionChanged', (e) => {
-        console.log('received a message');
-        console.log(e);
-    });*/
+
 
 Echo.join('room-user-notifications.' + room_id)
     .here((users) => {
@@ -35,6 +42,9 @@ Echo.join('room-user-notifications.' + room_id)
     .leaving((user) => {
         removeOnlineUser(user);
         sendExitMessage(user);
+    })
+    .listen('SendMessage', (e) => {
+        addChatMessage(e);
     })
     .error((error) => {
         console.error(error);
@@ -93,4 +103,32 @@ function getNowDate() {
     const sec = date.getSeconds().toString().padStart(2, '0');
     const now = year + "-" + month.toString().padStart(2, '0') + "-" + day + "-" + hour + ":" + min + ":" + sec;
     return now;
+}
+
+function addChatMessage(e) {
+    console.log(e.auth_user.id,e.user.id);
+    const message_list = document.getElementById('messageList');
+    const message_element = document.createElement('li');
+    if(e.auth_user.id === e.user.id){
+        message_element.classList = "myself message-wrapper"
+        const p_element = document.createElement('p');
+        p_element.textContent = e.message;
+        message_element.appendChild(p_element);
+        message_list.appendChild(message_element);
+    }else{
+        const user_image = document.createElement('img');
+        user_image.src = '/' + e.user.profile_image;
+        user_image.classList = "rounded-circle";
+        user_image.width = "20";
+        user_image.height = "20";
+        const user_name = document.createElement('strong');
+        user_name.textContent = e.user.name;
+        message_element.classList = "opponent";
+        const p_element = document.createElement('p');
+        p_element.textContent = e.message;
+        message_element.appendChild(user_image);
+        message_element.appendChild(user_name);
+        message_element.appendChild(p_element);
+        message_list.appendChild(message_element);
+    }
 }

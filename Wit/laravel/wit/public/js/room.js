@@ -10927,7 +10927,17 @@ var __webpack_exports__ = {};
   !*** ./resources/js/room.js ***!
   \******************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-var room_id = document.querySelector('body').id; //ページ離脱防止禁止
+var room_id = document.querySelector('body').id;
+var message_value = document.getElementById('message');
+var send_button = document.getElementById('send');
+send_button.addEventListener('click', function (e) {
+  e.preventDefault();
+  window.axios.post('/room/chat/message', {
+    room_id: room_id,
+    message: message_value.value
+  });
+  message.value = "";
+}); //ページ離脱防止禁止
 
 window.onbeforeunload = function (e) {
   e.returnValue = "ページを離れようとしています。よろしいですか？";
@@ -10942,12 +10952,6 @@ if (document.getElementById('exitRoomModal')) {
     exitRoomLink.href = '/home';
   });
 }
-/*Echo.private('room-user-notifications.'+room_id)
-    .listen('UserSessionChanged', (e) => {
-        console.log('received a message');
-        console.log(e);
-    });*/
-
 
 Echo.join('room-user-notifications.' + room_id).here(function (users) {
   users.forEach(function (user) {
@@ -10959,6 +10963,8 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
 }).leaving(function (user) {
   removeOnlineUser(user);
   sendExitMessage(user);
+}).listen('SendMessage', function (e) {
+  addChatMessage(e);
 }).error(function (error) {
   console.error(error);
 });
@@ -11018,6 +11024,37 @@ function getNowDate() {
   var sec = date.getSeconds().toString().padStart(2, '0');
   var now = year + "-" + month.toString().padStart(2, '0') + "-" + day + "-" + hour + ":" + min + ":" + sec;
   return now;
+}
+
+function addChatMessage(e) {
+  console.log(e.auth_user.id, e.user.id);
+  var message_list = document.getElementById('messageList');
+  var message_element = document.createElement('li');
+
+  if (e.auth_user.id === e.user.id) {
+    message_element.classList = "myself message-wrapper";
+    var p_element = document.createElement('p');
+    p_element.textContent = e.message;
+    message_element.appendChild(p_element);
+    message_list.appendChild(message_element);
+  } else {
+    var user_image = document.createElement('img');
+    user_image.src = '/' + e.user.profile_image;
+    user_image.classList = "rounded-circle";
+    user_image.width = "20";
+    user_image.height = "20";
+    var user_name = document.createElement('strong');
+    user_name.textContent = e.user.name;
+    message_element.classList = "opponent";
+
+    var _p_element = document.createElement('p');
+
+    _p_element.textContent = e.message;
+    message_element.appendChild(user_image);
+    message_element.appendChild(user_name);
+    message_element.appendChild(_p_element);
+    message_list.appendChild(message_element);
+  }
 }
 })();
 
