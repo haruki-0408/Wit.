@@ -10928,15 +10928,29 @@ var __webpack_exports__ = {};
   \******************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 var room_id = document.querySelector('body').id;
-var message_value = document.getElementById('message');
+var me_id = document.getElementById('me').dataset.authId;
+var message = document.getElementById('message');
 var send_button = document.getElementById('send');
 send_button.addEventListener('click', function (e) {
-  e.preventDefault();
-  window.axios.post('/room/chat/message', {
-    room_id: room_id,
-    message: message_value.value
-  });
-  message.value = "";
+  if (message.value != "") {
+    e.preventDefault();
+    $.ajax({
+      type: "post",
+      //HTTP通信の種類
+      url: '/room/chat/message',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        "room_id": room_id,
+        "message": message.value
+      },
+      dataType: 'json'
+    }).fail(function (error) {
+      message.value = error.responseJSON.errors.message[0];
+    });
+    message.value = "";
+  }
 }); //ページ離脱防止禁止
 
 window.onbeforeunload = function (e) {
@@ -11027,14 +11041,13 @@ function getNowDate() {
 }
 
 function addChatMessage(e) {
-  console.log(e.auth_user.id, e.user.id);
   var message_list = document.getElementById('messageList');
   var message_element = document.createElement('li');
 
-  if (e.auth_user.id === e.user.id) {
+  if (e.user.id === me_id) {
     message_element.classList = "myself message-wrapper";
     var p_element = document.createElement('p');
-    p_element.textContent = e.message;
+    p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
     message_element.appendChild(p_element);
     message_list.appendChild(message_element);
   } else {
@@ -11049,7 +11062,7 @@ function addChatMessage(e) {
 
     var _p_element = document.createElement('p');
 
-    _p_element.textContent = e.message;
+    _p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
     message_element.appendChild(user_image);
     message_element.appendChild(user_name);
     message_element.appendChild(_p_element);

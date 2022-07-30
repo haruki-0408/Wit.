@@ -139,8 +139,8 @@
     aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <div id="offcanvasRightLabel">
-            <img src="https://github.com/haruki-0408.png" alt="" width="30" height="30"
-                class="rounded-circle me-2">
+            <img src="{{ asset($auth_user->profile_image) }}" id="me" alt="" width="30"
+                height="30" class="rounded-circle me-2" data-auth-id={{ $auth_user->id }}>
         </div>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -419,50 +419,26 @@
                             <div class="card-body">
                                 <!-- MESSAGE -->
                                 <ul id="messageList" class="p-0 m-0 w-100 ">
+                                    <li id="room-description">
+                                        <p> {!! nl2br(e($room_info->description)) !!}</p>
+                                    </li>
+
                                     @foreach ($room_info->roomChat as $chat)
-                                        <li class="myself">
-                                            <div class="message-wrapper">
-                                                <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
-                                            </div>
-                                        </li>
+                                        @if ($chat->pivot->user_id == $auth_user->id)
+                                            <li class="myself">
+                                                <div class="message-wrapper">
+                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                </div>
+                                            </li>
+                                        @else
+                                            <li class="opponent">
+                                                <img class="" src="" alt="user-image" width="20"
+                                                    height="20" class="rounded-circle">
+                                                <strong>opponent</strong>
+                                                <p>{{ $chat->pivot->message }}</p>
+                                            </li>
+                                        @endif
                                     @endforeach
-
-                                    <li class="opponent">
-                                        <img class="" src="{{ asset($room_info->user->profile_image) }}"
-                                            alt="" width="20" height="20" class="rounded-circle">
-                                        <strong>haruki</strong>
-                                        <p>test message!</p>
-                                        <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
-                                        <p>こちらのチャットスペースではすべての背景を灰色にし、メッセージだけでなく画像やPDFファイルの投稿も可能です。</p>
-                                    </li>
-
-                                    <li class="myself">
-                                        <div class="message-wrapper">
-                                            <p>harukiさん</p><br>
-                                            <p>こちらこそはじめまして、自分側のメッセージは右側に表示され青色の背景で白文字になります</p><br>
-                                            <p>相手のページからは左側に見えるのでフレキシブルです</p><br>
-                                        </div>
-                                    </li>
-
-                                    <li class="opponent">
-                                        <img class="" src="{{ asset('images/sample02.PNG') }}" alt=""
-                                            width="20" height="20" class="rounded-circle">
-                                        <strong>test2</strong>
-                                        <p>test message!</p>
-                                        <p>はじめまして、こんばんはチャットメッセージの長い要素を打てばどうなるのかのメッセージテストです。</p>
-                                        <p>こちらのチャットスペースではすべての背景を灰色にし、メッセージだけでなく画像やPDFファイルの投稿も可能です。</p>
-                                    </li>
-
-                                    <li class="myself">
-                                        <div class="message-wrapper">
-                                            <p>harukiさん</p><br>
-                                            <p>こちらこそはじめまして、自分側のメッセージは</p><br>
-                                            <p>相手のページからは左側</p><br>
-                                            <p>I have got the bus</p><br>
-                                        </div>
-                                    </li>
-
-
                                 </ul>
                             </div>
 
@@ -470,17 +446,22 @@
                                 <form>
                                     <div class="row">
                                         <div class="col-9">
-                                            <input id="message" class="form-control" type="text">
+                                            <textarea id="message" class="form-control" type="text" rows='1'>
+                                                
+                                            </textarea>
+                                            <div id="error-message" class="text-danger">
+
+                                            </div>
                                         </div>
                                         <div class="col-3 d-flex justify-content-center">
-                                            <button id="send" type="submit" class="btn btn-primary" onclick="window.onbeforeunload = null;">
+                                            <button id="send" type="button" class="btn btn-primary"
+                                                onclick="window.onbeforeunload = null;">
                                                 <svg width="16" height="16" fill="currentColor"
                                                     class="bi bi-send" viewBox="0 0 16 16">
                                                     <path
                                                         d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z">
                                                     </path>
                                                 </svg>
-
                                             </button>
                                         </div>
                                     </div>
@@ -493,8 +474,8 @@
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
                         <div class="row h-100">
                             <div class="onlineUsers col-12 d-flex align-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
+                                <svg width="16" height="16" fill="currentColor"
+                                    class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                                     <path

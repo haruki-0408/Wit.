@@ -185,6 +185,7 @@ class RoomController extends Controller
     public function enterRoom($room_id)
     {
         event(new UserSessionChanged($room_id));
+        $auth_user = Auth::user();
 
         if (mb_strlen($room_id) != 26) {
             return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
@@ -199,11 +200,13 @@ class RoomController extends Controller
                 return view('wit.room', [
                     'room_info' => $room_info,
                     'count_image_data' => $count_image_data,
+                    'auth_user' => $auth_user,
                 ]);
             } else if ((session()->get('auth_room_id') == $room_id)) {
                 return view('wit.room', [
                     'room_info' => $room_info,
                     'count_image_data' => $count_image_data,
+                    'auth_user' => $auth_user,
                 ]);
             } else {
                 return redirect('home')->with('error_message', 'パスワード付きのルームです');
@@ -226,7 +229,6 @@ class RoomController extends Controller
 
     public function receiveMessage(Request $request)
     {
-        $auth_user = Auth::user();
         $rules = [
             'message' => 'required|max:400',
         ];
@@ -237,9 +239,12 @@ class RoomController extends Controller
         ];
 
         $request->validate($rules,$message);
-        event(new SendMessage($request->room_id,$request->user(),$auth_user,$request->message));
-        return response()->Json('Message broadcast');
 
+        $user = User::find($request->user()->id);
+        $user->roomChat()->attach($request->room_id, ['message' => $request->message]);
+
+        event(new SendMessage($request->room_id,$request->user(),$request->message));
+        return response()->Json('Message broadcast');
     }
 
     public static function getPostRoom($room_id = null, $user_id = null)

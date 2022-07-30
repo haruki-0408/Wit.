@@ -1,14 +1,28 @@
 const room_id = document.querySelector('body').id;
-const message_value = document.getElementById('message');
+const me_id = document.getElementById('me').dataset.authId;
+const message = document.getElementById('message');
 const send_button = document.getElementById('send');
 
 send_button.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.axios.post('/room/chat/message',{
-        room_id : room_id,
-        message : message_value.value,
-    });
-    message.value  = "";
+    if (message.value != "") {
+        e.preventDefault();
+        $.ajax({
+            type: "post", //HTTP通信の種類
+            url: '/room/chat/message',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {
+                "room_id": room_id,
+                "message": message.value,
+            },
+            dataType: 'json',
+        })
+            .fail((error) => {
+                message.value = error.responseJSON.errors.message[0];
+            });
+        message.value = "";
+    }
 });
 
 //ページ離脱防止禁止
@@ -33,7 +47,6 @@ Echo.join('room-user-notifications.' + room_id)
         users.forEach(user => {
             addOnlineUser(user);
         });
-
     })
     .joining((user) => {
         addOnlineUser(user);
@@ -74,7 +87,7 @@ function sendEnterMessage(user) {
     const enter_message = document.createElement('li');
     enter_message.classList = "text-primary text-center m-2";
     now = getNowDate();
-    enter_message.textContent = user.name + 'さんが入室しました  '+now;
+    enter_message.textContent = user.name + 'さんが入室しました  ' + now;
     document.getElementById('messageList').appendChild(enter_message);
 }
 
@@ -82,7 +95,7 @@ function sendExitMessage(user) {
     const exit_message = document.createElement('li');
     exit_message.classList = "text-danger text-center m-2";
     now = getNowDate();
-    exit_message.textContent = user.name + 'さんが退室しました  '+now;
+    exit_message.textContent = user.name + 'さんが退室しました  ' + now;
     document.getElementById('messageList').appendChild(exit_message);
 }
 
@@ -106,16 +119,15 @@ function getNowDate() {
 }
 
 function addChatMessage(e) {
-    console.log(e.auth_user.id,e.user.id);
     const message_list = document.getElementById('messageList');
     const message_element = document.createElement('li');
-    if(e.auth_user.id === e.user.id){
+    if (e.user.id === me_id) {
         message_element.classList = "myself message-wrapper"
         const p_element = document.createElement('p');
-        p_element.textContent = e.message;
+        p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
         message_element.appendChild(p_element);
         message_list.appendChild(message_element);
-    }else{
+    } else {
         const user_image = document.createElement('img');
         user_image.src = '/' + e.user.profile_image;
         user_image.classList = "rounded-circle";
@@ -125,7 +137,7 @@ function addChatMessage(e) {
         user_name.textContent = e.user.name;
         message_element.classList = "opponent";
         const p_element = document.createElement('p');
-        p_element.textContent = e.message;
+        p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
         message_element.appendChild(user_image);
         message_element.appendChild(user_name);
         message_element.appendChild(p_element);

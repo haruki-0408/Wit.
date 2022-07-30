@@ -19,19 +19,17 @@ class SendMessage implements ShouldBroadcast
     public $room_id;
     public $user;
     public $message;
-    public $auth_user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($room_id, User $user,$auth_user,$message)
+    public function __construct($room_id,$user,$message)
     {
         $this->room_id = $room_id;
         $this->user = $user;
         $this->message = $message;
-        $this->auth_user = $auth_user;
     }
 
     /**
