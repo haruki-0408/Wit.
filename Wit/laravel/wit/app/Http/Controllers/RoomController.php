@@ -164,6 +164,8 @@ class RoomController extends Controller
 
         $room = Room::find($room_id);
         $room_password = $room->password;
+        event(new UserSessionChanged($room_id));
+        $auth_user = Auth::user();
 
         if (isset($request->enterPass) && isset($room_password)) {
             if (Hash::check($request->enterPass, $room_password)) {
@@ -173,6 +175,7 @@ class RoomController extends Controller
                 return view('wit.room', [
                     'room_info' => $room_info,
                     'count_image_data' => $count_image_data,
+                    'auth_user' => $auth_user,
                 ]);
             } else {
                 return back()->with('error_message', 'パスワードが違います');
@@ -381,15 +384,12 @@ class RoomController extends Controller
         }
     }
 
-
-
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $room_password = Room::find($room_id)->value("password");
+        $room_password = Room::find($room_id)->password;
 
         if (is_null($room_password)) {
-
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
             if (is_null($room_image)) {

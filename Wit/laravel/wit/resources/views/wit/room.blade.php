@@ -422,7 +422,6 @@
                                     <li id="room-description">
                                         <p> {!! nl2br(e($room_info->description)) !!}</p>
                                     </li>
-
                                     @foreach ($room_info->roomChat as $chat)
                                         @if ($chat->pivot->user_id == $auth_user->id)
                                             <li class="myself">
@@ -432,9 +431,9 @@
                                             </li>
                                         @else
                                             <li class="opponent">
-                                                <img class="" src="" alt="user-image" width="20"
+                                                <img src="{{ asset($chat->profile_image) }}" alt="user-image" width="20"
                                                     height="20" class="rounded-circle">
-                                                <strong>opponent</strong>
+                                                <strong>{{ $chat->name }}</strong>
                                                 <p>{{ $chat->pivot->message }}</p>
                                             </li>
                                         @endif
