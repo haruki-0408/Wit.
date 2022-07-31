@@ -19,9 +19,7 @@ class RoomsTable extends Migration
             $table->string('title', 30);
             $table->string('description', 400);
             $table->string('password')->nullable()->default(null)->comment('private用のパスワード');
-            $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
-            $table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除のためのdeleted_at'); 
+            $table->dateTime('created_at')->useCurrent(); 
         });
 
         DB::statement('ALTER TABLE `rooms` ADD INDEX `room_desc_index` (id DESC,user_id DESC,title DESC,description DESC,password DESC,created_at DESC,updated_at DESC,deleted_at DESC)');

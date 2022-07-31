@@ -16,7 +16,7 @@
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="profile">
                     <img src="{{ asset(Auth::user()->profile_image) }}" alt="" width="70" height="70"
-                        class="rounded-circle me-2">
+                        class="rounded-circle m-2">
                     <strong>{{ Auth::user()->name }}</strong>
                 </div>
             </a>

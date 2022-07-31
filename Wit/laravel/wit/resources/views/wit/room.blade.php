@@ -46,6 +46,14 @@
             height: 55%;
         }
 
+        #room-description {
+            margin: 10px;
+            font-size: 13px;
+            border-radius: 20px;
+            border-color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+
         #messageList p {
             font-size: 13px;
             padding: 10px;
@@ -71,7 +79,8 @@
             background-color: #f8f9fa;
         }
 
-        .roomTagsList {
+        #roomTagsList {
+            height: 90%;
             overflow: scroll;
         }
 
@@ -80,9 +89,14 @@
             overflow: scroll;
         }
 
+        #accessLogList {
+            height: 90%;
+            overflow: scroll
+        }
+
 
         :-webkit-full-screen {
-            background-color: white;
+            background-color: #fff;
         }
 
         :-webkit-full-screen img {
@@ -313,9 +327,8 @@
                 <div class="row h-100">
                     <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
                         <div class="row h-100">
-
-                            <div class="row roomTags">
-                                <div class="col-6 p-2 text-start">
+                            <div class="h-50">
+                                <div id="roomTags" class="col-12 d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -326,27 +339,22 @@
                                     <strong>Room Tags</strong>
                                 </div>
 
+                                <ul id="roomTagsList" class="col-12 fs-5 p-0 m-0">
+                                    @foreach ($room_info->tags as $roomTag)
+                                        <li>
+                                            <div class="tag">
+                                                <span class="tag-name">{{ $roomTag->name }}</span>
+                                                <span
+                                                    class="tag-number badge badge-light">{{ $roomTag->number }}</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
-
-                            <div class="roomTagsList col-12 fs-5 h-25">
-                                <div class="Room-tag fs-5">
-                                    <ul>
-                                        @foreach ($room_info->tags as $roomTag)
-                                            <li>
-                                                <div class="tag">
-                                                    <span class="tag-name">{{ $roomTag->name }}</span>
-                                                    <span
-                                                        class="tag-number badge badge-light">{{ $roomTag->number }}</span>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                            <div class="h-50">
+                                <div class="settingButtons col-12 mt-2">
+                                    ID : {{ $room_info->id }}
                                 </div>
-                            </div>
-
-                            <hr>
-                            <div class="settingButtons col-12 h-50">
-                                ID : {{ $room_info->id }}
                             </div>
                         </div>
                     </div>
@@ -420,6 +428,7 @@
                                 <!-- MESSAGE -->
                                 <ul id="messageList" class="p-0 m-0 w-100 ">
                                     <li id="room-description">
+                                        <p class="fs-6 fw-bold m-0 pb-0">Description</p>
                                         <p> {!! nl2br(e($room_info->description)) !!}</p>
                                     </li>
                                     @foreach ($room_info->roomChat as $chat)
@@ -431,8 +440,8 @@
                                             </li>
                                         @else
                                             <li class="opponent">
-                                                <img src="{{ asset($chat->profile_image) }}" alt="user-image" width="20"
-                                                    height="20" class="rounded-circle">
+                                                <img src="{{ asset($chat->profile_image) }}" alt="user-image"
+                                                    width="20" height="20" class="rounded-circle">
                                                 <strong>{{ $chat->name }}</strong>
                                                 <p>{{ $chat->pivot->message }}</p>
                                             </li>
@@ -472,25 +481,41 @@
 
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
                         <div class="row h-100">
-                            <div class="onlineUsers col-12 d-flex align-items-center">
-                                <svg width="16" height="16" fill="currentColor"
-                                    class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                    <path
-                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                </svg>
-                                <strong>Online</strong>
+                            <div class="h-50">
+                                <div class="onlineUsers col-12 d-flex align-items-center p-2">
+                                    <svg width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                    <strong>Online</strong>
+                                </div>
+
+                                <ul id="onlineUsersList" class="col-12 p-0 m-0">
+
+                                </ul>
                             </div>
-
-                            <ul id="onlineUsersList" class="col-12">
-
-                            </ul>
+                            <div class="h-50">
+                                <div class="accessLog col-12 d-flex align-items-center mt-2 p-2">
+                                    <svg width="16" height="16" fill="currentColor"
+                                        class="bi bi-file-text-fill mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z" />
+                                    </svg>
+                                    <strong>Access Log</strong>
+                                </div>
+                                <ul id="accessLogList" class="col-12 p-0 m-0">
+                                    @foreach ($room_info->roomUsers as $user)
+                                    <li>{{ $user->pivot->entered_at }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
         </main>
     </div>
 </body>

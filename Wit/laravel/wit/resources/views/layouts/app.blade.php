@@ -72,16 +72,16 @@
             border-radius: 50%;
             text-align: center;
             font-size: 20px;
-            background-color: white;
+            background-color: #fff;
             /* transition: .3s;*/
             color: #0d6efd;
-            box-shadow: 0 3px 10ex white;
+            box-shadow: 0 3px 10ex #fff;
         }
 
         .btn-room-create:hover {
             background-color: #0d6efd;
             /* transition: .3s;*/
-            color: white;
+            color: #fff;
         }
     </style>
 

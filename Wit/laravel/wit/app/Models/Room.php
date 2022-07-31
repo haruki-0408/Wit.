@@ -70,7 +70,7 @@ class Room extends Model
 
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\User','room_users','room_id','user_id');
+        return $this->belongsToMany('App\Models\User','room_users','room_id','user_id')->withPivot('entered_at','exited_at');
     }
 
     public function tags()
