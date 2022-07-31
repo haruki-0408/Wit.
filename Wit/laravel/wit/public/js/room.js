@@ -10975,6 +10975,22 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
   addOnlineUser(user);
   sendEnterMessage(user);
 }).leaving(function (user) {
+  $.ajax({
+    type: "post",
+    //HTTP通信の種類
+    url: '/home/exitRoom',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      "room_id": room_id,
+      "user_id": user.id,
+      "user_name": user.name
+    },
+    dataType: 'json'
+  }).fail(function (error) {
+    console.log(error);
+  });
   removeOnlineUser(user);
   sendExitMessage(user);
 }).listen('SendMessage', function (e) {
@@ -11006,16 +11022,18 @@ function addOnlineUser(user) {
 
 function sendEnterMessage(user) {
   var enter_message = document.createElement('li');
+  var type = 'full';
   enter_message.classList = "text-primary text-center m-2";
-  now = getNowDate();
+  now = getNowDate(type);
   enter_message.textContent = user.name + 'さんが入室しました  ' + now;
   document.getElementById('messageList').appendChild(enter_message);
 }
 
 function sendExitMessage(user) {
   var exit_message = document.createElement('li');
+  var type = 'full';
   exit_message.classList = "text-danger text-center m-2";
-  now = getNowDate();
+  now = getNowDate(type);
   exit_message.textContent = user.name + 'さんが退室しました  ' + now;
   document.getElementById('messageList').appendChild(exit_message);
 }
@@ -11028,7 +11046,7 @@ function removeOnlineUser(user) {
   }
 }
 
-function getNowDate() {
+function getNowDate(type) {
   var date = new Date();
   var year = date.getFullYear();
   var month = date.getMonth() + 1;
@@ -11036,18 +11054,29 @@ function getNowDate() {
   var hour = date.getHours().toString().padStart(2, '0');
   var min = date.getMinutes().toString().padStart(2, '0');
   var sec = date.getSeconds().toString().padStart(2, '0');
-  var now = year + "-" + month.toString().padStart(2, '0') + "-" + day + "-" + hour + ":" + min + ":" + sec;
-  return now;
+
+  if (type === 'full') {
+    var full_time = year + "/" + month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min + ":" + sec;
+    return full_time;
+  } else {
+    var half_time = month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min;
+    return half_time;
+  }
 }
 
 function addChatMessage(e) {
   var message_list = document.getElementById('messageList');
   var message_element = document.createElement('li');
+  var type = 'half';
 
   if (e.user.id === me_id) {
     message_element.classList = "myself message-wrapper";
+    var span_element = document.createElement('span');
     var p_element = document.createElement('p');
+    span_element.classList = "badge d-block text-dark text-end";
+    span_element.textContent = getNowDate(type);
     p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
+    message_element.appendChild(span_element);
     message_element.appendChild(p_element);
     message_list.appendChild(message_element);
   } else {
@@ -11060,11 +11089,17 @@ function addChatMessage(e) {
     user_name.textContent = e.user.name;
     message_element.classList = "opponent";
 
+    var _span_element = document.createElement('span');
+
+    _span_element.classList = "badge text-dark";
+    _span_element.textContent = getNowDate(type);
+
     var _p_element = document.createElement('p');
 
     _p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
     message_element.appendChild(user_image);
     message_element.appendChild(user_name);
+    message_element.appendChild(_span_element);
     message_element.appendChild(_p_element);
     message_list.appendChild(message_element);
   }

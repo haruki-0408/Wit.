@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
-use Illuminate\Support\Collection;
 use App\Events\UserSessionChanged;
 use App\Events\SendMessage;
 use App\Models\User;
@@ -17,9 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-
-use function PHPUnit\Framework\isEmpty;
+use Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -219,15 +216,17 @@ class RoomController extends Controller
         }
     }
 
-    public function exitRoom($room_id)
+    public function exitRoom(Request $request)
     {
+        $room_id = $request->room_id;
+        $user_name = $request->user_name;
+        $user_id = $request->user_id;
         if (Room::where('id', $room_id)->exists()) {
-            $type = $this->describeRoomUser($room_id);
-            event(new UserSessionChanged($room_id, $type));
-            session()->forget('auth_room_id');
+            $room = Room::find($room_id);
+            $room->roomUsers()->updateExistingPivot($user_id,['exited_at' => Carbon::now()]);
+            return response()->Json($user_name.'Exited');
         }
-        return response()->with('action_message', '退出しました');
-        //return redirect('home');
+        return response()->Json('Exited Error');
     }
 
     public function receiveMessage(Request $request)

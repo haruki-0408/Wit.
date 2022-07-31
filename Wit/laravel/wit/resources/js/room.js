@@ -53,6 +53,22 @@ Echo.join('room-user-notifications.' + room_id)
         sendEnterMessage(user);
     })
     .leaving((user) => {
+        $.ajax({
+            type: "post", //HTTP通信の種類
+            url: '/home/exitRoom',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {
+                "room_id": room_id,
+                "user_id": user.id,
+                "user_name": user.name,
+            },
+            dataType: 'json',
+        })
+            .fail((error) => {
+                console.log(error);
+            });
         removeOnlineUser(user);
         sendExitMessage(user);
     })
@@ -85,16 +101,18 @@ function addOnlineUser(user) {
 
 function sendEnterMessage(user) {
     const enter_message = document.createElement('li');
+    const type = 'full';
     enter_message.classList = "text-primary text-center m-2";
-    now = getNowDate();
+    now = getNowDate(type);
     enter_message.textContent = user.name + 'さんが入室しました  ' + now;
     document.getElementById('messageList').appendChild(enter_message);
 }
 
 function sendExitMessage(user) {
     const exit_message = document.createElement('li');
+    const type = 'full';
     exit_message.classList = "text-danger text-center m-2";
-    now = getNowDate();
+    now = getNowDate(type);
     exit_message.textContent = user.name + 'さんが退室しました  ' + now;
     document.getElementById('messageList').appendChild(exit_message);
 }
@@ -106,7 +124,7 @@ function removeOnlineUser(user) {
     }
 }
 
-function getNowDate() {
+function getNowDate(type) {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -114,17 +132,27 @@ function getNowDate() {
     const hour = date.getHours().toString().padStart(2, '0');
     const min = date.getMinutes().toString().padStart(2, '0');
     const sec = date.getSeconds().toString().padStart(2, '0');
-    const now = year + "-" + month.toString().padStart(2, '0') + "-" + day + "-" + hour + ":" + min + ":" + sec;
-    return now;
+    if (type === 'full') {
+        const full_time = year + "/" + month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min + ":" + sec;
+        return full_time;
+    } else {
+        const half_time = month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min;
+        return half_time;
+    }
 }
 
 function addChatMessage(e) {
     const message_list = document.getElementById('messageList');
     const message_element = document.createElement('li');
+    const type = 'half';
     if (e.user.id === me_id) {
         message_element.classList = "myself message-wrapper"
+        const span_element = document.createElement('span');
         const p_element = document.createElement('p');
+        span_element.classList = "badge d-block text-dark text-end";
+        span_element.textContent = getNowDate(type);
         p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
+        message_element.appendChild(span_element);
         message_element.appendChild(p_element);
         message_list.appendChild(message_element);
     } else {
@@ -136,10 +164,14 @@ function addChatMessage(e) {
         const user_name = document.createElement('strong');
         user_name.textContent = e.user.name;
         message_element.classList = "opponent";
+        const span_element = document.createElement('span');
+        span_element.classList = "badge text-dark";
+        span_element.textContent = getNowDate(type);
         const p_element = document.createElement('p');
         p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
         message_element.appendChild(user_image);
         message_element.appendChild(user_name);
+        message_element.appendChild(span_element);
         message_element.appendChild(p_element);
         message_list.appendChild(message_element);
     }

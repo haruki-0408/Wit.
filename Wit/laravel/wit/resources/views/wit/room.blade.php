@@ -435,15 +435,18 @@
                                         @if ($chat->pivot->user_id == $auth_user->id)
                                             <li class="myself">
                                                 <div class="message-wrapper">
+                                                    <span class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
                                                     <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+
                                                 </div>
                                             </li>
                                         @else
                                             <li class="opponent">
                                                 <img src="{{ asset($chat->profile_image) }}" alt="user-image"
                                                     width="20" height="20" class="rounded-circle">
-                                                <strong>{{ $chat->name }}</strong>
+                                                <strong>{{ $chat->name }}</strong><span class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
                                                 <p>{{ $chat->pivot->message }}</p>
+
                                             </li>
                                         @endif
                                     @endforeach
@@ -508,7 +511,12 @@
                                 </div>
                                 <ul id="accessLogList" class="col-12 p-0 m-0">
                                     @foreach ($room_info->roomUsers as $user)
-                                    <li>{{ $user->pivot->entered_at }}</li>
+                                        @if (isset($user->pivot->exited_at))
+                                            <li class="text-danger">{{ $user->name }} Latest Offline
+                                                {{ $user->pivot->exited_at }}</li>
+                                        @endif
+                                        <li class="text-primary">{{ $user->name }} Latest Online
+                                            {{ $user->pivot->entered_at }}</li>
                                     @endforeach
                                 </ul>
                             </div>
