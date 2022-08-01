@@ -512,11 +512,9 @@
                                 <ul id="accessLogList" class="col-12 p-0 m-0">
                                     @foreach ($room_info->roomUsers as $user)
                                         @if (isset($user->pivot->exited_at))
-                                            <li class="text-danger">{{ $user->name }} Latest Offline
-                                                {{ $user->pivot->exited_at }}</li>
+                                            <li class="text-danger">{{ $user->name }} Latest Offline {{ $user->pivot->exited_at->format('m/d H:i:s') }}</li>
                                         @endif
-                                        <li class="text-primary">{{ $user->name }} Latest Online
-                                            {{ $user->pivot->entered_at }}</li>
+                                        <li class="text-primary">{{ $user->name }} Latest Online {{ $user->pivot->entered_at }}</li>
                                     @endforeach
                                 </ul>
                             </div>

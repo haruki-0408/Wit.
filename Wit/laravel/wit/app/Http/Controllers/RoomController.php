@@ -249,14 +249,6 @@ class RoomController extends Controller
         return response()->Json('Message broadcast');
     }
 
-    public function roomChatSort($room_id){
-        $room = new Room;
-        $room_chat = $room->find($room_id)->roomChat;
-        foreach($room_chat as $chat){
-            
-        }
-    }
-
 
 
     public static function getPostRoom($room_id = null, $user_id = null)

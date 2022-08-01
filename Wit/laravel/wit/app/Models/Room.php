@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Rorecek\Ulid\HasUlid;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,7 @@ class Room extends Model
     protected $guarded = [
         'id',
     ];
+
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +45,11 @@ class Room extends Model
         'password',
         'deleted_at',
         'updated_at',
+    ];
+
+    protected $date = [
+        'entered_at',
+        'exited_at',
     ];
 
     /**
