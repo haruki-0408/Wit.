@@ -101,19 +101,25 @@ function addOnlineUser(user) {
 
 function sendEnterMessage(user) {
     const enter_message = document.createElement('li');
-    const type = 'full';
+    const change_element = $('p[data-enter-id="' + user.id + '"]');
     enter_message.classList = "text-primary text-center m-2";
-    now = getNowDate(type);
-    enter_message.textContent = user.name + 'さんが入室しました  ' + now;
+    const now1 = getNowDate('full');
+    const now2=  getNowDate('half');
+    enter_message.textContent = user.name + 'さんが入室しました  ' + now1;
+    change_element.text('Latest Online '+ now2 );
     document.getElementById('messageList').appendChild(enter_message);
+    
 }
 
 function sendExitMessage(user) {
     const exit_message = document.createElement('li');
+    const change_element = $('p[data-exit-id="' + user.id + '"]');
     const type = 'full';
     exit_message.classList = "text-danger text-center m-2";
-    now = getNowDate(type);
-    exit_message.textContent = user.name + 'さんが退室しました  ' + now;
+    const now1 = getNowDate('full');
+    const now2=  getNowDate('half');
+    exit_message.textContent = user.name + 'さんが退室しました  ' + now1;
+    change_element.text('Latest Offline '+ now2 );
     document.getElementById('messageList').appendChild(exit_message);
 }
 
@@ -133,7 +139,7 @@ function getNowDate(type) {
     const min = date.getMinutes().toString().padStart(2, '0');
     const sec = date.getSeconds().toString().padStart(2, '0');
     if (type === 'full') {
-        const full_time = year + "/" + month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min + ":" + sec;
+        const full_time = year + "/" + month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min;
         return full_time;
     } else {
         const half_time = month.toString().padStart(2, '0') + "/" + day + " " + hour + ":" + min;
