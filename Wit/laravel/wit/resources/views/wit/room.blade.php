@@ -159,15 +159,7 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
-    <div class="offcanvas-body d-flex flex-column align-items-center">
-        <div data-bs-toggle="modal" data-bs-target="#users" class="onlineUsers pb-3">
-            <svg width="20" height="20" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-            </svg>
-        </div>
-
+    <div class="offcanvas-body d-flex flex-column align-items-center p-2">
         <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
             <svg width="20" height="20" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                 <path
@@ -177,7 +169,24 @@
             </svg>
         </div>
 
-        <div class="information pb-3">
+        <div data-bs-toggle="modal" data-bs-target="#users" class="onlineUsers pb-3">
+            <svg width="20" height="20" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            </svg>
+        </div>
+
+        <div data-bs-toggle="modal" data-bs-target="#logs" class="accessLog pb-3">
+            <svg width="16" height="16" fill="currentColor" class="bi bi-file-text-fill mx-2"
+                viewBox="0 0 16 16">
+                <path
+                    d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z" />
+            </svg>
+        </div>
+
+
+        <div data-bs-toggle="modal" data-bs-target="#information" class="pb-3">
             <svg width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                 <path
                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
@@ -204,17 +213,53 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="users"><svg width="16" height="16" fill="currentColor"
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
                         class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>Online</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul id="onlineUsersListModal">
 
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="logs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby=logs" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-file-text-fill mx-2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z" />
+                    </svg>Access Log
+                </h5>
+            </div>
+            <div class="modal-body">
+                <ul id="accessLogListModal">
+                    @foreach ($room_info->roomUsers as $user)
+                        <li>
+                            <strong>{{ $user->name }}</strong>
+
+                            <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
+                                @if (isset($user->pivot->exited_at))
+                                    Latest Offline {{ $user->pivot->exited_at->format('m/d H:i') }}
+                                @endif
+                            </p>
+                            <p data-enter-id="{{ $user->id }}" class="m-0 text-primary">
+                                Latest Online {{ $user->pivot->entered_at->format('m/d H:i') }}</p>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="modal-footer">
@@ -229,8 +274,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-
-                <h5 class="modal-title" id="tags">
+                <h5 class="modal-title">
                     <svg width="20" height="20" fill="currentColor" class="bi bi-tags-fill mx-2"
                         viewBox="0 0 16 16">
                         <path
@@ -258,6 +302,35 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="information" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="information" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <svg width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill mx-2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                    </svg>Information
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column p-3  ">
+                    <ul id="informationListModal" class="p-1">
+                        <li>ID : {{ $room_info->id }}</li>
+                        <li>CREATE : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="exitRoomModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exitRoom"
     tabindex="-1">
@@ -352,9 +425,10 @@
                                 </ul>
                             </div>
                             <div class="h-50">
-                                <div class="settingButtons col-12 mt-2">
-                                    ID : {{ $room_info->id }}
-                                </div>
+                                <ul id="informationList" class="col-12 mt-2 p-1">
+                                    <li>ID : {{ $room_info->id }}</li>
+                                    <li>CREATE : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -515,12 +589,15 @@
                                     @foreach ($room_info->roomUsers as $user)
                                         <li>
                                             <strong>{{ $user->name }}</strong>
-                                            @if (isset($user->pivot->exited_at))
-                                                <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
-                                                Latest Offline {{ $user->pivot->exited_at->format('m/d H:i') }}</p>
-                                            @endif
-                                            <p data-enter-id="{{ $user->id }}" class="m-0 text-primary">
-                                            Latest Online {{ $user->pivot->entered_at->format('m/d H:i') }}</p>
+
+                                            <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
+                                                @if (isset($user->pivot->exited_at))
+                                                    Latest Offline {{ $user->pivot->exited_at->format('m/d H:i') }}
+                                                @endif
+                                            </p>
+
+                                            <p data-enter-id="{{ $user->id }}" class="m-0 text-primary">Latest
+                                                Online {{ $user->pivot->entered_at->format('m/d H:i') }}</p>
                                         </li>
                                     @endforeach
                                 </ul>

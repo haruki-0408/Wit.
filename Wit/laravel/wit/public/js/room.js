@@ -11023,18 +11023,36 @@ function addOnlineUser(user) {
 function sendEnterMessage(user) {
   var enter_message = document.createElement('li');
   var change_element = $('p[data-enter-id="' + user.id + '"]');
+  var create_enter_element = document.createElement('p');
+  var create_exit_element = document.createElement('p');
+  var user_name_element = document.createElement('strong');
   enter_message.classList = "text-primary text-center m-2";
   var now1 = getNowDate('full');
   var now2 = getNowDate('half');
   enter_message.textContent = user.name + 'さんが入室しました  ' + now1;
-  change_element.text('Latest Online ' + now2);
+
+  if (change_element.length !== 0) {
+    console.log('exist');
+    change_element.text('Latest Online ' + now2);
+  } else {
+    console.log('not exist');
+    user_name_element.innerText = user.name;
+    create_enter_element.classList = "text-primary m-0";
+    create_enter_element.dataset.enterId = user.id;
+    create_exit_element.classList = "text-danger m-0";
+    create_exit_element.dataset.exitId = user.id;
+    create_enter_element.textContent = 'Latest Online ' + now2;
+    $("[id^='accessLogList']").append(user_name_element);
+    $("[id^='accessLogList']").append(create_exit_element);
+    $("[id^='accessLogList']").append(create_enter_element);
+  }
+
   document.getElementById('messageList').appendChild(enter_message);
 }
 
 function sendExitMessage(user) {
   var exit_message = document.createElement('li');
   var change_element = $('p[data-exit-id="' + user.id + '"]');
-  var type = 'full';
   exit_message.classList = "text-danger text-center m-2";
   var now1 = getNowDate('full');
   var now2 = getNowDate('half');

@@ -121,7 +121,7 @@
         <div class="row h-100">
             @component('wit.left')
             @endcomponent
-            <div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 m-0 p-2">
+            <div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 m-0 p-3">
                 <ul id="Rooms" class="p-0 m-0 ">
                     @component('wit.room-content')
                         @slot('rooms', $rooms);
