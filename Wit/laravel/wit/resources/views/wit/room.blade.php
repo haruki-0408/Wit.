@@ -501,10 +501,8 @@
                     </div>
 
                     <div id="center-content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
-                        <div id="image">
-                            <div id="carouselIndicators"
-                                class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center "
-                                data-bs-interval="false">
+                        <div id="image" class="d-flex align-items-center">
+                            <div id="carouselIndicators" class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center" data-bs-interval="false">
                                 <div class="carousel-indicators">
                                     @if ($count_image_data > 1)
                                         @for ($i = 0; $i < $count_image_data; $i++)
