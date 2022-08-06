@@ -39,8 +39,6 @@ class SendMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        //\Log::debug("{$this->user->name}: {$this->message} in {$this->room_id}");
-        //return new PresenceChannel('send-message.'.$this->room_id);
         return new PresenceChannel('room-user-notifications.'.$this->room_id);
     }
 }

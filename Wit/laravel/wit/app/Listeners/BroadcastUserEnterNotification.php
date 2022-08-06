@@ -32,12 +32,14 @@ class BroadcastUserEnterNotification
         $room = new Room;
         $room_id = $event->room_id;
         $auth_id = Auth::id();
-       //$room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
-        if ($room->find($room_id)->roomUsers->doesntContain($auth_id)) {
-            $room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
-            //$room->find($room_id)->roomUsers()->detach($auth_id);
-        }else{
-            $room->find($room_id)->roomUsers()->updateExistingPivot($auth_id,['entered_at' => Carbon::now()]);
+        //$room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
+        if ($room->where('id', $room_id)->exists()) {
+            if ($room->find($room_id)->roomUsers->doesntContain($auth_id)) {
+                $room->find($room_id)->roomUsers()->syncWithoutDetaching($auth_id);
+                //$room->find($room_id)->roomUsers()->detach($auth_id);
+            } else {
+                $room->find($room_id)->roomUsers()->updateExistingPivot($auth_id, ['entered_at' => Carbon::now()]);
+            }
         }
     }
 }

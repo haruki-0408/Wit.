@@ -208,6 +208,50 @@
 </div>
 
 <!-- Mordals -->
+@if (Auth::id() == $room_info->user->id)
+    <div class="modal fade" id="force" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="force" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                            class="bi bi-person-x-fill mx-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                        </svg>Users</h5>
+                </div>
+                <div class="modal-body">
+                    <ul id="onlineUsersListForce">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+<div class="modal fade" id="redirect" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="redirect" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    </svg>Notification</h5>
+            </div>
+            <div class="modal-body">
+                ルームが作成者により削除されました　１０秒後にホーム画面に戻ります
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="users" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="users" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -319,8 +363,19 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
                     <ul id="informationListModal" class="p-1">
-                        <li>ID : {{ $room_info->id }}</li>
-                        <li>CREATE : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Id : {{ $room_info->id }}</li>
+                        <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        @if (Auth::id() == $room_info->user->id)
+                            <hr>
+                            <li class="p-2">Room Administration</li>
+
+                            <li><button class="mx-2 btn-outline-danger btn" type="button" data-bs-target="#force"
+                                    data-bs-toggle="modal"><svg width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                                    </svg> User Force Exit</button></li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -426,8 +481,20 @@
                             </div>
                             <div class="h-50">
                                 <ul id="informationList" class="col-12 mt-2 p-1">
-                                    <li>ID : {{ $room_info->id }}</li>
-                                    <li>CREATE : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Id : {{ $room_info->id }}</li>
+                                    <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    @if (Auth::id() == $room_info->user->id)
+                                        <hr>
+                                        <li class="p-2">Room Administration</li>
+
+                                        <li><button class="mx-2 btn-outline-danger btn" type="button"
+                                                data-bs-target="#force" data-bs-toggle="modal"><svg width="16"
+                                                    height="16" fill="currentColor" class="bi bi-person-x-fill"
+                                                    viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                                                </svg> User Force Exit</button></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

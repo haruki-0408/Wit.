@@ -72,6 +72,11 @@ Echo.join('room-user-notifications.' + room_id)
         removeOnlineUser(user);
         sendExitMessage(user);
     })
+    .listen('RemoveRoom', (e) => {
+        console.log(e.room_id);
+        console.log('このルームは作成者によって削除されました10秒後にホームに戻ります');
+        removeRoomNotification();
+    })
     .listen('SendMessage', (e) => {
         addChatMessage(e);
     })
@@ -110,10 +115,8 @@ function sendEnterMessage(user) {
     const now2 = getNowDate('half');
     enter_message.textContent = user.name + 'さんが入室しました  ' + now1;
     if (change_element.length !== 0) {
-        console.log('exist');
         change_element.text('Latest Online ' + now2);
     } else {
-        console.log('not exist');
         user_name_element.innerText = user.name;
         create_enter_element.classList = "text-primary m-0";
         create_enter_element.dataset.enterId = user.id;
@@ -198,4 +201,26 @@ function addChatMessage(e) {
         message_element.appendChild(p_element);
         message_list.appendChild(message_element);
     }
+}
+
+function removeRoomNotification() {
+    $('#image').children().remove();
+    const counter = document.createElement('h6');
+    counter.classList ='d-flex align-items-center p-2';
+    let count = 10;
+    counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+    $('#image').append(counter);
+    const interval = setInterval(function () {
+        counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+        count--;
+        if (count == 0) {
+            counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+            clearInterval(interval);
+            window.onbeforeunload = null;
+            window.location.href = '/home';
+        }
+    }, 1000);
+    /*setTimeout(function(){
+            window.location.href = '/home';
+          }, 10*1000);*/
 }

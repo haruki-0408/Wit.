@@ -27,7 +27,7 @@ Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_i
     }
 });
 
-Broadcast::channel('send-message.{room_id}', function ($user, $room_id) {
+/*Broadcast::channel('send-message.{room_id}', function ($user, $room_id) {
     if($user->roomUsers->contains($room_id) ){
         //$user->id = Crypt::encrypt($user->id);
         return $user;
@@ -35,4 +35,4 @@ Broadcast::channel('send-message.{room_id}', function ($user, $room_id) {
     }else{
         return ['message'=>'false'];
     }
-});
+});*/

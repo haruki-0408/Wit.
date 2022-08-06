@@ -7,6 +7,7 @@ use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserSessionChanged;
 use App\Events\SendMessage;
+use App\Events\RemoveRoom;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
@@ -511,7 +512,7 @@ class RoomController extends Controller
                 }
 
                 $room->delete();
-
+                event(new RemoveRoom($room_id));
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
                 return back()->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
             } else {
