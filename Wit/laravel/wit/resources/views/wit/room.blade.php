@@ -209,8 +209,8 @@
 
 <!-- Mordals -->
 @if (Auth::id() == $room_info->user->id)
-    <div class="modal fade" id="force" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="force" aria-hidden="true">
+    <div class="modal fade" id="accessDenied" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="accessDenied" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -218,15 +218,37 @@
                             class="bi bi-person-x-fill mx-2" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
-                        </svg>Users</h5>
+                        </svg>Ban Users</h5>
                 </div>
                 <div class="modal-body">
-                    <ul id="onlineUsersListForce">
+                    <ul id="accessDeniedList">
 
                     </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="forceConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="forceConfirm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                          </svg>Attention
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>このユーザをアクセス禁止にしますか？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
                 </div>
             </div>
         </div>
@@ -369,12 +391,12 @@
                             <hr>
                             <li class="p-2">Room Administration</li>
 
-                            <li><button class="mx-2 btn-outline-danger btn" type="button" data-bs-target="#force"
+                            <li><button class="mx-2 btn-outline-danger btn" type="button" data-bs-target="#accessDenied"
                                     data-bs-toggle="modal"><svg width="16" height="16" fill="currentColor"
                                         class="bi bi-person-x-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
-                                    </svg> User Force Exit</button></li>
+                                    </svg>Ban Users List</button></li>
                         @endif
                     </ul>
                 </div>
@@ -488,12 +510,12 @@
                                         <li class="p-2">Room Administration</li>
 
                                         <li><button class="mx-2 btn-outline-danger btn" type="button"
-                                                data-bs-target="#force" data-bs-toggle="modal"><svg width="16"
-                                                    height="16" fill="currentColor" class="bi bi-person-x-fill"
+                                                data-bs-target="#accessDenied" data-bs-toggle="modal"><svg width="16"
+                                                    height="16" fill="currentColor" class="bi bi-person-x-fill mx-2"
                                                     viewBox="0 0 16 16">
                                                     <path fill-rule="evenodd"
                                                         d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
-                                                </svg> User Force Exit</button></li>
+                                                </svg>Ban Users List</button></li>
                                     @endif
                                 </ul>
                             </div>
@@ -502,7 +524,9 @@
 
                     <div id="center-content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
                         <div id="image" class="d-flex align-items-center">
-                            <div id="carouselIndicators" class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center" data-bs-interval="false">
+                            <div id="carouselIndicators"
+                                class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center"
+                                data-bs-interval="false">
                                 <div class="carousel-indicators">
                                     @if ($count_image_data > 1)
                                         @for ($i = 0; $i < $count_image_data; $i++)

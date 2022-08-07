@@ -11021,6 +11021,20 @@ function addOnlineUser(user) {
     user_element.appendChild(user_image);
     user_element.appendChild(user_name);
     $("[id^='onlineUsersList']").append(user_element);
+
+    if (document.getElementById('accessDeniedList')) {
+      var force_user_element = $('li[data-user-id="' + user.id + '"]');
+      var div = document.createElement('div');
+      div.classList = "text-end";
+      var force_exit_button = document.createElement('button');
+      force_exit_button.type = 'button';
+      force_exit_button.dataset.bsToggle = "modal";
+      force_exit_button.dataset.bsTarget = "#forceConfirm";
+      force_exit_button.classList = "btn btn-outline-danger ";
+      force_exit_button.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-x-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z' /></svg>";
+      div.append(force_exit_button);
+      force_user_element.append(div);
+    }
   }
 }
 
@@ -11151,9 +11165,6 @@ function removeRoomNotification() {
       window.location.href = '/home';
     }
   }, 1000);
-  /*setTimeout(function(){
-          window.location.href = '/home';
-        }, 10*1000);*/
 }
 })();
 
