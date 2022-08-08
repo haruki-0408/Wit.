@@ -9,11 +9,6 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
-
-    public static $rules =[
-        'name'=>'required|max:20|unique:member,name',
-        'number'=>'filled|integer',
-    ];
     
     protected $guarded = [
         'id',

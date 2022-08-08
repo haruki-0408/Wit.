@@ -11010,31 +11010,34 @@ function addOnlineUser(user) {
     var user_element = document.createElement('li');
     user_element.classList = "d-flex align-items-center p-2";
     user_element.dataset.userId = user.id;
+    var user_image_column = document.createElement('div');
+    user_image_column.classList = "col-2";
     var user_image = document.createElement('img');
     user_image.src = '/' + user.profile_image;
     user_image.width = '50';
     user_image.height = '50';
-    user_image.classList = "rounded-circle me-2";
-    var user_name = document.createElement('p');
-    user_name.classList = "m-0";
-    user_name.textContent = user.name;
-    user_element.appendChild(user_image);
-    user_element.appendChild(user_name);
-    $("[id^='onlineUsersList']").append(user_element);
+    user_image.classList = "rounded-circle";
+    user_image_column.appendChild(user_image);
+    var user_name_column = document.createElement('div');
+    user_name_column.classList = "col-8 m-1";
+    user_name_column.textContent = user.name;
+    user_element.appendChild(user_image_column);
+    user_element.appendChild(user_name_column);
 
     if (document.getElementById('accessDeniedList')) {
-      var force_user_element = $('li[data-user-id="' + user.id + '"]');
-      var div = document.createElement('div');
-      div.classList = "text-end";
-      var force_exit_button = document.createElement('button');
-      force_exit_button.type = 'button';
-      force_exit_button.dataset.bsToggle = "modal";
-      force_exit_button.dataset.bsTarget = "#forceConfirm";
-      force_exit_button.classList = "btn btn-outline-danger ";
-      force_exit_button.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-x-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z' /></svg>";
-      div.append(force_exit_button);
-      force_user_element.append(div);
+      var force_exit_column = document.createElement('div');
+      force_exit_column.classList = "col-2 text-end";
+      var force_exit = document.createElement('button');
+      force_exit.type = 'button';
+      force_exit.dataset.bsToggle = "modal";
+      force_exit.dataset.bsTarget = "#forceConfirm";
+      force_exit.classList = "btn btn-outline-danger ";
+      force_exit.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-x-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z' /></svg>";
+      force_exit_column.append(force_exit);
+      user_element.appendChild(force_exit_column);
     }
+
+    $("[id^='onlineUsersList']").append(user_element);
   }
 }
 

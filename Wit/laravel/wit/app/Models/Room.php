@@ -19,6 +19,7 @@ class Room extends Model
 
     protected $keyType = 'string';
 
+    const UPDATED_AT = NULL;
 
     protected $guarded = [
         'id',
@@ -43,13 +44,6 @@ class Room extends Model
      */
     protected $hidden = [
         'password',
-        'deleted_at',
-        'updated_at',
-    ];
-
-    protected $date = [
-        'entered_at',
-        'exited_at',
     ];
 
     /**

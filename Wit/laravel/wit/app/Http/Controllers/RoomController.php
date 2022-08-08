@@ -440,9 +440,6 @@ class RoomController extends Controller
 
     public function createRoom(CreateRoomRequest $request)
     {
-        //$this->validate($request, Room::$rules);
-        //$this->validate($request, Tag::$rules);
-
         $room = new Room;
 
         //roomsテーブルへ保存

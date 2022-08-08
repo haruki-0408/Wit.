@@ -11740,7 +11740,7 @@ function addUserPage(res, show) {
 
       clone.querySelector('li').setAttribute('data-user-id', res[i].id);
       clone.querySelector('.user-link').href = '/home/profile:' + res[i].id;
-      clone.querySelector('.profile-image').src = '/' + res[i].profile_image;
+      clone.querySelector('.profile-image').src = res[i].profile_image;
       clone.querySelector('.user-name').textContent = res[i].name;
       button = userButtonTypeJudge(res[i].type, res[i].id);
 
