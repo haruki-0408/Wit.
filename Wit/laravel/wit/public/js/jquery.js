@@ -12106,7 +12106,7 @@ if (document.getElementById('enterRoomModal')) {
     var button = event.relatedTarget;
     var room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');
     var enterRoomLink = document.getElementById('enterRoomLink');
-    enterRoomLink.href = '/home/Room:' + room_id;
+    enterRoomLink.href = '/home/room:' + room_id;
   });
 } //ルームパスワードを認証するとき
 

@@ -1141,7 +1141,7 @@ if (document.getElementById('enterRoomModal')) {
         let button = (event.relatedTarget);
         let room_id = button.parentNode.parentNode.parentNode.parentNode.getAttribute('data-room-id');
         let enterRoomLink = document.getElementById('enterRoomLink');
-        enterRoomLink.href = '/home/Room:' + room_id;
+        enterRoomLink.href = '/home/room:' + room_id;
     });
 }
 

@@ -10937,7 +10937,7 @@ send_button.addEventListener('click', function (e) {
     $.ajax({
       type: "post",
       //HTTP通信の種類
-      url: '/room/chat/message',
+      url: '/home/room/chat/message',
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
@@ -11173,11 +11173,45 @@ function removeRoomNotification() {
 if (document.getElementById('forceConfirm')) {
   var forceConfirmModal = document.getElementById("forceConfirm");
   forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
+    var access_denied_button = document.getElementById('userAccessDeniedButton');
     var button = event.relatedTarget;
     var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
-    console.log(user_id); //let input = document.roomPass.room_id;
-    //input.value = room_id;
-    //document.getElementById('roomPassword').appendChild(input);
+    var attention_message = document.createElement('p');
+    var attention_message2 = document.createElement('p');
+    attention_message.textContent = 'このユーザをアクセス禁止にしますか?';
+    attention_message2.classList = 'text-danger fs-6 p-1';
+    attention_message2.textContent = '※ルームが終了するまでユーザは再入場不可能になります';
+    var user_image = document.createElement('img');
+    user_image.src = button.parentNode.previousSibling.previousSibling.firstChild.src;
+    user_image.classList = 'rounded-circle m-1';
+    user_image.width = '50';
+    user_image.height = '50';
+    var user_name = document.createElement('strong');
+    user_name.textContent = button.parentNode.previousSibling.textContent;
+    var modal_body = $(forceConfirmModal).find('.modal-body');
+    modal_body.children().remove();
+    modal_body.append(attention_message);
+    modal_body.append(user_image);
+    modal_body.append(user_name);
+    modal_body.append(attention_message2);
+    access_denied_button.addEventListener('click', function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: "post",
+        //HTTP通信の種類
+        url: '/home/room/ban',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+          "room_id": room_id,
+          "user_id": user_id
+        },
+        dataType: 'json'
+      }).fail(function (error) {
+        console.log(error);
+      });
+    });
   });
 }
 })();

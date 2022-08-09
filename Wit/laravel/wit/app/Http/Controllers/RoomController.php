@@ -224,8 +224,8 @@ class RoomController extends Controller
         $user_id = $request->user_id;
         if (Room::where('id', $room_id)->exists()) {
             $room = Room::find($room_id);
-            $room->roomUsers()->updateExistingPivot($user_id,['exited_at' => Carbon::now()]);
-            return response()->Json($user_name.'Exited');
+            $room->roomUsers()->updateExistingPivot($user_id, ['exited_at' => Carbon::now()]);
+            return response()->Json($user_name . 'Exited');
         }
         return response()->Json('Exited Error');
     }
@@ -241,13 +241,18 @@ class RoomController extends Controller
             'message.max' => 'メッセージは最大400文字までです',
         ];
 
-        $request->validate($rules,$message);
+        $request->validate($rules, $message);
 
         $user = User::find($request->user()->id);
         $user->roomChat()->attach($request->room_id, ['message' => $request->message]);
 
-        event(new SendMessage($request->room_id,$request->user(),$request->message));
+        event(new SendMessage($request->room_id, $request->user(), $request->message));
         return response()->Json('Message broadcast');
+    }
+
+    public function receiveBanUser(Request $request)
+    {
+        dd($request->user_id,$request->room_id);
     }
 
 
@@ -456,10 +461,6 @@ class RoomController extends Controller
         if ($request->has('createPass')) {
             session()->put('auth_room_id', $room->id);
         };
-
-        //room_chatテーブルへ保存
-        $user = User::find($room->user_id);
-        $user->roomChat()->attach($room->id, ['message' => $room->description]);
 
         //room_imagesテーブルへ保存
         if ($request->has('roomImages')) {
