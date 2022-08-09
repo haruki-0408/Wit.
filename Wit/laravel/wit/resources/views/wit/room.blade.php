@@ -610,7 +610,6 @@
                                                 <strong>{{ $chat->name }}</strong><span
                                                     class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
                                                 <p>{{ $chat->pivot->message }}</p>
-
                                             </li>
                                         @endif
                                     @endforeach

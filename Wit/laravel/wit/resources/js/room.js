@@ -90,7 +90,7 @@ function addOnlineUser(user) {
         const user_element = document.createElement('li');
         user_element.classList = "d-flex align-items-center p-2";
         user_element.dataset.userId = user.id;
-        
+
         const user_image_column = document.createElement('div');
         user_image_column.classList = "col-2";
         const user_image = document.createElement('img');
@@ -105,9 +105,9 @@ function addOnlineUser(user) {
         user_name_column.textContent = user.name;
         user_element.appendChild(user_image_column);
         user_element.appendChild(user_name_column);
-        
 
-        if (document.getElementById('accessDeniedList')) {
+
+        if (document.getElementById('accessDeniedList') && user.id !== me_id) {
             const force_exit_column = document.createElement('div');
             force_exit_column.classList = "col-2 text-end";
             const force_exit = document.createElement('button');
@@ -245,4 +245,16 @@ function removeRoomNotification() {
             window.location.href = '/home';
         }
     }, 1000);
+}
+
+if (document.getElementById('forceConfirm')) {
+    let forceConfirmModal = document.getElementById("forceConfirm");
+    forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
+        let button = (event.relatedTarget);
+        let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+        console.log(user_id);
+        //let input = document.roomPass.room_id;
+        //input.value = room_id;
+        //document.getElementById('roomPassword').appendChild(input);
+    });
 }

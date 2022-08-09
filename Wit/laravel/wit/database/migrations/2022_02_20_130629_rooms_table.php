@@ -23,7 +23,7 @@ class RoomsTable extends Migration
             $table->dateTime('posted_at')->nullable()->default(null); 
         });
 
-        DB::statement('ALTER TABLE `rooms` ADD INDEX `room_desc_index` (id DESC,user_id DESC,title DESC,description DESC,password DESC,created_at DESC,posted_at DESC)');
+        DB::statement('ALTER TABLE `rooms` ADD INDEX `room_desc_index` (id DESC, user_id DESC, title DESC, description DESC, password DESC, created_at DESC, posted_at DESC)');
 
     }
 

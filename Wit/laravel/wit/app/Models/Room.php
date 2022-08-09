@@ -66,7 +66,7 @@ class Room extends Model
 
     public function roomChat() //ここだけChatsとは言わないので複数形の意味だけどChat
     {
-        return $this->belongsToMany('App\Models\User','room_chat','room_id')->withPivot('message','postfile','created_at');
+        return $this->belongsToMany('App\Models\User','room_chat','room_id')->withPivot('message','postfile','created_at')->orderBy('room_chat.id','asc');
     }
 
     public function roomUsers()

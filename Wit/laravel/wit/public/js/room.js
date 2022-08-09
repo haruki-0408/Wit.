@@ -11024,7 +11024,7 @@ function addOnlineUser(user) {
     user_element.appendChild(user_image_column);
     user_element.appendChild(user_name_column);
 
-    if (document.getElementById('accessDeniedList')) {
+    if (document.getElementById('accessDeniedList') && user.id !== me_id) {
       var force_exit_column = document.createElement('div');
       force_exit_column.classList = "col-2 text-end";
       var force_exit = document.createElement('button');
@@ -11168,6 +11168,17 @@ function removeRoomNotification() {
       window.location.href = '/home';
     }
   }, 1000);
+}
+
+if (document.getElementById('forceConfirm')) {
+  var forceConfirmModal = document.getElementById("forceConfirm");
+  forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+    console.log(user_id); //let input = document.roomPass.room_id;
+    //input.value = room_id;
+    //document.getElementById('roomPassword').appendChild(input);
+  });
 }
 })();
 
