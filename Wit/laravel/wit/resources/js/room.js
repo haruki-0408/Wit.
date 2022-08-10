@@ -73,9 +73,10 @@ Echo.join('room-user-notifications.' + room_id)
         sendExitMessage(user);
     })
     .listen('RemoveRoom', (e) => {
-        console.log(e.room_id);
-        console.log('このルームは作成者によって削除されました10秒後にホームに戻ります');
         removeRoomNotification();
+    })
+    .listen('RoomBanned', (e) => {
+        console.log(e.user.name+'さんがバンされました');
     })
     .listen('SendMessage', (e) => {
         addChatMessage(e);

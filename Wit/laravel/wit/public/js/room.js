@@ -10994,9 +10994,9 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
   removeOnlineUser(user);
   sendExitMessage(user);
 }).listen('RemoveRoom', function (e) {
-  console.log(e.room_id);
-  console.log('このルームは作成者によって削除されました10秒後にホームに戻ります');
   removeRoomNotification();
+}).listen('RoomBanned', function (e) {
+  console.log(e.user.name + 'さんがバンされました');
 }).listen('SendMessage', function (e) {
   addChatMessage(e);
 }).error(function (error) {

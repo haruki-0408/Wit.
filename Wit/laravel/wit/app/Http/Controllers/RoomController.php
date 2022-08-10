@@ -8,6 +8,7 @@ use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserSessionChanged;
 use App\Events\SendMessage;
 use App\Events\RemoveRoom;
+use App\Events\RoomBanned;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Tag;
@@ -252,7 +253,12 @@ class RoomController extends Controller
 
     public function receiveBanUser(Request $request)
     {
-        dd($request->user_id,$request->room_id);
+        $user = User::find($request->user_id);
+        $room = new Room;
+        $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
+        $room->find($request->room_id)->roomUsers()->detach($request->user_id);
+        event(new RoomBanned($user,$request->room_id));
+        return response()->Json('User was Banned');
     }
 
 

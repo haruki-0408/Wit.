@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\Room;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +19,13 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_id) {
-    if($user->roomUsers->contains($room_id) ){
+    $room = new Room;
+    if($user->roomUsers->contains($room_id)&&($room->find($room_id)->roomBans->doesntContain($user->id)) ){
         //$user->id = Crypt::encrypt($user->id);
         return $user;
         //return ['id'=>Crypt::encrypt($user->id),'name'=>$user->name,'profile_image'=>$user->profile_image];
     }else{
-        return ['message'=>'false'];
+        return false;
     }
 });
 
