@@ -76,7 +76,9 @@ Echo.join('room-user-notifications.' + room_id)
         removeRoomNotification();
     })
     .listen('RoomBanned', (e) => {
-        console.log(e.user.name+'さんがバンされました');
+        if (e.user.id === me_id) {
+            window.location.href = '/home';
+        }
     })
     .listen('SendMessage', (e) => {
         addChatMessage(e);
@@ -102,7 +104,7 @@ function addOnlineUser(user) {
         user_image_column.appendChild(user_image);
 
         const user_name_column = document.createElement('div');
-        user_name_column.classList = "col-8 m-1";
+        user_name_column.classList = "col-8 mx-2 mx-sm-1";
         user_name_column.textContent = user.name;
         user_element.appendChild(user_image_column);
         user_element.appendChild(user_name_column);

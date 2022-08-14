@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Hamcrest\Type\IsBoolean;
 
 class RoomController extends Controller
 {
@@ -186,35 +187,40 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
-        event(new UserSessionChanged($room_id));
         $auth_user = Auth::user();
+        $check = Room::checkRoomAccess($auth_user, $room_id);
+        if (!$check){
+            event(new UserSessionChanged($room_id));
 
-        if (mb_strlen($room_id) != 26) {
-            return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
-        }
-
-        if (Room::where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-
-            $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-
-            if (is_null($room_info->password)) {
-                return view('wit.room', [
-                    'room_info' => $room_info,
-                    'count_image_data' => $count_image_data,
-                    'auth_user' => $auth_user,
-                ]);
-            } else if ((session()->get('auth_room_id') == $room_id)) {
-                return view('wit.room', [
-                    'room_info' => $room_info,
-                    'count_image_data' => $count_image_data,
-                    'auth_user' => $auth_user,
-                ]);
-            } else {
-                return redirect('home')->with('error_message', 'パスワード付きのルームです');
+            if (mb_strlen($room_id) != 26) {
+                return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
-        } else {
-            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+
+            if (Room::where('id', $room_id)->exists()) {
+                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+
+                $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+
+                if (is_null($room_info->password)) {
+                    return view('wit.room', [
+                        'room_info' => $room_info,
+                        'count_image_data' => $count_image_data,
+                        'auth_user' => $auth_user,
+                    ]);
+                } else if ((session()->get('auth_room_id') == $room_id)) {
+                    return view('wit.room', [
+                        'room_info' => $room_info,
+                        'count_image_data' => $count_image_data,
+                        'auth_user' => $auth_user,
+                    ]);
+                } else {
+                    return redirect('home')->with('error_message', 'パスワード付きのルームです');
+                }
+            } else {
+                return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+            }
+        }else {
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
         }
     }
 
@@ -257,7 +263,7 @@ class RoomController extends Controller
         $room = new Room;
         $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
         $room->find($request->room_id)->roomUsers()->detach($request->user_id);
-        event(new RoomBanned($user,$request->room_id));
+        event(new RoomBanned($user, $request->room_id));
         return response()->Json('User was Banned');
     }
 
@@ -400,9 +406,9 @@ class RoomController extends Controller
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
+        $check = Room::checkRoomAccess(Auth::user(),$room_id);
         $room_password = Room::find($room_id)->password;
-
-        if (is_null($room_password)) {
+        if (is_null($room_password) && !$check) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
             if (is_null($room_image)) {
@@ -412,7 +418,7 @@ class RoomController extends Controller
             } else {
                 abort(404);
             }
-        } else if (session()->get('auth_room_id') == $room_id) {
+        } else if (session()->get('auth_room_id') == $room_id && !$check) {
 
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 

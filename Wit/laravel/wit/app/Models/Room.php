@@ -61,27 +61,27 @@ class Room extends Model
 
     public function listRooms()
     {
-        return $this->belongsToMany('App\Models\User','list_rooms','user_id','room_id');
+        return $this->belongsToMany('App\Models\User', 'list_rooms', 'user_id', 'room_id');
     }
 
     public function roomChat() //ここだけChatsとは言わないので複数形の意味だけどChat
     {
-        return $this->belongsToMany('App\Models\User','room_chat','room_id')->withPivot('message','postfile','created_at')->orderBy('room_chat.id','asc');
+        return $this->belongsToMany('App\Models\User', 'room_chat', 'room_id')->withPivot('message', 'postfile', 'created_at')->orderBy('room_chat.id', 'asc');
     }
 
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\User','room_users','room_id','user_id')->using('App\Models\RoomUser')->withPivot('entered_at','exited_at');
+        return $this->belongsToMany('App\Models\User', 'room_users', 'room_id', 'user_id')->using('App\Models\RoomUser')->withPivot('entered_at', 'exited_at');
     }
 
     public function roomBans()
     {
-        return $this->belongsToMany('App\Models\User','room_bans','room_id','user_id');
+        return $this->belongsToMany('App\Models\User', 'room_bans', 'room_id', 'user_id');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag','room_tags');
+        return $this->belongsToMany('App\Models\Tag', 'room_tags');
     }
 
     public function roomImages()
@@ -126,6 +126,16 @@ class Room extends Model
             return $query->whereHas('tags', function ($tag) use ($tag_name) {
                 $tag->whereRaw('name = CAST(? as CHAR) COLLATE utf8mb4_general_ci', [$tag_name]);
             });
+        }
+    }
+
+    public static function checkRoomAccess(User $user,$room_id)
+    {
+        $room = new Room;
+        if($room->find($room_id)->roomBans->contains($user->id)){
+            return true;
+        }else{
+            return false;
         }
     }
 
