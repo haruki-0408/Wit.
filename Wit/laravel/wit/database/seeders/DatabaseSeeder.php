@@ -17,9 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(TagsTableSeeder::class);
-        $this->call(RoomTagsTableSeeder::class);
         $this->call(RoomUsersTableSeeder::class);
-        $this->call(RoomImagesTableSeeder::class);
         $this->call(RoomChatTableSeeder::class);
 
     }

@@ -117,14 +117,13 @@ class UserController extends Controller
     {
         if (isset($image_file)) {
             $user_id = Auth::id();
-            $crypted_user_id = Crypt::encrypt($user_id);
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
             Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
             //一旦中身を全削除してから新しい画像を登録
             $img = $image_file->storeAs('/userImages/secondary:' . $user_id, 'profile_image' . '.' . $extension, ['disk' => 'local']);
-
+            //$img の中身は/から始まっていない
             return $img;
         }
     }

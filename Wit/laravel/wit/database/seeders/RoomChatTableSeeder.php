@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class RoomChatTableSeeder extends Seeder
 {
@@ -14,23 +16,12 @@ class RoomChatTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('room_chat')->insert([
-            'room_id' => '1',
-            'user_id' => '3',
-            'message'=>'こんにちはテストメッセージ1です!',
-        ]);
-
-
-        DB::table('room_chat')->insert([
-            'room_id' => '1',
-            'user_id' => '6',
-            'message'=>'こんにちはテストメッセージ2です!',
-        ]);
-
-        DB::table('room_chat')->insert([
-            'room_id' => '2',
-            'user_id' => '8',
-            'message'=>'こんにちはテストメッセージ3です!',
-        ]);
+        for ($i = 0; $i < 999; $i++) {
+            DB::table('room_chat')->insert([
+                'room_id' => '01gag4sjgs0hth2m8z04kspb9c',
+                'user_id' => '42670639-dc44-4bcb-98b1-85e01ca58e72',
+                'message' => Str::random(20),
+            ]);
+        }
     }
 }

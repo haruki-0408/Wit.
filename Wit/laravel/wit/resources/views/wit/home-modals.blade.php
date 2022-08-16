@@ -185,7 +185,7 @@
                             </div>
                         @enderror
                         <div class="text-end">
-                            <button type="submit" form="roomPassword" class="btn btn-primary ">Submit</button>
+                            <button type="submit" form="roomPassword" class="btn btn-outline-primary ">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -289,7 +289,7 @@
                         </div>
                     @enderror
                     <div class="text-end">
-                        <button type="submit" form="userPassword1" class="btn btn-primary">Submit</button>
+                        <button type="submit" form="userPassword1" class="btn btn-outline-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -355,7 +355,7 @@
                         </div>
                     @enderror
                     <div class="text-end">
-                        <button type="submit" form="userPassword3" class="btn btn-primary text-end">Submit</button>
+                        <button type="submit" form="userPassword3" class="btn btn-outline-primary text-end">Submit</button>
                     </div>
                 </form>
             </div>

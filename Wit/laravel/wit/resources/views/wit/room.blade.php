@@ -209,8 +209,8 @@
 
 <!-- Mordals -->
 @if (Auth::id() == $room_info->user->id)
-    <div class="modal fade" id="accessDenied" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="accessDenied" aria-hidden="true">
+    <div class="modal fade" id="banUsers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="banUsers" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -221,17 +221,21 @@
                         </svg>Ban Users</h5>
                 </div>
                 <div class="modal-body">
-                    <ul id="accessDeniedList" class="p-0 m-2">
+                    <ul id="banUsersList" class="p-0 m-2">
                         @foreach ($room_info->roomBans as $room_ban_user)
                             <li class="d-flex align-items-center p-3" data-user-id="{{ $room_ban_user->id }}">
-                                <div class="col-2 text-center"><img src="{{ asset($room_ban_user->profile_image) }}" width="50" height="50" class="rounded-circle"></div>
+                                <div class="col-2 text-center"><img src="{{ asset($room_ban_user->profile_image) }}"
+                                        width="50" height="50" class="rounded-circle"></div>
                                 <div class="col-8 text-left mx-2 mx-sm-0">{{ $room_ban_user->name }}</div>
                                 <div class="col-2 text-center">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#forceConfirm" class="btn btn-outline-danger ">
-                                        <svg width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#liftBan"
+                                        class="btn btn-outline-primary">
+                                        <svg width="16" height="16" fill="currentColor"
+                                            class="bi bi-person-check-fill" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd"
-                                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z">
-                                            </path>
+                                                d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                            <path
+                                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                         </svg>
                                     </button>
                                 </div>
@@ -241,6 +245,32 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="liftBan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="liftBan" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-person-check-fill mx-2"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        </svg>Lift Ban
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="liftBanButton" type="submit" class="btn btn-outline-primary"
+                        data-bs-dismiss="modal">Yes</button>
                 </div>
             </div>
         </div>
@@ -264,7 +294,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="userAccessDeniedButton" type="submit" class="btn btn-secondary"
+                    <button id="userAccessDeniedButton" type="submit" class="btn btn-outline-primary"
                         data-bs-dismiss="modal">Yes</button>
                 </div>
             </div>
@@ -369,7 +399,7 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
-                    <ul>
+                    <ul id="roomTagsListModal">
                         @foreach ($room_info->tags as $roomTag)
                             <li>
                                 <div class="tag"><span class="tag-name">{{ $roomTag->name }}</span><span
@@ -408,10 +438,9 @@
                             <hr>
                             <li class="p-2">Room Administration</li>
 
-                            <li><button class="mx-2 btn-outline-danger btn" type="button"
-                                    data-bs-target="#accessDenied" data-bs-toggle="modal"><svg width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-x-fill"
-                                        viewBox="0 0 16 16">
+                            <li><button class="mx-2 btn-outline-danger btn" type="button" data-bs-target="#banUsers"
+                                    data-bs-toggle="modal"><svg width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-x-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
                                     </svg>Ban Users List</button></li>
@@ -507,7 +536,7 @@
                                     <strong>Room Tags</strong>
                                 </div>
 
-                                <ul id="roomTagsList" class="col-12 fs-5 p-0 m-0">
+                                <ul id="roomTagsList" class="col-12 fs-5 p-0 m-2">
                                     @foreach ($room_info->tags as $roomTag)
                                         <li>
                                             <div class="tag">
@@ -528,12 +557,8 @@
                                         <li class="p-2">Room Administration</li>
 
                                         <li><button class="mx-2 btn-outline-danger btn" type="button"
-                                                data-bs-target="#accessDenied" data-bs-toggle="modal"><svg
-                                                    width="16" height="16" fill="currentColor"
-                                                    class="bi bi-person-x-fill mx-2" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
-                                                </svg>Ban Users List</button></li>
+                                                data-bs-target="#banUsers" data-bs-toggle="modal">Ban Users
+                                                List</button></li>
                                     @endif
                                 </ul>
                             </div>
@@ -639,12 +664,13 @@
                                 <form>
                                     <div class="row">
                                         <div class="col-9">
+                                            @if($room_info->roomChat->count() > 999)
+                                            <strong class="text-center d-block text-danger">ルームの最大メッセージ数(1000)に達しました</strong>
+                                            @else
                                             <textarea id="message" class="form-control" type="text" rows='1'>
                                                 
                                             </textarea>
-                                            <div id="error-message" class="text-danger">
-
-                                            </div>
+                                            @endif
                                         </div>
                                         <div class="col-3 d-flex justify-content-center">
                                             <button id="send" type="button" class="btn btn-primary"

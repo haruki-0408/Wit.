@@ -14,8 +14,7 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 50; $i++) {
-            Tag::factory()->create();
-        }
+        //50個タグをランダムに生成
+        Tag::factory()->count(50)->create();
     }
 }

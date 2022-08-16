@@ -239,13 +239,20 @@ class RoomController extends Controller
 
     public function receiveMessage(Request $request)
     {
+        $room = new Room;
+        $chat_count = $room->find($request->room_id)->roomChat->count();
+        $request->merge(['chat_count' => $chat_count]);
+
         $rules = [
             'message' => 'required|max:400',
+            'chat_count' => 'integer|max:1000',
         ];
 
         $message = [
             'message.required' => 'メッセージを入力して下さい',
             'message.max' => 'メッセージは最大400文字までです',
+            'chat_count.integer' => 'エラーにより送信できません',
+            'chat_count.max' => 'ルームの最大メッセージ数(1000)に達しました',
         ];
 
         $request->validate($rules, $message);
@@ -263,8 +270,19 @@ class RoomController extends Controller
         $room = new Room;
         $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
         $room->find($request->room_id)->roomUsers()->detach($request->user_id);
-        event(new RoomBanned($user, $request->room_id));
+        $type = 'ban';
+        event(new RoomBanned($user, $request->room_id,$type));
         return response()->Json('User was Banned');
+    }
+
+    public function receiveLiftBanUser(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $room = new Room;
+        $room->find($request->room_id)->roomBans()->detach($request->user_id);
+        $type= 'lift';
+        event(new RoomBanned($user, $request->room_id,$type));
+        return response()->Json('Ban was canceled');
     }
 
 
@@ -459,6 +477,9 @@ class RoomController extends Controller
     {
         $room = new Room;
 
+        if($room->where('user_id',Auth::id())->where('posted_at',null)->count() >= 3){
+            return redirect('home')->with('error_message','同時に開設できるルームは３つまでです。');
+        }
         //roomsテーブルへ保存
         $room->user_id =  Auth::user()->id;
         $room->title = $request->title;

@@ -22,7 +22,7 @@ class UsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_message',500)->nullable();
-            $table->string('profile_image')->default('/userImages/default/wit.PNG');
+            $table->string('profile_image')->default('userImages/default/wit.PNG');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
             $table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除のためのdeleted_at'); 

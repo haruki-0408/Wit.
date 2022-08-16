@@ -4,7 +4,7 @@ const message = document.getElementById('message');
 const send_button = document.getElementById('send');
 
 send_button.addEventListener('click', (e) => {
-    if (message.value != "") {
+    if (message && message.value != "") {
         e.preventDefault();
         $.ajax({
             type: "post", //HTTP通信の種類
@@ -19,7 +19,12 @@ send_button.addEventListener('click', (e) => {
             dataType: 'json',
         })
             .fail((error) => {
-                message.value = error.responseJSON.errors.message[0];
+                console.log(error);
+                if (error.responseJSON.errors.message) {
+                    message.value = error.responseJSON.errors.message[0];
+                } else if (error.responseJSON.errors.chat_count) {
+                    message.value = error.responseJSON.errors.chat_count[0];
+                }
             });
         message.value = "";
     }
@@ -76,8 +81,12 @@ Echo.join('room-user-notifications.' + room_id)
         removeRoomNotification();
     })
     .listen('RoomBanned', (e) => {
-        if (e.user.id === me_id) {
+        if (e.type === 'ban' && e.user.id === me_id) {
+            window.onbeforeunload = null;
             window.location.href = '/home';
+        } else if (e.type === 'lift') {
+            console.log(e.user.name + 'さんのアクセスが許可されました');
+            //liftBanUser(e.user);
         }
     })
     .listen('SendMessage', (e) => {
@@ -110,7 +119,7 @@ function addOnlineUser(user) {
         user_element.appendChild(user_name_column);
 
 
-        if (document.getElementById('accessDeniedList') && user.id !== me_id) {
+        if (document.getElementById('banUsersList') && user.id !== me_id) {
             const force_exit_column = document.createElement('div');
             force_exit_column.classList = "col-2 text-end";
             const force_exit = document.createElement('button');
@@ -257,13 +266,15 @@ if (document.getElementById('forceConfirm')) {
 
         let button = (event.relatedTarget);
         let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
-        const attention_message = document.createElement('p');
+        const attention_message = document.createElement('strong');
         const attention_message2 = document.createElement('p');
+        attention_message.classList = "d-block mb-2 text-center";
         attention_message.textContent = 'このユーザをアクセス禁止にしますか?';
-        attention_message2.classList = 'text-danger fs-6 p-1';
-        attention_message2.textContent = '※ルームが終了するまでユーザは再入場不可能になります';
+        attention_message2.classList = 'text-danger fs-6 p-1 m-0 text-center';
+        attention_message2.textContent = '※ルームが終了するか解除するまで再入場不可能になります';
 
-
+        const user_element = document.createElement('div');
+        user_element.classList = 'text-center p-1 m-0';
         let user_image = document.createElement('img');
         user_image.src = button.parentNode.previousSibling.previousSibling.firstChild.src;
         user_image.classList = 'rounded-circle m-1';
@@ -272,12 +283,13 @@ if (document.getElementById('forceConfirm')) {
 
         let user_name = document.createElement('strong');
         user_name.textContent = button.parentNode.previousSibling.textContent;
+        user_element.append(user_image);
+        user_element.append(user_name);
 
         let modal_body = $(forceConfirmModal).find('.modal-body')
         modal_body.children().remove();
         modal_body.append(attention_message);
-        modal_body.append(user_image);
-        modal_body.append(user_name);
+        modal_body.append(user_element);
         modal_body.append(attention_message2);
 
         access_denied_button.addEventListener('click', (e) => {
@@ -293,6 +305,62 @@ if (document.getElementById('forceConfirm')) {
                     "user_id": user_id,
                 },
                 dataType: 'json',
+            }).done(() => {
+                window.onbeforeunload = null;
+                location.reload();
+            })
+                .fail((error) => {
+                    console.log(error);
+                });
+        });
+    });
+}
+
+if (document.getElementById('liftBan')) {
+    const liftBanModal = document.getElementById("liftBan");
+    liftBanModal.addEventListener('shown.bs.modal', function (event) {
+        const lift_ban_button = document.getElementById('liftBanButton');
+
+        let button = event.relatedTarget;
+        let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+        const message = document.createElement('strong');
+        message.classList = "d-block mb-2 text-center";
+        message.textContent = 'このユーザのアクセスを許可しますか？';
+
+        const user_element = document.createElement('div');
+        user_element.classList = 'text-center p-1 m-0';
+        let user_image = document.createElement('img');
+        user_image.src = button.parentNode.parentNode.children[0].firstChild.src;
+        user_image.classList = 'rounded-circle m-1';
+        user_image.width = '50';
+        user_image.height = '50';
+
+        let user_name = document.createElement('strong');
+        user_name.textContent = button.parentNode.parentNode.children[1].textContent;
+        user_element.append(user_image);
+        user_element.append(user_name);
+
+        let modal_body = $(liftBanModal).find('.modal-body')
+        modal_body.children().remove();
+        modal_body.append(message);
+        modal_body.append(user_element);
+
+        lift_ban_button.addEventListener('click', (e) => {
+            e.preventDefault();
+            $.ajax({
+                type: "post", //HTTP通信の種類
+                url: '/home/room/ban/lift',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                data: {
+                    "room_id": room_id,
+                    "user_id": user_id,
+                },
+                dataType: 'json',
+            }).done(() => {
+                window.onbeforeunload = null;
+                location.reload();
             })
                 .fail((error) => {
                     console.log(error);
