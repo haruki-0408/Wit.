@@ -246,6 +246,22 @@ class RoomController extends Controller
         }
     }
 
+    public function saveRoom($room_id)
+    {
+        if (Room::where('id', $room_id)->exists()) {
+            $room = Room::find($room_id);
+            if ($room->user_id == Auth::id()) {
+                $room->posted_at = Carbon::now();
+                $room->save();
+                return redirect('home')->with('action_message','ルーム:' . $room_id . 'の保存が完了しました');
+            } else {
+                return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
+            }
+        } else {
+            return back()->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
+        }
+    }
+
     public function exitRoom(Request $request)
     {
         $room_id = $request->room_id;
