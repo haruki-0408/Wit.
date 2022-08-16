@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/profile/settings/changePassword', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('changePassword');
     Route::get('/home/profile/settings/deleteAccount', [App\Http\Controllers\UserController::class, 'deleteAccount'])->name('deleteAccount');
     Route::get('/home/room:{id}', [App\Http\Controllers\RoomController::class, 'enterRoom'])->name('enterRoom');
+    Route::get('/home/post/room:{id}', [App\Http\Controllers\RoomController::class, 'showPostRoom'])->name('showPostRoom');
     Route::get('/home/room:{room_id}/showRoomImage:{number}', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
     Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class, 'authRoomPassword'])->name('authRoomPassword');
     Route::post('/home/exitRoom',[App\Http\Controllers\RoomController::class, 'exitRoom'])->name('exitRoom');

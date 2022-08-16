@@ -189,7 +189,7 @@ class RoomController extends Controller
     {
         $auth_user = Auth::user();
         $check = Room::checkRoomAccess($auth_user, $room_id);
-        if (!$check){
+        if (!$check) {
             event(new UserSessionChanged($room_id));
 
             if (mb_strlen($room_id) != 26) {
@@ -219,8 +219,30 @@ class RoomController extends Controller
             } else {
                 return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
-        }else {
+        } else {
             return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
+        }
+    }
+
+    public function showPostRoom($room_id)
+    {
+        $auth_user = Auth::user();
+        if (mb_strlen($room_id) != 26) {
+            return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+        }
+
+        if (Room::where('id', $room_id)->exists()) {
+            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+
+            $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+
+            return view('wit.post_room', [
+                'room_info' => $room_info,
+                'count_image_data' => $count_image_data,
+                'auth_user' => $auth_user,
+            ]);
+        } else {
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 
@@ -271,7 +293,7 @@ class RoomController extends Controller
         $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
         $room->find($request->room_id)->roomUsers()->detach($request->user_id);
         $type = 'ban';
-        event(new RoomBanned($user, $request->room_id,$type));
+        event(new RoomBanned($user, $request->room_id, $type));
         return response()->Json('User was Banned');
     }
 
@@ -280,8 +302,8 @@ class RoomController extends Controller
         $user = User::find($request->user_id);
         $room = new Room;
         $room->find($request->room_id)->roomBans()->detach($request->user_id);
-        $type= 'lift';
-        event(new RoomBanned($user, $request->room_id,$type));
+        $type = 'lift';
+        event(new RoomBanned($user, $request->room_id, $type));
         return response()->Json('Ban was canceled');
     }
 
@@ -424,7 +446,7 @@ class RoomController extends Controller
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $check = Room::checkRoomAccess(Auth::user(),$room_id);
+        $check = Room::checkRoomAccess(Auth::user(), $room_id);
         $room_password = Room::find($room_id)->password;
         if (is_null($room_password) && !$check) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
@@ -477,8 +499,8 @@ class RoomController extends Controller
     {
         $room = new Room;
 
-        if($room->where('user_id',Auth::id())->where('posted_at',null)->count() >= 3){
-            return redirect('home')->with('error_message','同時に開設できるルームは３つまでです。');
+        if ($room->where('user_id', Auth::id())->where('posted_at', null)->count() >= 3) {
+            return redirect('home')->with('error_message', '同時に開設できるルームは３つまでです。');
         }
         //roomsテーブルへ保存
         $room->user_id =  Auth::user()->id;

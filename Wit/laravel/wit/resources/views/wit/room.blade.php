@@ -659,15 +659,16 @@
                                     @endforeach
                                 </ul>
                             </div>
-
+                            
                             <div class="card-footer">
                                 <form>
                                     <div class="row">
                                         <div class="col-9">
-                                            @if($room_info->roomChat->count() > 999)
-                                            <strong class="text-center d-block text-danger">ルームの最大メッセージ数(1000)に達しました</strong>
+                                            @if ($room_info->roomChat->count() > 999)
+                                                <strong
+                                                    class="text-center d-block text-danger">ルームの最大メッセージ数(1000)に達しました</strong>
                                             @else
-                                            <textarea id="message" class="form-control" type="text" rows='1'>
+                                                <textarea id="message" class="form-control" type="text" rows='1'>
                                                 
                                             </textarea>
                                             @endif
