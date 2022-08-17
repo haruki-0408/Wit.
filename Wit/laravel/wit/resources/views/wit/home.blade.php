@@ -80,18 +80,18 @@
                     </td>
                     <td>
                         <label class="form-check-label" for="flexCheckPassword">
-                            鍵あり
+                            鍵付き
                         </label>
                     </td>
 
                 </tr>
                 <tr class="dropdown-item">
                     <th>
-                        <input class="form-check-input" type="checkbox" name="flexCheckAnswer" id="flexCheckAnswer">
+                        <input class="form-check-input" type="checkbox" name="flexCheckPost" id="flexCheckPost">
                     </th>
                     <td>
-                        <label class="form-check-label" for="flexCheckAnswer">
-                            回答済み
+                        <label class="form-check-label" for="flexCheckPost">
+                            PostRoomのみ
                         </label>
                     </td>
                 </tr>

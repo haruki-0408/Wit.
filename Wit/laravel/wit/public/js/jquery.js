@@ -10950,7 +10950,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
       var flexCheckImage = searchButton.dataset.flexCheckImage;
       var flexCheckTag = searchButton.dataset.flexCheckTag;
       var flexCheckPassword = searchButton.dataset.flexCheckPassword;
-      var flexCheckAnswer = searchButton.dataset.flexCheckAnswer;
+      var flexCheckPost = searchButton.dataset.flexCheckPost;
       $.ajax({
         type: "post",
         //HTTP通信の種類
@@ -10965,7 +10965,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
           "checkImage": flexCheckImage,
           "checkTag": flexCheckTag,
           "checkPassword": flexCheckPassword,
-          "checkAnswer": flexCheckAnswer
+          "checkPost": flexCheckPost
         },
         dataType: 'json'
       }) //通信が成功したとき
@@ -11339,13 +11339,13 @@ $(document).on('click', '#search-button', function () {
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-    var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
+    var flexCheckPost = document.getElementById('flexCheckPost').checked;
     _searchButton2.dataset.select = select;
     _searchButton2.dataset.keyword = _keyword;
     _searchButton2.dataset.flexCheckImage = flexCheckImage;
     _searchButton2.dataset.flexCheckTag = flexCheckTag;
     _searchButton2.dataset.flexCheckPassword = flexCheckPassword;
-    _searchButton2.dataset.flexCheckAnswer = flexCheckAnswer;
+    _searchButton2.dataset.flexCheckPost = flexCheckPost;
     $.ajax({
       type: "post",
       //HTTP通信の種類
@@ -11359,7 +11359,7 @@ $(document).on('click', '#search-button', function () {
         "checkImage": flexCheckImage,
         "checkTag": flexCheckTag,
         "checkPassword": flexCheckPassword,
-        "checkAnswer": flexCheckAnswer
+        "checkPost": flexCheckPost
       },
       dataType: 'json'
     }) //通信が成功したとき
@@ -11415,7 +11415,7 @@ $(document).on('click', '.tag', function (event) {
       _searchButton3.dataset.flexCheckImage = 'false';
       _searchButton3.dataset.flexCheckTag = 'false';
       _searchButton3.dataset.flexCheckPassword = 'false';
-      _searchButton3.dataset.flexCheckAnswer = 'false';
+      _searchButton3.dataset.flexCheckPost = 'false';
       $("[id^='getMoreButton']").remove();
       $("[id^='getMoreUserButton']").remove();
       $(document.getElementById("Rooms")).empty();
@@ -11432,7 +11432,7 @@ $(document).on('click', '.tag', function (event) {
           "checkImage": 'false',
           "checkTag": 'false',
           "checkPassword": 'false',
-          "checkAnswer": 'false'
+          "checkPost": 'false'
         },
         dataType: 'json'
       }) //通信が成功したとき
@@ -11621,7 +11621,7 @@ $(document).on('click', '#flexRadioUser', function () {
   var flexCheckImage = document.getElementById('flexCheckImage');
   var flexCheckTag = document.getElementById('flexCheckTag');
   var flexCheckPassword = document.getElementById('flexCheckPassword');
-  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var flexCheckPost = document.getElementById('flexCheckPost');
   var newRow = document.getElementById('new-row');
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
@@ -11629,7 +11629,7 @@ $(document).on('click', '#flexRadioUser', function () {
   flexCheckImage.disabled = true;
   flexCheckTag.disabled = true;
   flexCheckPassword.disabled = true;
-  flexCheckAnswer.disabled = true;
+  flexCheckPost.disabled = true;
   newRow.disabled = true;
   oldRow.disabled = true;
   chatRow.disabled = true;
@@ -11640,7 +11640,7 @@ $(document).on('click', '#flexRadioRoom', function () {
   var flexCheckImage = document.getElementById('flexCheckImage');
   var flexCheckTag = document.getElementById('flexCheckTag');
   var flexCheckPassword = document.getElementById('flexCheckPassword');
-  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var flexCheckPost = document.getElementById('flexCheckPost');
   var newRow = document.getElementById('new-row');
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
@@ -11652,7 +11652,7 @@ $(document).on('click', '#flexRadioRoom', function () {
       flexCheckImage.disabled = false;
       flexCheckTag.disabled = false;
       flexCheckPassword.disabled = false;
-      flexCheckAnswer.disabled = false;
+      flexCheckPost.disabled = false;
       newRow.disabled = false;
       oldRow.disabled = false;
       chatRow.disabled = false;
@@ -11662,7 +11662,7 @@ $(document).on('click', '#flexRadioRoom', function () {
       flexCheckImage.disabled = true;
       flexCheckTag.disabled = true;
       flexCheckPassword.disabled = true;
-      flexCheckAnswer.disabled = true;
+      flexCheckPost.disabled = true;
       newRow.disabled = true;
       oldRow.disabled = true;
       chatRow.disabled = true;
@@ -11672,7 +11672,7 @@ $(document).on('click', '#flexRadioRoom', function () {
       flexCheckImage.disabled = false;
       flexCheckTag.disabled = true;
       flexCheckPassword.disabled = false;
-      flexCheckAnswer.disabled = false;
+      flexCheckPost.disabled = false;
       newRow.disabled = false;
       oldRow.disabled = false;
       chatRow.disabled = false;
@@ -11689,7 +11689,7 @@ $(document).on('change', '#searchType', function () {
   var flexCheckImage = document.getElementById('flexCheckImage');
   var flexCheckTag = document.getElementById('flexCheckTag');
   var flexCheckPassword = document.getElementById('flexCheckPassword');
-  var flexCheckAnswer = document.getElementById('flexCheckAnswer');
+  var flexCheckPost = document.getElementById('flexCheckPost');
   var newRow = document.getElementById('new-row');
   var oldRow = document.getElementById('old-row');
   var chatRow = document.getElementById('chat-row');
@@ -11699,7 +11699,7 @@ $(document).on('change', '#searchType', function () {
       flexCheckImage.disabled = false;
       flexCheckTag.disabled = false;
       flexCheckPassword.disabled = false;
-      flexCheckAnswer.disabled = false;
+      flexCheckPost.disabled = false;
       newRow.disabled = false;
       oldRow.disabled = false;
       chatRow.disabled = false;
@@ -11709,7 +11709,7 @@ $(document).on('change', '#searchType', function () {
       flexCheckImage.disabled = true;
       flexCheckTag.disabled = true;
       flexCheckPassword.disabled = true;
-      flexCheckAnswer.disabled = true;
+      flexCheckPost.disabled = true;
       newRow.disabled = true;
       oldRow.disabled = true;
       chatRow.disabled = true;
@@ -11719,7 +11719,7 @@ $(document).on('change', '#searchType', function () {
       flexCheckImage.disabled = false;
       flexCheckTag.disabled = true;
       flexCheckPassword.disabled = false;
-      flexCheckAnswer.disabled = false;
+      flexCheckPost.disabled = false;
       newRow.disabled = false;
       oldRow.disabled = false;
       chatRow.disabled = false;
@@ -12053,8 +12053,8 @@ function getMoreRoomButton(tag) {
     var flexCheckImage = document.getElementById('flexCheckImage').checked;
     var flexCheckTag = document.getElementById('flexCheckTag').checked;
     var flexCheckPassword = document.getElementById('flexCheckPassword').checked;
-    var flexCheckAnswer = document.getElementById('flexCheckAnswer').checked;
-    var check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckAnswer];
+    var flexCheckPost = document.getElementById('flexCheckPost').checked;
+    var check = [keyword, flexCheckImage, flexCheckTag, flexCheckPassword, flexCheckPost];
 
     if (check.some(function (element) {
       return element === true;

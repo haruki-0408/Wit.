@@ -111,6 +111,11 @@ class Room extends Model
         return $query->whereNotNull('password');
     }
 
+    public function scopeSearchPostRoom($query)
+    {
+        return $query->whereNotNull('posted_at');
+    }
+
     public function scopeSearchRoomId($query, $room_id)
     {
         if (isset($room_id)) {
@@ -129,12 +134,12 @@ class Room extends Model
         }
     }
 
-    public static function checkRoomAccess(User $user,$room_id)
+    public static function checkRoomAccess(User $user, $room_id)
     {
         $room = new Room;
-        if($room->find($room_id)->roomBans->contains($user->id)){
+        if ($room->find($room_id)->roomBans->contains($user->id)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

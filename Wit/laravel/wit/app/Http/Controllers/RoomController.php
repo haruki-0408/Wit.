@@ -82,9 +82,9 @@ class RoomController extends Controller
             $second_query->searchRoomPassword();
         }
 
-        if ($request->checkAnswer != 'false') {
-            $query->has('answer');
-            $second_query->has('answer');
+        if ($request->checkPost != 'false') {
+            $query->searchPostRoom();
+            $second_query->searchPostRoom();
         }
 
 
