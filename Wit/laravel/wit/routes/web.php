@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/removeListRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'actionRemoveListRoom'])->name('actionRemoveListRoom');
     Route::get('/home/addListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionAddListUser'])->name('actioAddListUser');
     Route::get('/home/removeListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionRemoveListUser'])->name('actionRemoveListUser');
-    //api 
+    //api
     Route::post('/home/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->name('receiveMessage');
     Route::post('/home/room/ban/', [App\Http\Controllers\RoomController::class, 'receiveBanUser'])->name('receiveBanUser');
     Route::post('/home/room/ban/lift', [App\Http\Controllers\RoomController::class, 'receiveLiftBanUser'])->name('receiveLiftBanUser');

@@ -15,7 +15,6 @@ class UserSessionChanged implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    public $type;
     public $room_id;
 
 

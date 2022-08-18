@@ -260,7 +260,15 @@
             }, 3000);
         @endif
 
-        @if ($errors->hasAny(['title', 'description', 'sumImageSize', 'sumImageCount', 'roomImages.*', 'matches.*', 'createPass']))
+        @if ($errors->hasAny([
+            'title',
+            'description',
+            'sumImageSize',
+            'sumImageCount',
+            'roomImages.*',
+            'matches.*',
+            'createPass',
+        ]))
             if (document.getElementById('createRoomModalButton')) {
                 const myModal = document.getElementById('createRoomModalButton');
                 myModal.click();
@@ -283,13 +291,14 @@
                 const delete_password_button = document.getElementById('deleteAccountPasswordModalButton');
                 delete_password_button.click();
             } else if (document.getElementById('deleteAccountPasswordModalButtonFooter')) {
-                const delete_password_button2 = document.getElementById('deleteAccountPasswordModalButtonFooter');
+                const delete_password_button2 = document.getElementById(
+                    'deleteAccountPasswordModalButtonFooter');
                 delete_password_button2.click();
             }
         @elseif($errors->has('enterPass'))
             const room_id = '{{ old('room_id') }}';
-            const room = document.querySelector('[data-room-id="'+room_id+'"]');
-            const enter_password_button =room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
+            const room = document.querySelector('[data-room-id="' + room_id + '"]');
+            const enter_password_button = room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
             enter_password_button.click();
         @endif
     </script>

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Events\RemoveRoom;
+use App\Events\UserExited;
 use App\Events\UserSessionChanged;
 use App\Listeners\BroadcastUserEnterNotification;
-use App\Listeners\BroadcastRemoveRoomNotification;
+use App\Listeners\BroadcastUserExitNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,8 +26,8 @@ class EventServiceProvider extends ServiceProvider
         UserSessionChanged::class => [
             BroadcastUserEnterNotification::class,
         ],
-        RemoveRoom::class =>[
-            BroadcastRemoveRoomNotification::class,
+        UserExited::class => [
+            BroadcastUserExitNotification::class,
         ]
     ];
 

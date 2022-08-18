@@ -46,7 +46,6 @@ if (document.getElementById('exitRoomModal')) {
 }
 
 
-
 Echo.join('room-user-notifications.' + room_id)
     .here((users) => {
         users.forEach(user => {
@@ -58,6 +57,8 @@ Echo.join('room-user-notifications.' + room_id)
         sendEnterMessage(user);
     })
     .leaving((user) => {
+        //この書き方だとユーザが誰もいないとexited_atの値は更新されないし、ユーザが複数いるとその分exited_atの値が更新される
+        /*console.log(users);
         $.ajax({
             type: "post", //HTTP通信の種類
             url: '/home/exitRoom',
@@ -74,6 +75,7 @@ Echo.join('room-user-notifications.' + room_id)
             .fail((error) => {
                 console.log(error);
             });
+            */
         removeOnlineUser(user);
         sendExitMessage(user);
     })
@@ -94,6 +96,7 @@ Echo.join('room-user-notifications.' + room_id)
     })
     .error((error) => {
         console.error(error);
+        window.location.href = '/home';
     });
 
 function addOnlineUser(user) {

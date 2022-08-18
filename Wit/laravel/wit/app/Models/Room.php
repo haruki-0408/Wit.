@@ -134,10 +134,10 @@ class Room extends Model
         }
     }
 
-    public static function checkRoomAccess(User $user, $room_id)
+    public static function checkRoomAccess($user_id, $room_id)
     {
         $room = new Room;
-        if ($room->find($room_id)->roomBans->contains($user->id)) {
+        if ($room->find($room_id)->roomBans->contains($user_id)) {
             return true;
         } else {
             return false;

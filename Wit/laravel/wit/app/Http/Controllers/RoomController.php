@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserSessionChanged;
+use App\Events\UserExited;
 use App\Events\SendMessage;
 use App\Events\RemoveRoom;
 use App\Events\RoomBanned;
@@ -188,17 +189,16 @@ class RoomController extends Controller
     public function enterRoom($room_id)
     {
         $auth_user = Auth::user();
-        $check = Room::checkRoomAccess($auth_user, $room_id);
-        if (!$check) {
-            event(new UserSessionChanged($room_id));
+        $check = Room::checkRoomAccess(Auth::id(), $room_id);
 
+        if (!$check) {
             if (mb_strlen($room_id) != 26) {
                 return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
 
             if (Room::where('id', $room_id)->exists()) {
                 $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-
+                event(new UserSessionChanged($room_id));
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
                 if (is_null($room_info->password)) {
@@ -253,7 +253,7 @@ class RoomController extends Controller
             if ($room->user_id == Auth::id()) {
                 $room->posted_at = Carbon::now();
                 $room->save();
-                return redirect('home')->with('action_message','ルーム:' . $room_id . 'の保存が完了しました');
+                return redirect('home')->with('action_message', 'ルーム:' . $room_id . 'の保存が完了しました');
             } else {
                 return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
             }
@@ -262,18 +262,31 @@ class RoomController extends Controller
         }
     }
 
-    public function exitRoom(Request $request)
+    public function receiveWebhooks(Request $request)
     {
-        $room_id = $request->room_id;
-        $user_name = $request->user_name;
-        $user_id = $request->user_id;
+        foreach ($request->events as $event) {
+            $room_id = substr($event['channel'], -26);
+            $user_id = $event['user_id'];
+            if ($event['name'] == 'member_removed') {
+                event(new UserExited($room_id, $user_id));
+                return response()->Json('User Exited');
+            }
+        }
+
+
+        //return response()->Json($request->all());
+    }
+
+    /*public function exitRoom($room_id,$user_id)
+    {
+        $user_name = User::find($user_id)->name;
         if (Room::where('id', $room_id)->exists()) {
             $room = Room::find($room_id);
             $room->roomUsers()->updateExistingPivot($user_id, ['exited_at' => Carbon::now()]);
             return response()->Json($user_name . 'Exited');
         }
         return response()->Json('Exited Error');
-    }
+    }*/
 
     public function receiveMessage(Request $request)
     {
@@ -462,7 +475,7 @@ class RoomController extends Controller
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $check = Room::checkRoomAccess(Auth::user(), $room_id);
+        $check = Room::checkRoomAccess(Auth::id(), $room_id);
         $room_password = Room::find($room_id)->password;
         if (is_null($room_password) && !$check) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
