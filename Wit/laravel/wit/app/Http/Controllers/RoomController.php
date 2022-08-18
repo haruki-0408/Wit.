@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\AuthPasswordRequest;
-use App\Events\UserSessionChanged;
+use App\Events\UserEntered;
 use App\Events\UserExited;
 use App\Events\SendMessage;
 use App\Events\RemoveRoom;
@@ -165,7 +165,7 @@ class RoomController extends Controller
 
         $room = Room::find($room_id);
         $room_password = $room->password;
-        event(new UserSessionChanged($room_id));
+        event(new UserEntered($room_id));
         $auth_user = Auth::user();
 
         if (isset($request->enterPass) && isset($room_password)) {
@@ -198,7 +198,7 @@ class RoomController extends Controller
 
             if (Room::where('id', $room_id)->exists()) {
                 $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-                event(new UserSessionChanged($room_id));
+                event(new UserEntered($room_id));
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
                 if (is_null($room_info->password)) {

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Events\UserExited;
-use App\Events\UserSessionChanged;
+use App\Events\UserEntered;
 use App\Listeners\BroadcastUserEnterNotification;
 use App\Listeners\BroadcastUserExitNotification;
 use Illuminate\Auth\Events\Registered;
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        UserSessionChanged::class => [
+        UserEntered::class => [
             BroadcastUserEnterNotification::class,
         ],
         UserExited::class => [

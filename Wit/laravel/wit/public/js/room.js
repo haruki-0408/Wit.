@@ -10981,26 +10981,6 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
   addOnlineUser(user);
   sendEnterMessage(user);
 }).leaving(function (user) {
-  //この書き方だとユーザが誰もいないとexited_atの値は更新されないし、ユーザが複数いるとその分exited_atの値が更新される
-
-  /*console.log(users);
-  $.ajax({
-      type: "post", //HTTP通信の種類
-      url: '/home/exitRoom',
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-      },
-      data: {
-          "room_id": room_id,
-          "user_id": user.id,
-          "user_name": user.name,
-      },
-      dataType: 'json',
-  })
-      .fail((error) => {
-          console.log(error);
-      });
-      */
   removeOnlineUser(user);
   sendExitMessage(user);
 }).listen('RemoveRoom', function (e) {

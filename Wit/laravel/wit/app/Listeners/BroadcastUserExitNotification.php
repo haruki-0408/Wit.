@@ -29,8 +29,6 @@ class BroadcastUserExitNotification
     
     public function handle(UserExited $event)
     {
-        \Log::debug('Exit listener 発火');
-
         $room_id = $event->room_id;
         $user_id = $event->user_id;
         if (Room::where('id', $room_id)->exists()) {
