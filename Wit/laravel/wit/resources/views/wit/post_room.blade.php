@@ -322,7 +322,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a id="exitRoomLink" onclick="window.onbeforeunload = null;"
+                <a id="exitRoomLink" href="/home" onclick="window.onbeforeunload = null;"
                     class="btn btn-outline-primary text-end">Yes</a>
             </div>
         </div>
@@ -408,14 +408,6 @@
                                 <ul id="informationList" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
                                     <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
-                                    @if (Auth::id() == $room_info->user->id)
-                                        <hr>
-                                        <li class="p-2">Room Administration</li>
-
-                                        <li><button class="mx-2 btn-outline-danger btn" type="button"
-                                                data-bs-target="#banUsers" data-bs-toggle="modal">Ban Users
-                                                List</button></li>
-                                    @endif
                                 </ul>
                             </div>
                         </div>

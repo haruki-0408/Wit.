@@ -18,12 +18,14 @@ class WitViewComposer
     public function compose(View $view)
     {
         $trend_tags = TagController::getTrend();
+        $open_rooms = RoomController::getOpenRoom();
         $post_rooms = RoomController::getPostRoom();
         $list_rooms = RoomController::getListRoom();
         $list_users = UserController::getListUser();
         $rooms = RoomController::getRoomInfo();
         $view->with('rooms', $rooms);
         $view->with('trend_tags' , $trend_tags);
+        $view->with('open_rooms' , $open_rooms);
         $view->with('post_rooms' , $post_rooms);
         $view->with('list_rooms' , $list_rooms);
         $view->with('list_users' , $list_users);

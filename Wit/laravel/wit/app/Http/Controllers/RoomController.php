@@ -133,10 +133,10 @@ class RoomController extends Controller
     public static function getRoomInfo($room_id = null) //引数省略可能なメソッドにしてページ読み込み時と追加読み込み時に分けている
     {
         if (is_null($room_id)) {
-            $rooms = Room::with(['user', 'tags'])->take(15)->get();
+            $rooms = Room::with(['user', 'tags'])->whereNull('posted_at')->take(15)->get();
         } else {
             if (mb_strlen($room_id) == 26) {
-                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'tags'])->take(10)->get();
+                $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'tags'])->whereNull('posted_at')->take(10)->get();
             } else {
                 abort(404);
             }
@@ -331,7 +331,33 @@ class RoomController extends Controller
         return response()->Json('Ban was canceled');
     }
 
+    public static function getOpenRoom($user_id = null)
+    {
+        if (isset($user_id)) {
+            $decrypted_user_id = Crypt::decrypt($user_id);
+            $user = User::find($decrypted_user_id);
+        } else {
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+        }
+         
+        $open_rooms = $user->rooms()->whereNull('posted_at')->with(['user', 'tags'])->get();
 
+        $open_rooms->map(function ($each){
+            $count_online_users = RoomUser::countOnlineUsers($each->id);
+            $count_chat_messages = $each->roomChat->count();
+            $each['count_online_users'] = $count_online_users;
+            $each['count_chat_messages'] = $count_chat_messages;
+            return $each;
+        });
+
+        foreach ($open_rooms as $open_room) {
+            $open_room->user->id = Crypt::encrypt($open_room->user->id);
+            $open_room->user_id = Crypt::encrypt($open_room->user_id);
+        }
+
+        return $open_rooms;
+    }
 
     public static function getPostRoom($room_id = null, $user_id = null)
     {
@@ -343,21 +369,17 @@ class RoomController extends Controller
             $user = User::find($user_id);
         }
 
-        $query = $user->rooms();
+        $query = $user->rooms()->whereNotNull('posted_at');
 
         if (is_null($room_id)) {
-            $post_rooms = $user->rooms()->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
+            $post_rooms = $user->rooms()->orderBy('id', 'desc')->whereNotNull('posted_at')->with(['user', 'tags'])->take(10)->get();
         } else {
-            $post_rooms = $user->rooms()->orderBy('id', 'desc')->where('id', '<', $room_id)->with(['user', 'tags'])->take(10)->get();
+            $post_rooms = $user->rooms()->orderBy('id', 'desc')->where('id', '<', $room_id)->whereNotNull('posted_at')->with(['user', 'tags'])->take(10)->get();
         }
 
         $post_rooms->map(function ($each) use ($query) {
-            $count_online_users = RoomUser::countOnlineUsers($each->id);
-            $count_chat_messages = $each->roomChat->count();
             $type = Room::buttonTypeJudge($each->id, $query);
             $each['type'] = $type['type'];
-            $each['count_online_users'] = $count_online_users;
-            $each['count_chat_messages'] = $count_chat_messages;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -593,19 +615,19 @@ class RoomController extends Controller
                             ]);
                         }
                     } else {
-                        return back()->with('error_message', 'tag エラー');
+                        return redirect('home')->with('error_message', 'tag エラー');
                     }
                 }
 
                 $room->delete();
                 event(new RemoveRoom($room_id));
                 Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
-                return back()->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
+                return redirect('home')->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
             } else {
-                return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
+                return redirect('home')->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
             }
         } else {
-            return back()->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
+            return redirect('home')->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 }

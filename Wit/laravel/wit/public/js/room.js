@@ -10961,17 +10961,7 @@ send_button.addEventListener('click', function (e) {
 
 window.onbeforeunload = function (e) {
   e.returnValue = "ページを離れようとしています。よろしいですか？";
-}; //ルーム退出時
-
-
-if (document.getElementById('exitRoomModal')) {
-  var exitRoomModal = document.getElementById("exitRoomModal");
-  exitRoomModal.addEventListener('shown.bs.modal', function (event) {
-    var button = event.relatedTarget;
-    var enterRoomLink = document.getElementById('exitRoomLink');
-    exitRoomLink.href = '/home';
-  });
-}
+};
 
 Echo.join('room-user-notifications.' + room_id).here(function (users) {
   users.forEach(function (user) {

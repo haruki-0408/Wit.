@@ -49,15 +49,16 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myPostModal">
-                    Post
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myOpenModal">
+                    <strong>Open</strong>
                 </a>
             </li>
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myAnswerModal">
-                    Answer
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myPostModal">
+                    <strong>Post</strong>
                 </a>
             </li>
+            
         </ul>
         <hr>
     </div>

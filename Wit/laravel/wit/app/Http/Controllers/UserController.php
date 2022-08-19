@@ -47,6 +47,7 @@ class UserController extends Controller
                 ];
 
                 if ($user != Auth::user()) {
+                    $user_data += array('o_open_rooms' => RoomController::getOpenRoom($user_id));
                     $user_data += array('o_post_rooms' => RoomController::getPostRoom(null, $user_id));
                     $user_data += array('o_list_users' => Self::getListUser(null, $user_id));
                     $user_data += array('o_list_rooms' => RoomController::getListRoom(null, $user_id));

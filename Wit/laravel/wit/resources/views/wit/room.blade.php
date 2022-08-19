@@ -354,11 +354,8 @@
                     <dd class="p-2">パスワード付き、またはタグが1つもないルームはセキュリティ上保存されることなく削除されます</dd>
                 </div>
                 <div class="modal-footer">
-                    <form method='post' action='/home/save/room:{{ $room_info->id }}'>
-                        @csrf
-                        <button id="saveRoomButton" type="submit" class="btn btn-outline-primary"
-                            onclick="window.onbeforeunload = null;" data-bs-dismiss="modal">Yes</button>
-                    </form>
+                    <a id="removevRoomButton" href="/home/removeRoom:{{ $room_info->id }}"
+                        class="btn btn-outline-primary" onclick="window.onbeforeunload = null;">Yes</a>
                 </div>
             </div>
         </div>
@@ -537,7 +534,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a id="exitRoomLink" onclick="window.onbeforeunload = null;"
+                <a id="exitRoomLink" href="/home" onclick="window.onbeforeunload = null;"
                     class="btn btn-outline-primary text-end">Yes</a>
             </div>
         </div>

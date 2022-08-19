@@ -35,16 +35,6 @@ window.onbeforeunload = function (e) {
     e.returnValue = "ページを離れようとしています。よろしいですか？";
 }
 
-//ルーム退出時
-if (document.getElementById('exitRoomModal')) {
-    let exitRoomModal = document.getElementById("exitRoomModal");
-    exitRoomModal.addEventListener('shown.bs.modal', function (event) {
-        let button = (event.relatedTarget);
-        let enterRoomLink = document.getElementById('exitRoomLink');
-        exitRoomLink.href = '/home';
-    });
-}
-
 
 Echo.join('room-user-notifications.' + room_id)
     .here((users) => {

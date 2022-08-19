@@ -5,7 +5,7 @@
     @endcomponent
 
     @if ($user_id != Auth::id())
-        @component('wit.profile-modals', ['o_post_rooms' => $o_post_rooms, 'o_list_rooms' => $o_list_rooms, 'o_list_users' => $o_list_users])
+        @component('wit.profile-modals', ['o_open_rooms' => $o_open_rooms, 'o_post_rooms' => $o_post_rooms, 'o_list_rooms' => $o_list_rooms, 'o_list_users' => $o_list_users])
         @endcomponent
     @endif
 
@@ -103,16 +103,18 @@
                         <ul style="list-style-type:disc ">
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+                                    data-bs-target="#myOpenModal">
+                                    <strong>Open</strong>
+                                </a>
+                            </li>
+
+                            <li class="border-bottom">
+                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
                                     data-bs-target="#myPostModal">
                                     <strong>Post</strong>
                                 </a>
                             </li>
-                            <li class="border-bottom">
-                                <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#myAnswerModal">
-                                    <strong>Answer</strong>
-                                </a>
-                            </li>
+                            
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
                                     data-bs-target="#myListUserModal">
@@ -136,16 +138,17 @@
                         <ul style="list-style-type:disc ">
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#otherPostModal">
-                                    <strong>Post</strong>
+                                    data-bs-target="#otherOpenModal">
+                                    <strong>Open</strong>
                                 </a>
                             </li>
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                    data-bs-target="#otherAnswerModal">
-                                    <strong>Answer</strong>
+                                    data-bs-target="#otherPostModal">
+                                    <strong>Post</strong>
                                 </a>
                             </li>
+                            
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
                                     data-bs-target="#otherListUserModal">
@@ -155,7 +158,7 @@
                             <li class="border-bottom">
                                 <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
                                     data-bs-target="#otherListRoomModal">
-                                    <strong>List Rooms</strong>
+                                    <strong>List Room</strong>
                                 </a>
                             </li>
                             <li class="border-bottom">
