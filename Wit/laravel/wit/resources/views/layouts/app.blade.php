@@ -130,6 +130,12 @@
         <div class="card-body p-1 row d-flex align-items-center m-0">
             <strong class="card-title"></strong>
             <p class="card-text room-description text-break m-0"></p>
+            <small class="text-muted d-flex justify-content-end text-end">
+                <div class="mx-2 countOnlineUsers">
+                </div>
+                <div class="countChatMessages">
+                </div>
+            </small>
             <small class="d-block text-end text-muted created_at"></small>
         </div>
 

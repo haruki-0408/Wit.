@@ -103,8 +103,12 @@ class RoomController extends Controller
 
 
         $rooms->map(function ($each) use ($second_query) {
+            $count_online_users = RoomUser::countOnlineUsers($each->id);
+            $count_chat_messages = $each->roomChat->count();
             $type = Room::buttonTypeJudge($each->id, $second_query);
             $each['type'] = $type['type'];
+            $each['count_online_users'] = $count_online_users;
+            $each['count_chat_messages'] = $count_chat_messages;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -140,9 +144,11 @@ class RoomController extends Controller
 
         $rooms->map(function ($each) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
+            $count_chat_messages = $each->roomChat->count();
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
             $each['count_online_users'] = $count_online_users;
+            $each['count_chat_messages'] = $count_chat_messages;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -171,7 +177,7 @@ class RoomController extends Controller
         event(new UserEntered($room_id));
         $auth_user = Auth::user();
 
-        if (isset($request->enterPass) && isset($room_password)) {
+        if (isset($request->enterPass) && isset($room_password) && $room->posted_at == null) {
             if (Hash::check($request->enterPass, $room_password)) {
                 $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
@@ -199,7 +205,7 @@ class RoomController extends Controller
                 return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
 
-            if (Room::where('id', $room_id)->exists()) {
+            if (Room::where('id', $room_id)->exists() && Room::where('id',$room_id)->first()->posted_at == null) {
                 $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
                 event(new UserEntered($room_id));
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
@@ -275,21 +281,7 @@ class RoomController extends Controller
                 return response()->Json('User Exited');
             }
         }
-
-
-        //return response()->Json($request->all());
     }
-
-    /*public function exitRoom($room_id,$user_id)
-    {
-        $user_name = User::find($user_id)->name;
-        if (Room::where('id', $room_id)->exists()) {
-            $room = Room::find($room_id);
-            $room->roomUsers()->updateExistingPivot($user_id, ['exited_at' => Carbon::now()]);
-            return response()->Json($user_name . 'Exited');
-        }
-        return response()->Json('Exited Error');
-    }*/
 
     public function receiveMessage(Request $request)
     {
@@ -360,8 +352,12 @@ class RoomController extends Controller
         }
 
         $post_rooms->map(function ($each) use ($query) {
+            $count_online_users = RoomUser::countOnlineUsers($each->id);
+            $count_chat_messages = $each->roomChat->count();
             $type = Room::buttonTypeJudge($each->id, $query);
             $each['type'] = $type['type'];
+            $each['count_online_users'] = $count_online_users;
+            $each['count_chat_messages'] = $count_chat_messages;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -395,8 +391,13 @@ class RoomController extends Controller
             $list_rooms = $user->listRooms()->where('list_rooms.id', '<', $list_rooms_id)->orderBy('list_rooms.id', 'desc')->with(['user', 'tags'])->take(10)->get();
         }
         $list_rooms->map(function ($each) use ($list_query) {
+            $count_online_users = RoomUser::countOnlineUsers($each->id);
+            $count_chat_messages = $each->roomChat->count();
             $type = Room::buttonTypeJudge($each->id, null, $list_query);
             $each['type'] = $type['type'];
+            $each['count_online_users'] = $count_online_users;
+            $each['count_chat_messages'] = $count_chat_messages;
+
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];

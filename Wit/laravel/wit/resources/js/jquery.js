@@ -868,6 +868,10 @@ function addRoomPage(res, show) {
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
             clone.querySelector('.created_at').textContent = res[i].created_at;
+            if(res[i].posted_at == null){
+                clone.querySelector('.countOnlineUsers').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-people-fill'viewBox='0 0 16 16'><path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /><path fill-rule='evenodd'd='M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z'/><path d='M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z' /></svg>x"+res[i].count_online_users;
+                clone.querySelector('.countChatMessages').innerHTML ="<svg width='16' height='16' fill='currentColor' class='bi bi-chat-left-dots-fill'viewBox='0 0 16 16'><path d='M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>x"+res[i].count_chat_messages;
+            }
 
             for (let j = 0; j < Object.keys(res[i].tags).length; j++) { //ここの実装見直したい、、
                 let room_tag_li = document.createElement("li");

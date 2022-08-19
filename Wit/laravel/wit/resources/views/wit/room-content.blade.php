@@ -219,7 +219,7 @@
             <p class="card-text room-description text-break m-0">{!! nl2br(e($room->description)) !!}</p>
             @if (is_null($room->posted_at))
                 <small class="text-muted d-flex justify-content-end text-end">
-                    <div class="mx-2">
+                    <div class="mx-2 countOnlineUsers">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-people-fill"
                             viewBox="0 0 16 16">
                             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -228,12 +228,12 @@
                             <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                         </svg>x{{ $room->count_online_users }}
                     </div>
-                    <div>
+                    <div class="countChatMessages">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill"
                             viewBox="0 0 16 16">
                             <path
                                 d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                        </svg>x{{ $room->roomChat->count() }}
+                        </svg>x{{ $room->count_chat_messages }}
                     </div>
                 </small>
             @endif
