@@ -71,7 +71,7 @@ class Room extends Model
 
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\User', 'room_users', 'room_id', 'user_id')->using('App\Models\RoomUser')->withPivot('entered_at', 'exited_at');
+        return $this->belongsToMany('App\Models\User', 'room_users', 'room_id', 'user_id')->using('App\Models\RoomUser')->withPivot('in_room','entered_at', 'exited_at');
     }
 
     public function roomBans()

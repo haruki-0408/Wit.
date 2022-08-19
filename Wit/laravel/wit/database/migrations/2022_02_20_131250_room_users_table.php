@@ -17,8 +17,9 @@ class RoomUsersTable extends Migration
             $table->id();
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->foreignUuid('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
+            $table->boolean('in_room')->nullable()->default(null);
             $table->dateTime('entered_at')->useCurrent();
-            $table->dateTime('exited_at')->nullable()->default(null)->comment('論理削除により出入りをテーブルに記録する');
+            $table->dateTime('exited_at')->nullable()->default(null);
             $table->unique(['user_id', 'room_id']);
         });
     }

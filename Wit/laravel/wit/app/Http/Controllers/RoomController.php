@@ -12,6 +12,7 @@ use App\Events\RemoveRoom;
 use App\Events\RoomBanned;
 use App\Models\User;
 use App\Models\Room;
+use App\Models\RoomUser;
 use App\Models\Tag;
 use App\Models\RoomImage;
 use Illuminate\Support\Facades\Auth;
@@ -138,8 +139,10 @@ class RoomController extends Controller
         }
 
         $rooms->map(function ($each) {
+            $count_online_users = RoomUser::countOnlineUsers($each->id);
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
+            $each['count_online_users'] = $count_online_users;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];

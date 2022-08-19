@@ -33,7 +33,7 @@ class BroadcastUserExitNotification
         $user_id = $event->user_id;
         if (Room::where('id', $room_id)->exists()) {
             $room = Room::find($room_id);
-            $room->roomUsers()->updateExistingPivot($user_id, ['exited_at' => Carbon::now()]);
+            $room->roomUsers()->updateExistingPivot($user_id, ['in_room'=>false,'exited_at' => Carbon::now()]);
         }
     }
 }
