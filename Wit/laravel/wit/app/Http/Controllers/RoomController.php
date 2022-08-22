@@ -199,6 +199,11 @@ class RoomController extends Controller
     {
         $auth_user = Auth::user();
         $check = Room::checkRoomAccess(Auth::id(), $room_id);
+        $count_online_others = RoomUser::countOnlineOthers($room_id);
+    
+        if($count_online_others >= 10){
+            return redirect('home')->with('error_message','ルームの最大人数を超過したため入室できません');
+        }
 
         if (!$check) {
             if (mb_strlen($room_id) != 26) {
