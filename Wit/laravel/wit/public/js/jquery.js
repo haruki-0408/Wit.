@@ -11728,6 +11728,24 @@ $(document).on('change', '#searchType', function () {
       location.reload();
       break;
   }
+}); //検索フィルターのPostをクリックしたとき
+
+$(document).on('click', '#flexCheckPost', function () {
+  var select = document.getElementById('searchType').value;
+  var flexCheckTag = document.getElementById('flexCheckTag');
+  var flexCheckPassword = document.getElementById('flexCheckPassword');
+  var flexCheckPost = document.getElementById('flexCheckPost');
+
+  if (flexCheckPost.checked) {
+    flexCheckTag.disabled = true;
+    flexCheckPassword.disabled = true;
+  } else if (select === 'tag') {
+    flexCheckTag.disabled = true;
+    flexCheckPassword.disabled = false;
+  } else {
+    flexCheckTag.disabled = false;
+    flexCheckPassword.disabled = false;
+  }
 });
 
 function addUserPage(res, show) {

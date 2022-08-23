@@ -692,7 +692,7 @@ $(document).on('click', '#flexRadioUser', function () {
     newRow.disabled = true;
     oldRow.disabled = true;
     chatRow.disabled = true;
-})
+});
 
 //検索タイプをルーム検索に切り替えたとき
 $(document).on('click', '#flexRadioRoom', function () {
@@ -740,7 +740,7 @@ $(document).on('click', '#flexRadioRoom', function () {
             location.reload();
             break;
     }
-})
+});
 
 //キーワード、ルームID、タグ　検索タイプを切り替えたとき
 $(document).on('change', '#searchType', function () {
@@ -786,7 +786,25 @@ $(document).on('change', '#searchType', function () {
             location.reload();
             break;
     }
-})
+});
+
+//検索フィルターのPostをクリックしたとき
+$(document).on('click', '#flexCheckPost', function () {
+    let select = document.getElementById('searchType').value;
+    let flexCheckTag = document.getElementById('flexCheckTag');
+    let flexCheckPassword = document.getElementById('flexCheckPassword');
+    let flexCheckPost = document.getElementById('flexCheckPost');
+    if(flexCheckPost.checked){
+        flexCheckTag.disabled = true;
+        flexCheckPassword.disabled = true;
+    }else if(select === 'tag'){
+        flexCheckTag.disabled = true;
+        flexCheckPassword.disabled = false;
+    }else{
+        flexCheckTag.disabled = false;
+        flexCheckPassword.disabled = false;
+    }
+});
 
 
 function addUserPage(res, show) {

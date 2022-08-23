@@ -9,6 +9,7 @@ use App\Events\UserEntered;
 use App\Events\UserExited;
 use App\Events\SendMessage;
 use App\Events\RemoveRoom;
+use App\Events\SaveRoom;
 use App\Events\RoomBanned;
 use App\Models\User;
 use App\Models\Room;
@@ -200,9 +201,9 @@ class RoomController extends Controller
         $auth_user = Auth::user();
         $check = Room::checkRoomAccess(Auth::id(), $room_id);
         $count_online_others = RoomUser::countOnlineOthers($room_id);
-    
-        if($count_online_others >= 10){
-            return redirect('home')->with('error_message','ルームの最大人数を超過したため入室できません');
+
+        if ($count_online_others >= 10) {
+            return redirect('home')->with('error_message', 'ルームの最大人数を超過したため入室できません');
         }
 
         if (!$check) {
@@ -210,7 +211,7 @@ class RoomController extends Controller
                 return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
 
-            if (Room::where('id', $room_id)->exists() && Room::where('id',$room_id)->first()->posted_at == null) {
+            if (Room::where('id', $room_id)->exists()) {
                 $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
                 event(new UserEntered($room_id));
                 $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
@@ -233,6 +234,10 @@ class RoomController extends Controller
             } else {
                 return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
             }
+        } elseif (Room::find($room_id)->posted_at != null) {
+            return redirect(route('showPostRoom', [
+                'room_id' => $room_id,
+            ]));
         } else {
             return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
         }
@@ -240,24 +245,23 @@ class RoomController extends Controller
 
     public function showPostRoom($room_id)
     {
+        if (is_null(Room::find($room_id)->posted_at)) {
+            return redirect(route('enterRoom', [
+                'room_id' => $room_id,
+            ]));
+        }
+
         $auth_user = Auth::user();
-        if (mb_strlen($room_id) != 26) {
-            return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
-        }
 
-        if (Room::where('id', $room_id)->exists()) {
-            $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+        $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
 
-            $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+        $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
-            return view('wit.post_room', [
-                'room_info' => $room_info,
-                'count_image_data' => $count_image_data,
-                'auth_user' => $auth_user,
-            ]);
-        } else {
-            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
-        }
+        return view('wit.post_room', [
+            'room_info' => $room_info,
+            'count_image_data' => $count_image_data,
+            'auth_user' => $auth_user,
+        ]);
     }
 
     public function saveRoom($room_id)
@@ -267,12 +271,13 @@ class RoomController extends Controller
             if ($room->user_id == Auth::id()) {
                 $room->posted_at = Carbon::now();
                 $room->save();
+                event(new SaveRoom($room_id));
                 return redirect('home')->with('action_message', 'ルーム:' . $room_id . 'の保存が完了しました');
             } else {
-                return back()->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
+                return redirect('home')->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
             }
         } else {
-            return back()->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
+            return redirect('home')->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
         }
     }
 
@@ -345,10 +350,10 @@ class RoomController extends Controller
             $user_id = Auth::id();
             $user = User::find($user_id);
         }
-         
+
         $open_rooms = $user->rooms()->whereNull('posted_at')->with(['user', 'tags'])->get();
 
-        $open_rooms->map(function ($each){
+        $open_rooms->map(function ($each) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
             $each['count_online_users'] = $count_online_users;
@@ -506,29 +511,18 @@ class RoomController extends Controller
     //ルーム画像だけは別のメソッドで返す。　不正アクセス対策
     public function showRoomImage($room_id, $number)
     {
-        $check = Room::checkRoomAccess(Auth::id(), $room_id);
         $room_password = Room::find($room_id)->password;
-        if (is_null($room_password) && !$check) {
+        if (is_null($room_password)) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
-            if (is_null($room_image)) {
-                abort(404);
-            } elseif (Storage::exists($room_image->image)) {
-                return response()->file(Storage::path($room_image->image));
-            } else {
-                abort(404);
-            }
-        } else if (session()->get('auth_room_id') == $room_id && !$check) {
+            abort_unless(Storage::exists($room_image->image), 404);
+            return response()->file(Storage::path($room_image->image));
+        } else if (session()->get('auth_room_id') == $room_id) {
 
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
 
-            if (is_null($room_image)) {
-                abort(404);
-            } elseif (Storage::exists($room_image->image)) {
-                return response()->file(Storage::path($room_image->image));
-            } else {
-                abort(404);
-            }
+            abort_unless(Storage::exists($room_image->image), 404);
+            return response()->file(Storage::path($room_image->image));
         } else {
             abort(404);
         }

@@ -138,7 +138,7 @@ class Room extends Model
     public static function checkRoomAccess($user_id, $room_id)
     {
         $room = new Room;
-        if ($room->find($room_id)->roomBans->contains($user_id)) {
+        if ($room->find($room_id)->roomBans->contains($user_id) || $room->find($room_id)->posted_at != null) {
             return true;
         } else {
             return false;

@@ -67,6 +67,7 @@
                         <input id="inputTags" class="form-control" type="text" name="tag" value="{{ old('tag') }}" multiple>
                         <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
                         <div class="form-text">全角数字記号,全角スペース,中括弧'[]'は登録されず無視されます</div>
+                        <div class="form-text">※タグがないとPost Roomとして保存できません</div>
 
                         @error('matches.*')
                             <div class="text-danger">
@@ -130,7 +131,7 @@
                 '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
             confirm_password.innerHTML = 
                 '<input type="password" name="createPass_confirmation" class="form-control" placeholder="confirm password" autocomplete="off">';
-            password_help.textContent = 'passwordは8文字以上255文字以下で半角英数字&記号が使用できます';
+            password_help.innerHTML = '<p>passwordは8文字以上255文字以下で半角英数字&記号が使用できます</p><p>※パスワード付きのルームはPost Roomとして保存できません</p>';
         } else {
             password.innerHTML =
                 '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';

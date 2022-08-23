@@ -496,7 +496,8 @@
                 <div class="d-flex flex-column p-3  ">
                     <ul id="informationListModal" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
-                        <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Create User : <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px" height="50px" class="rounded-circle m-1"><strong class="d-inline">{{ $room_info->user->name }}</strong></li>
+                        <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
                             <li class="p-2">Room Administration</li>
