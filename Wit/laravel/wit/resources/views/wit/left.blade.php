@@ -2,7 +2,7 @@
     <div class="profile-box  ">
         <a href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            <svg width="16" height="16" fill="currentColor"
                 class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg>
@@ -14,10 +14,10 @@
         <div class="dropdown mb-3">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="profile">
-                    <img src="{{ asset(Auth::user()->profile_image) }}" alt="" width="70" height="70"
-                        class="rounded-circle m-2">
-                    <strong>{{ Auth::user()->name }}</strong>
+                <div id="profile" class="row">
+                    <div class="col-3 inline"><img src="{{ asset(Auth::user()->profile_image) }}" alt="" width="70" height="70"
+                        class="rounded-circle m-2"></div>
+                    <div class="col-9 d-flex align-items-center justify-content-center text-wrap text-break"><strong class="p-1 m-1">{{ Auth::user()->name }}</strong></div>
                 </div>
             </a>
 

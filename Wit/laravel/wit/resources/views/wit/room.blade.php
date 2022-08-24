@@ -551,7 +551,7 @@
                         <div id="hostUser" class="d-flex justify-content-center">
                             <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
                                 height="50px" class="rounded-circle m-1">
-                            <strong class="d-flex align-items-center">{{ $room_info->user->name }}</strong>
+                            <strong class="text-break d-flex align-items-center">{{ $room_info->user->name }}</strong>
                         </div>
                     </div>
 
@@ -801,7 +801,7 @@
                                 <ul id="accessLogList" class="col-12 p-0 m-0">
                                     @foreach ($room_info->roomUsers as $user)
                                         <li>
-                                            <strong>{{ $user->name }}</strong>
+                                            <strong class="text-break">{{ $user->name }}</strong>
 
                                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                                 @if (isset($user->pivot->exited_at))

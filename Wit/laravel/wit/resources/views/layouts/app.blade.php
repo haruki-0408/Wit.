@@ -96,11 +96,16 @@
 <template id="User-template">
     <li class="border-0 d-flex bg-white p-1 align-items-center justify-content-between">
         <div class="user">
-            <a class="user-link link-dark text-decoration-none" href="#" alt="">
-                <img src="" alt="" width="50" height="50"
-                    class="profile-image rounded-circle me-2">
-                <strong class="user-name"></strong>
+            <a class="row user-link link-dark text-decoration-none" href="#" alt="">
+                <div class="col-2 d-flex justify-content-center p-0">
+                    <img src="" alt="" width="50" height="50"
+                        class="profile-image rounded-circle">
+                </div>
+                <div class="col-10 d-flex align-items-center p-0">
+                    <strong class="user-name text-break"></strong>
+                </div>
             </a>
+
         </div>
 
         <div class="btn-group d-flex align-items-center p-2">
@@ -117,7 +122,7 @@
                     <a href="#" class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="" alt="" width="50" height="50"
                             class="profile-image rounded-circle me-2">
-                        <strong class="user-name"></strong>
+                        <strong class="user-name text-break"></strong>
                     </a>
                 </div>
 
@@ -128,7 +133,7 @@
         </div>
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
-            <strong class="card-title"></strong>
+            <strong class="card-title m-0 pb-1"></strong>
             <p class="card-text room-description text-break m-0"></p>
             <small class="text-muted d-flex justify-content-end text-end">
                 <div class="mx-2 countOnlineUsers">
@@ -189,7 +194,7 @@
                                     <a id="navbarUserName" class="link-dark text-decoration-none dropdown-toggle "
                                         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         v-pre>
-                                        {{ Auth::user()->name }}
+                                        <strong style="font-size:10px;">{{ Auth::user()->name }}</strong>
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

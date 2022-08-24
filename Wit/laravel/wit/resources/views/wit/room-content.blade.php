@@ -8,7 +8,7 @@
                         class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="{{ asset($room->user->profile_image) }}" alt="" width="50" height="50"
                             class="profile-image rounded-circle me-2">
-                        <strong class="user-name">{{ $room->user->name }}</strong>
+                        <strong class="user-name text-break">{{ $room->user->name }}</strong>
                     </a>
                 </div>
 
@@ -214,7 +214,7 @@
                             d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                     </svg></strong>
             @else
-                <strong class="card-title m-0">{{ $room->title }}</strong>
+                <strong class="card-title m-0 pb-1">{{ $room->title }}</strong>
             @endif
             <p class="card-text room-description text-break m-0">{!! nl2br(e($room->description)) !!}</p>
             @if (is_null($room->posted_at))

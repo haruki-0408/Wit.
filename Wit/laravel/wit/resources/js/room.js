@@ -62,7 +62,6 @@ Echo.join('room-user-notifications.' + room_id)
             window.location.href = '/home';
         } else if (e.type === 'lift') {
             console.log(e.user.name + 'さんのアクセスが許可されました');
-            //liftBanUser(e.user);
         }
     })
     .listen('SendMessage', (e) => {
@@ -84,7 +83,7 @@ function addOnlineUser(user) {
         user_image_column.classList = "col-2";
         const user_image = document.createElement('img');
         user_image.src = '/' + user.profile_image;
-        console.log(screen.width);
+    
         if (screen.width < 991 && screen.width > 580) {
             user_image.width = '30';
             user_image.height = '30';
@@ -97,10 +96,10 @@ function addOnlineUser(user) {
 
         const user_name_column = document.createElement('div');
         if (screen.width < 991 && screen.width > 580) {
-            user_name_column.classList = "col-6 mx-2 mx-sm-1";
+            user_name_column.classList = "col-6 mx-2 mx-sm-1 text-break";
             user_name_column.style = 'font-size:8px;'
         } else {
-            user_name_column.classList = "col-8 mx-2 mx-sm-1";
+            user_name_column.classList = "col-8 mx-2 mx-sm-1 text-break";
         }
         
         user_name_column.textContent = user.name;
@@ -145,6 +144,7 @@ function sendEnterMessage(user) {
     if (change_element.length !== 0) {
         change_element.text('Latest Online ' + now2);
     } else {
+        user_name_element.classList = 'text-break';
         user_name_element.innerText = user.name;
         create_enter_element.classList = "text-primary m-0";
         create_enter_element.dataset.enterId = user.id;
@@ -298,6 +298,7 @@ if (document.getElementById('forceConfirm')) {
         user_image.height = '50';
 
         let user_name = document.createElement('strong');
+        user_name.classList = 'text-break';
         user_name.textContent = button.parentNode.previousSibling.textContent;
         user_element.append(user_image);
         user_element.append(user_name);
