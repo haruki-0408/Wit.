@@ -39,11 +39,11 @@
         }
 
         #image {
-            height: 45%;
+            height: 40%;
         }
 
         #chat {
-            height: 55%;
+            height: 60%;
         }
 
         #room-description {
@@ -80,12 +80,16 @@
         }
 
         #roomTagsList {
-            height: 90%;
+            height: 80%;
             overflow: scroll;
         }
 
-        #onlineUsersList {
+        #informationList {
             height: 90%;
+        }
+
+        #onlineUsersList {
+            height: 80%;
             overflow: scroll;
         }
 
@@ -422,10 +426,10 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <ul id="accessLogListModal">
+                <ul id="accessLogListModal" class="p-2 m-0">
                     @foreach ($room_info->roomUsers as $user)
                         <li>
-                            <strong>{{ $user->name }}</strong>
+                            <strong class="text-break">{{ $user->name }}</strong>
 
                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                 @if (isset($user->pivot->exited_at))
@@ -496,7 +500,17 @@
                 <div class="d-flex flex-column p-3  ">
                     <ul id="informationListModal" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
-                        <li>Create User : <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px" height="50px" class="rounded-circle m-1"><strong class="d-inline">{{ $room_info->user->name }}</strong></li>
+                        <li class="row">
+                            <p class="m-0">Create User : </p>
+                            <div class="col-2">
+                                <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px"
+                                    height="50px" class="rounded-circle m-1">
+                            </div>
+                            <div class="col-10 d-flex align-items-center"><strong
+                                    class="d-inline text-break">{{ $room_info->user->name }}</strong>
+                            </div>
+                        </li>
+
                         <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
@@ -547,7 +561,7 @@
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
                 <div class="container-fluid">
-                    <div class="col-2 d-none d-md-block ">
+                    <div class="col-3 d-none d-md-block ">
                         <div id="hostUser" class="d-flex justify-content-center">
                             <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
                                 height="50px" class="rounded-circle m-1">
@@ -555,13 +569,13 @@
                         </div>
                     </div>
 
-                    <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">{{ $room_info->title }}</h4>
-                        <p class="d-sm-none">{{ $room_info->title }}</p>
+                    <div class="col-9 col-md-8 text-wrap fw-bold">
+                        <h4 class="d-none d-md-block m-0">{{ $room_info->title }}</h4>
+                        <p class="d-sm-none m-0">{{ $room_info->title }}</p>
                     </div>
 
 
-                    <div class="exitRoomButton col-2 d-none d-md-block d-flex justify-content-center">
+                    <div class="exitRoomButton col-1 d-none d-md-block d-flex justify-content-center">
                         <a style="width:42px; height:30px;" data-bs-toggle="modal" data-bs-target="#exitRoomModal"
                             class="d-flex justify-content-center btn btn-outline-primary">
                             <svg width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left"
@@ -575,7 +589,7 @@
                     </div>
 
 
-                    <div class="col-2 d-sm-none d-flex justify-content-center ">
+                    <div class="col-1 d-sm-none d-flex justify-content-center ">
                         <a data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
                             aria-controls="offcanvasRight">
                             <button class="navbar-toggler" type="button">
@@ -602,7 +616,7 @@
                                         <path
                                             d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
                                     </svg>
-                                    <strong>Room Tags</strong>
+                                    <strong>Room Tag</strong>
                                 </div>
 
                                 <ul id="roomTagsList" class="col-12 fs-5 p-0 m-2">
@@ -618,7 +632,15 @@
                                 </ul>
                             </div>
                             <div class="h-50">
-                                <ul id="informationList" class="col-12 mt-2 p-1">
+                                <div id="informations" class="col-12 d-flex align-items-center p-2">
+                                    <svg width="20" height="20" fill="currentColor"
+                                        class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                    </svg>
+                                    <strong>Information</strong>
+                                </div>
+                                <ul id="informationList" class="col-12 mt-2 p-2">
                                     <li>Id : {{ $room_info->id }}</li>
                                     <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                                     @if (Auth::id() == $room_info->user->id)
@@ -668,26 +690,32 @@
                                 </div>
 
                                 <div class="carousel-inner  h-100 w-100">
-                                    @for ($i = 0; $i < $count_image_data; $i++)
-                                        @if ($i == 0)
-                                            <div onclick="this.webkitRequestFullScreen();"
-                                                class="carousel-item active">
-                                                <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => $room_info->id,
-                                                    'number' => $i,
-                                                ]) }}"
-                                                    alt="" style="" class="image-fluid">
-                                            </div>
-                                        @else
-                                            <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                                <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => $room_info->id,
-                                                    'number' => $i,
-                                                ]) }}"
-                                                    alt="" style="" class=" image-fluid">
-                                            </div>
-                                        @endif
-                                    @endfor
+                                    @if ($count_image_data != 0)
+                                        @for ($i = 0; $i < $count_image_data; $i++)
+                                            @if ($i == 0)
+                                                <div onclick="this.webkitRequestFullScreen();"
+                                                    class="carousel-item active">
+                                                    <img src=" {{ route('showRoomImage', [
+                                                        'room_id' => $room_info->id,
+                                                        'number' => $i,
+                                                    ]) }}"
+                                                        alt="" style="" class="image-fluid">
+                                                </div>
+                                            @else
+                                                <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                                    <img src=" {{ route('showRoomImage', [
+                                                        'room_id' => $room_info->id,
+                                                        'number' => $i,
+                                                    ]) }}"
+                                                        alt="" style="" class=" image-fluid">
+                                                </div>
+                                            @endif
+                                        @endfor
+                                    @else
+                                        <div class="h-100 d-flex align-items-center justify-content-center">
+                                            <h1 class="text-light ">No Image</h1>
+                                        </div>
+                                    @endif
 
                                 </div>
 
@@ -768,7 +796,6 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
 
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
@@ -788,9 +815,30 @@
                                 <ul id="onlineUsersList" class="col-12 p-0 m-0">
 
                                 </ul>
+                                <div class="button-group p-0 m-0 d-none d-md-block d-lg-none ">
+                                    <button data-bs-toggle="modal" data-bs-target="#tags"
+                                        class="roomTags btn btn-outline-primary mx-4">
+                                        <svg width="20" height="20" fill="currentColor"
+                                            class="bi bi-tags-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                            <path
+                                                d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
+                                        </svg>
+                                    </button>
+                                    <button data-bs-toggle="modal" data-bs-target="#information"
+                                        class="btn btn-outline-primary">
+                                        <svg width="20" height="20" fill="currentColor"
+                                            class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
+
                             <div class="h-50">
-                                <div class="accessLog col-12 d-flex align-items-center mt-2 p-2">
+                                <div class="accessLog d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-file-text-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -798,7 +846,7 @@
                                     </svg>
                                     <strong>Access Log</strong>
                                 </div>
-                                <ul id="accessLogList" class="col-12 p-0 m-0">
+                                <ul id="accessLogList" class="p-2 m-0">
                                     @foreach ($room_info->roomUsers as $user)
                                         <li>
                                             <strong class="text-break">{{ $user->name }}</strong>
@@ -816,7 +864,6 @@
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                 </div>
         </main>

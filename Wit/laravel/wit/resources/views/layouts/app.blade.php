@@ -94,20 +94,15 @@
 </head>
 
 <template id="User-template">
-    <li class="border-0 d-flex bg-white p-1 align-items-center justify-content-between">
+    <li class="d-flex bg-white p-1 justify-content-between">
         <div class="user">
-            <a class="row user-link link-dark text-decoration-none" href="#" alt="">
-                <div class="col-2 d-flex justify-content-center p-0">
-                    <img src="" alt="" width="50" height="50"
-                        class="profile-image rounded-circle">
-                </div>
-                <div class="col-10 d-flex align-items-center p-0">
-                    <strong class="user-name text-break"></strong>
-                </div>
+            <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1" href="#"
+                alt="">
+                <img src="" alt="" width="50" height="50"
+                    class="profile-image rounded-circle me-2">
+                <strong class="user-name text-break"></strong>
             </a>
-
         </div>
-
         <div class="btn-group d-flex align-items-center p-2">
 
         </div>

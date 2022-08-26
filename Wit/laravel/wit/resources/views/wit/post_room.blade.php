@@ -38,11 +38,11 @@
         }
 
         #image {
-            height: 45%;
+            height: 40%;
         }
 
         #chat {
-            height: 55%;
+            height: 60%;
         }
 
         #room-description {
@@ -79,8 +79,16 @@
         }
 
         #roomTagsList {
-            height: 90%;
+            height: 80%;
             overflow: scroll;
+        }
+
+        #informationList {
+            height: 90%;
+        }
+
+        #informationListLeft {
+            font-size:10px;
         }
 
         #accessLogList {
@@ -405,6 +413,14 @@
                                 </ul>
                             </div>
                             <div class="h-50">
+                                <div id="informations" class="col-12 d-flex align-items-center p-2">
+                                    <svg width="20" height="20" fill="currentColor"
+                                        class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                    </svg>
+                                    <strong>Information</strong>
+                                </div>
                                 <ul id="informationList" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
                                     <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
@@ -512,8 +528,48 @@
 
                     <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
                         <div class="row h-100">
+                            <div class="d-none d-md-block d-lg-none">
+                                <div id="roomTagsLeft" class="col-12 d-flex align-items-center p-2">
+                                    <svg width="16" height="16" fill="currentColor"
+                                        class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                        <path
+                                            d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
+                                    </svg>
+                                    <strong>Room Tags</strong>
+                                </div>
+
+                                <ul id="roomTagsListLeft" class="col-12 fs-5 p-0 m-2">
+                                    @foreach ($room_info->tags as $roomTag)
+                                        <li>
+                                            <div class="tag">
+                                                <span class="tag-name">{{ $roomTag->name }}</span>
+                                                <span
+                                                    class="tag-number badge badge-light">{{ $roomTag->number }}</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+        
+                            <div class="d-none d-md-block d-lg-none">
+                                <div id="informationsLeft" class="col-12 d-flex align-items-center p-2">
+                                    <svg width="20" height="20" fill="currentColor"
+                                        class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                    </svg>
+                                    <strong>Information</strong>
+                                </div>
+                                <ul id="informationListLeft" class="col-12 p-1">
+                                    <li class="text-break pb-2">Id : {{ $room_info->id }}</li>
+                                    <li class="text-break">Create : {{ $room_info->created_at->format('Y/m/d H:i') }}
+                                    </li>
+                                </ul>
+                            </div>
                             <div>
-                                <div class="accessLog col-12 d-flex align-items-center mt-2 p-2">
+                                <div class="accessLog col-12 d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-file-text-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -540,9 +596,10 @@
                                 </ul>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
+            </div>
         </main>
     </div>
 </body>

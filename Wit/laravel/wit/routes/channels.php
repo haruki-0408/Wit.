@@ -21,12 +21,12 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_id) {
     $room = new Room;
-    $count_online_others = RoomUser::countOnlineOthers($room_id);
-    if($count_online_others <= 10 && $user->roomUsers->contains($room_id)&&($room->find($room_id)->roomBans->doesntContain($user->id)) ){
-        //$user->id = Crypt::encrypt($user->id);
-        return $user;
-        //return ['id'=>Crypt::encrypt($user->id),'name'=>$user->name,'profile_image'=>$user->profile_image];
-    }else{
+    $count_online_users = RoomUser::countOnlineUsers($room_id);
+    $ban_check = $room->find($room_id)->roomBans->contains($user->id);
+
+    if($count_online_users > 10 || $ban_check){
         return false;
     }
+
+    return $user;
 });

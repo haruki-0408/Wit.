@@ -173,26 +173,37 @@ class RoomController extends Controller
             return back()->with('error_message', 'ルーム:' . $request->room_id . 'は存在しません');
         }
 
+        $auth_user = Auth::user();
+        $check = Room::checkRoomAccess(Auth::id(), $room_id);
+        $count_online_others = RoomUser::countOnlineOthers($room_id);
+
+        if ($count_online_others >= 10) {
+            return redirect('home')->with('error_message', 'ルームの最大人数を超過したため入室できません');
+        }
+
         $room = Room::find($room_id);
         $room_password = $room->password;
         event(new UserEntered($room_id));
         $auth_user = Auth::user();
-
-        if (isset($request->enterPass) && isset($room_password) && $room->posted_at == null) {
-            if (Hash::check($request->enterPass, $room_password)) {
-                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-                $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-                session()->put('auth_room_id', $room_id);
-                return view('wit.room', [
-                    'room_info' => $room_info,
-                    'count_image_data' => $count_image_data,
-                    'auth_user' => $auth_user,
-                ]);
+        if (!$check) {
+            if (isset($request->enterPass) && isset($room_password) && $room->posted_at == null) {
+                if (Hash::check($request->enterPass, $room_password)) {
+                    $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+                    $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
+                    session()->put('auth_room_id', $room_id);
+                    return view('wit.room', [
+                        'room_info' => $room_info,
+                        'count_image_data' => $count_image_data,
+                        'auth_user' => $auth_user,
+                    ]);
+                } else {
+                    return back()->with('error_message', 'パスワードが違います');
+                }
             } else {
-                return back()->with('error_message', 'パスワードが違います');
+                return back()->with('error_message', 'パスワードが不正入力されています');
             }
         } else {
-            return back()->with('error_message', 'パスワードが不正入力されています');
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
         }
     }
 

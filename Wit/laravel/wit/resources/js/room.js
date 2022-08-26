@@ -72,9 +72,10 @@ Echo.join('room-user-notifications.' + room_id)
         window.location.href = '/home';
     });
 
+
 function addOnlineUser(user) {
     const check = $('li[data-user-id="' + user.id + '"]');
-    if (check.length == 0) {
+    if (check.length === 0) {
         const user_element = document.createElement('li');
         user_element.classList = "d-flex align-items-center p-2";
         user_element.dataset.userId = user.id;
@@ -121,7 +122,7 @@ function addOnlineUser(user) {
             force_exit.dataset.bsTarget = "#forceConfirm";
             force_exit.classList = "btn btn-outline-danger ";
             force_exit.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-x-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z' /></svg>";
-            force_exit_column.append(force_exit)
+            force_exit_column.append(force_exit);
             user_element.appendChild(force_exit_column);
         }
 
@@ -284,7 +285,7 @@ if (document.getElementById('forceConfirm')) {
         let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
         const attention_message = document.createElement('strong');
         const attention_message2 = document.createElement('p');
-        attention_message.classList = "d-block mb-2 text-center";
+        attention_message.classList = "d-block mb-2 text-center text-break text-wrap";
         attention_message.textContent = 'このユーザをアクセス禁止にしますか?';
         attention_message2.classList = 'text-danger fs-6 p-1 m-0 text-center';
         attention_message2.textContent = '※ルームが終了するか解除するまで再入場不可能になります';
@@ -341,7 +342,7 @@ if (document.getElementById('liftBan')) {
         let button = event.relatedTarget;
         let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
         const message = document.createElement('strong');
-        message.classList = "d-block mb-2 text-center";
+        message.classList = "d-block mb-2 text-center text-break text-wrap";
         message.textContent = 'このユーザのアクセスを許可しますか？';
 
         const user_element = document.createElement('div');

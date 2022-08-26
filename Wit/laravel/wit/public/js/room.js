@@ -10994,7 +10994,7 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
 function addOnlineUser(user) {
   var check = $('li[data-user-id="' + user.id + '"]');
 
-  if (check.length == 0) {
+  if (check.length === 0) {
     var user_element = document.createElement('li');
     user_element.classList = "d-flex align-items-center p-2";
     user_element.dataset.userId = user.id;
@@ -11210,7 +11210,7 @@ if (document.getElementById('forceConfirm')) {
     var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
     var attention_message = document.createElement('strong');
     var attention_message2 = document.createElement('p');
-    attention_message.classList = "d-block mb-2 text-center";
+    attention_message.classList = "d-block mb-2 text-center text-break text-wrap";
     attention_message.textContent = 'このユーザをアクセス禁止にしますか?';
     attention_message2.classList = 'text-danger fs-6 p-1 m-0 text-center';
     attention_message2.textContent = '※ルームが終了するか解除するまで再入場不可能になります';
@@ -11262,7 +11262,7 @@ if (document.getElementById('liftBan')) {
     var button = event.relatedTarget;
     var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
     var message = document.createElement('strong');
-    message.classList = "d-block mb-2 text-center";
+    message.classList = "d-block mb-2 text-center text-break text-wrap";
     message.textContent = 'このユーザのアクセスを許可しますか？';
     var user_element = document.createElement('div');
     user_element.classList = 'text-center p-1 m-0';

@@ -82,26 +82,24 @@
             <div class="modal-body p-1">
                 <ul id="myListUser" class="fs-6 p-2">
                     @foreach ($list_users as $list_user)
-                        <li data-user-id='{{ $list_user->id }}'
-                            class="border-0 d-flex bg-white p-1 align-items-center justify-content-between">
+                        <li data-user-id="{{ $list_user->id }}" class="d-flex bg-white p-1 justify-content-between">
                             <div class="user">
-                                <a class="user-link link-dark text-decoration-none"
-                                    href='/home/profile:{{ $list_user->id }}' alt="">
-                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50"
-                                        height="50" class="profile-image rounded-circle me-2">
-                                    <strong class="user-name">{{ $list_user->name }}</strong>
+                                <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1" href="/home/profile:{{ $list_user->id }}"
+                                    alt="">
+                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
+                                        class="profile-image rounded-circle me-2">
+                                    <strong class="user-name text-break">{{ $list_user->name }}</strong>
                                 </a>
                             </div>
-
                             <div class="btn-group d-flex align-items-center p-2">
                                 <button type="button" class="remove-list-user btn btn-outline-danger"><svg
-                                        width="16" height="16" fill="currentColor"
-                                        class="bi bi-person-dash-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
-                                        <path
-                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg></button>
+                                    width="16" height="16" fill="currentColor"
+                                    class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                    <path
+                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                </svg></button>
                             </div>
                         </li>
                     @endforeach
