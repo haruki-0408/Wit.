@@ -228,7 +228,7 @@
                 <div class="modal-body">
                     <ul id="banUsersList" class="p-0 m-2">
                         @foreach ($room_info->roomBans as $room_ban_user)
-                            <li class="d-flex align-items-center p-3" data-user-id="{{ $room_ban_user->id }}">
+                            <li class="d-flex align-items-center p-3" data-lift-id="{{ $room_ban_user->id }}">
                                 <div class="col-2 text-center"><img src="{{ asset($room_ban_user->profile_image) }}"
                                         width="50" height="50" class="rounded-circle"></div>
                                 <div class="col-8 text-left mx-2 mx-sm-0">{{ $room_ban_user->name }}</div>

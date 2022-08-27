@@ -11260,7 +11260,8 @@ if (document.getElementById('liftBan')) {
   liftBanModal.addEventListener('shown.bs.modal', function (event) {
     var lift_ban_button = document.getElementById('liftBanButton');
     var button = event.relatedTarget;
-    var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+    var user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
+    console.log(user_id);
     var message = document.createElement('strong');
     message.classList = "d-block mb-2 text-center text-break text-wrap";
     message.textContent = 'このユーザのアクセスを許可しますか？';

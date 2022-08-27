@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Events\RemoveRoom;
+
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
 use App\Http\Requests\ChangeProfileRequest;
@@ -78,11 +81,11 @@ class UserController extends Controller
     protected function authUserPassword(AuthPasswordRequest $request)
     {
         $query = $request->query('ref');
-        
+
         if (isset($query)) {
             $user = Auth::user();
             $password = $user->password;
-            
+
             if ($request->has('infoPass')) {
                 $setting_password = $request->infoPass;
             } else if ($request->has('deletePass')) {
@@ -96,22 +99,6 @@ class UserController extends Controller
             }
         }
     }
-
-    /* 応答が遅いのでやめた
-    public function showProfileImage($user_id)
-    {
-        $decrypted_user_id = Crypt::decrypt($user_id);
-        $user = User::find($decrypted_user_id);
-        $user_image_path = $user->profile_image;
-        if($user_image_path == 'default' && Storage::exists('userImages/default/wit.png')){
-            return response()->file(Storage::path('userImages/default/wit.png'));
-        }else if(!Storage::exists($user_image_path)){
-            abort(404);
-        }
-
-        return response()->file(Storage::path($user_image_path));
-    }
-    */
 
 
     public function storeImage($image_file)
@@ -179,6 +166,30 @@ class UserController extends Controller
     {
         $user_id = Auth::id();
         $user = User::find($user_id);
+        $rooms = $user->rooms()->get();
+
+        foreach ($rooms as $room) {
+            $room_tags = $room->tags()->get();
+
+            foreach ($room_tags as $room_tag) {
+                if (Tag::where('id', $room_tag->pivot->tag_id)->doesntExist()) {
+                    return redirect('home')->with('error_message', 'tag エラー');
+                }
+
+                $tag = Tag::find($room_tag->pivot->tag_id);
+                if ($tag->number < 1) {
+                    $tag->delete();
+                } else {
+                    $tag->update([
+                        'number' => $tag->number - 1
+                    ]);
+                }
+            }
+
+            $room->delete();
+            event(new RemoveRoom($room->id));
+            Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room->id);
+        }
         $user->delete();
         Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
         return redirect(route('index'));

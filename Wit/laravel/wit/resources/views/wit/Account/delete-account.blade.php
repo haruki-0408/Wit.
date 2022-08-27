@@ -36,8 +36,8 @@
                             d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
                     </svg>
                 </div>
-                <div class="col-9 align-items-center">
-                    <p style="color:red;">
+                <div class="col-9 d-flex align-items-center">
+                    <p style="color:red;" class="p-0 m-0">
                         アカウントを削除するとユーザ情報、過去に投稿したルーム、発言がすべて削除され、元には戻せません。
                         ご注意ください
                     </p>

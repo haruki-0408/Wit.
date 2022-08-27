@@ -22,18 +22,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Hamcrest\Type\IsBoolean;
 
 class RoomController extends Controller
 {
-    /*
-    public function index()
-    {
-        $items = Room::all();
-        return view('wit.ShowDatabase.showRoom', ['rooms' => $items]);
-    }*/
-
-    protected function searchRoom(Request $request)
+    public function searchRoom(Request $request)
     {
         $query = Room::query();
         $second_query = Room::query();
@@ -209,53 +201,49 @@ class RoomController extends Controller
 
     public function enterRoom($room_id)
     {
+        if (Room::where('id', $room_id)->doesntExist()) {
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+        }
+
+        if (Room::find($room_id)->posted_at != null) {
+            return redirect(route('showPostRoom', [
+                'room_id' => $room_id,
+            ]));
+        }
+
         $auth_user = Auth::user();
         $check = Room::checkRoomAccess(Auth::id(), $room_id);
         $count_online_others = RoomUser::countOnlineOthers($room_id);
+
+        if ($check) {
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
+        }
 
         if ($count_online_others >= 10) {
             return redirect('home')->with('error_message', 'ルームの最大人数を超過したため入室できません');
         }
 
-        if (!$check) {
-            if (mb_strlen($room_id) != 26) {
-                return back()->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
-            }
+        $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+        $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
-            if (Room::where('id', $room_id)->exists()) {
-                $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-                event(new UserEntered($room_id));
-                $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
-
-                if (is_null($room_info->password)) {
-                    return view('wit.room', [
-                        'room_info' => $room_info,
-                        'count_image_data' => $count_image_data,
-                        'auth_user' => $auth_user,
-                    ]);
-                } else if ((session()->get('auth_room_id') == $room_id)) {
-                    return view('wit.room', [
-                        'room_info' => $room_info,
-                        'count_image_data' => $count_image_data,
-                        'auth_user' => $auth_user,
-                    ]);
-                } else {
-                    return redirect('home')->with('error_message', 'パスワード付きのルームです');
-                }
-            } else {
-                return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
-            }
-        } elseif (Room::find($room_id)->posted_at != null) {
-            return redirect(route('showPostRoom', [
-                'room_id' => $room_id,
-            ]));
-        } else {
-            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
+        if (isset($room_info->password) && session()->get('auth_room_id') != $room_id) {
+            return redirect('home')->with('error_message', 'パスワード付きのルームです');
         }
+
+        event(new UserEntered($room_id));
+        return view('wit.room', [
+            'room_info' => $room_info,
+            'count_image_data' => $count_image_data,
+            'auth_user' => $auth_user,
+        ]);
     }
 
     public function showPostRoom($room_id)
     {
+        if (Room::where('id', $room_id)->doesntExist()) {
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
+        }
+
         if (is_null(Room::find($room_id)->posted_at)) {
             return redirect(route('enterRoom', [
                 'room_id' => $room_id,
@@ -263,9 +251,7 @@ class RoomController extends Controller
         }
 
         $auth_user = Auth::user();
-
         $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-
         $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
         return view('wit.post_room', [
@@ -335,21 +321,31 @@ class RoomController extends Controller
     {
         $user = User::find($request->user_id);
         $room = new Room;
-        $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
-        $room->find($request->room_id)->roomUsers()->detach($request->user_id);
-        $type = 'ban';
-        event(new RoomBanned($user, $request->room_id, $type));
-        return response()->Json('User was Banned');
+
+        if ($room->find($request->room_id)->user_id == Auth::id()) {
+            $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
+            $room->find($request->room_id)->roomUsers()->detach($request->user_id);
+            $type = 'ban';
+            event(new RoomBanned($user, $request->room_id, $type));
+            return response()->Json('User was Banned');
+        } else {
+            return response()->Json('Access Error');
+        }
     }
 
     public function receiveLiftBanUser(Request $request)
     {
         $user = User::find($request->user_id);
         $room = new Room;
-        $room->find($request->room_id)->roomBans()->detach($request->user_id);
-        $type = 'lift';
-        event(new RoomBanned($user, $request->room_id, $type));
-        return response()->Json('Ban was canceled');
+
+        if ($room->find($request->room_id)->user_id == Auth::id() && $request->user_id != null) {
+            $room->find($request->room_id)->roomBans()->detach($request->user_id);
+            $type = 'lift';
+            event(new RoomBanned($user, $request->room_id, $type));
+            return response()->Json('Ban was canceled');
+        } else {
+            return response()->Json('Access Error');
+        }
     }
 
     public static function getOpenRoom($user_id = null)
@@ -365,6 +361,8 @@ class RoomController extends Controller
         $open_rooms = $user->rooms()->whereNull('posted_at')->with(['user', 'tags'])->get();
 
         $open_rooms->map(function ($each) {
+            $type = Room::buttonTypeJudge($each->id);
+            $each['type'] = $type['type'];
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
             $each['count_online_users'] = $count_online_users;
@@ -577,7 +575,6 @@ class RoomController extends Controller
 
         $room->save();
 
-
         if ($request->has('createPass')) {
             session()->put('auth_room_id', $room->id);
         };
@@ -609,61 +606,36 @@ class RoomController extends Controller
 
     public function removeRoom($room_id)
     {
-        if (Room::where('id', $room_id)->exists()) {
-            $room = Room::find($room_id);
-            if ($room->user_id == Auth::id()) {
-                $room_tags = $room->tags()->get();
-
-                foreach ($room_tags as $room_tag) {
-                    if (Tag::where('id', $room_tag->pivot->tag_id)->exists()) {
-                        $tag = Tag::find($room_tag->pivot->tag_id);
-                        if ($tag->number < 1) {
-                            $tag->delete();
-                        } else {
-                            $tag->update([
-                                'number' => $tag->number - 1
-                            ]);
-                        }
-                    } else {
-                        return redirect('home')->with('error_message', 'tag エラー');
-                    }
-                }
-
-                $room->delete();
-                event(new RemoveRoom($room_id));
-                Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
-                return redirect('home')->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
-            } else {
-                return redirect('home')->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
-            }
-        } else {
+        if (Room::where('id', $room_id)->doesntExist()) {
             return redirect('home')->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
         }
+
+        $room = Room::find($room_id);
+
+        if ($room->user_id != Auth::id()) {
+            return redirect('home')->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
+        }
+
+        $room_tags = $room->tags()->get();
+
+        foreach ($room_tags as $room_tag) {
+            if (Tag::where('id', $room_tag->pivot->tag_id)->doesntExist()) {
+                return redirect('home')->with('error_message', 'tag エラー');
+            }
+
+            $tag = Tag::find($room_tag->pivot->tag_id);
+            if ($tag->number < 1) {
+                $tag->delete();
+            } else {
+                $tag->update([
+                    'number' => $tag->number - 1
+                ]);
+            }
+        }
+
+        $room->delete();
+        event(new RemoveRoom($room_id));
+        Storage::disk('local')->deleteDirectory('/roomImages/RoomID:' . $room_id);
+        return redirect('home')->with('action_message', 'ルーム:' . $room_id . 'が削除されました');
     }
 }
-
-/* テストように作ったもの　本番には不要
-public function userGet()
-    {
-        $items = RoomUser::with('User')->get();
-        return view('wit.ShowDatabase.showRoomUser', ['room_users' => $items]);
-    }
-
-    public function getUser()
-    {
-        $users = User::select('name', 'email')->get();
-        return $users;
-    }
-
-    public function imageGet()
-    {
-        $items = RoomImage::with('Room')->get();
-        return view('wit.ShowDatabase.showRoomImage', ['room_images' => $items]);
-    }
-
-    public function chatGet()
-    {
-        $items = RoomChat::with('User')->with('Room')->get();
-        return view('wit.ShowDatabase.showRoomChat', ['room_chat' => $items]);
-    }
-*/

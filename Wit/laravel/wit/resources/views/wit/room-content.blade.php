@@ -56,7 +56,7 @@
 
                         @case(10)
                             <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    width="16" height="16" fill="currentColor"
                                     class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
@@ -77,7 +77,7 @@
 
                         @case(11)
                             <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    width="16" height="16" fill="currentColor"
                                     class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />

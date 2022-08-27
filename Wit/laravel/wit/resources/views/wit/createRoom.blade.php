@@ -3,7 +3,7 @@
     aria-labelledby="CreateRoomForm" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
-            <form action="/home/createRoom" enctype="multipart/form-data" method="post">
+            <form id="createRoomForm" action="/home/createRoom" enctype="multipart/form-data" method="post">
                 @csrf
 
                 <div class="modal-header">
@@ -107,7 +107,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Create</button>
+                    <button id="submitButton" type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Create</button>
                 </div>
             </form>
         </div>
@@ -115,6 +115,12 @@
 </div>
 
 <script>
+    const submit_form = document.getElementById('createRoomForm');
+    const submit_button = document.getElementById('submitButton');
+    submit_form.addEventListener('submit',function(){
+        submit_button.disabled = true;
+    })
+
     let RoomSwitch = document.getElementById('roomSwitch');
     RoomSwitch.addEventListener('change', switchCheck);
     let password = document.getElementById('password');

@@ -84,7 +84,7 @@ function addOnlineUser(user) {
         user_image_column.classList = "col-2";
         const user_image = document.createElement('img');
         user_image.src = '/' + user.profile_image;
-    
+
         if (screen.width < 991 && screen.width > 580) {
             user_image.width = '30';
             user_image.height = '30';
@@ -102,7 +102,7 @@ function addOnlineUser(user) {
         } else {
             user_name_column.classList = "col-8 mx-2 mx-sm-1 text-break";
         }
-        
+
         user_name_column.textContent = user.name;
         user_element.appendChild(user_image_column);
         user_element.appendChild(user_name_column);
@@ -115,7 +115,7 @@ function addOnlineUser(user) {
             } else {
                 force_exit_column.classList = "col-2 text-end";
             }
-            
+
             const force_exit = document.createElement('button');
             force_exit.type = 'button';
             force_exit.dataset.bsToggle = "modal";
@@ -340,7 +340,8 @@ if (document.getElementById('liftBan')) {
         const lift_ban_button = document.getElementById('liftBanButton');
 
         let button = event.relatedTarget;
-        let user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+        let user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
+        console.log(user_id);
         const message = document.createElement('strong');
         message.classList = "d-block mb-2 text-center text-break text-wrap";
         message.textContent = 'このユーザのアクセスを許可しますか？';

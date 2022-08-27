@@ -41,7 +41,7 @@ class ChangeProfileRequest extends FormRequest
         return [
             'name' => 'string|max:25',
             'email' => 'email|max:255|string|unique:users,email,' . $auth_id . ',id',
-            'message' => 'max:500|string',
+            'message' => 'max:500',
             'image' => 'image|max:5120'
         ];
     }
