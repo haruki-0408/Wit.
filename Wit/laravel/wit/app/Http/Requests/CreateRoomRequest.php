@@ -58,9 +58,14 @@ class CreateRoomRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if($this->has('tag')){
+        if(isset($this->tag)){
             preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $this['tag'], $matches);
-            $this->merge(['matches' => $matches[1] ]);
+            foreach($matches[1] as $index => $match){
+                $match = trim($match);
+                $matches[$index] = $match;
+            }
+            $matches = array_unique($matches);
+            $this->merge(['matches' => $matches ]);
         }
 
         return $this->all();

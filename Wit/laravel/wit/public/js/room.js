@@ -11205,9 +11205,12 @@ function saveRoomNotification() {
 if (document.getElementById('forceConfirm')) {
   var forceConfirmModal = document.getElementById("forceConfirm");
   forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
+    var modal_body = $(forceConfirmModal).find('.modal-body');
+    modal_body.children().remove();
     var access_denied_button = document.getElementById('userAccessDeniedButton');
     var button = event.relatedTarget;
     var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
+    console.log(user_id);
     var attention_message = document.createElement('strong');
     var attention_message2 = document.createElement('p');
     attention_message.classList = "d-block mb-2 text-center text-break text-wrap";
@@ -11226,38 +11229,26 @@ if (document.getElementById('forceConfirm')) {
     user_name.textContent = button.parentNode.previousSibling.textContent;
     user_element.append(user_image);
     user_element.append(user_name);
-    var modal_body = $(forceConfirmModal).find('.modal-body');
-    modal_body.children().remove();
     modal_body.append(attention_message);
     modal_body.append(user_element);
     modal_body.append(attention_message2);
     access_denied_button.addEventListener('click', function (e) {
-      e.preventDefault();
-      $.ajax({
-        type: "post",
-        //HTTP通信の種類
-        url: '/home/room/ban',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-          "room_id": room_id,
-          "user_id": user_id
-        },
-        dataType: 'json'
-      }).done(function () {
-        window.onbeforeunload = null;
-        location.reload();
-      }).fail(function (error) {
-        console.log(error);
-      });
+      access_denied_button.disabled = true;
+      sendBanUser(user_id);
+      access_denied_button.disabled = false;
     });
+  });
+  forceConfirmModal.addEventListener('hidden.bs.modal', function (event) {
+    var user_id = null;
+    console.log(user_id);
   });
 }
 
 if (document.getElementById('liftBan')) {
   var liftBanModal = document.getElementById("liftBan");
   liftBanModal.addEventListener('shown.bs.modal', function (event) {
+    var modal_body = $(liftBanModal).find('.modal-body');
+    modal_body.children().remove();
     var lift_ban_button = document.getElementById('liftBanButton');
     var button = event.relatedTarget;
     var user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
@@ -11276,31 +11267,57 @@ if (document.getElementById('liftBan')) {
     user_name.textContent = button.parentNode.parentNode.children[1].textContent;
     user_element.append(user_image);
     user_element.append(user_name);
-    var modal_body = $(liftBanModal).find('.modal-body');
-    modal_body.children().remove();
     modal_body.append(message);
     modal_body.append(user_element);
     lift_ban_button.addEventListener('click', function (e) {
-      e.preventDefault();
-      $.ajax({
-        type: "post",
-        //HTTP通信の種類
-        url: '/home/room/ban/lift',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-          "room_id": room_id,
-          "user_id": user_id
-        },
-        dataType: 'json'
-      }).done(function () {
-        window.onbeforeunload = null;
-        location.reload();
-      }).fail(function (error) {
-        console.log(error);
-      });
+      lift_ban_button.disabled = true;
+      sendLiftBanUser(user_id);
+      lift_ban_button.disabled = false;
     });
+  });
+  liftBanModal.addEventListener('hidden.bs.modal', function (event) {
+    var user_id = null;
+    console.log(user_id);
+  });
+}
+
+function sendBanUser(user_id) {
+  $.ajax({
+    type: "post",
+    //HTTP通信の種類
+    url: '/home/room/ban',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      "room_id": room_id,
+      "user_id": user_id
+    },
+    dataType: 'json'
+  }).done(function () {//window.onbeforeunload = null;
+    //location.reload();
+  }).fail(function (error) {
+    console.log(error);
+  });
+}
+
+function sendLiftBanUser(user_id) {
+  $.ajax({
+    type: "post",
+    //HTTP通信の種類
+    url: '/home/room/ban/lift',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      "room_id": room_id,
+      "user_id": user_id
+    },
+    dataType: 'json'
+  }).done(function () {//window.onbeforeunload = null;
+    //location.reload();
+  }).fail(function (error) {
+    console.log(error);
   });
 }
 })();

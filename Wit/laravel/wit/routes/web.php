@@ -24,7 +24,6 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    //Route::get('/home/profile/image/{user_id}', [App\Http\Controllers\UserController::class, 'showProfileImage'])->name('showProfileImage');
     Route::get('/home/profile:{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
     Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');
@@ -56,26 +55,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');
     Route::post('/home/searchRoom', [App\Http\Controllers\RoomController::class, 'searchRoom'])->name('searchRoom');
 
-    /*Route::get('/tasks', function () {
-        $type = 'success';
-        $message = "New Comer";
-        event(new UserSessionChanged($type,$message));
-    });*/
 });
 
 
-
-
-
-
-
-/*
-Route::get('/getUser', [App\Http\Controllers\RoomController::class, 'getUser'])->name('getUser');
-Route::get('/ShowUser', [App\Http\Controllers\UserController::class,'index'])->name('showUser');
-Route::get('/ShowRoom', [App\Http\Controllers\RoomController::class,'index'])->name('showRoom');
-Route::get('/ShowTag', [App\Http\Controllers\TagController::class,'index'])->name('showTag');
-Route::get('/ShowRoomTag', [App\Http\Controllers\TagController::class,'relationGet'])->name('showRoomTag');
-Route::get('/ShowRoomUser', [App\Http\Controllers\RoomController::class,'userGet'])->name('showRoomUser');
-Route::get('/ShowRoomImage', [App\Http\Controllers\RoomController::class,'imageGet'])->name('showRoomImage');
-Route::get('/ShowRoomChat', [App\Http\Controllers\RoomController::class,'chatGet'])->name('showRoomChat');
-*/
