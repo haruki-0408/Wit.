@@ -23,7 +23,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_id) {
     $room = new Room;
     $room_user_id = $room->find($room_id)->user_id;
-    
+
     //ルームの管理者は数に入れない
     $count_online_users = $room->find($room_id)->roomUsers->except(['id',$room_user_id])->count();
     
@@ -33,7 +33,7 @@ Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_i
         return false;
     }
 
-    if($count_online_users > 1 && $user->id !== Auth::id()){
+    if($count_online_users > 10 && $user->id !== Auth::id()){
         return false;
     }
 

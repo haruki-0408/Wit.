@@ -274,8 +274,13 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="liftBanButton" type="submit" class="btn btn-outline-primary"
-                        data-bs-dismiss="modal">Yes</button>
+                    <form method="post" action="/home/room/ban/lift">
+                        @csrf
+                        <button id="liftBanButton" type="submit" class="btn btn-outline-primary"
+                            data-bs-dismiss="modal" onclick="window.onbeforeunload = null;">Yes</button>
+                        <input id="lift-user-id" name="user_id" hidden>
+                        <input id="lift-room-id" name="room_id" hidden>
+                    </form>
                 </div>
             </div>
         </div>
@@ -299,8 +304,13 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="userAccessDeniedButton" type="submit" class="btn btn-outline-primary"
-                        data-bs-dismiss="modal">Yes</button>
+                    <form method="post" action="/home/room/ban">
+                        @csrf
+                        <button id="userAccessDeniedButton" type="submit" class="btn btn-outline-primary"
+                            data-bs-dismiss="modal" onclick="window.onbeforeunload = null;">Yes</button>
+                        <input id="ban-user-id" name="user_id" hidden>
+                        <input id="ban-room-id" name="room_id" hidden>
+                    </form>
                 </div>
             </div>
         </div>
@@ -562,7 +572,8 @@
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
                 <div class="container-fluid">
                     <div class="col-3 d-none d-md-block ">
-                        <div id="hostUser" class="d-flex justify-content-center" data-host-id="{{ $room_info->user_id }}">
+                        <div id="hostUser" class="d-flex justify-content-center"
+                            data-host-id="{{ $room_info->user_id }}">
                             <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
                                 height="50px" class="rounded-circle m-1">
                             <strong class="text-break d-flex align-items-center">{{ $room_info->user->name }}</strong>

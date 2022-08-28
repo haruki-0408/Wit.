@@ -273,11 +273,11 @@ class RoomController extends Controller
             return redirect('home')->with('error_message', 'ログインユーザーとルームの作成者が一致しません');
         }
 
-        if ($room->password !== null){
+        if ($room->password !== null) {
             return redirect('home')->with('error_message', 'ルームにパスワードがついているため保存できません');
         }
 
-        if ($room->roomTags()->count == 0){
+        if ($room->roomTags()->count == 0) {
             return redirect('home')->with('error_message', 'ルームにタグが付いていないため保存できません');
         }
 
@@ -331,43 +331,67 @@ class RoomController extends Controller
 
     public function receiveBanUser(Request $request)
     {
-        if ($request->user_id == null) {
-            return response()->Json('Access Error');
+
+        if (!($request->filled(['user_id', 'room_id']))) {
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
+        }
+
+        if(Room::where('id',$request->room_id)->doesntExist() || User::where('id',$request->user_id)->doesntExist()){
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
         }
 
         $user = User::find($request->user_id);
         $room = new Room;
 
-        if ($room->find($request->room_id)->user_id == Auth::id()) {
-            $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
-            $room->find($request->room_id)->roomUsers()->detach($request->user_id);
-            $type = 'ban';
-            event(new RoomBanned($user, $request->room_id, $type));
-            return response()->Json($request->user_id);
-            //return response()->Json('User was Banned');
-        } else {
-            return response()->Json('Access Error');
+
+        if ($request->user_id == Auth::id() || $room->find($request->room_id)->user_id !== Auth::id()) {
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
         }
+
+        $room->find($request->room_id)->roomBans()->syncWithoutDetaching($request->user_id);
+        $room->find($request->room_id)->roomUsers()->detach($request->user_id);
+        $type = 'ban';
+        event(new RoomBanned($user, $request->room_id, $type));
+        return redirect(route('enterRoom', [
+            'room_id' => $request->room_id,
+        ]));
     }
 
     public function receiveLiftBanUser(Request $request)
     {
-        if ($request->user_id == null) {
-            return response()->Json('Access Error');
+        if (!($request->filled(['user_id', 'room_id']))) {
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
+        }
+
+        if(Room::where('id',$request->room_id)->doesntExist() || User::where('id',$request->user_id)->doesntExist()){
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
         }
 
         $user = User::find($request->user_id);
         $room = new Room;
 
-        if ($room->find($request->room_id)->user_id == Auth::id()) {
-            $room->find($request->room_id)->roomBans()->detach($request->user_id);
-            $type = 'lift';
-            event(new RoomBanned($user, $request->room_id, $type));
-            return response()->Json($request->user_id);
-            //return response()->Json('Ban was canceled');
-        } else {
-            return response()->Json('Access Error');
+        if ($request->user_id == Auth::id() || $room->find($request->room_id)->user_id !== Auth::id()) {
+            return redirect(route('enterRoom', [
+                'room_id' => $request->room_id,
+            ]));
         }
+        
+        $room->find($request->room_id)->roomBans()->detach($request->user_id);
+        $type = 'lift';
+        event(new RoomBanned($user, $request->room_id, $type));
+        return redirect(route('enterRoom', [
+            'room_id' => $request->room_id,
+        ]));
     }
 
     public static function getOpenRoom($user_id = null)
@@ -380,7 +404,7 @@ class RoomController extends Controller
             $user = User::find($user_id);
         }
 
-        $open_rooms = $user->rooms()->whereNull('posted_at')->orderBy('id','desc')->with(['user', 'tags'])->get();
+        $open_rooms = $user->rooms()->whereNull('posted_at')->orderBy('id', 'desc')->with(['user', 'tags'])->get();
 
         $open_rooms->map(function ($each) {
             $type = Room::buttonTypeJudge($each->id);
@@ -621,7 +645,7 @@ class RoomController extends Controller
         }
 
         return redirect(route('enterRoom', [
-            'id' => $room->id,
+            'room_id' => $room->id,
         ]));
     }
 

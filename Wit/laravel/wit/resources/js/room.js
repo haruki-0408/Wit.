@@ -45,10 +45,8 @@ Echo.join('room-user-notifications.' + room_id)
                 except_host_users.push(user);
             }
         });
-        console.log(except_host_users);
-
         if(me_id !== host_id){
-            if(except_host_users.length > 1){
+            if(except_host_users.length > 10){
                 window.location.href = '/home';
             }  
         }
@@ -292,15 +290,17 @@ function saveRoomNotification() {
 }
 
 if (document.getElementById('forceConfirm')) {
-    let forceConfirmModal = document.getElementById("forceConfirm");
+    const forceConfirmModal = document.getElementById("forceConfirm");
     forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
         let modal_body = $(forceConfirmModal).find('.modal-body')
         modal_body.children().remove();
-        let access_denied_button = document.getElementById('userAccessDeniedButton');
-
         let button = (event.relatedTarget);
+        const ban_uesr_id = document.getElementById('ban-user-id'); 
+        const ban_room_id = document.getElementById('ban-room-id');
         const user_id = button.parentNode.parentNode.getAttribute('data-user-id');
-        console.log(user_id);
+        ban_uesr_id.value = user_id;
+        ban_room_id.value = room_id;
+
         let attention_message = document.createElement('strong');
         let attention_message2 = document.createElement('p');
         attention_message.classList = "d-block mb-2 text-center text-break text-wrap";
@@ -325,20 +325,7 @@ if (document.getElementById('forceConfirm')) {
         modal_body.append(attention_message);
         modal_body.append(user_element);
         modal_body.append(attention_message2);
-
-        access_denied_button.addEventListener('click', (e) => {
-            access_denied_button.disabled = true;
-            sendBanUser(user_id);
-            access_denied_button.disabled = false;
-
-        });
-
     });
-    forceConfirmModal.addEventListener('hidden.bs.modal', function (event) {
-        const user_id = null;
-        console.log(user_id);
-    });
-
 }
 
 if (document.getElementById('liftBan')) {
@@ -346,11 +333,14 @@ if (document.getElementById('liftBan')) {
     liftBanModal.addEventListener('shown.bs.modal', function (event) {
         let modal_body = $(liftBanModal).find('.modal-body')
         modal_body.children().remove();
-        let lift_ban_button = document.getElementById('liftBanButton');
 
         let button = event.relatedTarget;
+        const lift_user_id = document.getElementById('lift-user-id');
+        const lift_room_id = document.getElementById('lift-room-id');
         const user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
-        console.log(user_id);
+        lift_user_id.value = user_id;
+        lift_room_id.value = room_id;
+
         let message = document.createElement('strong');
         message.classList = "d-block mb-2 text-center text-break text-wrap";
         message.textContent = 'このユーザのアクセスを許可しますか？';
@@ -370,59 +360,5 @@ if (document.getElementById('liftBan')) {
 
         modal_body.append(message);
         modal_body.append(user_element);
-
-        lift_ban_button.addEventListener('click', (e) => {
-            lift_ban_button.disabled = true;
-            sendLiftBanUser(user_id);
-            lift_ban_button.disabled = false;
-        });
     });
-
-    liftBanModal.addEventListener('hidden.bs.modal', function (event) {
-        const user_id = null;
-        console.log(user_id);
-    });
-}
-
-function sendBanUser(user_id) {
-    $.ajax({
-        type: "post", //HTTP通信の種類
-        url: '/home/room/ban',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-        data: {
-            "room_id": room_id,
-            "user_id": user_id,
-        },
-        dataType: 'json',
-    }).done(() => {
-        //window.onbeforeunload = null;
-        //location.reload();
-    })
-        .fail((error) => {
-            console.log(error);
-        });
-}
-
-
-function sendLiftBanUser(user_id) {
-    $.ajax({
-        type: "post", //HTTP通信の種類
-        url: '/home/room/ban/lift',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-        data: {
-            "room_id": room_id,
-            "user_id": user_id,
-        },
-        dataType: 'json',
-    }).done(() => {
-        //window.onbeforeunload = null;
-        //location.reload();
-    })
-        .fail((error) => {
-            console.log(error);
-        });
 }

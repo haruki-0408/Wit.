@@ -10971,10 +10971,9 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
       except_host_users.push(user);
     }
   });
-  console.log(except_host_users);
 
   if (me_id !== host_id) {
-    if (except_host_users.length > 1) {
+    if (except_host_users.length > 10) {
       window.location.href = '/home';
     }
   }
@@ -11222,10 +11221,12 @@ if (document.getElementById('forceConfirm')) {
   forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
     var modal_body = $(forceConfirmModal).find('.modal-body');
     modal_body.children().remove();
-    var access_denied_button = document.getElementById('userAccessDeniedButton');
     var button = event.relatedTarget;
+    var ban_uesr_id = document.getElementById('ban-user-id');
+    var ban_room_id = document.getElementById('ban-room-id');
     var user_id = button.parentNode.parentNode.getAttribute('data-user-id');
-    console.log(user_id);
+    ban_uesr_id.value = user_id;
+    ban_room_id.value = room_id;
     var attention_message = document.createElement('strong');
     var attention_message2 = document.createElement('p');
     attention_message.classList = "d-block mb-2 text-center text-break text-wrap";
@@ -11247,15 +11248,11 @@ if (document.getElementById('forceConfirm')) {
     modal_body.append(attention_message);
     modal_body.append(user_element);
     modal_body.append(attention_message2);
-    access_denied_button.addEventListener('click', function (e) {
-      access_denied_button.disabled = true;
-      sendBanUser(user_id);
-      access_denied_button.disabled = false;
-    });
-  });
-  forceConfirmModal.addEventListener('hidden.bs.modal', function (event) {
-    var user_id = null;
-    console.log(user_id);
+    /*access_denied_button.addEventListener('click', (e) => {
+        access_denied_button.disabled = true;
+        sendBanUser(user_id);
+        access_denied_button.disabled = false;
+     });*/
   });
 }
 
@@ -11264,10 +11261,12 @@ if (document.getElementById('liftBan')) {
   liftBanModal.addEventListener('shown.bs.modal', function (event) {
     var modal_body = $(liftBanModal).find('.modal-body');
     modal_body.children().remove();
-    var lift_ban_button = document.getElementById('liftBanButton');
     var button = event.relatedTarget;
+    var lift_user_id = document.getElementById('lift-user-id');
+    var lift_room_id = document.getElementById('lift-room-id');
     var user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
-    console.log(user_id);
+    lift_user_id.value = user_id;
+    lift_room_id.value = room_id;
     var message = document.createElement('strong');
     message.classList = "d-block mb-2 text-center text-break text-wrap";
     message.textContent = 'このユーザのアクセスを許可しますか？';
@@ -11284,16 +11283,16 @@ if (document.getElementById('liftBan')) {
     user_element.append(user_name);
     modal_body.append(message);
     modal_body.append(user_element);
-    lift_ban_button.addEventListener('click', function (e) {
-      lift_ban_button.disabled = true;
-      sendLiftBanUser(user_id);
-      lift_ban_button.disabled = false;
-    });
+    /*lift_ban_button.addEventListener('click', (e) => {
+        lift_ban_button.disabled = true;
+        sendLiftBanUser(user_id);
+        lift_ban_button.disabled = false;
+    });*/
   });
-  liftBanModal.addEventListener('hidden.bs.modal', function (event) {
-    var user_id = null;
-    console.log(user_id);
-  });
+  /*liftBanModal.addEventListener('hidden.bs.modal', function (event) {
+      const user_id = null;
+      console.log(user_id);
+  });*/
 }
 
 function sendBanUser(user_id) {

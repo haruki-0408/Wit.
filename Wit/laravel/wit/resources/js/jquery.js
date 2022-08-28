@@ -8,9 +8,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
     let last;
     let lastli;
     let searchButton = document.getElementById('search-button');
-    if (searchButton) {
-        searchButton.disabled = true;
-    }
+    searchButton.disabled = true;
+
     switch (event.currentTarget.id) {
         case 'getMoreButtonSearch':
             last = document.getElementById('Rooms');
@@ -53,9 +52,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -85,9 +82,8 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
+
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -115,9 +111,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -149,9 +143,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -180,9 +172,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -212,9 +202,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
                     }
                     event.currentTarget.disabled = false;
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -358,10 +346,7 @@ $(document).on('click', '#search-button', function () {
                         noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
                         noresult.textContent = 'No result';
                         document.getElementById('Rooms').appendChild(noresult);
-
-                        if (searchButton) {
-                            searchButton.disabled = false;
-                        }
+                        searchButton.disabled = false;
                         clickFlag = true;
                     }
                 })
@@ -370,15 +355,13 @@ $(document).on('click', '#search-button', function () {
                     console.log(error.statusText)
                 })
         } else {
+            let searchButton = document.getElementById("search-button");
             let noresult = document.createElement('h3');
             noresult.setAttribute('data-room-id', 'noResult');
             noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100"
             noresult.textContent = 'No result';
             document.getElementById('Rooms').appendChild(noresult);
-
-            if (searchButton) {
-                searchButton.disabled = false;
-            }
+            searchButton.disabled = false;
             clickFlag = true;
         }
     } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
@@ -430,9 +413,7 @@ $(document).on('click', '#search-button', function () {
                     noresult.textContent = 'No result';
                     document.getElementById('Rooms').appendChild(noresult);
 
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;
                     clickFlag = true;
                 }
             })
@@ -449,9 +430,8 @@ $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
     if (clickFlag) {
         let searchButton = document.getElementById("search-button");
-        if (searchButton) {
-            searchButton.disabled = true;
-        }
+        searchButton.disabled = true;
+        
         clickFlag = false;
         if (!(preview) && document.getElementById('Rooms')) {
             let searchTagName = event.currentTarget.children[0].textContent;
@@ -501,9 +481,7 @@ $(document).on('click', '.tag', function (event) {
                         removeGetMoreButton(show, last_get_more);
                     }
                     clickFlag = true;
-                    if (searchButton) {
-                        searchButton.disabled = false;
-                    }
+                    searchButton.disabled = false;    
                 })
                 //通信が失敗したとき
                 .fail((error) => {
@@ -794,13 +772,13 @@ $(document).on('click', '#flexCheckPost', function () {
     let flexCheckTag = document.getElementById('flexCheckTag');
     let flexCheckPassword = document.getElementById('flexCheckPassword');
     let flexCheckPost = document.getElementById('flexCheckPost');
-    if(flexCheckPost.checked){
+    if (flexCheckPost.checked) {
         flexCheckTag.disabled = true;
         flexCheckPassword.disabled = true;
-    }else if(select === 'tag'){
+    } else if (select === 'tag') {
         flexCheckTag.disabled = true;
         flexCheckPassword.disabled = false;
-    }else{
+    } else {
         flexCheckTag.disabled = false;
         flexCheckPassword.disabled = false;
     }
@@ -839,9 +817,7 @@ function addUserPage(res, show) {
 
             if (document.getElementById("search-button")) {
                 let searchButton = document.getElementById("search-button");
-                if (searchButton) {
-                    searchButton.disabled = false;
-                }
+                searchButton.disabled = false;
             }
 
         }
@@ -885,9 +861,9 @@ function addRoomPage(res, show) {
             clone.querySelector('.user-name').textContent = res[i].user.name;
             clone.querySelector('.room-description').innerHTML = res[i].description.replace(/\r?\n/g, '<br>');
             clone.querySelector('.created_at').textContent = res[i].created_at;
-            if(res[i].posted_at == null){
-                clone.querySelector('.countOnlineUsers').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-people-fill'viewBox='0 0 16 16'><path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /><path fill-rule='evenodd'd='M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z'/><path d='M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z' /></svg>x"+res[i].count_online_users;
-                clone.querySelector('.countChatMessages').innerHTML ="<svg width='16' height='16' fill='currentColor' class='bi bi-chat-left-dots-fill'viewBox='0 0 16 16'><path d='M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>x"+res[i].count_chat_messages;
+            if (res[i].posted_at == null) {
+                clone.querySelector('.countOnlineUsers').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-people-fill'viewBox='0 0 16 16'><path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /><path fill-rule='evenodd'd='M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z'/><path d='M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z' /></svg>x" + res[i].count_online_users;
+                clone.querySelector('.countChatMessages').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-chat-left-dots-fill'viewBox='0 0 16 16'><path d='M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>x" + res[i].count_chat_messages;
             }
 
             for (let j = 0; j < Object.keys(res[i].tags).length; j++) { //ここの実装見直したい、、
@@ -934,9 +910,8 @@ function addRoomPage(res, show) {
 
             if (document.getElementById("search-button")) {
                 let searchButton = document.getElementById("search-button");
-                if (searchButton) {
-                    searchButton.disabled = false;
-                }
+                searchButton.disabled = false;
+
             }
         }
     }
@@ -991,7 +966,7 @@ function roomButtonTypeJudge(type, room_id) {
             button3.setAttribute("data-bs-toggle", 'modal');
             button3.setAttribute("data-bs-target", "#enterRoomModal")
             button3.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
-            
+
             return [button1, button3];
 
 
@@ -1040,7 +1015,7 @@ function roomButtonTypeJudge(type, room_id) {
             button3.className = "enter-room btn btn-outline-primary p-2";
             button3.setAttribute("data-bs-toggle", 'modal');
             button3.setAttribute("data-bs-target", "#enterRoomModal")
-            button3.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";   
+            button3.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-box-arrow-in-right' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z'/><path fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'/></svg>";
             return [button0, button1, button3];
 
         case '111':

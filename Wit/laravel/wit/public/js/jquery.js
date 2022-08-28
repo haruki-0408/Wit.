@@ -10936,10 +10936,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
   var last;
   var lastli;
   var searchButton = document.getElementById('search-button');
-
-  if (searchButton) {
-    searchButton.disabled = true;
-  }
+  searchButton.disabled = true;
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
@@ -10984,10 +10981,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11019,10 +11013,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11052,10 +11043,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11090,10 +11078,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11124,10 +11109,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11157,10 +11139,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-
-        if (searchButton) {
-          searchButton.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11285,10 +11264,8 @@ $(document).on('click', '#search-button', function () {
   if (document.getElementById('flexRadioUser').checked && document.getElementById('flexRadioRoom').checked != true) {
     if (document.getElementById("search-keyword").value) {
       var keyword = document.getElementById("search-keyword").value;
-
-      var _searchButton = document.getElementById("search-button");
-
-      _searchButton.dataset.keyword = keyword;
+      var searchButton = document.getElementById("search-button");
+      searchButton.dataset.keyword = keyword;
       $.ajax({
         type: "get",
         //HTTP通信の種類
@@ -11307,11 +11284,7 @@ $(document).on('click', '#search-button', function () {
           noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
           noresult.textContent = 'No result';
           document.getElementById('Rooms').appendChild(noresult);
-
-          if (_searchButton) {
-            _searchButton.disabled = false;
-          }
-
+          searchButton.disabled = false;
           clickFlag = true;
         }
       }) //通信が失敗したとき
@@ -11319,16 +11292,14 @@ $(document).on('click', '#search-button', function () {
         console.log(error.statusText);
       });
     } else {
+      var _searchButton = document.getElementById("search-button");
+
       var noresult = document.createElement('h3');
       noresult.setAttribute('data-room-id', 'noResult');
       noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
       noresult.textContent = 'No result';
       document.getElementById('Rooms').appendChild(noresult);
-
-      if (searchButton) {
-        searchButton.disabled = false;
-      }
-
+      _searchButton.disabled = false;
       clickFlag = true;
     }
   } else if (document.getElementById('flexRadioRoom').checked && document.getElementById('flexRadioUser').checked != true) {
@@ -11382,11 +11353,7 @@ $(document).on('click', '#search-button', function () {
         _noresult.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         _noresult.textContent = 'No result';
         document.getElementById('Rooms').appendChild(_noresult);
-
-        if (_searchButton2) {
-          _searchButton2.disabled = false;
-        }
-
+        _searchButton2.disabled = false;
         clickFlag = true;
       }
     }) //通信が失敗したとき
@@ -11400,22 +11367,18 @@ $(document).on('click', '.tag', function (event) {
   var preview = event.currentTarget.classList.contains('preview');
 
   if (clickFlag) {
-    var _searchButton3 = document.getElementById("search-button");
-
-    if (_searchButton3) {
-      _searchButton3.disabled = true;
-    }
-
+    var searchButton = document.getElementById("search-button");
+    searchButton.disabled = true;
     clickFlag = false;
 
     if (!preview && document.getElementById('Rooms')) {
       var searchTagName = event.currentTarget.children[0].textContent;
-      _searchButton3.dataset.select = 'tag';
-      _searchButton3.dataset.keyword = searchTagName;
-      _searchButton3.dataset.flexCheckImage = 'false';
-      _searchButton3.dataset.flexCheckTag = 'false';
-      _searchButton3.dataset.flexCheckPassword = 'false';
-      _searchButton3.dataset.flexCheckPost = 'false';
+      searchButton.dataset.select = 'tag';
+      searchButton.dataset.keyword = searchTagName;
+      searchButton.dataset.flexCheckImage = 'false';
+      searchButton.dataset.flexCheckTag = 'false';
+      searchButton.dataset.flexCheckPassword = 'false';
+      searchButton.dataset.flexCheckPost = 'false';
       $("[id^='getMoreButton']").remove();
       $("[id^='getMoreUserButton']").remove();
       $(document.getElementById("Rooms")).empty();
@@ -11457,10 +11420,7 @@ $(document).on('click', '.tag', function (event) {
         }
 
         clickFlag = true;
-
-        if (_searchButton3) {
-          _searchButton3.disabled = false;
-        }
+        searchButton.disabled = false;
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11783,11 +11743,8 @@ function addUserPage(res, show) {
       }
 
       if (document.getElementById("search-button")) {
-        var _searchButton4 = document.getElementById("search-button");
-
-        if (_searchButton4) {
-          _searchButton4.disabled = false;
-        }
+        var searchButton = document.getElementById("search-button");
+        searchButton.disabled = false;
       }
     }
 
@@ -11881,11 +11838,8 @@ function addRoomPage(res, show) {
       }
 
       if (document.getElementById("search-button")) {
-        var _searchButton5 = document.getElementById("search-button");
-
-        if (_searchButton5) {
-          _searchButton5.disabled = false;
-        }
+        var searchButton = document.getElementById("search-button");
+        searchButton.disabled = false;
       }
     };
 
