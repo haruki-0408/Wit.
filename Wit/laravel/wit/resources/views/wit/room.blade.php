@@ -562,7 +562,7 @@
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
                 <div class="container-fluid">
                     <div class="col-3 d-none d-md-block ">
-                        <div id="hostUser" class="d-flex justify-content-center">
+                        <div id="hostUser" class="d-flex justify-content-center" data-host-id="{{ $room_info->user_id }}">
                             <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
                                 height="50px" class="rounded-circle m-1">
                             <strong class="text-break d-flex align-items-center">{{ $room_info->user->name }}</strong>

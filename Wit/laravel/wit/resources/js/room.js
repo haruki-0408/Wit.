@@ -1,4 +1,5 @@
 const room_id = document.querySelector('body').id;
+const host_id = document.getElementById('hostUser').dataset.hostId;
 const me_id = document.getElementById('me').dataset.authId;
 const message = document.getElementById('message');
 const send_button = document.getElementById('send');
@@ -38,6 +39,20 @@ window.onbeforeunload = function (e) {
 
 Echo.join('room-user-notifications.' + room_id)
     .here((users) => {
+        const except_host_users = [];
+        users.forEach(user =>{
+            if(user.id != host_id){
+                except_host_users.push(user);
+            }
+        });
+        console.log(except_host_users);
+
+        if(me_id !== host_id){
+            if(except_host_users.length > 1){
+                window.location.href = '/home';
+            }  
+        }
+
         users.forEach(user => {
             addOnlineUser(user);
         });

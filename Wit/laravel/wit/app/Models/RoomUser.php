@@ -41,7 +41,8 @@ class RoomUser extends Pivot
     public static function countOnlineOthers($room_id)
     {
         $room = new Room;
-        $room_others = $room->find($room_id)->roomUsers->except(['id',Auth::id()]);
+        $room_user_id = $room->find($room_id)->user_id;
+        $room_others = $room->find($room_id)->roomUsers->except(['id',Auth::id()])->except(['id',$room_user_id]);
         $other_count = 0;
         foreach ($room_others as $other) {
             if($other->pivot->in_room == 1){

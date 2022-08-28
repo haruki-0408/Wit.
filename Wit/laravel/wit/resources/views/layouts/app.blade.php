@@ -128,7 +128,7 @@
         </div>
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
-            <strong class="card-title m-0 pb-1"></strong>
+            <strong class="card-title m-0 pb-1 d-flex align-items-center"></strong>
             <p class="card-text room-description text-break m-0"></p>
             <small class="text-muted d-flex justify-content-end text-end">
                 <div class="mx-2 countOnlineUsers">

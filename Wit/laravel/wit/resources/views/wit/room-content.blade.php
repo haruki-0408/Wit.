@@ -207,14 +207,14 @@
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
             @if (isset($room->password))
-                <strong class="card-title m-0">{{ $room->title }}
+                <strong class="card-title m-0 pb-1 d-flex align-items-center">{{ $room->title }}
                     <svg width="16" height="16" fill="currentColor" class="bi bi-lock-fill"
                         viewBox="0 0 16 16">
                         <path
                             d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                     </svg></strong>
             @else
-                <strong class="card-title m-0 pb-1">{{ $room->title }}</strong>
+                <strong class="card-title m-0 pb-1 d-flex align-items-center">{{ $room->title }}</strong>
             @endif
             <p class="card-text room-description text-break m-0">{!! nl2br(e($room->description)) !!}</p>
             @if (is_null($room->posted_at))

@@ -221,7 +221,7 @@ class RoomController extends Controller
         }
 
         if ($count_online_others >= 10 && $auth_user->id !== Room::find($room_id)->user_id) {
-            return redirect('home')->with('error_message', 'ルームの最大人数を超過したため入室できません');
+            return redirect('home')->with('error_message', 'ルームの最大人数(作成者を除いて10人まで)を超過したため入室できません');
         }
 
         $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);

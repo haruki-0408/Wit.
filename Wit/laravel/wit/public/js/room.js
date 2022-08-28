@@ -10928,6 +10928,7 @@ var __webpack_exports__ = {};
   \******************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 var room_id = document.querySelector('body').id;
+var host_id = document.getElementById('hostUser').dataset.hostId;
 var me_id = document.getElementById('me').dataset.authId;
 var message = document.getElementById('message');
 var send_button = document.getElementById('send');
@@ -10964,6 +10965,20 @@ window.onbeforeunload = function (e) {
 };
 
 Echo.join('room-user-notifications.' + room_id).here(function (users) {
+  var except_host_users = [];
+  users.forEach(function (user) {
+    if (user.id != host_id) {
+      except_host_users.push(user);
+    }
+  });
+  console.log(except_host_users);
+
+  if (me_id !== host_id) {
+    if (except_host_users.length > 1) {
+      window.location.href = '/home';
+    }
+  }
+
   users.forEach(function (user) {
     addOnlineUser(user);
   });
