@@ -277,7 +277,7 @@ class RoomController extends Controller
             return redirect('home')->with('error_message', 'ルームにパスワードがついているため保存できません');
         }
 
-        if ($room->roomTags()->count == 0) {
+        if ($room->tags->count() == 0) {
             return redirect('home')->with('error_message', 'ルームにタグが付いていないため保存できません');
         }
 

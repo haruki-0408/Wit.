@@ -58,27 +58,37 @@ class CreateRoomRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if(isset($this->tag)){
+        if (isset($this->tag)) {
             preg_match_all('/([a-zA-Z0-9ぁ-んァ-ヶー-龠 ~!#$&()=@.,:%*{}¥?<>^|_\\\"\'\-\+]+);/u', $this['tag'], $matches);
-            foreach($matches[1] as $index => $match){
-                $match = trim($match);
-                $matches[$index] = $match;
+
+            if (empty($matches[1])) {
+                return $this->all();
             }
-            $matches = array_unique($matches);
-            $this->merge(['matches' => $matches ]);
+
+            foreach ($matches[1] as $index => $match) {
+                $match = trim($match);
+                if ($match !== "") {
+                    $trim_matches[$index] = $match;
+                }
+            }
+            if (isset($trim_matches)) {
+                $matches = array_unique($trim_matches);
+                $this->merge(['matches' => $matches]);
+            }
         }
+
 
         return $this->all();
     }
 
-    
+
     public function validationData()
     {
         $data = $this->all();
         if ($this->has('roomImages')) {
             $sum_image_size = 0;
             $sum_image_count = count($this['roomImages']);
-            
+
             foreach ($this['roomImages'] as $roomImage) {
                 $sum_image_size += filesize($roomImage);
             }
@@ -88,5 +98,4 @@ class CreateRoomRequest extends FormRequest
 
         return $data;
     }
-    
 }

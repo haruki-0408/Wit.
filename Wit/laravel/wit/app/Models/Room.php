@@ -162,14 +162,14 @@ class Room extends Model
             } else if (isset($list_query)) {
                 //getListRoom()から飛んできたときはテーブルjoinするのでvalue('id')だと、どのidか曖昧になるため記載方法変更
                 if ($list_query->orderBy('list_rooms.id', 'asc')->value('rooms.id') == $room_id) {
-                    //dd($room_id);
+                    
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;
                 }
             } else {
                 //getRoomInfo()から飛んできたとき
-                if (Room::orderBy('id', 'asc')->value('id') == $room_id) {
+                if (Room::orderBy('id', 'asc')->whereNull('posted_at')->value('id') == $room_id) {
                     $no_get_more = true;
                 } else {
                     $no_get_more = false;

@@ -65,7 +65,7 @@
                     <div class="mb-3">
                         <label for="InputTags" class="form-label">Tags</label>
                         <input id="inputTags" class="form-control" type="text" name="tag" value="{{ old('tag') }}" multiple>
-                        <div class="form-text">1タグ20文字まで、複数記入時と最後は' ; 'をつけてください</div>
+                        <div class="form-text">1タグ20文字まで、複数記入時と最後は半角セミコロン' ; 'をつけてください</div>
                         <div class="form-text">重複しているタグは一つに統合されます</div>
                         <div class="form-text">全角数字&記号,全角スペース,中括弧'[]'は登録されず無視されます</div>
                         <div class="form-text">※タグがないとPost Roomとして保存できません</div>

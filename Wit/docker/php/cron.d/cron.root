@@ -1,0 +1,4 @@
+SHELL=/bin/bash
+PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+* * * * * php /var/www/laravel/wit/artisan schedule:run >> /var/log/cron.log 2>&1
+
