@@ -44,4 +44,4 @@ RUN crontab /etc/cron.d/cron.root
 ADD ./supervisor/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
 # must to attach docker-php-entrypoint php-fpm
-CMD supervisord -c /etc/supervisor/supervisord.conf  && docker-php-entrypoint php-fpm
+CMD supervisord -c /etc/supervisor/supervisord.conf 

@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Room;
+use App\Models\User;
 
 class CheckRoomState extends Command
 {
@@ -37,6 +39,8 @@ class CheckRoomState extends Command
      */
     public function handle()
     {
-        logger()->info('天才とはできるまでやり続ける才能のことである');
+        $room = new Room;
+        $rooms = $room->whereNull('posted_at')->count();
+        logger()->info($rooms);
     }
 }
