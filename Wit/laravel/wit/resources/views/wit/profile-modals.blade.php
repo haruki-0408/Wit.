@@ -83,17 +83,15 @@
             <div class="modal-body p-1">
                 <ul id="otherListUser" class="fs-6 p-2">
                     @foreach ($o_list_users as $o_list_user)
-                        <li data-user-id='{{ $o_list_user->id }}'
-                            class="border-0 d-flex bg-white p-1 align-items-center justify-content-between">
+                        <li data-user-id="{{ $o_list_user->id }}" class="d-flex bg-white p-1 justify-content-between">
                             <div class="user">
-                                <a class="user-link link-dark text-decoration-none"
-                                    href='/home/profile:{{ $o_list_user->id }}' alt="">
-                                    <img src="{{ asset($o_list_user->profile_image) }}" alt=""
-                                        width="50" height="50" class="profile-image rounded-circle me-2">
-                                    <strong class="user-name">{{ $o_list_user->name }}</strong>
+                                <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1"
+                                    href="/home/profile:{{ $o_list_user->id }}" alt="">
+                                    <img src="{{ asset($o_list_user->profile_image) }}" alt="" width="50"
+                                        height="50" class="profile-image rounded-circle me-2">
+                                    <strong class="user-name text-break">{{ $o_list_user->name }}</strong>
                                 </a>
                             </div>
-
                             <div class="btn-group d-flex align-items-center p-2">
                                 @switch($o_list_user->type)
                                     @case(0)

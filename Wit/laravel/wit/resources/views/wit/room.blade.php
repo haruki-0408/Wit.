@@ -581,8 +581,8 @@
                     </div>
 
                     <div class="col-9 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block m-0">{{ $room_info->title }}</h4>
-                        <p class="d-sm-none m-0">{{ $room_info->title }}</p>
+                        <h4 class="d-none d-md-block m-0 text-break">{{ $room_info->title }}</h4>
+                        <p class="d-sm-none m-0 text-break">{{ $room_info->title }}</p>
                     </div>
 
 

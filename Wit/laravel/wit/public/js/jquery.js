@@ -10936,7 +10936,10 @@ $(document).on('click', "[id^='getMore']", function (event) {
   var last;
   var lastli;
   var searchButton = document.getElementById('search-button');
-  searchButton.disabled = true;
+
+  if (document.getElementById('search-button')) {
+    searchButton.disabled = true;
+  }
 
   switch (event.currentTarget.id) {
     case 'getMoreButtonSearch':
@@ -11043,15 +11046,14 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-        searchButton.disabled = false;
+
+        if (document.getElementById('search-button')) {
+          searchButton.disabled = false;
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
       });
-      break;
-
-    case 'getMoreAnswerRoomButton':
-      console.log("getMoreAnswerRoomButtonが押されました");
       break;
 
     case 'getMoreListUserButton':
@@ -11078,7 +11080,10 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-        searchButton.disabled = false;
+
+        if (document.getElementById('search-button')) {
+          searchButton.disabled = false;
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11109,7 +11114,10 @@ $(document).on('click', "[id^='getMore']", function (event) {
 
         event.currentTarget.disabled = false;
         clickFlag = true;
-        searchButton.disabled = false;
+
+        if (document.getElementById('search-button')) {
+          searchButton.disabled = false;
+        }
       }) //通信が失敗したとき
       .fail(function (error) {
         console.log(error.statusText);
@@ -11147,7 +11155,7 @@ $(document).on('click', "[id^='getMore']", function (event) {
       break;
 
     default:
-      console.log("それ以外が押されました");
+      console.log("No Button");
       break;
   }
 }); //otherMoreを押したとき
@@ -11248,7 +11256,7 @@ $(document).on('click', "[id^='otherMore']", function (event) {
       break;
 
     default:
-      console.log("それ以外が押されました");
+      console.log("No Button");
       break;
   }
 }); //検索ボタンを押したとき
@@ -11427,7 +11435,7 @@ $(document).on('click', '.tag', function (event) {
       });
     }
   }
-}); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異やご判定が多かったので中止
+}); //当初はルームの追加をスクロール判定で行うとしていたがデバイス間の差異や誤判定が多かったので中止
 
 /*$("#Room-content").on('scroll', function () {　　　　　
     let docHeight = document.getElementById('Room-content').scrollHeight, //要素の全体の高さ
@@ -11787,6 +11795,7 @@ function addRoomPage(res, show) {
       if (res[i].posted_at == null) {
         clone.querySelector('.countOnlineUsers').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-people-fill'viewBox='0 0 16 16'><path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /><path fill-rule='evenodd'd='M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z'/><path d='M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z' /></svg>x" + res[i].count_online_users;
         clone.querySelector('.countChatMessages').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-chat-left-dots-fill'viewBox='0 0 16 16'><path d='M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>x" + res[i].count_chat_messages;
+        clone.querySelector('.expired-time-left').innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-clock-history mx-1' viewBox='0 0 16 16'><path d='M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z'/><path d='M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z' /><path d='M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z' /></svg>" + res[i].expired_time_left + '  Hours';
       }
 
       for (var j = 0; j < Object.keys(res[i].tags).length; j++) {

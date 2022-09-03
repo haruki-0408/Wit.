@@ -351,8 +351,8 @@
                     </div>
 
                     <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block">{{ $room_info->title }}</h4>
-                        <p class="d-sm-none">{{ $room_info->title }}</p>
+                        <h4 class="d-none d-md-block text-break">{{ $room_info->title }}</h4>
+                        <p class="d-sm-none text-break">{{ $room_info->title }}</p>
                     </div>
 
 
@@ -423,7 +423,7 @@
                                 </div>
                                 <ul id="informationList" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                                 </ul>
                             </div>
                         </div>

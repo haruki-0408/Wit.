@@ -11177,15 +11177,15 @@ function removeRoomNotification() {
   icon.innerHTML = "<svg width='40' height='40' fill='currentColor' class='text-danger bi bi-exclamation-triangle mx-2' viewBox='0 0 16 16'><path d='M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z'/><path d='M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z'/></svg>";
   counter.classList = 'fs-6 d-inline text-danger p-2';
   var count = 10;
-  counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+  counter.textContent = 'このルームは削除されました' + count + '秒後にホームに戻ります';
   $('#image').append(icon);
   $('#image').append(counter);
   var interval = setInterval(function () {
-    counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+    counter.textContent = 'このルームは削除されました' + count + '秒後にホームに戻ります';
     count--;
 
     if (count == 0) {
-      counter.textContent = 'このルームは作成者によって削除されました' + count + '秒後にホームに戻ります';
+      counter.textContent = 'このルームは削除されました' + count + '秒後にホームに戻ります';
       clearInterval(interval);
       window.onbeforeunload = null;
       window.location.href = '/home';
@@ -11200,15 +11200,15 @@ function saveRoomNotification() {
   icon.innerHTML = "<svg width='40' height='40' fill='currentColor' class='text-primary bi bi-exclamation-triangle mx-2' viewBox='0 0 16 16'><path d='M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z'/><path d='M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z'/></svg>";
   counter.classList = 'fs-6 d-inline text-primary p-2';
   var count = 10;
-  counter.textContent = 'このルームは作成者によってPost Roomとして保存されました' + count + '秒後にホームに戻ります';
+  counter.textContent = 'このルームはPost Roomとして保存されました' + count + '秒後にホームに戻ります';
   $('#image').append(icon);
   $('#image').append(counter);
   var interval = setInterval(function () {
-    counter.textContent = 'このルームは作成者によってPost Roomとして保存されました' + count + '秒後にホームに戻ります';
+    counter.textContent = 'このルームはPost Roomとして保存されました' + count + '秒後にホームに戻ります';
     count--;
 
     if (count == 0) {
-      counter.textContent = 'このルームは作成者によってPost Roomとして保存されました' + count + '秒後にホームに戻ります';
+      counter.textContent = 'このルームはPost Roomとして保存されました' + count + '秒後にホームに戻ります';
       clearInterval(interval);
       window.onbeforeunload = null;
       window.location.href = '/home';
@@ -11248,11 +11248,6 @@ if (document.getElementById('forceConfirm')) {
     modal_body.append(attention_message);
     modal_body.append(user_element);
     modal_body.append(attention_message2);
-    /*access_denied_button.addEventListener('click', (e) => {
-        access_denied_button.disabled = true;
-        sendBanUser(user_id);
-        access_denied_button.disabled = false;
-     });*/
   });
 }
 
@@ -11283,55 +11278,6 @@ if (document.getElementById('liftBan')) {
     user_element.append(user_name);
     modal_body.append(message);
     modal_body.append(user_element);
-    /*lift_ban_button.addEventListener('click', (e) => {
-        lift_ban_button.disabled = true;
-        sendLiftBanUser(user_id);
-        lift_ban_button.disabled = false;
-    });*/
-  });
-  /*liftBanModal.addEventListener('hidden.bs.modal', function (event) {
-      const user_id = null;
-      console.log(user_id);
-  });*/
-}
-
-function sendBanUser(user_id) {
-  $.ajax({
-    type: "post",
-    //HTTP通信の種類
-    url: '/home/room/ban',
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-      "room_id": room_id,
-      "user_id": user_id
-    },
-    dataType: 'json'
-  }).done(function () {//window.onbeforeunload = null;
-    //location.reload();
-  }).fail(function (error) {
-    console.log(error);
-  });
-}
-
-function sendLiftBanUser(user_id) {
-  $.ajax({
-    type: "post",
-    //HTTP通信の種類
-    url: '/home/room/ban/lift',
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-      "room_id": room_id,
-      "user_id": user_id
-    },
-    dataType: 'json'
-  }).done(function () {//window.onbeforeunload = null;
-    //location.reload();
-  }).fail(function (error) {
-    console.log(error);
   });
 }
 })();

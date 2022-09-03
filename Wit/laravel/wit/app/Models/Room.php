@@ -135,6 +135,24 @@ class Room extends Model
         }
     }
 
+    public static function checkExpiredRoom($room_id)
+    {
+        $created_at = Room::find($room_id)->created_at;
+        $carbon = new Carbon($created_at);
+        $expired_at = $carbon->addDays(7);
+        return $expired_at <= Carbon::now();
+    }
+
+    public static function getRoomExpiredTime($room_id)
+    {
+        $room = new Room;
+        $created_at = $room->find($room_id)->created_at;
+        $carbon = new Carbon($created_at);
+        $expired_at = $carbon->addDays(7);
+        $diff = $expired_at->diffInHours(Carbon::now());
+        return $diff;
+    }
+
     public static function checkRoomAccess($user_id, $room_id)
     {
         $room = new Room;

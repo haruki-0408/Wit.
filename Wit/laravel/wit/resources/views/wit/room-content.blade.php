@@ -55,9 +55,8 @@
                         @break
 
                         @case(10)
-                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    width="16" height="16" fill="currentColor"
-                                    class="bi bi-clipboard-minus" viewBox="0 0 16 16">
+                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg width="16"
+                                    height="16" fill="currentColor" class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
                                     <path
@@ -76,9 +75,8 @@
                         @break
 
                         @case(11)
-                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    width="16" height="16" fill="currentColor"
-                                    class="bi bi-clipboard-minus" viewBox="0 0 16 16">
+                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg width="16"
+                                    height="16" fill="currentColor" class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
                                     <path
@@ -155,9 +153,8 @@
                                     <path
                                         d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                 </svg></button>
-                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    width="16" height="16" fill="currentColor"
-                                    class="bi bi-clipboard-minus" viewBox="0 0 16 16">
+                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg width="16"
+                                    height="16" fill="currentColor" class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
                                     <path
@@ -181,9 +178,8 @@
                                     <path
                                         d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                 </svg></button>
-                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg
-                                    width="16" height="16" fill="currentColor"
-                                    class="bi bi-clipboard-minus" viewBox="0 0 16 16">
+                            <button type="button" class="remove-list-room btn btn-outline-danger p-2"><svg width="16"
+                                    height="16" fill="currentColor" class="bi bi-clipboard-minus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M5.5 9.5A.5.5 0 0 1 6 9h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z" />
                                     <path
@@ -214,7 +210,7 @@
                             d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                     </svg></strong>
             @else
-                <strong class="card-title m-0 pb-1 d-flex align-items-center">{{ $room->title }}</strong>
+                <strong class="card-title m-0 pb-1 d-flex align-items-center text-break">{{ $room->title }}</strong>
             @endif
             <p class="card-text room-description text-break m-0">{!! nl2br(e($room->description)) !!}</p>
             @if (is_null($room->posted_at))
@@ -228,17 +224,29 @@
                             <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                         </svg>x{{ $room->count_online_users }}
                     </div>
-                    <div class="countChatMessages">
+                    <div class="mx-2 countChatMessages">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots-fill"
                             viewBox="0 0 16 16">
                             <path
                                 d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                         </svg>x{{ $room->count_chat_messages }}
                     </div>
+                    <div class="expired-time-left">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-clock-history mx-1"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
+                            <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
+                            <path
+                                d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>{{ $room->expired_time_left }} Hours
+                    </div>
                 </small>
             @endif
             <small class="text-muted text-end">
-                {{ $room->created_at }}
+                <div class="create-time">
+                    {{ $room->created_at }}
+                </div>
             </small>
 
         </div>

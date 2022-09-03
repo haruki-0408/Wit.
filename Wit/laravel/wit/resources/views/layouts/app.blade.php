@@ -128,12 +128,14 @@
         </div>
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
-            <strong class="card-title m-0 pb-1 d-flex align-items-center"></strong>
+            <strong class="card-title m-0 pb-1 d-flex align-items-center text-break"></strong>
             <p class="card-text room-description text-break m-0"></p>
             <small class="text-muted d-flex justify-content-end text-end">
                 <div class="mx-2 countOnlineUsers">
                 </div>
-                <div class="countChatMessages">
+                <div class="mx-2 countChatMessages">
+                </div>
+                <div class="expired-time-left">
                 </div>
             </small>
             <small class="d-block text-end text-muted created_at"></small>
@@ -254,7 +256,7 @@
             action = document.getElementById("action-message")
             action.classList.remove('invisible');
             setTimeout(() => {
-                action.classList.add('invisible')
+                action.classList.add('invisible');
             }, 3000);
         @endif
 
@@ -279,12 +281,12 @@
                 const myModal = document.getElementById('createRoomModalButton');
                 myModal.click();
             }
-        @elseif($errors->hasAny(['currentPass', 'newPass']))
+        @elseif ($errors->hasAny(['currentPass', 'newPass']))
             if (document.getElementById('changePasswordModalButton')) {
                 const change_password_button = document.getElementById('changePasswordModalButton');
                 change_password_button.click();
             }
-        @elseif($errors->has('infoPass'))
+        @elseif ($errors->has('infoPass'))
             if (document.getElementById('informationPasswordModalButton')) {
                 const info_password_button = document.getElementById('informationPasswordModalButton');
                 info_password_button.click();
@@ -292,7 +294,7 @@
                 const info_password_button2 = document.getElementById('informationPasswordModalButtonFooter');
                 info_password_button2.click();
             }
-        @elseif($errors->has('deletePass'))
+        @elseif ($errors->has('deletePass'))
             if (document.getElementById('deleteAccountPasswordModalButton')) {
                 const delete_password_button = document.getElementById('deleteAccountPasswordModalButton');
                 delete_password_button.click();
@@ -301,7 +303,7 @@
                     'deleteAccountPasswordModalButtonFooter');
                 delete_password_button2.click();
             }
-        @elseif($errors->has('enterPass'))
+        @elseif ($errors->has('enterPass'))
             const room_id = '{{ old('room_id') }}';
             const room = document.querySelector('[data-room-id="' + room_id + '"]');
             const enter_password_button = room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');

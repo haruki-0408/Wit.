@@ -33,6 +33,10 @@ Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_i
         return false;
     }
 
+    if($room->find($room_id)->posted_at !== null){
+        return false;
+    }
+
     if($count_online_users > 10 && $user->id !== Auth::id()){
         return false;
     }

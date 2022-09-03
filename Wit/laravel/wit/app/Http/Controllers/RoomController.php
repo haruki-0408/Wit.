@@ -98,10 +98,12 @@ class RoomController extends Controller
         $rooms->map(function ($each) use ($second_query) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
+            $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id, $second_query);
             $each['type'] = $type['type'];
             $each['count_online_users'] = $count_online_users;
             $each['count_chat_messages'] = $count_chat_messages;
+            $each['expired_time_left'] = $expired_time_left;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -138,10 +140,12 @@ class RoomController extends Controller
         $rooms->map(function ($each) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
+            $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
             $each['count_online_users'] = $count_online_users;
             $each['count_chat_messages'] = $count_chat_messages;
+            $each['expired_time_left'] = $expired_time_left;
 
             if ($type['no_get_more']) {
                 $each['no_get_more'] = $type['no_get_more'];
@@ -197,6 +201,7 @@ class RoomController extends Controller
             'room_info' => $room_info,
             'count_image_data' => $count_image_data,
             'auth_user' => $auth_user,
+            'expired_time_left' => Room::getRoomExpiredTime($room_id),
         ]);
     }
 
@@ -236,6 +241,7 @@ class RoomController extends Controller
             'room_info' => $room_info,
             'count_image_data' => $count_image_data,
             'auth_user' => $auth_user,
+            'expired_time_left' => Room::getRoomExpiredTime($room_id),
         ]);
     }
 
@@ -411,8 +417,10 @@ class RoomController extends Controller
             $each['type'] = $type['type'];
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
+            $expired_time_left = Room::getRoomExpiredTime($each->id);
             $each['count_online_users'] = $count_online_users;
             $each['count_chat_messages'] = $count_chat_messages;
+            $each['expired_time_left'] = $expired_time_left;
             return $each;
         });
 
@@ -480,10 +488,12 @@ class RoomController extends Controller
         $list_rooms->map(function ($each) use ($list_query) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
             $count_chat_messages = $each->roomChat->count();
+            $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id, null, $list_query);
             $each['type'] = $type['type'];
             $each['count_online_users'] = $count_online_users;
             $each['count_chat_messages'] = $count_chat_messages;
+            $each['expired_time_left'] = $expired_time_left;
 
 
             if ($type['no_get_more']) {
