@@ -522,6 +522,7 @@
                         </li>
 
                         <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Expired Time: {{ $expired_time_left }} Hours </li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
                             <li class="p-2">Room Administration</li>
@@ -653,7 +654,8 @@
                                 </div>
                                 <ul id="informationList" class="col-12 mt-2 p-2">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Expired Time: {{ $expired_time_left }} Hours </li>
                                     @if (Auth::id() == $room_info->user->id)
                                         <hr>
                                         <li class="p-2">Room Administration</li>

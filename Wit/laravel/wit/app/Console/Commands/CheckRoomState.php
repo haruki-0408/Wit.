@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Room;
-use App\Models\User;
 use App\Events\RemoveRoom;
 use App\Events\SaveRoom;
 use App\Models\Tag;
@@ -52,10 +51,6 @@ class CheckRoomState extends Command
                     $room_tags = $room->tags()->get();
 
                     foreach ($room_tags as $room_tag) {
-                        if (Tag::where('id', $room_tag->pivot->tag_id)->doesntExist()) {
-                            return logger()->info('tag error');
-                        }
-
                         $tag = Tag::find($room_tag->pivot->tag_id);
                         if ($tag->number < 1) {
                             $tag->delete();

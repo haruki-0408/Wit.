@@ -308,7 +308,7 @@
                 <div class="d-flex flex-column p-3  ">
                     <ul id="informationListModal" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
-                        <li>Create : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                     </ul>
                 </div>
             </div>
