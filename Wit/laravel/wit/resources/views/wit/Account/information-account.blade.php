@@ -5,13 +5,13 @@
     @endcomponent
 
     <div class="card border-0 overflow-auto w-100" style="height:83%;">
-        <div id="profileContents" class="row justify-content-center w-100">
-            <form class="m-0 p-0" action="/home/profile/settings/changeProfile" method="post" name='changeProfile'
+        <div id="Profile-Contents" class="row justify-content-center w-100">
+            <form class="m-0 p-0" action="/home/profile/settings/changeProfile" method="post" name='change_profile'
                 enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
-                    <div id="parentImage" class="text-center">
-                        <img id="childImage" src="{{ asset(Auth::user()->profile_image) }}"
+                    <div id="Parent-Image" class="text-center">
+                        <img id="Child-Image" src="{{ asset(Auth::user()->profile_image) }}"
                             style="width:100;height:100; position:relative;" class="rounded-circle " alt="">
                         <span class="d-block m-0"><small class="text-muted">Profile Image</small></span>
                         @error('image')
@@ -21,9 +21,10 @@
                         @enderror
                     </div>
 
-                    <div id="parentName" class="row justify-content-center align-items-center">
+                    <div id="Parent-Name" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Name</strong>
-                        <p id="childName" class="card-text col-10 col-md-4 text-center p-1 m-0">{{ Auth::user()->name }}</p>
+                        <p id="Child-Name" class="card-text col-10 col-md-4 text-center p-1 m-0">{{ Auth::user()->name }}
+                        </p>
                         @error('name')
                             <div class="col-0 col-md-4">
                             </div>
@@ -33,9 +34,9 @@
                         @enderror
                     </div>
 
-                    <div id="parentEmail" class="row justify-content-center align-items-center">
+                    <div id="Parent-Email" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
-                        <p id="childEmail" class="card-text col-10 col-md-4  text-center p-1 m-0">{{ Auth::user()->email }}
+                        <p id="Child-Email" class="card-text col-10 col-md-4  text-center p-1 m-0">{{ Auth::user()->email }}
                         </p>
                         @error('email')
                             <div class="col-0 col-md-4">
@@ -46,9 +47,9 @@
                         @enderror
                     </div>
 
-                    <div id="parentMessage" class="row justify-content-center align-items-center">
+                    <div id="Parent-Message" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Profile Message</strong>
-                        <p id="childMessage" class="card-text col-10 text-center col-md-4 p-1 m-0"
+                        <p id="Child-Message" class="card-text col-10 text-center col-md-4 p-1 m-0"
                             style="font-size: 0.9em;">
                             {{ Auth::user()->profile_message }}</p>
                         @error('message')
@@ -61,14 +62,14 @@
                     </div>
 
                     <div class="row justify-content-center align-items-center">
-                        <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2">Created Date</strong>
+                        <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2">Created Time</strong>
                         <h6 class="card-text col-10 col-md-4 text-center p-0">{{ Auth::user()->created_at }}</h6>
                     </div>
 
                     <div class="row justify-content-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-0 m-0 m-lg-2"></strong>
-                        <div id="parentButton" class="col-10 col-md-4 text-end mt-2">
-                            <button type="button" id="profileEdit" class="btn btn-outline-primary">Edit</button>
+                        <div id="Parent-Button" class="col-10 col-md-4 text-end mt-2">
+                            <button type="button" id="Profile-Edit-Button" class="btn btn-outline-primary">Edit</button>
                         </div>
                     </div>
 
@@ -85,82 +86,82 @@
 
 <script>
     window.onload = function() {
-        document.getElementById("profileEdit").onclick = function() {
+        document.getElementById("Profile-Edit-Button").onclick = function() {
 
-            var parent_button = document.getElementById("parentButton");
-            var button_edit = document.getElementById("profileEdit");
-            var button_save = document.createElement("button");
+            const parent_button = document.getElementById("Parent-Button");
+            const button_edit = document.getElementById("Profile-Edit-Button");
+            const button_save = document.createElement("button");
             button_save.className = "btn btn-outline-primary"
-            button_save.setAttribute("id", "saveButton");
+            button_save.setAttribute("id", "Profile-Save-Button");
             button_save.setAttribute("type", "submit");
             button_save.textContent = "Save";
-            button_save.setAttribute("onclick","window.onbeforeunload = null;")
+            button_save.setAttribute("onclick", "window.onbeforeunload = null;")
 
-            var button_cancel = document.createElement("button");
+            const button_cancel = document.createElement("button");
             button_cancel.className = "btn btn-secondary mx-2";
             button_cancel.setAttribute("type", "button");
-            button_cancel.setAttribute("id", "cancelButton");
+            button_cancel.setAttribute("id", "Profile-Cancel-Button");
             button_cancel.textContent = "Cancel"
 
             parent_button.appendChild(button_cancel);
             parent_button.replaceChild(button_save, button_edit);
 
 
-            var image = document.getElementById('childImage');
+            const image = document.getElementById('Child-Image');
             image.classList.add('opacity-25');
-            var icon = document.createElement("label");
+            const icon = document.createElement("label");
 
             //変更後の画像プレビュー
             icon.innerHTML =
-                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='imageInput' name='image' type='file' accept='image/*' class='invisible'></i>";
-            document.getElementById("parentImage").appendChild(icon);
+                "<i style='width:50; height:50; font-size:2.5rem; position:absolute; top:10%;left:55%; cursor:pointer;' class='bi bi-camera-fill '><input id='Image-Input' name='image' type='file' accept='image/*' class='invisible'></i>";
+            document.getElementById("Parent-Image").appendChild(icon);
 
 
-            var childName = document.getElementById('childName');
-            var childEmail = document.getElementById('childEmail');
-            var childMessage = document.getElementById('childMessage');
-            var oldNode = [childName, childEmail, childMessage];
+            const child_name = document.getElementById('Child-Name');
+            const child_email = document.getElementById('Child-Email');
+            const child_message = document.getElementById('Child-Message');
+            let old_node = [child_name, child_email, child_message];
 
-            var name = document.getElementById('childName').innerText;
-            var email = document.getElementById('childEmail').innerText;
-            var message = document.getElementById('childMessage').innerText;
-
-            var input_name = document.createElement('input');
+            let input_name = document.createElement('input');
             input_name.setAttribute('name', 'name');
             input_name.className = "card-text col-10 col-md-4 p-1";
-            input_name.value = name;
+            input_name.value = child_name.innerText;
 
-            var input_email = document.createElement('input');
+            let input_email = document.createElement('input');
             input_email.setAttribute('name', 'email');
             input_email.className = "card-text col-10 col-md-4 p-1";
-            input_email.value = email;
+            input_email.value = child_email.innerText;
 
-            var input_message = document.createElement('textarea');
+            let input_message = document.createElement('textarea');
             input_message.setAttribute('name', 'message');
             input_message.className = "card-text col-10 col-md-4 p-1";
-            input_message.value = message;
+            input_message.value = child_message.innerText;
 
-            var newNode = [input_name, input_email, input_message];
+            let new_node = [input_name, input_email, input_message];
 
             for (var i = 0; i < 3; i++) {
-
-                if (i === 0) {
-                    var parentNode = document.getElementById('parentName');
-                } else if (i === 1) {
-                    var parentNode = document.getElementById('parentEmail');
-                } else if (i === 2) {
-                    var parentNode = document.getElementById('parentMessage');
+                switch (i) {
+                    case 0:
+                        var parent_node = document.getElementById('Parent-Name');
+                        break;
+                    case 1:
+                        var parent_node = document.getElementById('Parent-Email');
+                        break;
+                    case 2:
+                        var parent_node = document.getElementById('Parent-Message');
+                        break;
+                    default:
+                        break;
                 }
-
-                parentNode.replaceChild(newNode[i], oldNode[i]);
+                parent_node.replaceChild(new_node[i], old_node[i]);
             }
 
         }
 
         //画像の変更プレビュー表示
         document.addEventListener('click', function(e) { //VanillaJSで動的要素にイベント登録するための書き方
-            if (event.target.id === 'imageInput') {
-                document.getElementById("imageInput").addEventListener("change", function(e) {
+            if (event.target.id === 'Image-Input') {
+                document.getElementById("Image-Input").addEventListener("change", function(e) {
                     const file = e.target.files[0];
 
                     // Only process image files.
@@ -171,9 +172,9 @@
                     const reader = new FileReader();
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            const imgElm = document.getElementById("childImage");
-                            imgElm.src = e.target.result;
-                            imgElm.classList.remove('opacity-25');
+                            const img_element = document.getElementById("Child-Image");
+                            img_element.src = e.target.result;
+                            img_element.classList.remove('opacity-25');
                         }
                     })(file);
 
@@ -186,13 +187,12 @@
 
         document.addEventListener('click', function(e) {
             // id属性の値で判定
-            if (event.target.id === 'cancelButton') {
+            if (event.target.id === 'Profile-Cancel-Button') {
                 window.location.reload(false);
             }
         });
     }
-</script>
-<script>
+
     window.onbeforeunload = function(e) {
         e.returnValue = "ページを離れようとしています。よろしいですか？";
     }
