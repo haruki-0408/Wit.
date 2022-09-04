@@ -32,7 +32,7 @@ class RoomController extends Controller
         //queryを２つ用意しないとオーバーライドされてしまう
 
 
-        switch ($request->searchType) {
+        switch ($request->search_type) {
             case 'keyword':
                 if (isset($request->keyword)) {
                     $query->searchRoomName($request->keyword);
@@ -62,22 +62,22 @@ class RoomController extends Controller
 
 
 
-        if ($request->checkImage != 'false') {
+        if ($request->check_image != 'false') {
             $query->doesntHave('roomImages');
             $second_query->doesntHave('roomImages');
         }
 
-        if ($request->checkTag != 'false' && $request->searchType != 'tag') {
+        if ($request->check_tag != 'false' && $request->search_type != 'tag' && $request->check_post == 'false') {
             $query->doesntHave('tags');
             $second_query->doesntHave('tags');
         }
 
-        if ($request->checkPassword != 'false') {
+        if ($request->check_password != 'false' && $request->check_post == 'false') {
             $query->searchRoomPassword();
             $second_query->searchRoomPassword();
         }
 
-        if ($request->checkPost != 'false') {
+        if ($request->check_post != 'false') {
             $query->searchPostRoom();
             $second_query->searchPostRoom();
         }
@@ -185,11 +185,11 @@ class RoomController extends Controller
         $room_password = $room->password;
         $auth_user = Auth::user();
 
-        if (is_null($request->enterPass) || is_null($room_password)) {
+        if (is_null($request->enter_password) || is_null($room_password)) {
             return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
-        if (!(Hash::check($request->enterPass, $room_password))) {
+        if (!(Hash::check($request->enter_password, $room_password))) {
             return back()->with('error_message', 'パスワードが違います');
         }
 

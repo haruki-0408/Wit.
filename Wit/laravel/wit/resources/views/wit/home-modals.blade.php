@@ -175,7 +175,7 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3">
 
-                    <form id="Room-Password" name='room_password' method="post" action="/home/authRoomPassword">
+                    <form id="Room-Password-Form" name='room_password' method="post" action="/home/authRoomPassword">
                         @csrf
                         <input type="password" name="enter_password" class="form-control mb-3" autocomplete=off>
                         <input type="hidden" name="room_id">
@@ -185,7 +185,7 @@
                             </div>
                         @enderror
                         <div class="text-end">
-                            <button type="submit" form="Room-Password" class="btn btn-outline-primary ">Submit</button>
+                            <button type="submit" form="Room-Password-Form" class="btn btn-outline-primary ">Submit</button>
                         </div>
                     </form>
                 </div>

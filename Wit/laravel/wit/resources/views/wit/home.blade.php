@@ -19,7 +19,7 @@
         <ul class="dropdown-menu p-2 bg-light" aria-labelledby="dropdown">
             <table width=200>
                 <tr class="dropdown-item">
-                    <th><input class="form-check-input" type="radio" name="radio_user" id="Radio-User"></th>
+                    <th><input class="form-check-input" type="radio" name="flexRadioDefault" id="Radio-User"></th>
                     <th>
                         <label class="form-check-label" for="Radio-User">
                             <svg width="16" height="16" fill="currentColor"
@@ -34,7 +34,7 @@
                     </th>
                 </tr>
                 <tr class="dropdown-item">
-                    <th><input class="form-check-input" type="radio" name="radio_room" id="Radio-Room" checked>
+                    <th><input class="form-check-input" type="radio" name="flexRadioDefault" id="Radio-Room" checked>
                     </th>
                     <th>
                         <label class="form-check-label" for="Radio-Room">

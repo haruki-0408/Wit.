@@ -93,14 +93,14 @@
 
 </head>
 
-<template id="User-template">
+<template id="User-Template">
     <li class="d-flex bg-white p-1 justify-content-between">
-        <div class="user">
-            <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1" href="#"
+        <div class="User">
+            <a class="User-Link link-dark text-decoration-none d-flex align-items-center p-1" href="#"
                 alt="">
                 <img src="" alt="" width="50" height="50"
-                    class="profile-image rounded-circle me-2">
-                <strong class="user-name text-break"></strong>
+                    class="Profile-Image rounded-circle me-2">
+                <strong class="User-Name text-break"></strong>
             </a>
         </div>
         <div class="btn-group d-flex align-items-center p-2">
@@ -109,15 +109,15 @@
     </li>
 </template>
 
-<template id="Room-template">
+<template id="Room-Template">
     <li>
         <div class="card border-0">
             <div class="card-header border-0 d-flex bg-white p-1 justify-content-between">
-                <div class="user">
-                    <a href="#" class="user-link link-dark p-1 text-decoration-none d-flex align-items-center">
+                <div class="User">
+                    <a href="#" class="User-Link link-dark p-1 text-decoration-none d-flex align-items-center">
                         <img src="" alt="" width="50" height="50"
-                            class="profile-image rounded-circle me-2">
-                        <strong class="user-name text-break"></strong>
+                            class="Profile-Image rounded-circle me-2">
+                        <strong class="User-Name text-break"></strong>
                     </a>
                 </div>
 
@@ -129,20 +129,20 @@
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
             <strong class="card-title m-0 pb-1 d-flex align-items-center text-break"></strong>
-            <p class="card-text room-description text-break m-0"></p>
+            <p class="Room-Description card-text text-break m-0"></p>
             <small class="text-muted d-flex justify-content-end text-end">
-                <div class="mx-2 countOnlineUsers">
+                <div class="mx-2 Count-Online-Users">
                 </div>
-                <div class="mx-2 countChatMessages">
+                <div class="mx-2 Count-Chat-Messages">
                 </div>
-                <div class="expired-time-left">
+                <div class="Expired-Time-Left">
                 </div>
             </small>
-            <small class="d-block text-end text-muted created_at"></small>
+            <small class="Created-at d-block text-end text-muted"></small>
         </div>
 
         <div class="card-footer border-0 bg-white p-0">
-            <ul class="room_tags p-1">
+            <ul class="Room-Tags p-1">
 
             </ul>
         </div>

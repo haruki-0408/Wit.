@@ -1,4 +1,4 @@
-<div class="Room-tag fs-5">
+<div class="Room-Tags fs-5">
     <ul>
         <li><a class="tag" href="#">あいうえおかきくけこさしすせそたちつてと<span class="badge badge-light">4</span></a></li>
         <li><a class="tag" href="#">Food</a></li>
