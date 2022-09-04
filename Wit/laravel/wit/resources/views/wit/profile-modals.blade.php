@@ -1,6 +1,6 @@
 <!-- Modals -->
-<div class="modal fade" id="otherOpenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="open" aria-hidden="true">
+<div class="modal fade" id="Other-OpenRoom-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Other-OpenRoom-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +14,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul id="otherOpen" class="p-1 m-0 ">
+                <ul id="Other-OpenRoom-List" class="p-1 m-0 ">
                     @component('wit.room-content')
                         @slot('rooms', $o_open_rooms)
                     @endcomponent
@@ -27,8 +27,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="otherPostModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="posts" aria-hidden="true">
+<div class="modal fade" id="Other-PostRoom-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Other-PostRoom-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -42,13 +42,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul id="otherPost" class="p-1 m-0">
+                <ul id="Other-PostRoom-List" class="p-1 m-0">
                     @component('wit.room-content')
                         @slot('rooms', $o_post_rooms)
                     @endcomponent
                 </ul>
                 @if (!isset($o_post_rooms->last()->no_get_more) && $o_post_rooms->isNotEmpty())
-                    <div id="otherMorePostRoomButton" class="btn d-flex justify-content-center m-3"><svg width="16"
+                    <div id="Other-More-PostRoom-Button" class="btn d-flex justify-content-center m-3"><svg width="16"
                             height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
@@ -66,8 +66,8 @@
 
 
 
-<div class="modal fade" id="otherListUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="users" aria-hidden="true">
+<div class="modal fade" id="Other-ListUser-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Other-ListUser-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,15 +81,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-1">
-                <ul id="otherListUser" class="fs-6 p-2">
+                <ul id="Other-ListUser-List" class="fs-6 p-2">
                     @foreach ($o_list_users as $o_list_user)
                         <li data-user-id="{{ $o_list_user->id }}" class="d-flex bg-white p-1 justify-content-between">
-                            <div class="user">
-                                <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1"
+                            <div class="User">
+                                <a class="User-Link link-dark text-decoration-none d-flex align-items-center p-1"
                                     href="/home/profile:{{ $o_list_user->id }}" alt="">
                                     <img src="{{ asset($o_list_user->profile_image) }}" alt="" width="50"
-                                        height="50" class="profile-image rounded-circle me-2">
-                                    <strong class="user-name text-break">{{ $o_list_user->name }}</strong>
+                                        height="50" class="Profile-Image rounded-circle me-2">
+                                    <strong class="User-Name text-break">{{ $o_list_user->name }}</strong>
                                 </a>
                             </div>
                             <div class="btn-group d-flex align-items-center p-2">
@@ -126,7 +126,7 @@
                 </ul>
 
                 @if (!isset($o_list_users->last()->no_get_more) && $o_list_users->isNotEmpty())
-                    <div id="otherMoreListUserButton" class="btn d-flex justify-content-center m-3"><svg
+                    <div id="Other-More-ListUser-Button" class="btn d-flex justify-content-center m-3"><svg
                             width="16" height="16" fill="currentColor" class="bi bi-caret-down"
                             viewBox="0 0 16 16">
                             <path
@@ -144,8 +144,8 @@
 </div>
 
 
-<div class="modal fade" id="otherListRoomModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="list-rooms" aria-hidden="true">
+<div class="modal fade" id="Other-ListRoom-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Other-ListRoom-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,13 +159,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul id="otherListRoom" class="p-1 m-0 ">
+                <ul id="Other-ListRoom-List" class="p-1 m-0 ">
                     @component('wit.room-content')
                         @slot('rooms', $o_list_rooms);
                     @endcomponent
                 </ul>
                 @if (!isset($o_list_rooms->last()->no_get_more) && $o_list_rooms->isNotEmpty())
-                    <div id="otherMoreListRoomButton" class="btn d-flex justify-content-center m-3"><svg
+                    <div id="Other-More-ListRoom-Button" class="btn d-flex justify-content-center m-3"><svg
                             width="16" height="16" fill="currentColor" class="bi bi-caret-down"
                             viewBox="0 0 16 16">
                             <path

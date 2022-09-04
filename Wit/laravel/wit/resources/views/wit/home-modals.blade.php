@@ -83,12 +83,12 @@
                 <ul id="My-ListUser-List" class="fs-6 p-2">
                     @foreach ($list_users as $list_user)
                         <li data-user-id="{{ $list_user->id }}" class="d-flex bg-white p-1 justify-content-between">
-                            <div class="user">
-                                <a class="user-link link-dark text-decoration-none d-flex align-items-center p-1" href="/home/profile:{{ $list_user->id }}"
+                            <div class="User">
+                                <a class="User-Link link-dark text-decoration-none d-flex align-items-center p-1" href="/home/profile:{{ $list_user->id }}"
                                     alt="">
                                     <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
-                                        class="profile-image rounded-circle me-2">
-                                    <strong class="user-name text-break">{{ $list_user->name }}</strong>
+                                        class="Profile-Image rounded-circle me-2">
+                                    <strong class="User-Name text-break">{{ $list_user->name }}</strong>
                                 </a>
                             </div>
                             <div class="btn-group d-flex align-items-center p-2">
