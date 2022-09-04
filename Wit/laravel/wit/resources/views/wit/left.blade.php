@@ -1,4 +1,4 @@
-<div id="left-sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
+<div id="Left-Sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div class="profile-box  ">
         <a href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -23,10 +23,10 @@
 
 
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><button class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#CreateRoomForm">New
+                <li><button class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#Create-Room-Modal">New
                         Room</button></li>
                 <li><button class="btn dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#settingsModal">Settings</button></li>
+                        data-bs-target="#Settings-Modal">Settings</button></li>
                 <li><a class="dropdown-item" href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}">Profile</a>
                 </li>
                 <li>
@@ -49,12 +49,12 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myOpenModal">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#My-OpenRoom-Modal">
                     <strong>Open</strong>
                 </a>
             </li>
             <li>
-                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#myPostModal">
+                <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal" data-bs-target="#My-PostRoom-Modal">
                     <strong>Post</strong>
                 </a>
             </li>
@@ -64,8 +64,8 @@
     </div>
 
 
-    <div class="mylist-box ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list mx-2"
+    <div class="mylist-box">
+        <svg width="16" height="16" fill="currentColor" class="bi bi-card-list mx-2"
             viewBox="0 0 16 16">
             <path
                 d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -76,9 +76,9 @@
 
         <hr>
 
-        <div class="user-list fs-5">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#myListUserModal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        <div class="fs-5">
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#My-ListUser-Modal">
+                <svg width="16" height="16" fill="currentColor"
                     class="bi bi-people-fill mx-2" viewBox="0 0 16 16">
                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     <path fill-rule="evenodd"
@@ -90,9 +90,9 @@
         </div>
 
 
-        <div class="room-list fs-5 mt-3 ">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#myListRoomModal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        <div class="fs-5 mt-3 ">
+            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#My-ListRoom-Modal">
+                <svg width="16" height="16" fill="currentColor"
                     class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
                         d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />

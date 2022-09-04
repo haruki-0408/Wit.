@@ -2,27 +2,27 @@
 
 @section('home-only')
     <div class="btn-group">
-        <select id="searchType" class="form-select-sm btn-outline-primary text-center" aria-label="searchType">
+        <select id="Search-Type" class="form-select-sm btn-outline-primary text-center" aria-label="Search-Type">
             <option value="keyword" selected>キーワード</option>
             <option value="id">ルームID</option>
             <option value="tag">タグ</option>
         </select>
-        <input id="search-keyword" class="form-control mx-1" type="text">
+        <input id="Search-Keyword" class="form-control mx-1" type="text">
     </div>
     <div class="btn-group">
 
-        <button id="search-button" class="border-0 bg-light" type="submit"> <i
+        <button id="Search-Button" class="border-0 bg-light" type="submit"> <i
                 class="btn btn-primary bi bi-search"></i></button>
 
-        <button class="border-0 bg-light dsropdown-toggle" type="button" data-bs-toggle="dropdown"
+        <button class="border-0 bg-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" aria-expanded="false"><i class="btn btn-primary bi bi-filter-square"></i></button>
         <ul class="dropdown-menu p-2 bg-light" aria-labelledby="dropdown">
             <table width=200>
                 <tr class="dropdown-item">
-                    <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioUser"></th>
+                    <th><input class="form-check-input" type="radio" name="radio_user" id="Radio-User"></th>
                     <th>
-                        <label class="form-check-label" for="flexRadioUser">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        <label class="form-check-label" for="Radio-User">
+                            <svg width="16" height="16" fill="currentColor"
                                 class="bi bi-people-fill mx-2" viewBox="0 0 16 16">
                                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                 <path fill-rule="evenodd"
@@ -34,11 +34,11 @@
                     </th>
                 </tr>
                 <tr class="dropdown-item">
-                    <th><input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioRoom" checked>
+                    <th><input class="form-check-input" type="radio" name="radio_room" id="Radio-Room" checked>
                     </th>
                     <th>
-                        <label class="form-check-label" for="flexRadioRoom">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        <label class="form-check-label" for="Radio-Room">
+                            <svg width="16" height="16" fill="currentColor"
                                 class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
@@ -56,30 +56,30 @@
 
                 <tr class="dropdown-item">
                     <td>
-                        <input class="form-check-input" type="checkbox" name="flexCheckImage" id="flexCheckImage">
+                        <input class="form-check-input" type="checkbox" name="check_image" id="Check-Image">
                     </td>
                     <td>
-                        <label class="form-check-label" for="flexCheckImage">
+                        <label class="form-check-label" for="Check-Image">
                             画像なし
                         </label>
                     </td>
                 </tr>
                 <tr class="dropdown-item">
                     <td>
-                        <input class="form-check-input" type="checkbox" name="flexCheckTag" id="flexCheckTag">
+                        <input class="form-check-input" type="checkbox" name="check_tag" id="Check-Tag">
                     </td>
                     <td>
-                        <label class="form-check-label" for="flexCheckTag">
+                        <label class="form-check-label" for="Check-Tag">
                             タグなし
                         </label>
                     </td>
                 </tr>
                 <tr class="dropdown-item">
                     <td>
-                        <input class="form-check-input" type="checkbox" name="flexCheckPassword" id="flexCheckPassword">
+                        <input class="form-check-input" type="checkbox" name="check_password" id="Check-Password">
                     </td>
                     <td>
-                        <label class="form-check-label" for="flexCheckPassword">
+                        <label class="form-check-label" for="Check-Password">
                             鍵付き
                         </label>
                     </td>
@@ -87,24 +87,16 @@
                 </tr>
                 <tr class="dropdown-item">
                     <th>
-                        <input class="form-check-input" type="checkbox" name="flexCheckPost" id="flexCheckPost">
+                        <input class="form-check-input" type="checkbox" name="check_post" id="Check-Post">
                     </th>
                     <td>
-                        <label class="form-check-label" for="flexCheckPost">
+                        <label class="form-check-label" for="Check-Post">
                             PostRoomのみ
                         </label>
                     </td>
                 </tr>
 
             </table>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-            <div class="btn-group-vertical w-100">
-                <button id="new-row" type="button" class="btn btn-outline-primary">新規投稿順</button>
-                <button id="old-row" type="button" class="btn btn-outline-primary">古い順</button>
-                <button id="chat-row" type="button" class="btn btn-outline-primary">チャット数が多い順</button>
-            </div>
         </ul>
     </div>
 @endsection
@@ -117,30 +109,30 @@
 
 
 @section('content')
-    <div id="home-content" class="container-fluid h-100 p-1">
+    <div id="Home-Content" class="container-fluid h-100 p-1">
         <div class="row h-100">
             @component('wit.left')
             @endcomponent
-            <div id="Room-content" class="col-lg-6 col-md-8 col-sm-12 m-0 p-3">
-                <ul id="Rooms" class="p-0 m-0 ">
+            <div id="Room-Content" class="col-lg-6 col-md-8 col-sm-12 m-0 p-3">
+                <ul id="Rooms-List" class="p-0 m-0 ">
                     @component('wit.room-content')
                         @slot('rooms', $rooms);
                     @endcomponent
                 </ul>
                 @if (!isset($rooms->last()->no_get_more) && $rooms->isNotEmpty())
-                    <div id="getMoreButton" class="btn d-flex justify-content-center m-3"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    <div id="Get-More-Button" class="btn d-flex justify-content-center m-3">
+                        <svg width="16" height="16" fill="currentColor"
                             class="bi bi-caret-down" viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
-                        </svg></div>
+                        </svg>
+                    </div>
                 @endif
 
             </div>
             @component('wit.right')
             @endcomponent
-
         </div>
     </div>
     <div id="Create-Room-Button">
