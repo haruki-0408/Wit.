@@ -30,21 +30,21 @@ class AuthPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'deletePass' => 'required_if:ref,delete|password',
-            'infoPass' => 'required_if:ref,info|password',
-            'enterPass' => 'required_with:room_id|boolean'
+            'delete_password' => 'required_if:ref,delete|password',
+            'information_password' => 'required_if:ref,info|password',
+            'enter_password' => 'required_with:room_id|boolean'
         ];
     }
 
     public function messages()
     {
         return [
-            'deletePass.required_if' => 'パスワードを入力して下さい',
-            'deletePass.password' => 'パスワードが一致しませんでした',
-            'infoPass.required_if' => 'パスワードを入力して下さい',
-            'infoPass.password' => 'パスワードが一致しませんでした',
-            'enterPass.required_with' => 'パスワードを入力して下さい',
-            'enterPass.boolean' => 'パスワードが一致しませんでした',
+            'delete_password.required_if' => 'パスワードを入力して下さい',
+            'delete_password.password' => 'パスワードが一致しませんでした',
+            'information_password.required_if' => 'パスワードを入力して下さい',
+            'information_password.password' => 'パスワードが一致しませんでした',
+            'enter_password.required_with' => 'パスワードを入力して下さい',
+            'enter_password.boolean' => 'パスワードが一致しませんでした',
         ];
     }
 
@@ -52,15 +52,15 @@ class AuthPasswordRequest extends FormRequest
     public function validationData()
     {
         $data= $this->all();
-        if ($this->has('enterPass') && $this->has('room_id')) {
+        if ($this->has('enter_password') && $this->has('room_id')) {
             $room = new Room;
             $room_id = $this->room_id;
             if ($room->where('id', $room_id)->exists()) {
                 $room_password  = $room->find($room_id)->password;
-                $enter_password = $this->enterPass;
+                $enter_password = $this->enter_password;
                 
                 if (Hash::check($enter_password, $room_password)) {
-                    $data['enterPass'] = true;
+                    $data['enter_password'] = true;
                 }
             }
         }

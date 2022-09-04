@@ -281,32 +281,32 @@
                 const create_room_modal_button = document.getElementById('Create-Room-Modal-Button');
                 create_room_modal_button.click();
             }
-        @elseif ($errors->hasAny(['currentPass', 'newPass']))
-            if (document.getElementById('changePasswordModalButton')) {
-                const change_password_button = document.getElementById('changePasswordModalButton');
+        @elseif ($errors->hasAny(['current_password', 'new_password']))
+            if (document.getElementById('Change-Password-Modal-Button')) {
+                const change_password_button = document.getElementById('Change-Password-Modal-Button');
                 change_password_button.click();
             }
-        @elseif ($errors->has('infoPass'))
-            if (document.getElementById('informationPasswordModalButton')) {
-                const info_password_button = document.getElementById('informationPasswordModalButton');
+        @elseif ($errors->has('information_password'))
+            if (document.getElementById('Information-Password-Modal-Button')) {
+                const info_password_button = document.getElementById('Information-Password-Modal-Button');
                 info_password_button.click();
-            } else if (document.getElementById('informationPasswordModalButtonFooter')) {
+            } else if (document.getElementById('Information-Password-Modal-Button-Footer')) {
                 const info_password_button2 = document.getElementById('informationPasswordModalButtonFooter');
                 info_password_button2.click();
             }
-        @elseif ($errors->has('deletePass'))
-            if (document.getElementById('deleteAccountPasswordModalButton')) {
-                const delete_password_button = document.getElementById('deleteAccountPasswordModalButton');
+        @elseif ($errors->has('delete_password'))
+            if (document.getElementById('Delete-Account-Password-Modal-Button')) {
+                const delete_password_button = document.getElementById('Delete-Account-Password-Modal-Button');
                 delete_password_button.click();
             } else if (document.getElementById('deleteAccountPasswordModalButtonFooter')) {
                 const delete_password_button2 = document.getElementById(
                     'deleteAccountPasswordModalButtonFooter');
                 delete_password_button2.click();
             }
-        @elseif ($errors->has('enterPass'))
+        @elseif ($errors->has('enter_password'))
             const room_id = '{{ old('room_id') }}';
             const room = document.querySelector('[data-room-id="' + room_id + '"]');
-            const enter_password_button = room.querySelector('[data-bs-target = "#roomPasswordFormModal"]');
+            const enter_password_button = room.querySelector('[data-bs-target = "#Room-Password-Modal"]');
             enter_password_button.click();
         @endif
     </script>

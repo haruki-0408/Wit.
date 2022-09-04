@@ -86,10 +86,10 @@ class UserController extends Controller
             $user = Auth::user();
             $password = $user->password;
 
-            if ($request->has('infoPass')) {
-                $setting_password = $request->infoPass;
-            } else if ($request->has('deletePass')) {
-                $setting_password = $request->deletePass;
+            if ($request->has('information_password')) {
+                $setting_password = $request->information_password;
+            } else if ($request->has('delete_password')) {
+                $setting_password = $request->delete_password;
             }
 
             if (Hash::check($setting_password, $password)) {
@@ -140,13 +140,13 @@ class UserController extends Controller
 
     protected function changePassword(ChangePasswordRequest $request)
     {
-        if (isset($request->currentPass) && isset($request->newPass) && isset($request->newPass_confirmation)) {
+        if (isset($request->current_password) && isset($request->new_password) && isset($request->new_password_confirmation)) {
             $user_id = Auth::id();
             $user = User::find($user_id);
             $password = $user->password;
-            $current_password = $request->currentPass;
-            $new_password = $request->newPass;
-            $confirm_password = $request->newPass_confirmation;
+            $current_password = $request->current_password;
+            $new_password = $request->new_password;
+            $confirm_password = $request->new_password_confirmation;
             if (Hash::check($current_password, $password)) {
                 if ($new_password == $confirm_password) {
                     $user->password = Hash::make($new_password);
