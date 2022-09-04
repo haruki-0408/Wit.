@@ -30,12 +30,12 @@ class CreateRoomRequest extends FormRequest
         return [
             'title' => 'required|max:30|string',
             'description' => 'required|max:400|string',
-            'roomImages.*' => 'image',
-            'sumImageSize' => 'int|max:5120000',
-            'sumImageCount' => 'int|max:30',
+            'room_images.*' => 'image',
+            'sum_image_size' => 'int|max:5120000',
+            'sum_image_count' => 'int|max:30',
             //ここはサイズではなくintの整数値で判断しているからサイズなら5120でいい
             'matches.*' => 'max:20',
-            'createPass' => 'max:255|confirmed|min:8'
+            'create_password' => 'max:255|confirmed|min:8'
         ];
     }
 
@@ -46,13 +46,13 @@ class CreateRoomRequest extends FormRequest
             'title.max' => 'Titleは最大30文字以内です',
             'description.required' => 'Descriptionを入力してください',
             'description.max' => 'Descriptionは最大400文字以内です',
-            'sumImageSize.max' => '画像サイズは合計5MBまでです',
-            'sumImageCount.max' => '画像枚数は最大30枚までです',
-            'roomImages.*.image' => '画像形式以外はアップロードできません',
+            'sum_image_size.max' => '画像サイズは合計5MBまでです',
+            'sum_image_count.max' => '画像枚数は最大30枚までです',
+            'room_images.*.image' => '画像形式以外はアップロードできません',
             'matches.*.max' => '1タグにつき最大20文字までです',
-            'createPass.max' => 'passwordは最大255文字以内です',
-            'createPass.min' => 'passwordは最小8文字からです',
-            'createPass.confirmed' => 'passwordが一致しませんでした',
+            'create_password.max' => 'passwordは最大255文字以内です',
+            'create_password.min' => 'passwordは最小8文字からです',
+            'create_password.confirmed' => 'passwordが一致しませんでした',
         ];
     }
 
@@ -85,15 +85,15 @@ class CreateRoomRequest extends FormRequest
     public function validationData()
     {
         $data = $this->all();
-        if ($this->has('roomImages')) {
+        if ($this->has('room_images')) {
             $sum_image_size = 0;
-            $sum_image_count = count($this['roomImages']);
+            $sum_image_count = count($this['room_images']);
 
-            foreach ($this['roomImages'] as $roomImage) {
-                $sum_image_size += filesize($roomImage);
+            foreach ($this['room_images'] as $room_image) {
+                $sum_image_size += filesize($room_image);
             }
-            $data['sumImageSize'] = $sum_image_size;
-            $data['sumImageCount'] = $sum_image_count;
+            $data['sum_image_size'] = $sum_image_size;
+            $data['sum_image_count'] = $sum_image_count;
         }
 
         return $data;

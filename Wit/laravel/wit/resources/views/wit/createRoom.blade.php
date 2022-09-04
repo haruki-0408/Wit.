@@ -1,28 +1,26 @@
 <!-- Create Room Form -->
-<div class="modal fade " id="createRoomForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="CreateRoomForm" aria-hidden="true">
+<div class="modal fade " id="Create-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Create-Room-Modal" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
-            <form id="createRoomForm" action="/home/createRoom" enctype="multipart/form-data" method="post">
+            <form id="Create-Room-Form" action="/home/createRoom" enctype="multipart/form-data" method="post">
                 @csrf
-
                 <div class="modal-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    <svg width="16" height="16" fill="currentColor"
                         class="bi bi-house-fill mx-2" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                         <path fill-rule="evenodd"
                             d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                     </svg>
-                    <h5 class="modal-title" id="newRoom">NEW ROOM</h5>
+                    <h5 class="modal-title">NEW ROOM</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="mb-3">
-                        <label for="InputTitle" class="form-label">Title</label>
-                        <input type="text" name="title" value="{{ old('title') }}"class="form-control" id="inputTitle">
-                        <div id="titleHelp" class="form-text">Titleは全角半角問わず30文字まで記載できます</div>
+                        <label for="Input-Title" class="form-label">Title</label>
+                        <input id="Input-Title" type="text" name="title" value="{{ old('title') }}"class="form-control">
+                        <div class="form-text">Titleは全角半角問わず30文字まで記載できます</div>
                         @error('title')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
@@ -30,9 +28,9 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea class="form-control" type="text" name="description" rows="3">{{ old('description') }}</textarea>
-                        <div id="descriptionHelp" class="form-text">Descriptionは400文字まで記載できます</div>
+                        <label for="Input-Description" class="form-label">Description</label>
+                        <textarea id="Input-Description" class="form-control" type="text" name="description" rows="3">{{ old('description') }}</textarea>
+                        <div class="form-text">Descriptionは400文字まで記載できます</div>
                         @error('description')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
@@ -41,20 +39,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="InputImages" class="form-label">Images</label>
-                        <input class="form-control" name="roomImages[]" type="file" accept="image/*" multiple>
-                        <div id="inputImages" class="form-text">画像は合計5MBまで複数追加できます</div>
-                        @error('sumImageSize')
+                        <label for="Input-Images" class="form-label">Images</label>
+                        <input id="Input-Images" class="form-control" name="room_images[]" type="file" accept="image/*" multiple>
+                        <div class="form-text">画像は合計5MB,30枚まで追加できます</div>
+                        @error('sum_image_size')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
-                        @error('sumImageCount')
+                        @error('sum_image_count')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
-                        @error('roomImages.*')
+                        @error('room_images.*')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
@@ -63,8 +61,8 @@
 
 
                     <div class="mb-3">
-                        <label for="InputTags" class="form-label">Tags</label>
-                        <input id="inputTags" class="form-control" type="text" name="tag" value="{{ old('tag') }}" multiple>
+                        <label for="Input-Tags" class="form-label">Tags</label>
+                        <input id="Input-Tags" class="form-control" type="text" name="tag" value="{{ old('tag') }}" multiple>
                         <div class="form-text">1タグ20文字まで、複数記入時と最後は半角セミコロン' ; 'をつけてください</div>
                         <div class="form-text">重複しているタグは一つに統合されます</div>
                         <div class="form-text">全角数字&記号,全角スペース,中括弧'[]'は登録されず無視されます</div>
@@ -77,29 +75,29 @@
                         @enderror
                         <hr>
                         <p class="form-text">Tag Preview</p>
-                        <div id="showTags">
+                        <div id="Show-Tags">
 
 
                         </div>
                     </div>
 
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="roomSwitch">
+                        <input class="form-check-input" type="checkbox" id="Switch-Room-Password">
                         <label class="form-check-label" for="flexSwitchCheckDefault">Private Mode</label>
                     </div>
 
                     <div class="mb-3">
                         <label for="disabledTextInput" class="form-label"></label>
-                        <div id="password" class="mb-2">
+                        <div id="Password" class="mb-2">
 
                         </div>
-                        <div id="confirm-password" class="mb-0">
+                        <div id="Confirm-Password" class="mb-0">
                         
 
                         </div>
-                        <div id="passwordHelp" class="form-text"></div>
+                        <div id="Password-Help" class="form-text"></div>
 
-                        @error('createPass')
+                        @error('create_password')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </div>
@@ -108,7 +106,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="submitButton" type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Create</button>
+                    <button id="Submit-Button" type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Create</button>
                 </div>
             </form>
         </div>
@@ -116,40 +114,40 @@
 </div>
 
 <script>
-    const submit_form = document.getElementById('createRoomForm');
-    const submit_button = document.getElementById('submitButton');
+    const submit_form = document.getElementById('Create-Room-Form');
+    const submit_button = document.getElementById('Submit-Button');
     submit_form.addEventListener('submit',function(){
         submit_button.disabled = true;
     })
 
-    let RoomSwitch = document.getElementById('roomSwitch');
-    RoomSwitch.addEventListener('change', switchCheck);
-    let password = document.getElementById('password');
-    let confirm_password = document.getElementById('confirm-password');
-    let password_help = document.getElementById('passwordHelp');
+    let switch_room_password = document.getElementById('Switch-Room-Password');
+    switch_room_password.addEventListener('change', switchCheck);
+    let password = document.getElementById('Password');
+    let confirm_password = document.getElementById('Confirm-Password');
+    let password_help = document.getElementById('Password-Help');
 
-    let InputTags = document.getElementById('inputTags');
-    InputTags.addEventListener('change', valueChange)
-    let showTag = document.getElementById('showTags');
+    let input_tags = document.getElementById('Input-Tags');
+    input_tags.addEventListener('change', valueChange)
+    let show_tags = document.getElementById('Show-Tags');
 
     function switchCheck(event) {
-        if (RoomSwitch.checked) {
+        if (switch_room_password.checked) {
             password.innerHTML =
-                '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off">';
+                '<input type="password" name="create_password" id="Disabled-Text-Input" class="form-control" placeholder="password" autocomplete="off">';
             confirm_password.innerHTML = 
-                '<input type="password" name="createPass_confirmation" class="form-control" placeholder="confirm password" autocomplete="off">';
+                '<input type="password" name="create_password_confirmation" class="form-control" placeholder="confirm password" autocomplete="off">';
             password_help.innerHTML = '<p>passwordは8文字以上255文字以下で半角英数字&記号が使用できます</p><p>※パスワード付きのルームはPost Roomとして保存できません</p>';
         } else {
             password.innerHTML =
-                '<input type="password" name="createPass" id="disabledTextInput" class="form-control" placeholder="password" autocomplete="off" disabled>';
+                '<input type="password" name="create_password" id="Disabled-Text-Input" class="form-control" placeholder="password" autocomplete="off" disabled>';
             confirm_password.innerHTML = 
-                '<input type="password" name="createPass_confirmation" class="form-control" placeholder="confirm password" autocomplete="off" disabled>';
+                '<input type="password" name="create_password_confirmation" class="form-control" placeholder="confirm password" autocomplete="off" disabled>';
         }
     }
 
 
     function valueChange(event) {
-        showTag.innerHTML = '';
+        show_tags.innerHTML = '';
         let startpoint = 0;
         let endpoint = 0;
         if (event.target.value.indexOf(';') != -1) {
@@ -160,7 +158,7 @@
                 element.classList.add("preview");
                 element.innerText = event.target.value.slice(startpoint, endpoint);
                 element.innerText = element.innerText.trim();
-                showTag.appendChild(element);
+                show_tags.appendChild(element);
                 startpoint = endpoint + 1;
             }
         }

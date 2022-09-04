@@ -625,24 +625,24 @@ class RoomController extends Controller
         $room->user_id =  Auth::user()->id;
         $room->title = $request->title;
         $room->description = $request->description;
-        if ($request->has('createPass')) {
-            $room->password = Hash::make($request->createPass);
+        if ($request->has('create_password')) {
+            $room->password = Hash::make($request->create_password);
         };
 
         $room->save();
 
-        if ($request->has('createPass')) {
+        if ($request->has('create_password')) {
             session()->put('auth_room_id', $room->id);
         };
 
         //room_imagesテーブルへ保存
-        if ($request->has('roomImages')) {
-            foreach ($request->file("roomImages") as $index => $roomImage) {
+        if ($request->has('room_images')) {
+            foreach ($request->file("room_images") as $index => $room_image) {
                 $image_count = $index;
-                $room_image = new RoomImage;
-                $room_image->room_id = $room->id;
-                $room_image->image = $this->storeImage($roomImage, $image_count, $room->id);
-                $room_image->save();
+                $image = new RoomImage;
+                $image->room_id = $room->id;
+                $image->image = $this->storeImage($room_image, $image_count, $room->id);
+                $image->save();
             }
         }
 
