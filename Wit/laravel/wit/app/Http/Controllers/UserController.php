@@ -34,35 +34,33 @@ class UserController extends Controller
 
     public function showProfile($user_id)
     {
-        if (isset($user_id)) {
-            //this payload is invalid 問題解決してない
-            $decrypted_user_id = Crypt::decrypt($user_id);
-
-            if (User::find($decrypted_user_id)->exists()) {
-                $user = User::find($decrypted_user_id);
-                $type = User::buttonTypeJudge($user->id);
-                $user_data = [
-                    'user_id' => $decrypted_user_id,
-                    'type' => $type['type'],
-                    'profile_message' => $user->profile_message,
-                    'user_name' => $user->name,
-                    'profile_image' => $user->profile_image,
-                ];
-
-                if ($user != Auth::user()) {
-                    $user_data += array('o_open_rooms' => RoomController::getOpenRoom($user_id));
-                    $user_data += array('o_post_rooms' => RoomController::getPostRoom(null, $user_id));
-                    $user_data += array('o_list_users' => Self::getListUser(null, $user_id));
-                    $user_data += array('o_list_rooms' => RoomController::getListRoom(null, $user_id));
-                }
-
-                return view('wit.profile', $user_data);
-            } else {
-                abort(404);
-            }
-        } else {
+        if (is_null($user_id)) {
             abort(404);
         }
+        $decrypted_user_id = Crypt::decrypt($user_id);
+
+        if (User::find($decrypted_user_id)->doesntExist()) {
+            abort(404);
+        }
+
+        $user = User::find($decrypted_user_id);
+        $type = User::buttonTypeJudge($user->id);
+        $user_data = [
+            'user_id' => $decrypted_user_id,
+            'type' => $type['type'],
+            'profile_message' => $user->profile_message,
+            'user_name' => $user->name,
+            'profile_image' => $user->profile_image,
+        ];
+
+        if ($user != Auth::user()) {
+            $user_data += array('o_open_rooms' => RoomController::getOpenRoom($user_id));
+            $user_data += array('o_post_rooms' => RoomController::getPostRoom(null, $user_id));
+            $user_data += array('o_list_users' => Self::getListUser(null, $user_id));
+            $user_data += array('o_list_rooms' => RoomController::getListRoom(null, $user_id));
+        }
+
+        return view('wit.profile', $user_data);
     }
 
     public function settings(Request $request)
@@ -82,21 +80,23 @@ class UserController extends Controller
     {
         $query = $request->query('ref');
 
-        if (isset($query)) {
-            $user = Auth::user();
-            $password = $user->password;
+        if (is_null($query)) {
+            return back()->with('error_message', 'エラーが起きました');
+        }
 
-            if ($request->has('information_password')) {
-                $setting_password = $request->information_password;
-            } else if ($request->has('delete_password')) {
-                $setting_password = $request->delete_password;
-            }
+        $user = Auth::user();
+        $password = $user->password;
 
-            if (Hash::check($setting_password, $password)) {
-                return $this->settings($request);
-            } else {
-                return back()->with('error_message', 'パスワードが違います');
-            }
+        if ($request->has('information_password')) {
+            $setting_password = $request->information_password;
+        } else if ($request->has('delete_password')) {
+            $setting_password = $request->delete_password;
+        }
+
+        if (Hash::check($setting_password, $password)) {
+            return $this->settings($request);
+        } else {
+            return back()->with('error_message', 'パスワードが違います');
         }
     }
 
@@ -140,26 +140,29 @@ class UserController extends Controller
 
     protected function changePassword(ChangePasswordRequest $request)
     {
-        if (isset($request->current_password) && isset($request->new_password) && isset($request->new_password_confirmation)) {
-            $user_id = Auth::id();
-            $user = User::find($user_id);
-            $password = $user->password;
-            $current_password = $request->current_password;
-            $new_password = $request->new_password;
-            $confirm_password = $request->new_password_confirmation;
-            if (Hash::check($current_password, $password)) {
-                if ($new_password == $confirm_password) {
-                    $user->password = Hash::make($new_password);
-                    $user->save();
-                    $encrypted_user_id = Crypt::encrypt($user_id);
-                    return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message', 'パスワードを変更しました');
-                } else {
-                    return back()->with('error_message', '新しいパスワードと確認用のパスワードが一致していません');
-                }
-            } else {
-                return back()->with('error_message', 'パスワードが違います');
-            }
+        if (is_null($request->current_password) || is_null($request->new_password) || is_null($request->new_password_confirmation)) {
+            return back()->with('error_message', 'エラーが起きました');
         }
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $password = $user->password;
+        $current_password = $request->current_password;
+        $new_password = $request->new_password;
+        $confirm_password = $request->new_password_confirmation;
+
+        if (!(Hash::check($current_password, $password))) {
+            return back()->with('error_message', 'パスワードが違います');
+        }
+
+        if ($new_password !== $confirm_password) {
+            return back()->with('error_message', '新しいパスワードと確認用のパスワードが一致していません');
+        }
+
+        $user->password = Hash::make($new_password);
+        $user->save();
+        $encrypted_user_id = Crypt::encrypt($user_id);
+        return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message', 'パスワードを変更しました');
     }
 
     protected function deleteAccount()
@@ -197,38 +200,44 @@ class UserController extends Controller
 
     protected function searchUser(Request $request)
     {
-        if (isset($request->keyword)) {
-            $user_name = $request->keyword;
-            if (isset($request->user_id)) {
-                if ($request->user_id == 'undefined') {
-                    abort(404);
-                }
-                $user_id = Crypt::decrypt($request->user_id);
-                $users = User::searchUserName($user_name)->where('id', '>', $user_id)->take(30)->get();
-            } else {
-                $users = User::searchUserName($user_name)->take(30)->get();
-            }
-
-            $search_query = User::searchUsername($user_name);
-
-            $users->map(function ($each) use ($search_query) {
-                $type = User::buttonTypeJudge($each->id, $search_query);
-                $each['type'] = $type['type'];
-
-                if ($type['no_get_more']) {
-                    $each['no_get_more'] = $type['no_get_more'];
-                }
-                return $each;
-            });
-
-            foreach ($users as $user) {
-                $user->id = Crypt::encrypt($user->id);
-            }
-
-            return response()->Json($users);
-        } else {
+        if (is_null($request->keyword)) {
             abort(404);
         }
+
+        $user_name = $request->keyword;
+
+        if (is_null($request->user_id)) {
+            $users = User::searchUserName($user_name)->take(30)->get();
+        }
+
+        if ($request->user_id == 'undefined') {
+            abort(404);
+        }
+
+        if (isset($request->user_id)) {
+            $user_id = Crypt::decrypt($request->user_id);
+            $users = User::searchUserName($user_name)->where('id', '>', $user_id)->take(30)->get();
+            $search_query = User::searchUserName($user_name);
+        }else{
+            $users = User::searchUserName($user_name)->take(30)->get();
+            $search_query = User::searchUserName($user_name);
+        }
+
+        $users->map(function ($each) use ($search_query) {
+            $type = User::buttonTypeJudge($each->id, $search_query);
+            $each['type'] = $type['type'];
+
+            if ($type['no_get_more']) {
+                $each['no_get_more'] = $type['no_get_more'];
+            }
+            return $each;
+        });
+
+        foreach ($users as $user) {
+            $user->id = Crypt::encrypt($user->id);
+        }
+
+        return response()->Json($users);
     }
 
     public function actionAddListUser($user_id)

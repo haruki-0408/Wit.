@@ -14,7 +14,7 @@
         <button id="Search-Button" class="border-0 bg-light" type="submit"> <i
                 class="btn btn-primary bi bi-search"></i></button>
 
-        <button class="border-0 bg-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+        <button class="border-0 bg-light" type="button" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" aria-expanded="false"><i class="btn btn-primary bi bi-filter-square"></i></button>
         <ul class="dropdown-menu p-2 bg-light" aria-labelledby="dropdown">
             <table width=200>

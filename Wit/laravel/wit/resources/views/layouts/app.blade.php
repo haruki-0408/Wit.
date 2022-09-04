@@ -215,7 +215,7 @@
             </nav>
 
 
-            <div id="error-message" class="alert alert-primary d-flex align-items-center fixed-top invisible"
+            <div id="Error-Message" class="alert alert-primary d-flex align-items-center fixed-top invisible"
                 role="alert" style="z-index: 1060;">
                 <svg width="24" height="24" fill="currentColor"
                     class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16">
@@ -227,7 +227,7 @@
                 </div>
             </div>
 
-            <div id="action-message" class="alert alert-success d-flex align-items-center fixed-top invisible"
+            <div id="Action-Message" class="alert alert-success d-flex align-items-center fixed-top invisible"
                 role="alert" style="z-index: 1050;">
                 <svg width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill me-2"
                     viewBox="0 0 16 16">
@@ -250,10 +250,10 @@
     @stack('scripts')
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/home.js') }}"></script>
     <script>
         @if (session('action_message'))
-            action = document.getElementById("action-message")
+            action = document.getElementById("Action-Message")
             action.classList.remove('invisible');
             setTimeout(() => {
                 action.classList.add('invisible');
@@ -261,7 +261,7 @@
         @endif
 
         @if (session('error_message'))
-            error = document.getElementById("error-message")
+            error = document.getElementById("Error-Message")
             error.classList.remove('invisible');
             setTimeout(() => {
                 error.classList.add('invisible')
@@ -312,7 +312,7 @@
     </script>
 
     <noscript>
-        <div id="javascript-error" class="alert alert-primary d-flex align-items-center fixed-top " role="alert"
+        <div id="Javascript-Error" class="alert alert-primary d-flex align-items-center fixed-top " role="alert"
             style="z-index: 1060;">
             <svg width="24" height="24" fill="currentColor"
                 class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16">

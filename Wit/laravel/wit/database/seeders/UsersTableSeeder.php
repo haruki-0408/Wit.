@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        //User::factory()->count(50)->create(); 
         User::factory()->has(Room::factory()->count(20))->count(2)->create(); 
     }
 }
