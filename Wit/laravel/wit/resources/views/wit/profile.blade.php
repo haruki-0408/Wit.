@@ -16,10 +16,10 @@
     @endif
 
 
-    <div id="profile" class="overflow-auto" style="width:100%; height:85%;">
+    <div id="Profile" class="overflow-auto" style="width:100%; height:85%;">
         <div class="container-sm p-3">
             <div class="header row">
-                <div id="targetUser" data-user-id={{ Crypt::encrypt($user_id) }} class="row align-items-center">
+                <div id="Target-User" data-user-id={{ Crypt::encrypt($user_id) }} class="row align-items-center">
                     <div class="col-10 text-start">
                         <div class="profile row text-start d-flex align-items-center">
                             <div class="col-3 col-md-2 col-lg-1 p-1 justify-content-end d-flex">
@@ -34,8 +34,8 @@
                     <div class="col-2 text-end">
                         @switch($type)
                             @case(0)
-                                <button id="settingsModalButton" type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#settingsModal">
+                                <button id="Settings-Modal-Button" type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#Settings-Modal">
                                     <svg width="24" height="24" fill="currentColor" class="bi bi-gear-fill"
                                         viewBox="0 0 16 16">
                                         <path
@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="links pt-2">
+                <div id="Page-Link" class="pt-2">
                     <ul>
                         <li class="w-50">
                             <a href="/" class="d-flex align-items-center link-dark ">
@@ -97,46 +97,46 @@
                 </div>
             </div>
             <hr class="m-1">
-            <div class="discription">
+            <div id="Profile-Message">
                 <p class="text-break m-1" style="font-size:1.1em;">
                     {{ $profile_message }}
                 </p>
             </div>
             <hr class="m-1">
 
-            <div class="lists p-0">
+            <div id="Profile-List" class="p-0">
                 <!-- Button trigger modal -->
                 @if ($user_id == Auth::id())
                     <ul style="list-style-type:disc ">
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#myOpenModal">
+                                data-bs-target="#My-OpenRoom-Modal">
                                 <strong>Open</strong>
                             </a>
                         </li>
 
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#myPostModal">
+                                data-bs-target="#My-PostRoom-Modal">
                                 <strong>Post</strong>
                             </a>
                         </li>
 
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#myListUserModal">
+                                data-bs-target="#My-ListUser-Modal">
                                 <strong>List User</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#myListRoomModal">
+                                data-bs-target="#My-ListRoom-Modal">
                                 <strong>List Room</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#tagsModal">
+                                data-bs-target="#Trend-Tags-Modal">
                                 <strong>Trend Tag</strong>
                             </a>
                         </li>
@@ -145,32 +145,32 @@
                     <ul style="list-style-type:disc ">
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#otherOpenModal">
+                                data-bs-target="#Other-OpenRoom-Modal">
                                 <strong>Open</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#otherPostModal">
+                                data-bs-target="#Other-PostRoom-Modal">
                                 <strong>Post</strong>
                             </a>
                         </li>
 
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#otherListUserModal">
+                                data-bs-target="#Other-ListUser-Modal">
                                 <strong>List User</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#otherListRoomModal">
+                                data-bs-target="#Other-ListRoom-Modal">
                                 <strong>List Room</strong>
                             </a>
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#tagsModal">
+                                data-bs-target="#Trend-Tags-Modal">
                                 <strong>Trend Tag</strong>
                             </a>
                         </li>
