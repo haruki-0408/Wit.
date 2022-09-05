@@ -1,8 +1,8 @@
 const room_id = document.querySelector('body').id;
-const host_id = document.getElementById('hostUser').dataset.hostId;
-const me_id = document.getElementById('me').dataset.authId;
-const message = document.getElementById('message');
-const send_button = document.getElementById('send');
+const host_id = document.getElementById('Host-User').dataset.hostId;
+const me_id = document.getElementById('Me').dataset.authId;
+const message = document.getElementById('Message');
+const send_button = document.getElementById('Send-Message-Button');
 
 send_button.addEventListener('click', (e) => {
     if (message && message.value != "") {
@@ -121,7 +121,7 @@ function addOnlineUser(user) {
         user_element.appendChild(user_name_column);
 
 
-        if (document.getElementById('banUsersList') && user.id !== me_id) {
+        if (document.getElementById('Ban-Users-List') && user.id !== me_id) {
             const force_exit_column = document.createElement('div');
             if (screen.width < 991 && screen.width > 580) {
                 force_exit_column.classList = "col-4 text-end";
@@ -132,14 +132,14 @@ function addOnlineUser(user) {
             const force_exit = document.createElement('button');
             force_exit.type = 'button';
             force_exit.dataset.bsToggle = "modal";
-            force_exit.dataset.bsTarget = "#forceConfirm";
+            force_exit.dataset.bsTarget = "#Confirm-Ban-Modal";
             force_exit.classList = "btn btn-outline-danger ";
             force_exit.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-person-x-fill' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z' /></svg>";
             force_exit_column.append(force_exit);
             user_element.appendChild(force_exit_column);
         }
 
-        $("[id^='onlineUsersList']").append(user_element);
+        $("[id^='Online-Users-List']").append(user_element);
     }
 }
 
@@ -165,12 +165,12 @@ function sendEnterMessage(user) {
         create_exit_element.classList = "text-danger m-0";
         create_exit_element.dataset.exitId = user.id;
         create_enter_element.textContent = ('Latest Online ' + now2);
-        $("[id^='accessLogList']").append(user_name_element);
-        $("[id^='accessLogList']").append(create_exit_element);
-        $("[id^='accessLogList']").append(create_enter_element);
+        $("[id^='Access-Logs-List']").append(user_name_element);
+        $("[id^='Access-Logs-List']").append(create_exit_element);
+        $("[id^='Access-Logs-List']").append(create_enter_element);
 
     }
-    document.getElementById('messageList').appendChild(enter_message);
+    document.getElementById('Message-List').appendChild(enter_message);
 
 }
 
@@ -182,7 +182,7 @@ function sendExitMessage(user) {
     const now2 = getNowDate('half');
     exit_message.textContent = user.name + 'さんが退室しました  ' + now1;
     change_element.text('Latest Offline ' + now2);
-    document.getElementById('messageList').appendChild(exit_message);
+    document.getElementById('Message-List').appendChild(exit_message);
 }
 
 function removeOnlineUser(user) {
@@ -210,11 +210,11 @@ function getNowDate(type) {
 }
 
 function addChatMessage(e) {
-    const message_list = document.getElementById('messageList');
+    const message_list = document.getElementById('Message-List');
     const message_element = document.createElement('li');
     const type = 'half';
     if (e.user.id === me_id) {
-        message_element.classList = "myself message-wrapper"
+        message_element.classList = "Myself Message-Wrapper"
         const span_element = document.createElement('span');
         const p_element = document.createElement('p');
         span_element.classList = "badge d-block text-dark text-end";
@@ -231,7 +231,7 @@ function addChatMessage(e) {
         user_image.height = "20";
         const user_name = document.createElement('strong');
         user_name.textContent = e.user.name;
-        message_element.classList = "opponent";
+        message_element.classList = "Opponent";
         const span_element = document.createElement('span');
         span_element.classList = "badge text-dark";
         span_element.textContent = getNowDate(type);
@@ -246,15 +246,15 @@ function addChatMessage(e) {
 }
 
 function removeRoomNotification() {
-    $('#image').children().remove();
+    $('#Room-Image').children().remove();
     const counter = document.createElement('strong');
     const icon = document.createElement('div');
     icon.innerHTML = "<svg width='40' height='40' fill='currentColor' class='text-danger bi bi-exclamation-triangle mx-2' viewBox='0 0 16 16'><path d='M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z'/><path d='M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z'/></svg>";
     counter.classList = 'fs-6 d-inline text-danger p-2';
     let count = 10;
     counter.textContent = 'このルームは削除されました' + count + '秒後にホームに戻ります';
-    $('#image').append(icon);
-    $('#image').append(counter);
+    $('#Room-Image').append(icon);
+    $('#Room-Image').append(counter);
     const interval = setInterval(function () {
         counter.textContent = 'このルームは削除されました' + count + '秒後にホームに戻ります';
         count--;
@@ -268,15 +268,15 @@ function removeRoomNotification() {
 }
 
 function saveRoomNotification() {
-    $('#image').children().remove();
+    $('#Room-Image').children().remove();
     const counter = document.createElement('strong');
     const icon = document.createElement('div');
     icon.innerHTML = "<svg width='40' height='40' fill='currentColor' class='text-primary bi bi-exclamation-triangle mx-2' viewBox='0 0 16 16'><path d='M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z'/><path d='M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z'/></svg>";
     counter.classList = 'fs-6 d-inline text-primary p-2';
     let count = 10;
     counter.textContent = 'このルームはPost Roomとして保存されました' + count + '秒後にホームに戻ります';
-    $('#image').append(icon);
-    $('#image').append(counter);
+    $('#Room-Image').append(icon);
+    $('#Room-Image').append(counter);
     const interval = setInterval(function () {
         counter.textContent = 'このルームはPost Roomとして保存されました' + count + '秒後にホームに戻ります';
         count--;
@@ -289,14 +289,14 @@ function saveRoomNotification() {
     }, 1000);
 }
 
-if (document.getElementById('forceConfirm')) {
-    const forceConfirmModal = document.getElementById("forceConfirm");
-    forceConfirmModal.addEventListener('shown.bs.modal', function (event) {
-        let modal_body = $(forceConfirmModal).find('.modal-body')
+if (document.getElementById('Confirm-Ban-Modal')) {
+    const confirm_ban_modal = document.getElementById("Confirm-Ban-Modal");
+    confirm_ban_modal.addEventListener('shown.bs.modal', function (event) {
+        let modal_body = $(confirm_ban_modal).find('.modal-body')
         modal_body.children().remove();
         let button = (event.relatedTarget);
-        const ban_uesr_id = document.getElementById('ban-user-id'); 
-        const ban_room_id = document.getElementById('ban-room-id');
+        const ban_uesr_id = document.getElementById('Ban-User'); 
+        const ban_room_id = document.getElementById('Ban-Room');
         const user_id = button.parentNode.parentNode.getAttribute('data-user-id');
         ban_uesr_id.value = user_id;
         ban_room_id.value = room_id;
@@ -328,15 +328,15 @@ if (document.getElementById('forceConfirm')) {
     });
 }
 
-if (document.getElementById('liftBan')) {
-    const liftBanModal = document.getElementById("liftBan");
-    liftBanModal.addEventListener('shown.bs.modal', function (event) {
-        let modal_body = $(liftBanModal).find('.modal-body')
+if (document.getElementById('Lift-Ban-User-Modal')) {
+    const lift_ban_user_modal = document.getElementById("Lift-Ban-User-Modal");
+    lift_ban_user_modal.addEventListener('shown.bs.modal', function (event) {
+        let modal_body = $(lift_ban_user_modal).find('.modal-body')
         modal_body.children().remove();
 
         let button = event.relatedTarget;
-        const lift_user_id = document.getElementById('lift-user-id');
-        const lift_room_id = document.getElementById('lift-room-id');
+        const lift_user_id = document.getElementById('Lift-Ban-User');
+        const lift_room_id = document.getElementById('Lift-Ban-Room');
         const user_id = button.parentNode.parentNode.getAttribute('data-lift-id');
         lift_user_id.value = user_id;
         lift_room_id.value = room_id;

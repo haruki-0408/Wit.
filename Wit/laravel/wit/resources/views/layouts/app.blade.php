@@ -53,7 +53,7 @@
             background-color: #fff;
         }
 
-        #Room-content {
+        #Room-Content {
             height: 85%;
             overflow: scroll;
         }
@@ -62,7 +62,7 @@
             list-style-type: none;
         }
 
-        .btn-room-create {
+        .Create-Room-Button {
             display: inline-block;
             text-decoration: none;
             width: 50px;
@@ -78,7 +78,7 @@
             box-shadow: 0 3px 10ex #fff;
         }
 
-        .btn-room-create:hover {
+        .Create-Room-Button:hover {
             background-color: #0d6efd;
             /* transition: .3s;*/
             color: #fff;
