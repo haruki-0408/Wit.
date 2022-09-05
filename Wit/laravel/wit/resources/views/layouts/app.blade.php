@@ -128,7 +128,7 @@
         </div>
 
         <div class="card-body p-1 row d-flex align-items-center m-0">
-            <strong class="card-title m-0 pb-1 d-flex align-items-center text-break"></strong>
+            <strong class="Room-Title card-title m-0 pb-1 d-flex align-items-center text-break"></strong>
             <p class="Room-Description card-text text-break m-0"></p>
             <small class="text-muted d-flex justify-content-end text-end">
                 <div class="mx-2 Count-Online-Users">
@@ -138,7 +138,7 @@
                 <div class="Expired-Time-Left">
                 </div>
             </small>
-            <small class="Created-at d-block text-end text-muted"></small>
+            <small class="Create-Time d-block text-end text-muted"></small>
         </div>
 
         <div class="card-footer border-0 bg-white p-0">

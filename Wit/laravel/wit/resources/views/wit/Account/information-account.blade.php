@@ -6,7 +6,7 @@
 
     <div class="card border-0 overflow-auto w-100" style="height:83%;">
         <div id="Profile-Contents" class="row justify-content-center w-100">
-            <form class="m-0 p-0" action="/home/profile/settings/changeProfile" method="post" name='change_profile'
+            <form id="Change-Profile-Form" class="m-0 p-0" action="/home/profile/settings/changeProfile" method="post" name='change_profile'
                 enctype='multipart/form-data'>
                 @csrf
                 <div class="card-body p-1">
@@ -94,6 +94,7 @@
             button_save.className = "btn btn-outline-primary"
             button_save.setAttribute("id", "Profile-Save-Button");
             button_save.setAttribute("type", "submit");
+            button_save.setAttribute("for", "#Change-Profile-Form");
             button_save.textContent = "Save";
             button_save.setAttribute("onclick", "window.onbeforeunload = null;")
 
