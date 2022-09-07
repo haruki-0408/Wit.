@@ -288,7 +288,6 @@ class RoomController extends Controller
         }
 
         $room->roomBans()->detach();
-        $room->roomUsers()->detach();
 
         $room->posted_at = Carbon::now();
         $room->save();

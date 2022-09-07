@@ -37,15 +37,15 @@
             overflow: scroll;
         }
 
-        #image {
+        #Room-Image {
             height: 40%;
         }
 
-        #chat {
+        #Room-Chat {
             height: 60%;
         }
 
-        #room-description {
+        #Room-Description {
             margin: 10px;
             font-size: 13px;
             border-radius: 20px;
@@ -53,18 +53,18 @@
             background-color: #f8f9fa;
         }
 
-        #messageList p {
+        #Message-List p {
             font-size: 13px;
             padding: 10px;
             margin: 5px;
             border-radius: 20px;
         }
 
-        .message-wrapper {
+        .Message-Wrapper {
             text-align: right;
         }
 
-        .myself p {
+        .Myself p {
             max-width: 70%;
             background-color: #0d6efd;
             color: #fff;
@@ -72,26 +72,26 @@
             text-align: left;
         }
 
-        .opponent p {
+        .Opponent p {
             display: table;
             max-width: 70%;
             background-color: #f8f9fa;
         }
 
-        #roomTagsList {
+        #Room-Tags-List {
             height: 80%;
             overflow: scroll;
         }
 
-        #informationList {
+        #Room-Informations-List {
             height: 90%;
         }
 
-        #informationListLeft {
+        #Room-Informations-List3 {
             font-size:10px;
         }
 
-        #accessLogList {
+        #Access-Logs-List {
             height: 90%;
             overflow: scroll
         }
@@ -151,18 +151,18 @@
 </head>
 
 <!-- Offcanvas -->
-<div style="width:90px;" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-    aria-labelledby="offcanvasRightLabel">
+<div style="width:90px;" class="offcanvas offcanvas-end" tabindex="-1" id="Offcanvas-Right"
+    aria-labelledby="Offcanvas-Right">
     <div class="offcanvas-header">
-        <div id="offcanvasRightLabel">
-            <img src="{{ asset($auth_user->profile_image) }}" id="me" alt="" width="30"
+        <div id="Offcanvas-Right-Label">
+            <img src="{{ asset($auth_user->profile_image) }}" id="Me" alt="" width="30"
                 height="30" class="rounded-circle me-2" data-auth-id={{ $auth_user->id }}>
         </div>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
     <div class="offcanvas-body d-flex flex-column align-items-center p-2">
-        <div data-bs-toggle="modal" data-bs-target="#tags" class="roomTags pb-3">
+        <div data-bs-toggle="modal" data-bs-target="#Room-Tags-Modal" class="Room-Tags pb-3">
             <svg width="20" height="20" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                 <path
                     d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -171,7 +171,7 @@
             </svg>
         </div>
 
-        <div data-bs-toggle="modal" data-bs-target="#logs" class="accessLog pb-3">
+        <div data-bs-toggle="modal" data-bs-target="#Access-Logs-Modal" class="Access-Logs pb-3">
             <svg width="16" height="16" fill="currentColor" class="bi bi-file-text-fill mx-2"
                 viewBox="0 0 16 16">
                 <path
@@ -180,15 +180,15 @@
         </div>
 
 
-        <div data-bs-toggle="modal" data-bs-target="#information" class="pb-3">
+        <div data-bs-toggle="modal" data-bs-target="#Room-Informations-Modal" class="pb-3">
             <svg width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                 <path
                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
             </svg>
         </div>
 
-        <div class="exitRoomButton">
-            <a data-bs-toggle="modal" data-bs-target="#exitRoomModal"
+        <div class="Exit-Room-Button">
+            <a data-bs-toggle="modal" data-bs-target="#Exit-Room-Modal"
                 class="btn btn-outline-primary d-flex align-items-center">
                 <svg width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -201,27 +201,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="redirect" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="redirect" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
-                        class="bi bi-person-check-fill mx-2" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>Notification</h5>
-            </div>
-            <div class="modal-body">
-                ルームが作成者により削除されました　１０秒後にホーム画面に戻ります
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="logs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby=logs" aria-hidden="true">
+<div class="modal fade" id="Access-Logs-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby=Access-Logs-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,10 +215,10 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <ul id="accessLogListModal">
+                <ul id="Access-Logs-List2" class="p-2 m-0">
                     @foreach ($room_info->roomUsers as $user)
                         <li>
-                            <strong>{{ $user->name }}</strong>
+                            <strong class="text-break">{{ $user->name }}</strong>
 
                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                 @if (isset($user->pivot->exited_at))
@@ -257,8 +238,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="tags" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="tags" aria-hidden="true">
+<div class="modal fade" id="Room-Tags-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Room-Tags-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -274,7 +255,7 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
-                    <ul id="roomTagsListModal">
+                    <ul id="Room-Tags-List2">
                         @foreach ($room_info->tags as $roomTag)
                             <li>
                                 <div class="tag"><span class="tag-name">{{ $roomTag->name }}</span><span
@@ -291,8 +272,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="information" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="information" aria-hidden="true">
+<div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Room-Informations-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -306,9 +287,20 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3  ">
-                    <ul id="informationListModal" class="p-1">
+                    <ul id="Room-Informations-List2" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
-                        <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li class="row">
+                            <p class="m-0">Create User : </p>
+                            <div class="col-2">
+                                <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px"
+                                    height="50px" class="rounded-circle ">
+                            </div>
+                            <div class="col-10 d-flex align-items-center"><strong
+                                    class="d-inline text-break">{{ $room_info->user->name }}</strong>
+                            </div>
+                        </li>
+
+                        <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                     </ul>
                 </div>
             </div>
@@ -320,7 +312,7 @@
 </div>
 
 
-<div class="modal fade" id="exitRoomModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exitRoom"
+<div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="Exit-Room-Modal"
     tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
@@ -330,7 +322,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a id="exitRoomLink" href="/home" onclick="window.onbeforeunload = null;"
+                <a id="Exit-Room-Link" href="/home" onclick="window.onbeforeunload = null;"
                     class="btn btn-outline-primary text-end">Yes</a>
             </div>
         </div>
@@ -342,22 +334,23 @@
         <header>
             <nav style="" class="navbar navbar-light bg-light shadow-sm h-100">
                 <div class="container-fluid">
-                    <div class="col-2 d-none d-md-block ">
-                        <div id="hostUser" class="d-flex justify-content-center">
+                    <div class="col-3 d-none d-md-block ">
+                        <div id="Host-User" class="d-flex justify-content-center"
+                            data-host-id="{{ $room_info->user_id }}">
                             <img src="{{ asset($room_info->user->profile_image) }}" alt="" width="50px"
                                 height="50px" class="rounded-circle m-1">
-                            <strong class="d-flex align-items-center">{{ $room_info->user->name }}</strong>
+                            <strong class="text-break d-flex align-items-center">{{ $room_info->user->name }}</strong>
                         </div>
                     </div>
 
-                    <div class="col-10 col-md-8 text-wrap fw-bold">
-                        <h4 class="d-none d-md-block text-break">{{ $room_info->title }}</h4>
-                        <p class="d-sm-none text-break">{{ $room_info->title }}</p>
+                    <div class="col-9 col-md-8 text-wrap fw-bold">
+                        <h4 class="d-none d-md-block m-0 text-break">{{ $room_info->title }}</h4>
+                        <p class="d-sm-none m-0 text-break">{{ $room_info->title }}</p>
                     </div>
 
 
-                    <div class="exitRoomButton col-2 d-none d-md-block d-flex justify-content-center">
-                        <a style="width:42px; height:30px;" data-bs-toggle="modal" data-bs-target="#exitRoomModal"
+                    <div class="Exit-Room-Button col-1 d-none d-md-block d-flex justify-content-center">
+                        <a style="width:42px; height:30px;" data-bs-toggle="modal" data-bs-target="#Exit-Room-Modal"
                             class="d-flex justify-content-center btn btn-outline-primary">
                             <svg width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left"
                                 viewBox="0 0 16 16">
@@ -370,9 +363,9 @@
                     </div>
 
 
-                    <div class="col-2 d-sm-none d-flex justify-content-center ">
-                        <a data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
-                            aria-controls="offcanvasRight">
+                    <div class="col-1 d-sm-none d-flex justify-content-center ">
+                        <a data-bs-toggle="offcanvas" href="#Offcanvas-Right" role="button"
+                            aria-controls="Offcanvas-Right">
                             <button class="navbar-toggler" type="button">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
@@ -386,10 +379,10 @@
         <main>
             <div class="container-fluid h-100">
                 <div class="row h-100">
-                    <div id="left-content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
+                    <div id="Left-Content" class="bg-light col-3 p-3 d-none d-lg-block h-100 flex-column">
                         <div class="row h-100">
                             <div class="h-50">
-                                <div id="roomTags" class="col-12 d-flex align-items-center p-2">
+                                <div id="Room-Tags" class="col-12 d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -400,7 +393,7 @@
                                     <strong>Room Tags</strong>
                                 </div>
 
-                                <ul id="roomTagsList" class="col-12 fs-5 p-0 m-2">
+                                <ul id="Room-Tags-List" class="col-12 fs-5 p-0 m-2">
                                     @foreach ($room_info->tags as $roomTag)
                                         <li>
                                             <div class="tag">
@@ -413,7 +406,7 @@
                                 </ul>
                             </div>
                             <div class="h-50">
-                                <div id="informations" class="col-12 d-flex align-items-center p-2">
+                                <div id="Room-Informations" class="col-12 d-flex align-items-center p-2">
                                     <svg width="20" height="20" fill="currentColor"
                                         class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -421,7 +414,7 @@
                                     </svg>
                                     <strong>Information</strong>
                                 </div>
-                                <ul id="informationList" class="col-12 mt-2 p-1">
+                                <ul id="Room-Informations-List" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
                                     <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                                 </ul>
@@ -429,8 +422,8 @@
                         </div>
                     </div>
 
-                    <div id="center-content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
-                        <div id="image" class="d-flex align-items-center">
+                    <div id="Center-Content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
+                        <div id="Room-Image" class="d-flex align-items-center">
                             <div id="carouselIndicators"
                                 class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center"
                                 data-bs-interval="false">
@@ -493,18 +486,18 @@
                             </div>
                         </div>
 
-                        <div id="chat" class="card col-12">
+                        <div id="Room-Chat" class="card col-12">
                             <div class="card-body">
                                 <!-- MESSAGE -->
-                                <ul id="messageList" class="p-0 m-0 w-100 ">
-                                    <li id="room-description">
+                                <ul id="Message-List" class="p-0 m-0 w-100 ">
+                                    <li id="Room-Description">
                                         <p class="fs-6 fw-bold m-0 pb-0">Description</p>
                                         <p> {!! nl2br(e($room_info->description)) !!}</p>
                                     </li>
                                     @foreach ($room_info->roomChat as $chat)
                                         @if ($chat->pivot->user_id == $auth_user->id)
-                                            <li class="myself">
-                                                <div class="message-wrapper">
+                                            <li class="Myself">
+                                                <div class="Message-Wrapper">
                                                     <span
                                                         class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
                                                     <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
@@ -512,7 +505,7 @@
                                                 </div>
                                             </li>
                                         @else
-                                            <li class="opponent">
+                                            <li class="Opponent">
                                                 <img src="{{ asset($chat->profile_image) }}" alt="user-image"
                                                     width="20" height="20" class="rounded-circle">
                                                 <strong>{{ $chat->name }}</strong><span
@@ -526,10 +519,10 @@
                         </div>
                     </div>
 
-                    <div id="right-content" class="col-3 bg-light d-none d-md-block p-3 h-100">
+                    <div id="Right-Content" class="col-3 bg-light d-none d-md-block p-3 h-100">
                         <div class="row h-100">
                             <div class="d-none d-md-block d-lg-none">
-                                <div id="roomTagsLeft" class="col-12 d-flex align-items-center p-2">
+                                <div id="Room-Tags" class="col-12 d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -540,7 +533,7 @@
                                     <strong>Room Tags</strong>
                                 </div>
 
-                                <ul id="roomTagsListLeft" class="col-12 fs-5 p-0 m-2">
+                                <ul id="Room-Tags-List" class="col-12 fs-5 p-0 m-2">
                                     @foreach ($room_info->tags as $roomTag)
                                         <li>
                                             <div class="tag">
@@ -554,7 +547,7 @@
                             </div>
         
                             <div class="d-none d-md-block d-lg-none">
-                                <div id="informationsLeft" class="col-12 d-flex align-items-center p-2">
+                                <div id="Room-Informations" class="col-12 d-flex align-items-center p-2">
                                     <svg width="20" height="20" fill="currentColor"
                                         class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -562,14 +555,14 @@
                                     </svg>
                                     <strong>Information</strong>
                                 </div>
-                                <ul id="informationListLeft" class="col-12 p-1">
+                                <ul id="Room-Informations-List3" class="col-12 p-1">
                                     <li class="text-break pb-2">Id : {{ $room_info->id }}</li>
                                     <li class="text-break">Create : {{ $room_info->created_at->format('Y/m/d H:i') }}
                                     </li>
                                 </ul>
                             </div>
                             <div>
-                                <div class="accessLog col-12 d-flex align-items-center p-2">
+                                <div class="Access-Logs col-12 d-flex align-items-center p-2">
                                     <svg width="16" height="16" fill="currentColor"
                                         class="bi bi-file-text-fill mx-2" viewBox="0 0 16 16">
                                         <path
@@ -577,10 +570,10 @@
                                     </svg>
                                     <strong>Access Log</strong>
                                 </div>
-                                <ul id="accessLogList" class="col-12 p-0 m-0">
+                                <ul id="Access-Logs-List" class="col-12 p-2 m-0">
                                     @foreach ($room_info->roomUsers as $user)
                                         <li>
-                                            <strong>{{ $user->name }}</strong>
+                                            <strong class="text-break">{{ $user->name }}</strong>
 
                                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                                 @if (isset($user->pivot->exited_at))

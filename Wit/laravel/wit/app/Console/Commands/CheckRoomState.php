@@ -67,7 +67,6 @@ class CheckRoomState extends Command
                     logger()->info($room->id . ' is removed');
                 } else {
                     $room->roomBans()->detach();
-                    $room->roomUsers()->detach();
 
                     $room->posted_at = Carbon::now();
                     $room->save();
