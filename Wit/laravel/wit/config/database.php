@@ -49,11 +49,11 @@ return [
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'wit_db'),
-            'username' => env('DB_USERNAME', 'haruki'),
-            'password' => env('DB_PASSWORD', 'haruki'),
+            'username' => env('DB_USERNAME', 'LikelyId3567'),
+            'password' => env('DB_PASSWORD', '3BluetGkd7H4hgh'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_bin',//'utf8mb4_unicode_ci',
+            'collation' => 'utf8mb4_bin', //'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
@@ -61,6 +61,25 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+        ],
+
+        'mysql-test' => [
+            'driver' => 'mysql',
+            'host' => '127.0.0.1',
+            'port' => '3306',
+            'database' => 'wit_test_db',
+            'username' => '1browndektj',
+            'password' => '9djsk34GjsKdjga',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_bin', //'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options'  => [
+                // テストデータの永続化
+                PDO::ATTR_PERSISTENT => false,
+            ],
         ],
 
         'pgsql' => [
@@ -123,7 +142,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

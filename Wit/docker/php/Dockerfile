@@ -20,8 +20,8 @@ RUN apt-get install -y \
     gnupg \
     openssl \
     zlib1g-dev \ 
-    supervisor \ 
-    #cronは元から入っているのでインストールする必要なし
+    supervisor \
+    cron \ 
   &&  docker-php-ext-install pdo_mysql
 
 # install stable node and latest npm

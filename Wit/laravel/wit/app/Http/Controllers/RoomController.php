@@ -17,7 +17,6 @@ use App\Models\RoomUser;
 use App\Models\Tag;
 use App\Models\RoomImage;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -605,13 +604,6 @@ class RoomController extends Controller
         }
     }
 
-    public function storeTag($match)
-    {
-        $match_trim = trim($match);
-        $tag = Tag::UpdateOrCreate(['name' => $match_trim], ['name' => $match_trim, 'number' => DB::raw('number + 1')]);
-        return $tag;
-    }
-
 
     public function createRoom(CreateRoomRequest $request)
     {
@@ -648,7 +640,7 @@ class RoomController extends Controller
 
         if ($request->has('matches')) {
             foreach ($request->matches as $match) {
-                $tag = $this->storeTag($match);
+                $tag = TagController::storeTag($match);
                 $room->tags()->syncWithoutDetaching($tag->id);
             }
         }

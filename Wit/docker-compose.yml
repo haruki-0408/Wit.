@@ -9,7 +9,7 @@ services:
       - ./laravel:/var/www/laravel
     working_dir: /var/www/laravel
     depends_on:
-      - mysql
+      - mysql-test
 
   nginx:
     image: nginx
@@ -30,12 +30,14 @@ services:
     container_name: mysql
     ports:
       - 3306:3306
+    env_file:
+      - ./laravel/wit/.env
     environment:
       MYSQL_DATABASE: wit_db
-      #MYSQL_ROOT_USER: root
-      #MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: haruki
-      MYSQL_PASSWORD: haruki
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: LikelyId3567
+      MYSQL_PASSWORD: 3BluetGkd7H4hgh
       TZ: 'Asia/Tokyo'
       
     volumes:
@@ -45,6 +47,25 @@ services:
     depends_on:
       - mysql-volume
 
+  mysql-test:
+    image: mysql:8.0
+    platform: 'linux/amd64'
+    container_name: mysql-test
+    env_file:
+      - ./laravel/wit/.env.testing
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: wit_test_db
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: 1browndektj
+      MYSQL_PASSWORD: 9djsk34GjsKdjga
+
+      TZ: 'Asia/Tokyo'
+    depends_on:
+      - mysql
+    
   mysql-volume:
     image: busybox
     platform: 'linux/amd64'
