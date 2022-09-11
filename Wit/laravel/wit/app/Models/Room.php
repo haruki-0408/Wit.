@@ -90,11 +90,6 @@ class Room extends Model
         return $this->hasMany('App\Models\RoomImage');
     }
 
-    public function answer()
-    {
-        return $this->hasOne('App\Models\Answer');
-    }
-
     public function scopeSearchRoomName($query, $room_word)
     {
         if (isset($room_word)) {

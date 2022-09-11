@@ -6,8 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
-
 class UserTest extends TestCase
 {
     /**
@@ -16,23 +16,18 @@ class UserTest extends TestCase
      * @return void
      */
     use RefreshDatabase;
-   
-   public function setUp(): void
-   {
-       dd(env('APP_ENV'), env('DB_DATABASE'), env('DB_CONNECTION'));
-   }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        echo env('APP_ENV');
+        echo env('DB_DATABASE');
+        echo env('DB_CONNECTION');
+    }
 
 
     public function test_example()
     {
-        $user = User::factory()->create();
-        $this->post('/login', [
-            'email'    => $user->email,
-            'password' => $user->password,
-        ]);
-
-        $response = $this->get('/home');
-
-        $response->assertStatus(200);
+        
     }
 }

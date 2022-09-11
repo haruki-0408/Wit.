@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CheckDatabase;
 use App\Console\Commands\CheckRoomState;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -10,6 +11,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands =[
         CheckRoomState::class,
+        CheckDatabase::class,
     ];
     /**
      * Define the application's command schedule.

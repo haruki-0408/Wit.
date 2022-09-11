@@ -91,11 +91,6 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Room','room_bans','user_id','room_id');
     }
 
-    public function answers()
-    {
-        return $this->hasMany('App\Models\Answer');
-    }
-
     //ユーザーの名前検索
     public function scopeSearchUserName($query, $user_name)
     {
