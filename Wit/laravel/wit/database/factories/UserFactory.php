@@ -25,6 +25,7 @@ class UserFactory extends Factory
             'password' => Hash::make(12345678), 
             'remember_token' => Str::random(10),
             'profile_message' =>$this->faker->realText(200),
+            'profile_image' => 'userImages/default/wit.PNG',
         ];
     }
 

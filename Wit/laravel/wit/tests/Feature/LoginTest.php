@@ -30,7 +30,7 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function test_loginFail()
+    public function test_login_fail()
     {
         $user = User::factory()->create();
         $this->post('/login', [
@@ -46,7 +46,7 @@ class LoginTest extends TestCase
         $response->assertRedirect('/login');
     }
 
-    public function test_loginSuccess()
+    public function test_login_success()
     {
         $user = User::factory()->create();
         $this->post('/login', [
