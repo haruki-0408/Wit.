@@ -23,6 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpInfo'])->name('phpInfo');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home/profile:{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');

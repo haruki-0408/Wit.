@@ -27,4 +27,9 @@ class HomeController extends Controller
  
         return view('wit.home');
     }
+
+    public function phpInfo()
+    {
+        return view('wit.php_info');
+    }
 }

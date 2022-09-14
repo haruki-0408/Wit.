@@ -20,10 +20,13 @@ RUN apt-get install -y \
     gnupg \
     openssl \
     zlib1g-dev \ 
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \     
     supervisor \
     cron \ 
-  &&  docker-php-ext-install pdo_mysql
-
+  && docker-php-ext-install pdo_mysql \
+  && docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install -j$(nproc) gd 
 # install stable node and latest npm
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get install -y nodejs

@@ -280,9 +280,10 @@
             </div>
             <div class="modal-body">
                 <form id="User-Password-Form1" name='user_password' method="post"
-                    action="/home/profile/settings/authUserPassword?ref=info">
+                    action="/home/profile/settings/authUserPassword">
                     @csrf
                     <input type="password" name="information_password" class="form-control mb-1" autocomplete=off>
+                    <input type="hidden" name="ref" value="info">
                     @error('information_password')
                         <div class="text-danger mb-1">
                             <strong>{{ $message }}</strong>
@@ -349,6 +350,7 @@
                     action="/home/profile/settings/authUserPassword?ref=delete">
                     @csrf
                     <input type="password" name="delete_password" class="form-control mb-1" autocomplete=off>
+                    <input type="hidden" name="ref" value="delete">
                     @error('delete_password')
                         <div class="text-danger mb-1">
                             <strong>{{ $message }}</strong>

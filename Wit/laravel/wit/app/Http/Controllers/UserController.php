@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function settings(Request $request)
     {
-        switch ($request->query('ref')) { //query string によってどのページに飛ばすのか判定
+        switch ($request->input('ref')) { //query string によってどのページに飛ばすのか判定
             case 'info':
                 return view('wit.Account.information-account');
 
@@ -78,7 +78,7 @@ class UserController extends Controller
 
     protected function authUserPassword(AuthPasswordRequest $request)
     {
-        $query = $request->query('ref');
+        $query = $request->input('ref');
 
         if (is_null($query)) {
             return back()->with('error_message', 'エラーが起きました');
