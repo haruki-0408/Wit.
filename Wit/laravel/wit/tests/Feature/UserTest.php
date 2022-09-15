@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\UploadedFile;
 use App\Models\User;
+use App\Models\Room;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Crypt;
@@ -27,7 +29,7 @@ class UserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create(); 
+        $this->user = User::factory()->create();
     }
 
 
@@ -35,7 +37,7 @@ class UserTest extends TestCase
     {
         $this->actingAs($this->user);  //userをログイン状態にする
         $user_id = Crypt::encrypt($this->user->id);
-        $response = $this->get('/home/profile:'.$user_id);
+        $response = $this->get('/home/profile:' . $user_id);
         $response->assertStatus(200)->assertViewIs('wit.profile');
         $response->assertSee([ //response htmlに以下の文字列が含まれているか
             $this->user->profile_image,
@@ -66,7 +68,7 @@ class UserTest extends TestCase
         $response->assertStatus(200)->assertViewIs('wit.Account.delete-account');
 
         $random_string = Str::random(10);
-        $response = $this->get('/home/profile/settings?ref='.$random_string);
+        $response = $this->get('/home/profile/settings?ref=' . $random_string);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが起きました']);
     }
 
@@ -74,20 +76,20 @@ class UserTest extends TestCase
     {
         $this->actingAs($this->user);  //userをログイン状態にする
         //パスワードが存在しない時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'info',
         ]);
         $response->assertInvalid(['information_password']);
 
         //パスワードが間違っている時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'info',
-            'information_password' =>'12345',
+            'information_password' => '12345',
         ]);
         $response->assertInvalid(['information_password']);
 
         //パスワードが一致している時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'info',
             'information_password' => 12345678,
         ]);
@@ -99,20 +101,20 @@ class UserTest extends TestCase
     {
         $this->actingAs($this->user);  //userをログイン状態にする
         //パスワードが存在しない時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'delete',
         ]);
         $response->assertInvalid(['delete_password']);
 
         //パスワードが間違っている時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'delete',
-            'delete_password' =>'12345',
+            'delete_password' => '12345',
         ]);
         $response->assertInvalid(['delete_password']);
 
         //パスワードが一致している時
-        $response = $this->post('/home/profile/settings/authUserPassword',[
+        $response = $this->post('/home/profile/settings/authUserPassword', [
             'ref' => 'delete',
             'delete_password' => 12345678,
         ]);
@@ -135,18 +137,71 @@ class UserTest extends TestCase
         $user_id = Crypt::encrypt($this->user->id);
         $this->actingAs($this->user);  //userをログイン状態にする
         $profile_image = UploadedFile::fake()->image('hoge.png');
-        $response = $this->post('/home/profile/settings/changeProfile',[
-            'name'=>'TestUser',
-            'email'=>'test@test.com',
+        $response = $this->post('/home/profile/settings/changeProfile', [
+            'name' => 'TestUser',
+            'email' => 'test@test.com',
             'message' => 'hogehoge fugafuga',
-        ]); 
+            'image' => $profile_image,
+        ]);
         $response->assertStatus(302);
         $this->assertDatabaseHas('users', [
-            'name'=>'TestUser',
-            'email'=>'test@test.com',
-            'profile_message'=>'hogehoge fugafuga',
+            'name' => 'TestUser',
+            'email' => 'test@test.com',
+            'profile_message' => 'hogehoge fugafuga',
         ]);
     }
 
-    
+    public function test_change_password()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+
+        //入力なし
+        $response = $this->post('/home/profile/settings/changePassword', []);
+        $response->assertInvalid(['current_password', 'new_password']);
+
+        //バリデーションエラー
+        $response = $this->post('/home/profile/settings/changePassword', [
+            'current_password' => '123456',
+            'new_password' => '123',
+            'new_passwprd_confirmation' => '12345',
+        ]);
+        $response->assertInvalid(['current_password', 'new_password']);
+
+        //バリデーションクリア
+        $response = $this->post('/home/profile/settings/changePassword', [
+            'current_password' => 12345678,
+            'new_password' => 'abcdefgh',
+            'new_password_confirmation' => 'abcdefgh',
+        ]);
+        $response->assertValid(['current_password', 'new_password_confirmation']);
+        $response->assertStatus(302)->assertSessionHas(['action_message' => 'パスワードを変更しました']);
+        //$this->assertTrue(Hash::check('abcdefgh', $this->user->password));
+    }
+
+    public function test_delete_account()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+        $room = Room::factory()->create([
+            'user_id' => $this->user->id,
+            'title' => 'Test Room',
+            'description' => 'Use Feature Test',
+        ]);
+        $tag = Tag::factory()->create();
+        $tag_id = $tag->id;
+        $room->tags()->syncWithoutDetaching($tag_id);
+        $this->assertDatabaseHas('rooms', [
+            'user_id' => $this->user->id,
+            'title' => 'Test Room',
+            'description' => 'Use Feature Test',
+        ]);
+        $response = $this->post('/home/profile/settings/deleteAccount');
+        $response->assertStatus(302)->assertRedirect('/');
+        $this->assertDeleted($room);
+        $this->assertDeleted($this->user);
+        
+        
+
+
+
+    }
 }
