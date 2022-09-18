@@ -175,10 +175,11 @@ class UserTest extends TestCase
         ]);
         $response->assertValid(['current_password', 'new_password_confirmation']);
         $response->assertStatus(302)->assertSessionHas(['action_message' => 'パスワードを変更しました']);
-        //$this->assertTrue(Hash::check('abcdefgh', $this->user->password));
+        //$this->assertTrue(Hash::check(12345678, $this->user->password));
+        
     }
 
-    public function test_delete_account()
+    /*public function test_delete_account()
     {
         $this->actingAs($this->user);  //userをログイン状態にする
         $room = Room::factory()->create([
@@ -198,10 +199,5 @@ class UserTest extends TestCase
         $response->assertStatus(302)->assertRedirect('/');
         $this->assertDeleted($room);
         $this->assertDeleted($this->user);
-        
-        
-
-
-
-    }
+    }*/
 }
