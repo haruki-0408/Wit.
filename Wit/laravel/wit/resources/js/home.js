@@ -257,10 +257,10 @@ $(document).on('click', "[id^='Other-More']", function (event) {
             break;
         case 'Other-More-ListUser-Button':
             last = document.getElementById('Other-ListUser-List');
-            last_room_id = last.lastElementChild.dataset.userId;
+            last_user_id = last.lastElementChild.dataset.userId;
             $.ajax({
                 type: "get", //HTTP通信の種類
-                url: '/getListUser:' + last_room_id + '/' + user_id,
+                url: '/getListUser:' + last_user_id + '/' + user_id,
                 dataType: 'json',
             })
                 //通信が成功したとき
@@ -760,7 +760,7 @@ function addUserPage(res, show) {
             let clone = template.content.cloneNode(true);  // template要素の内容を複製
             clone.querySelector('li').setAttribute('data-user-id', res[i].id);
             clone.querySelector('.User-Link').href = '/home/profile:' + res[i].id;
-            clone.querySelector('.Profile-Image').src = res[i].profile_image;
+            clone.querySelector('.Profile-Image').src = '/' + res[i].profile_image;
             clone.querySelector('.User-Name').textContent = res[i].name;
 
             button = userButtonTypeJudge(res[i].type, res[i].id);

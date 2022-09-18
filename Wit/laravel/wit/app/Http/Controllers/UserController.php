@@ -165,8 +165,11 @@ class UserController extends Controller
         return redirect(route("showProfile", ['user_id' => $encrypted_user_id]))->with('action_message', 'パスワードを変更しました');
     }
 
-    protected function deleteAccount()
+    protected function deleteAccount(Request $request)
     {
+        if ($request->auth !== 'auth') {
+            abort(404);
+        }
         $user_id = Auth::id();
         $user = User::find($user_id);
         $rooms = $user->rooms()->get();
@@ -206,10 +209,6 @@ class UserController extends Controller
 
         $user_name = $request->keyword;
 
-        if (is_null($request->user_id)) {
-            $users = User::searchUserName($user_name)->take(30)->get();
-        }
-
         if ($request->user_id == 'undefined') {
             abort(404);
         }
@@ -218,7 +217,7 @@ class UserController extends Controller
             $user_id = Crypt::decrypt($request->user_id);
             $users = User::searchUserName($user_name)->where('id', '>', $user_id)->take(30)->get();
             $search_query = User::searchUserName($user_name);
-        }else{
+        } else {
             $users = User::searchUserName($user_name)->take(30)->get();
             $search_query = User::searchUserName($user_name);
         }
@@ -239,57 +238,6 @@ class UserController extends Controller
 
         return response()->Json($users);
     }
-
-    public function actionAddListUser($user_id)
-    {
-        if (isset($user_id)) {
-            $message_type = User::addListUser($user_id);
-            switch ($message_type) {
-                case 0:
-                    $error_message = 'そのユーザは存在しません';
-                    break;
-                case 1:
-                    $message = 'リストにユーザーを追加しました';
-                    break;
-                case 10:
-                    $error_message = 'そのユーザは既にリストに登録されています';
-                    break;
-            }
-        }
-
-        if (isset($message)) {
-            return response()->Json(["message" => $message]);
-        } else {
-            return response()->Json(["error_message" => $error_message]);
-        }
-    }
-
-    public function actionRemoveListUser($user_id)
-    {
-        if (isset($user_id)) {
-            $message_type = User::removeListUser($user_id);
-            switch ($message_type) {
-                case 0:
-                    $error_message = 'そのユーザは存在しません';
-                    break;
-                case 1:
-                    $message = 'リストからユーザーを削除しました';
-                    break;
-                case 10:
-                    $error_message = 'そのユーザはリストに登録されていません';
-                    break;
-            }
-        }
-
-        if (isset($message)) {
-            return response()->Json(["message" => $message]);
-        } else {
-            return response()->Json(["error_message" => $error_message]);
-        }
-    }
-
-
-
     public static function getListUser($favorite_user_id = null, $user_id = null)
     {
         if (isset($user_id)) {
@@ -327,5 +275,53 @@ class UserController extends Controller
 
 
         return $list_users;
+    }
+
+    public function actionAddListUser($user_id)
+    {
+        if (isset($user_id)) {
+            $message_type = User::addListUser($user_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'そのユーザは存在しません';
+                    break;
+                case 1:
+                    $message = 'リストにユーザーを追加しました';
+                    break;
+                case 10:
+                    $error_message = 'そのユーザは既にリストに登録されています';
+                    break;
+            }
+        }
+
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
+        }
+    }
+
+    public function actionRemoveListUser($user_id)
+    {
+        if (isset($user_id)) {
+            $message_type = User::removeListUser($user_id);
+            switch ($message_type) {
+                case 0:
+                    $error_message = 'そのユーザはリストに登録されていません';
+                    break;
+                case 1:
+                    $message = 'リストからユーザーを削除しました';
+                    break;
+                default:
+                    $error_message = 'そのユーザは存在しません';
+                    break;
+            }
+        }
+
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
+        }
     }
 }

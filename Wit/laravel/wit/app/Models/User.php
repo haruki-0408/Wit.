@@ -148,7 +148,7 @@ class User extends Authenticatable
             $message_type = 10;
             return $message_type;
         } elseif (User::where('id', $decrypted_user_id)->exists()) {
-            $user->listusers()->syncWithoutDetaching($decrypted_user_id);
+            $user->listUsers()->syncWithoutDetaching($decrypted_user_id);
             $message_type = 1;
             return $message_type;
         }else{
@@ -163,16 +163,14 @@ class User extends Authenticatable
         $decrypted_user_id = Crypt::decrypt($user_id);
         $user = User::find($auth_id);
         if ($user->listUsers()->where('favorite_user_id',$decrypted_user_id)->doesntExist()){
-            $message_type = 10;
+            $message_type = 0;
             return $message_type;
         } elseif (User::where('id', $decrypted_user_id)->exists()) {
-            //$list_user = new ListUser;
-            //$list_user->where('user_id', $auth_id)->where('favorite_user_id',$decrypted_user_id)->delete();
             $user->listUsers()->detach($decrypted_user_id);
             $message_type = 1;
             return $message_type;
         }else{
-            $message_type = 0;
+            $message_type = 10;
             return $message_type;
         }
     }

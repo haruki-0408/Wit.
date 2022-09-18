@@ -25,11 +25,17 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     protected $user;
+    protected $other_user;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->create([
+            'name' => 'Auth',
+        ]);
+        $this->other_user = User::factory()->create([
+            'name' => 'Other',
+        ]);
     }
 
 
@@ -175,11 +181,11 @@ class UserTest extends TestCase
         ]);
         $response->assertValid(['current_password', 'new_password_confirmation']);
         $response->assertStatus(302)->assertSessionHas(['action_message' => 'パスワードを変更しました']);
-        //$this->assertTrue(Hash::check(12345678, $this->user->password));
-        
+        $user_password = User::where('name', 'Auth')->value('password');
+        $this->assertTrue(Hash::check('abcdefgh', $user_password));
     }
 
-    /*public function test_delete_account()
+    public function test_delete_account()
     {
         $this->actingAs($this->user);  //userをログイン状態にする
         $room = Room::factory()->create([
@@ -195,9 +201,170 @@ class UserTest extends TestCase
             'title' => 'Test Room',
             'description' => 'Use Feature Test',
         ]);
-        $response = $this->post('/home/profile/settings/deleteAccount');
-        $response->assertStatus(302)->assertRedirect('/');
+        $response = $this->post('/home/profile/settings/deleteAccount', [
+            'df' => 'auth',
+        ])->assertStatus(404);
+
+        $response = $this->post('/home/profile/settings/deleteAccount', [
+            'auth' => 'auth',
+        ])->assertStatus(302)->assertRedirect('/');
+
         $this->assertDeleted($room);
         $this->assertDeleted($this->user);
-    }*/
+        $handle_tag = Tag::first();
+        //タグナンバーが適切に-1されているか確認
+        $this->assertSame($tag->number - 1, $handle_tag->number);
+    }
+
+    public function test_search_user()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+        //keyword 入力なしのとき
+        $response = $this->get('/home/searchUser?hoge=fuga');
+        $response->assertStatus(404);
+
+        //keyword 入力ありのとき 31件該当レコードがあっても30までしか取得しないことを確認
+        User::factory()->count(31)->create([
+            'name' => 'test',
+        ]);
+        $response = $this->get('/home/searchUser?keyword=test');
+        $response->assertJsonCount(30);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'name',
+                'profile_image',
+                'type',
+            ]
+        ]);
+
+        //Get-More-Userの時適切に続きから取得できているか
+        $user_id = Crypt::encrypt(User::offset(30)->first()->id);
+        $response = $this->get('/home/searchUser?keyword=test&user_id=' . $user_id);
+        $response->assertJsonCount(2);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'name',
+                'profile_image',
+                'type',
+            ]
+        ]);
+    }
+
+    public function test_get_list_user()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+
+        //31人のテストユーザを作成し、リスト登録 最初に３０件表示されるので1件をGet-Moreで取れるように31件とする
+        $users = User::factory()->count(31)->create([
+            'name' => 'TestListUser',
+        ]);
+
+        //今ログインしているユーザー以外にも同じく31件のリストユーザーを登録させる Other-List-Userのテスト
+        $other_favorite_users = User::factory()->count(31)->create([
+            'name' => 'TestOtherListUser',
+        ]);
+        foreach ($users as $user) {
+            $this->user->listUsers()->syncWithoutDetaching($user->id);
+        }
+
+        foreach ($other_favorite_users as $other_favorite_user) {
+            $this->other_user->listUsers()->syncWithoutDetaching($other_favorite_user->id);
+        }
+
+        //ログイン中のユーザーリストが取得できているか
+        $response = $this->get('/getListUser');
+        $response->assertJsonCount(30);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'name',
+                'profile_image',
+                'type',
+            ]
+        ]);
+
+        //Get-More-User であぶれた１件がきちんと取得できているか
+        $favorite_users = $this->user->listUsers()->orderBy('list_users.id', 'asc')->take(2)->get();
+        $favorite_user_id = Crypt::encrypt($favorite_users[1]->id);
+        $response = $this->get('/getListUser:' . $favorite_user_id);
+        $response->assertJsonCount(1);
+        $response->assertJsonStructure([
+            '0' => [  //Get_Moreの最後のユーザにはきちんとno_get_moreフラグがついているかテスト
+                'id',
+                'name',
+                'profile_image',
+                'type',
+                'no_get_more',
+            ]
+        ]);
+
+        //他人のリストが取得できているか Other-More-Userの機能をテストする
+        $other_favorite_users = $this->other_user->listUsers()->orderBy('list_users.id', 'asc')->take(16)->get();
+        $other_favorite_user_id = Crypt::encrypt($other_favorite_users[15]->id);
+        $other_user_id = Crypt::encrypt($this->other_user->id);
+        $response = $this->get('/getListUser:' . $other_favorite_user_id . '/' . $other_user_id);
+        $response->assertJsonCount(15);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'name',
+                'profile_image',
+                'type',
+            ]
+        ]);
+        $response->assertJsonStructure([
+            '14' => [   //Other_Moreの最後のユーザにはきちんとno_get_moreフラグがついているかテスト
+                'id',
+                'name',
+                'profile_image',
+                'no_get_more',
+            ]
+        ]);
+    }
+
+    public function test_action_add_list_user()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+
+        //存在しないユーザIDを送信した時
+        $random_user_id = Crypt::encrypt(Str::random(10));
+        $response = $this->get('/home/addListUser:' . $random_user_id);
+        $response->assertJsonPath('error_message', 'そのユーザは存在しません');
+
+        //存在しているがすでにユーザーがリストに登録されている時
+        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id); 
+        $other_user_id = Crypt::encrypt($this->other_user->id);
+        $response = $this->get('/home/addListUser:' . $other_user_id);
+        $response->assertJsonPath('error_message', 'そのユーザは既にリストに登録されています');
+
+        //ユーザが適切にリストに登録された時
+        $list_user = User::factory()->create();
+        $list_user_id = Crypt::encrypt($list_user->id);
+        $response = $this->get('/home/addListUser:' . $list_user_id);
+        $response->assertJsonPath('message', 'リストにユーザーを追加しました');
+    }
+
+    public function test_action_remove_list_user()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+
+        //存在しないユーザIDを送信した時
+        $random_user_id = Crypt::encrypt(Str::random(10));
+        $response = $this->get('/home/removeListUser:' . $random_user_id);
+        $response->assertJsonPath('error_message', 'そのユーザはリストに登録されていません');
+
+        //ユーザーが適切にリストから登録解除された時
+        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id); 
+        $other_user_id = Crypt::encrypt($this->other_user->id);
+        $response = $this->get('/home/removeListUser:' . $other_user_id);
+        $response->assertJsonPath('message', 'リストからユーザーを削除しました');
+
+        //存在しているがユーザがリストに登録されていない時
+        $list_user = User::factory()->create();
+        $list_user_id = Crypt::encrypt($list_user->id);
+        $response = $this->get('/home/removeListUser:' . $list_user_id);
+        $response->assertJsonPath('error_message', 'そのユーザはリストに登録されていません');
+    }
 }

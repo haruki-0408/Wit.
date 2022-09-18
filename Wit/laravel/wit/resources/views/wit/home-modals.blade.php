@@ -84,30 +84,31 @@
                     @foreach ($list_users as $list_user)
                         <li data-user-id="{{ $list_user->id }}" class="d-flex bg-white p-1 justify-content-between">
                             <div class="User">
-                                <a class="User-Link link-dark text-decoration-none d-flex align-items-center p-1" href="/home/profile:{{ $list_user->id }}"
-                                    alt="">
-                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50" height="50"
-                                        class="Profile-Image rounded-circle me-2">
+                                <a class="User-Link link-dark text-decoration-none d-flex align-items-center p-1"
+                                    href="/home/profile:{{ $list_user->id }}" alt="">
+                                    <img src="{{ asset($list_user->profile_image) }}" alt="" width="50"
+                                        height="50" class="Profile-Image rounded-circle me-2">
                                     <strong class="User-Name text-break">{{ $list_user->name }}</strong>
                                 </a>
                             </div>
                             <div class="btn-group d-flex align-items-center p-2">
                                 <button type="button" class="Remove-ListUser btn btn-outline-danger"><svg
-                                    width="16" height="16" fill="currentColor"
-                                    class="bi bi-person-dash-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
-                                    <path
-                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                </svg></button>
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg></button>
                             </div>
                         </li>
                     @endforeach
                 </ul>
 
                 @if (!isset($list_users->last()->no_get_more) && $list_users->isNotEmpty())
-                    <div id="Get-More-ListUser-Button" class="btn d-flex justify-content-center m-3"><svg width="16"
-                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                    <div id="Get-More-ListUser-Button" class="btn d-flex justify-content-center m-3"><svg
+                            width="16" height="16" fill="currentColor" class="bi bi-caret-down"
+                            viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
@@ -143,8 +144,9 @@
                     @endcomponent
                 </ul>
                 @if (!isset($list_rooms->last()->no_get_more) && $list_rooms->isNotEmpty())
-                    <div id="Get-More-ListRoom-Button" class="btn d-flex justify-content-center m-3"><svg width="16"
-                            height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                    <div id="Get-More-ListRoom-Button" class="btn d-flex justify-content-center m-3"><svg
+                            width="16" height="16" fill="currentColor" class="bi bi-caret-down"
+                            viewBox="0 0 16 16">
                             <path
                                 d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z">
                             </path>
@@ -160,13 +162,13 @@
 </div>
 
 <!-- Room Password Modal -->
-<div class="modal fade" id="Room-Password-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="Room-Password-Modal" aria-hidden="true">
+<div class="modal fade" id="Room-Password-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="Room-Password-Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-lock-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-lock-fill mx-2" viewBox="0 0 16 16">
                         <path
                             d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                     </svg>Room Password</h5>
@@ -175,7 +177,8 @@
             <div class="modal-body">
                 <div class="d-flex flex-column p-3">
 
-                    <form id="Room-Password-Form" name='room_password' method="post" action="/home/authRoomPassword">
+                    <form id="Room-Password-Form" name='room_password' method="post"
+                        action="/home/authRoomPassword">
                         @csrf
                         <input type="password" name="enter_password" class="form-control mb-3" autocomplete=off>
                         <input type="hidden" name="room_id">
@@ -185,7 +188,8 @@
                             </div>
                         @enderror
                         <div class="text-end">
-                            <button type="submit" form="Room-Password-Form" class="btn btn-outline-primary ">Submit</button>
+                            <button type="submit" form="Room-Password-Form"
+                                class="btn btn-outline-primary ">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -200,8 +204,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-tags-fill mx-2" viewBox="0 0 16 16">
                         <path
                             d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path
@@ -228,8 +232,8 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><svg width="16" height="16"
-                        fill="currentColor" class="bi bi-gear-fill mx-2" viewBox="0 0 16 16">
+                <h5 class="modal-title"><svg width="16" height="16" fill="currentColor"
+                        class="bi bi-gear-fill mx-2" viewBox="0 0 16 16">
                         <path
                             d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
                     </svg>Settings</h5>
@@ -238,23 +242,23 @@
             <div class="modal-body p-1">
                 <ul id="Setting-Links" class="p-0 m-0 fs-5 rounded">
                     <li><button id="Information-Password-Modal-Button" class="dropdown-item fw-bold"
-                            data-bs-target="#User-Password-Modal1" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
-                                width="16" height="16" fill="currentColor"
+                            data-bs-target="#User-Password-Modal1" data-bs-toggle="modal"
+                            data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </svg>Account Information</button></li>
                     <li><button id="Change-Password-Modal-Button" type="button" class="dropdown-item fw-bold"
-                            data-bs-target="#User-Password-Modal2" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
-                                width="16" height="16" fill="currentColor" class="bi bi-key-fill mx-2"
-                                viewBox="0 0 16 16">
+                            data-bs-target="#User-Password-Modal2" data-bs-toggle="modal"
+                            data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
+                                class="bi bi-key-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>Change
                             Password</button></li>
                     <li><button id="Delete-Account-Password-Modal-Button" class="dropdown-item fw-bold text-danger"
-                            data-bs-target="#User-Password-Modal3" data-bs-toggle="modal" data-bs-dismiss="modal"><svg
-                                width="16" height="16" fill="currentColor"
+                            data-bs-target="#User-Password-Modal3" data-bs-toggle="modal"
+                            data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
@@ -290,7 +294,8 @@
                         </div>
                     @enderror
                     <div class="text-end">
-                        <button type="submit" form="User-Password-Form1" class="btn btn-outline-primary">Submit</button>
+                        <button type="submit" form="User-Password-Form1"
+                            class="btn btn-outline-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -328,7 +333,8 @@
                     Confirm Password
                     <input type="password" name="new_password_confirmation" class="form-control " autocomplete=off>
                     <div class="text-end mt-3">
-                        <button type="submit" form="User-Password-Form2" class="btn btn-outline-primary">Save</button>
+                        <button type="submit" form="User-Password-Form2"
+                            class="btn btn-outline-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -357,7 +363,8 @@
                         </div>
                     @enderror
                     <div class="text-end">
-                        <button type="submit" form="User-Password-Form3" class="btn btn-outline-primary text-end">Submit</button>
+                        <button type="submit" form="User-Password-Form3"
+                            class="btn btn-outline-primary text-end">Submit</button>
                     </div>
                 </form>
             </div>
@@ -411,7 +418,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a href="/home/profile/settings/deleteAccount" class="btn btn-outline-primary text-end">Yes</a>
+                <form method='post' action="/home/profile/settings/deleteAccount">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary text-end">Yes</button>
+                    <input type="hidden" name="auth" value="auth">
+                </form>
             </div>
         </div>
     </div>
