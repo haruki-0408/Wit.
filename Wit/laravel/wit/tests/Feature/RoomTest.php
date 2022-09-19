@@ -80,6 +80,8 @@ class RoomTest extends TestCase
         ]);
         $room_id = Room::where('title', 'TestRoom')->value('id');
         $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
+        \Storage::disk('local')->assertExists('roomImages/RoomID:' . $room_id); //適切にルームイメーじが保存されているか確認
+        \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $room_id); //必ず最後は削除する
 
         //正常に部屋が作成される時　２つ目　パスワードあり　適切にセッションがセットされているか確認
         $response = $this->post('/home/createRoom', [
@@ -94,6 +96,8 @@ class RoomTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertValid(['title', 'description', 'create_password', 'sum_image_count', 'sum_image_size']);
         $response->assertSessionHas(['auth_room_id' => $room_id_2])->assertStatus(302)->assertRedirect('/home/room:' . $room_id_2);
+        \Storage::disk('local')->assertExists('roomImages/RoomID:' . $room_id_2); //適切にルームイメーじが保存されているか確認
+        \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $room_id_2); //必ず最後は削除する
 
         //同じユーザで部屋を4つ目を作成しようとした時の動作　３つ以上は同時に開設できないからエラーセッションが送られるはず
         $response = $this->post('/home/createRoom', [
@@ -137,7 +141,6 @@ class RoomTest extends TestCase
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ログインユーザーとルームの作成者が一致しません']);
 
         //ルームが適切に削除される時 
-        \Storage::disk('local')->assertExists('roomImages/RoomID:' . $this->room_id_1);
         $tag_1 = Tag::factory()->create(['number' => 2]);
         $tag_2 = Tag::factory()->create(['number' => 1]);
         $tag_id_1 = $tag_1->id;
@@ -146,8 +149,10 @@ class RoomTest extends TestCase
         $this->rooms[0]->tags()->syncWithoutDetaching([$tag_id_1, $tag_id_2]);
         $response = $this->get('/home/removeRoom:' . $this->room_id_1);
         $this->assertDeleted($this->rooms[0]);
-        $this->assertTrue($tag_number -1 ,Tag::find($tag_id_1)->number);
-        \Storage::disk('local')->assertMissing('roomImages/RoomID:' . $this->room_id_1);
+        //dd(Tag::find($tag_id_1)->number,$tag_number);
+        $this->assertSame($tag_number - 1 ,Tag::find($tag_id_1)->number); //タグナンバーが２だったものは-1され１になる
+        $this->assertDeleted($tag_2); //タグナンバーが１だったものを０になりテーブルから削除される
+        \Storage::disk('local')->assertMissing('/roomImages/RoomID:' . $this->room_id_1);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['action_message' => 'ルーム:' . $this->room_id_1 . 'が削除されました']);
 
     }

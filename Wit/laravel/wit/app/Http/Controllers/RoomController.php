@@ -671,7 +671,7 @@ class RoomController extends Controller
             }
 
             $tag = Tag::find($room_tag->pivot->tag_id);
-            if ($tag->number < 1) {
+            if ($tag->number <= 1) {
                 $tag->delete();
             } else {
                 $tag->update([
