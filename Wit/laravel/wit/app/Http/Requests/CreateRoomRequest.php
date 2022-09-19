@@ -77,7 +77,6 @@ class CreateRoomRequest extends FormRequest
             }
         }
 
-
         return $this->all();
     }
 
@@ -95,7 +94,6 @@ class CreateRoomRequest extends FormRequest
             $data['sum_image_size'] = $sum_image_size;
             $data['sum_image_count'] = $sum_image_count;
         }
-
         return $data;
     }
 }

@@ -11,8 +11,9 @@
     </div>
     <div class="btn-group">
 
-        <button id="Search-Button" class="border-0 bg-light" type="submit"> <i
-                class="btn btn-primary bi bi-search"></i></button>
+        <button id="Search-Button" class="border-0 bg-light" type="submit"> 
+            <i class="btn btn-primary bi bi-search"></i>
+        </button>
 
         <button class="border-0 bg-light" type="button" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" aria-expanded="false"><i class="btn btn-primary bi bi-filter-square"></i></button>
@@ -101,7 +102,7 @@
     </div>
 @endsection
 
-@component('wit.createRoom')
+@component('wit.create-room')
 @endcomponent
 
 @component('wit.home-modals')

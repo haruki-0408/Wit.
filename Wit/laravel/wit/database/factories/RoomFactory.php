@@ -26,4 +26,13 @@ class RoomFactory extends Factory
             'password'=> null ,
         ];
     }
+
+    public function truePassword()
+    {
+        return $this->state(function () {
+            return [
+                'password' => Hash::make(12345678),
+            ];
+        });
+    }
 }

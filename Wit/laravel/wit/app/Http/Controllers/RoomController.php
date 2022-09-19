@@ -654,7 +654,7 @@ class RoomController extends Controller
     public function removeRoom($room_id)
     {
         if (Room::where('id', $room_id)->doesntExist()) {
-            return redirect('home')->with('error_messge', 'ルーム:' . $room_id . 'は存在しません');
+            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'は存在しません');
         }
 
         $room = Room::find($room_id);

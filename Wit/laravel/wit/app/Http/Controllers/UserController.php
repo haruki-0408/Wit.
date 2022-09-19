@@ -26,12 +26,6 @@ class UserController extends Controller
     }
 
 
-    public function index()
-    {
-        $items = User::all();
-        return view('wit.ShowDatabase.showUser', ['users' => $items]);
-    }
-
     public function showProfile($user_id)
     {
         if (is_null($user_id)) {
