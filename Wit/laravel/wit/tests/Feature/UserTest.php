@@ -30,6 +30,7 @@ class UserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        //ユーザはメソッド毎に変わるが毎回名前だけ同じAuth,Otherというようになるので注意　$this->user->idはアクション毎に異なる
         $this->user = User::factory()->create([
             'name' => 'Auth',
         ]);
@@ -136,11 +137,11 @@ class UserTest extends TestCase
         $response = $user_controller->storeImage($upload_file);
         //適切にストレージにユーザー画像が保存されているかテスト
         \Storage::disk('local')->assertExists($response);
+        \Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $this->user->id); //必ず最後は削除する
     }
 
     public function test_change_profile()
     {
-        $user_id = Crypt::encrypt($this->user->id);
         $this->actingAs($this->user);  //userをログイン状態にする
         $profile_image = UploadedFile::fake()->image('hoge.png');
         $response = $this->post('/home/profile/settings/changeProfile', [
@@ -150,6 +151,8 @@ class UserTest extends TestCase
             'image' => $profile_image,
         ]);
         $response->assertStatus(302);
+        \Storage::disk('local')->assertExists('/userImages/secondary:'.$this->user->id);
+        \Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $this->user->id); //必ず最後は削除する
         $this->assertDatabaseHas('users', [
             'name' => 'TestUser',
             'email' => 'test@test.com',
@@ -211,6 +214,7 @@ class UserTest extends TestCase
 
         $this->assertDeleted($room);
         $this->assertDeleted($this->user);
+        \Storage::disk('local')->assertMissing('/userImages/secondary:' . $this->user->id);
         $handle_tag = Tag::first();
         //タグナンバーが適切に-1されているか確認
         $this->assertSame($tag->number - 1, $handle_tag->number);
@@ -367,4 +371,5 @@ class UserTest extends TestCase
         $response = $this->get('/home/removeListUser:' . $list_user_id);
         $response->assertJsonPath('error_message', 'そのユーザはリストに登録されていません');
     }
+
 }
