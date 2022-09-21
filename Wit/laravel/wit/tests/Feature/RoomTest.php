@@ -4,10 +4,12 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\RoomController;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Room;
+use App\Models\RoomImage;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Crypt;
@@ -150,10 +152,124 @@ class RoomTest extends TestCase
         $response = $this->get('/home/removeRoom:' . $this->room_id_1);
         $this->assertDeleted($this->rooms[0]);
         //dd(Tag::find($tag_id_1)->number,$tag_number);
-        $this->assertSame($tag_number - 1 ,Tag::find($tag_id_1)->number); //タグナンバーが２だったものは-1され１になる
+        $this->assertSame($tag_number - 1, Tag::find($tag_id_1)->number); //タグナンバーが２だったものは-1され１になる
         $this->assertDeleted($tag_2); //タグナンバーが１だったものを０になりテーブルから削除される
         \Storage::disk('local')->assertMissing('/roomImages/RoomID:' . $this->room_id_1);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['action_message' => 'ルーム:' . $this->room_id_1 . 'が削除されました']);
+    }
 
+    public function test_store_image()
+    {
+        $room_controller = new RoomController;
+        $room_id = $this->room_id_1;
+        $this->actingAs($this->user);  //userをログイン状態にする
+        $upload_file = UploadedFile::fake()->image('fuga.jpg');
+        //imgがnullの時
+        $response = $room_controller->storeImage(null, 0, $room_id);
+        $this->assertNull($response);
+
+        //image_countが0の時
+        $response = $room_controller->storeImage($upload_file, null, $room_id);
+        $this->assertNull($response);
+
+        //room_idがNULLの時
+        $response = $room_controller->storeImage($upload_file, 0, null);
+        $this->assertNull($response);
+
+        //適切に画像が保存される時
+        $image_count = rand(0, 10);
+        $extension = $upload_file->getClientOriginalExtension();
+        $response = $room_controller->storeImage($upload_file, rand(0, 10), $room_id);
+        \Storage::disk('local')->assertExists($response);
+        \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $room_id, 'no' . $image_count . '.' . $extension); //必ず最後は削除する
+    }
+
+    public function test_show_room_image()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+        $room_controller = new RoomController;
+        $upload_file_1 = UploadedFile::fake()->image('hoge.png');
+        $upload_file_2 = UploadedFile::fake()->image('fuga.png');
+        //パスワードなしとありの部屋２つそれぞれに３つずつルームイメージを紐付ける
+        for ($i = 0; $i < 3; $i++) {
+            $room_image_1 = new RoomImage;
+            $room_image_2 = new RoomImage;
+            $room_image_1->room_id = $this->room_id_1;
+            $room_image_2->room_id = $this->room_id_2;
+            $room_image_1->image = $room_controller->storeImage($upload_file_1, $i, $this->room_id_1);
+            $room_image_2->image = $room_controller->storeImage($upload_file_2, $i, $this->room_id_2);
+            $room_image_1->save();
+            $room_image_2->save();
+
+            //存在しない画像を参照する
+            $response = $this->get('/home/room:' . $this->room_id_1 . '/showRoomImage:4');
+            $response2 = $this->get('/home/room:' . $this->room_id_2 . '/showRoomImage:4');
+            $response->assertStatus(404);
+            $response2->assertStatus(404);
+
+            //存在する画像を参照する
+            $response = $this->get('/home/room:' . $this->room_id_1 . '/showRoomImage:' . $i);
+            $response2 = $this->get('/home/room:' . $this->room_id_2 . '/showRoomImage:' . $i);
+            $response2->assertStatus(404); //パスワード付きルームの画像はセッションをセットしないと閲覧できない
+            $response->assertOk();
+
+            session()->put('auth_room_id', $this->room_id_2); //セッションをセットしもう一度パスワード付きのルーム画像を取得する
+            $response2 = $this->get('/home/room:' . $this->room_id_2 . '/showRoomImage:' . $i);
+            $response2->assertOk(); //今度はステータスコード２００が適切に返ってくる
+            session()->forget('auth_room_id', $this->room_id_2);
+        }
+
+        \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $this->room_id_1); //必ず最後は削除する
+        \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $this->room_id_2); //必ず最後は削除する
+    }
+
+    public function test_receive_message()
+    {
+        $this->actingAs($this->user);  //userをログイン状態にする
+        //バリデーションエラーなし
+        $message = Str::random(10);
+        $response = $this->post('/home/room/chat/message', [
+            'message' => $message,
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('room_chat', [
+            'room_id' => $this->room_id_1,
+            'user_id' => $this->user->id,
+            'message' => $message,
+        ]);
+
+        //room_id の入力なし
+        $response = $this->post('/home/room/chat/message', [
+            'message' => '',
+            'room_id' => '',
+        ]);
+        $response->assertStatus(404);
+
+        //room_idの入力ありだがメッセージの入力なし
+        $response = $this->post('/home/room/chat/message', [
+            'message' => '',
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertInvalid(['message']);
+
+        //room_idもありメッセージの10００文字制限のバリデーションエラーチェック
+        $response = $this->post('/home/room/chat/message', [
+            'message' => Str::random(1001),
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertInvalid(['message']);
+
+        //チャットカウントが１０００を超えたときのバリデーション
+        $room = Room::find($this->room_id_1);
+        for ($i = 0; $i < 1000; $i++) {
+            $room->roomChat()->attach($this->user, ['message' => Str::random(10)]);
+        }
+        //dd($room->roomChat->count());
+        $response = $this->post('/home/room/chat/message', [
+            'message' => Str::random(10),
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertInvalid(['chat_count']);        
     }
 }

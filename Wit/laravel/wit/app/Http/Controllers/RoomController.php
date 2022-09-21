@@ -308,18 +308,22 @@ class RoomController extends Controller
 
     public function receiveMessage(Request $request)
     {
+        if(is_null($request->room_id)){
+            abort(404);
+        }
+
         $room = new Room;
         $chat_count = $room->find($request->room_id)->roomChat->count();
         $request->merge(['chat_count' => $chat_count]);
 
         $rules = [
-            'message' => 'required|max:400',
-            'chat_count' => 'integer|max:1000',
+            'message' => 'required|max:1000',
+            'chat_count' => 'integer|max:999',
         ];
 
         $message = [
             'message.required' => 'メッセージを入力して下さい',
-            'message.max' => 'メッセージは最大400文字までです',
+            'message.max' => 'メッセージは最大1000文字までです',
             'chat_count.integer' => 'エラーにより送信できません',
             'chat_count.max' => 'ルームの最大メッセージ数(1000)に達しました',
         ];
@@ -342,7 +346,7 @@ class RoomController extends Controller
             ]));
         }
 
-        if(Room::where('id',$request->room_id)->doesntExist() || User::where('id',$request->user_id)->doesntExist()){
+        if (Room::where('id', $request->room_id)->doesntExist() || User::where('id', $request->user_id)->doesntExist()) {
             return redirect(route('enterRoom', [
                 'room_id' => $request->room_id,
             ]));
@@ -375,7 +379,7 @@ class RoomController extends Controller
             ]));
         }
 
-        if(Room::where('id',$request->room_id)->doesntExist() || User::where('id',$request->user_id)->doesntExist()){
+        if (Room::where('id', $request->room_id)->doesntExist() || User::where('id', $request->user_id)->doesntExist()) {
             return redirect(route('enterRoom', [
                 'room_id' => $request->room_id,
             ]));
@@ -389,7 +393,7 @@ class RoomController extends Controller
                 'room_id' => $request->room_id,
             ]));
         }
-        
+
         $room->find($request->room_id)->roomBans()->detach($request->user_id);
         $type = 'lift';
         event(new RoomBanned($user, $request->room_id, $type));
@@ -575,9 +579,14 @@ class RoomController extends Controller
     public function showRoomImage($room_id, $number)
     {
         $room_password = Room::find($room_id)->password;
+        $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
+
+        if (is_null($room_image)) {
+            abort(404);
+        }
+
         if (is_null($room_password)) {
             $room_image = RoomImage::where('room_id', $room_id)->offset($number)->first('image');
-
             abort_unless(Storage::exists($room_image->image), 404);
             return response()->file(Storage::path($room_image->image));
         } else if (session()->get('auth_room_id') == $room_id) {
@@ -595,7 +604,7 @@ class RoomController extends Controller
 
     public function storeImage($image_file, $image_count, $room_id)
     {
-        if (isset($image_file)) {
+        if (isset($image_file) && isset($room_id) && isset($image_count)) {
             //拡張子を取得
             $extension = $image_file->getClientOriginalExtension();
             //画像を保存して、そのパスを$imgに保存　第三引数に'local'を指定
