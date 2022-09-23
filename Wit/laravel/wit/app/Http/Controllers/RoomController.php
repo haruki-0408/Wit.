@@ -162,46 +162,27 @@ class RoomController extends Controller
 
     public function authRoomPassword(AuthPasswordRequest $request)
     {
-        if (Room::where('id', $request->room_id)->doesntExist()) {
-            return redirect('home')->with('error_message', 'ルーム:' . $request->room_id . 'は存在しません');
+        if(is_null($request->room_id)){
+            return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
         $room_id = $request->room_id;
-
-        $auth_user = Auth::user();
-        $check = Room::checkRoomAccess(Auth::id(), $room_id);
-        $count_online_others = RoomUser::countOnlineOthers($room_id);
-
-        if ($check) {
-            return redirect('home')->with('error_message', 'ルーム:' . $room_id . 'へのアクセスが禁止されています');
-        }
-
-        if ($count_online_others >= 10 && $auth_user->id !== Room::find($room_id)->user_id) {
-            return redirect('home')->with('error_message', 'ルームの最大人数を超過したため入室できません');
-        }
-
         $room = Room::find($room_id);
         $room_password = $room->password;
-        $auth_user = Auth::user();
 
         if (is_null($request->enter_password) || is_null($room_password)) {
             return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
+        //バリデーションですでにパスワードのチェックは完了しているのでこのエラーが発生することは理論上はない
         if (!(Hash::check($request->enter_password, $room_password))) {
-            return back()->with('error_message', 'パスワードが違います');
+            return redirect('/home')->with('error_message', 'パスワードが違います');
         }
-
-        $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-        $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
         session()->put('auth_room_id', $room_id);
-        event(new UserEntered($room_id));
-        return view('wit.room', [
-            'room_info' => $room_info,
-            'count_image_data' => $count_image_data,
-            'auth_user' => $auth_user,
-            'expired_time_left' => Room::getRoomExpiredTime($room_id),
-        ]);
+
+        return redirect(route('enterRoom', [
+            'room_id' => $room->id,
+        ]));
     }
 
     public function enterRoom($room_id)

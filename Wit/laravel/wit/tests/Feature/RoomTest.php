@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class RoomTest extends TestCase
 {
@@ -134,19 +135,19 @@ class RoomTest extends TestCase
         $this->actingAs($this->user); //ユーザをログイン状態にする
 
         //ルームIDがリクエスト内に存在しない時
-        $response = $this->post('/home/removeRoom',[
+        $response = $this->post('/home/removeRoom', [
             'hoge' => 'hogehoge',
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
         //ルームIDが存在しないルームの時
         $str_room_id = Str::random(26);
-        $response = $this->post('/home/removeRoom',[
+        $response = $this->post('/home/removeRoom', [
             'room_id' => $str_room_id,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $str_room_id . 'は存在しません']);
 
         //ログインユーザとルームの作成者が一致しない場合
-        $response = $this->post('/home/removeRoom',[
+        $response = $this->post('/home/removeRoom', [
             'room_id' => $this->room_id_2,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ログインユーザーとルームの作成者が一致しません']);
@@ -158,7 +159,7 @@ class RoomTest extends TestCase
         $tag_id_2 = $tag_2->id;
         $tag_number = $tag_1->number;
         $this->rooms[0]->tags()->syncWithoutDetaching([$tag_id_1, $tag_id_2]);
-        $response = $this->post('/home/removeRoom',[
+        $response = $this->post('/home/removeRoom', [
             'room_id' => $this->room_id_1,
         ]);
         $this->assertDeleted($this->rooms[0]);
@@ -174,27 +175,27 @@ class RoomTest extends TestCase
         $this->actingAs($this->user);  //userをログイン状態にする
 
         //ルームIDがリクエスト内に存在しない時
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'hoge' => 'hogehoge',
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
         //存在しないルームIDの時
         $str_room_id = Str::random(26);
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'room_id' => $str_room_id,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $str_room_id . 'は存在しません']);
 
         //ログインユーザとルームの作成者が一致しない場合
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'room_id' => $this->room_id_2,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ログインユーザーとルームの作成者が一致しません']);
 
         //ルームにパスワードが付いている場合
         $this->actingAs($this->other_user);
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'room_id' => $this->room_id_2,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルームにパスワードがついているため保存できません']);
@@ -203,19 +204,20 @@ class RoomTest extends TestCase
         $this->actingAs($this->user);
         $room = Room::factory()->create(['user_id' => $this->user->id]);
         $room_id = $room->id;
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'room_id' => $room_id,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルームにタグが付いていないため保存できません']);
 
         //適切にルームがPOSTルームとして保存される時
         Room::find($this->room_id_1)->roomBans()->syncWithoutDetaching($this->other_user->id);
+        Room::find($this->room_id_1)->roomUsers()->syncWithoutDetaching($this->other_user->id);
         $this->assertDatabaseHas('room_bans', [
             'room_id' => $this->room_id_1,
             'user_id' => $this->other_user->id,
         ]);
 
-        $response = $this->post('/home/saveRoom',[
+        $response = $this->post('/home/saveRoom', [
             'room_id' => $this->room_id_1,
         ]);
 
@@ -223,9 +225,14 @@ class RoomTest extends TestCase
             'room_id' => $this->room_id_1,
             'user_id' => $this->other_user->id,
         ]);
+
+        $this->assertDatabaseHas('room_users', [
+            'room_id' => $this->room_id_1,
+            'user_id' => $this->other_user->id,
+        ]);
+
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['action_message' => 'ルーム:' . $this->room_id_1 . 'の保存が完了しました']);
         $this->assertNotNull(Room::find($this->room_id_1)->posted_at);
-        
     }
 
 
@@ -336,12 +343,12 @@ class RoomTest extends TestCase
         for ($i = 0; $i < 1000; $i++) {
             $room->roomChat()->attach($this->user, ['message' => Str::random(10)]);
         }
-        
+
         $response = $this->post('/home/room/chat/message', [
             'message' => Str::random(10),
             'room_id' => $this->room_id_1,
         ]);
-        $response->assertInvalid(['chat_count']);        
+        $response->assertInvalid(['chat_count']);
     }
 
     public function test_receive_ban_user()
@@ -351,27 +358,27 @@ class RoomTest extends TestCase
         $this->actingAs($this->user); //ユーザをログイン状態へ
 
         //room_id 入力なしのとき
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
         //room_idが存在しない部屋のとき
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
             'room_id' => Str::random(26),
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
         //user_idが存在しないユーザのとき
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => Str::random(26),
             'room_id' => $room_id
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
 
         //user_id が部屋の管理者のとき
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
@@ -379,11 +386,11 @@ class RoomTest extends TestCase
             'room_id' => $room_id,
             'user_id' => $user_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
 
         //部屋の管理者以外のユーザがリクエストを送ってきた時
         $user_id = $this->user->id;
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
@@ -391,13 +398,13 @@ class RoomTest extends TestCase
             'room_id' => $room_id,
             'user_id' => $user_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
-        
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
+
         //適切にバンされる時
         $user_id = $this->other_user->id;
         $room_id = $this->room_id_1;
         Room::find($room_id)->roomUsers()->syncWithoutDetaching($user_id);
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
@@ -409,7 +416,7 @@ class RoomTest extends TestCase
             'room_id' => $room_id,
             'user_id' => $user_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);   
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
     }
 
     public function test_receive_lift_ban_user()
@@ -419,40 +426,40 @@ class RoomTest extends TestCase
         $this->actingAs($this->user); //ユーザをログイン状態へ
 
         //room_id 入力なしのとき
-        $response = $this->post('/home/room/ban/lift',[
+        $response = $this->post('/home/room/ban/lift', [
             'user_id' => $user_id,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
         //room_idが存在しない部屋のとき
-        $response = $this->post('/home/room/ban/lift',[
+        $response = $this->post('/home/room/ban/lift', [
             'user_id' => $user_id,
             'room_id' => Str::random(26),
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
         //user_idが存在しないユーザのとき
-        $response = $this->post('/home/room/ban/lift',[
+        $response = $this->post('/home/room/ban/lift', [
             'user_id' => Str::random(26),
             'room_id' => $room_id
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
 
         //user_id が部屋の管理者のとき
-        $response = $this->post('/home/room/ban/lift',[
+        $response = $this->post('/home/room/ban/lift', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
 
         //部屋の管理者以外のユーザがリクエストを送ってきた時
         $user_id = $this->user->id;
-        $response = $this->post('/home/room/ban/',[
+        $response = $this->post('/home/room/ban/', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);
-        
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
+
         //適切にリフトバンされる時
         $user_id = $this->other_user->id;
         $room_id = $this->room_id_1;
@@ -462,7 +469,7 @@ class RoomTest extends TestCase
             'user_id' => $user_id,
         ]);
 
-        $response = $this->post('/home/room/ban/lift',[
+        $response = $this->post('/home/room/ban/lift', [
             'user_id' => $user_id,
             'room_id' => $room_id,
         ]);
@@ -471,6 +478,145 @@ class RoomTest extends TestCase
             'room_id' => $room_id,
             'user_id' => $user_id,
         ]);
-        $response->assertStatus(302)->assertRedirect('/home/room:'.$room_id);   
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $room_id);
+    }
+
+    public function test_enter_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+
+        $str_room_id = Str::random(26);
+        //存在しないルームのルームID
+        $response = $this->get('/home/room:' . $str_room_id);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $str_room_id . 'は存在しません']);
+
+        //posted_atに値が入っている場合
+        $room = Room::factory()->create(['posted_at' => Carbon::now()]);
+        $response = $this->get('/home/room:' . $room->id);
+        $response->assertStatus(302)->assertRedirect('/home/postRoom:' . $room->id);
+
+        //room_bansに登録されているユーザが入室しようとした時
+        $room = Room::factory()->create(['user_id' => $this->other_user->id]);
+        $room->roomBans()->syncWithoutDetaching($this->user->id);
+        $response = $this->get('/home/room:' . $room->id);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $room->id . 'へのアクセスが禁止されています']);
+        $room->roomBans()->detach($this->user->id);
+
+        //ルームに１０人入ってる状態で管理者ではないユーザが入室しようとした時
+        for ($user_number = 0; $user_number < 10; $user_number++) {
+            $user = User::factory()->create();
+            $room->roomUsers()->syncWithoutDetaching($user->id);
+            $room->roomUsers()->updateExistingPivot($user->id, ['in_room' => true]);
+        }
+        $response = $this->get('/home/room:' . $room->id);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルームの最大人数(作成者を除いて10人まで)を超過したため入室できません']);
+
+        //ルームに10人入っている状態で管理者ユーザが入室しようとした時
+        $this->actingAs($this->other_user);
+        $response = $this->get('/home/room:' . $room->id);
+        $response->assertStatus(200)->assertViewIs('wit.room');
+        $response->assertViewHasAll([ //responseに以下のデータが存在しているか
+            'room_info',
+            'count_image_data',
+            'auth_user',
+            'expired_time_left',
+        ]);
+
+        //ルームにパスワードが付いており、セッションがセットされていない時
+        $response = $this->get('/home/room:' . $this->room_id_2);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'パスワード付きのルームです']);
+
+        //ルームにパスワードが付いており、セッションがセットされている時
+        session()->put('auth_room_id', $this->room_id_2);
+        $response = $this->get('/home/room:' . $this->room_id_2);
+        $response->assertStatus(200)->assertViewIs('wit.room');
+        $response->assertViewHasAll([ //responseに以下のデータが存在しているか
+            'room_info',
+            'count_image_data',
+            'auth_user',
+            'expired_time_left',
+        ]);
+
+        //パスワードがついていない部屋に普通に入室する時
+        $response = $this->get('/home/room:' . $this->room_id_1);
+        $response->assertStatus(200)->assertViewIs('wit.room');
+        $response->assertViewHasAll([ //responseに以下のデータが存在しているか
+            'room_info',
+            'count_image_data',
+            'auth_user',
+            'expired_time_left',
+        ]);
+    }
+
+    public function test_auth_room_password()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+
+        //ルームIDがリクエストに存在しない時
+        $response = $this->post('/home/authRoomPassword', [
+            'hogehoge' => 'hogehoge',
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
+
+        //enter_passwordが入力されておらず、存在するルームのルームIDをリクエストに含めた時
+        $response = $this->post('/home/authRoomPassword', [
+            'room_id' => $this->room_id_2,
+        ]);
+        $response->assertInvalid(['enter_password']);
+
+        $str_room_id = Str::random(26);
+
+        //enter_passwordが正しく、存在しないルームのルームIDをリクエストに含めた時
+        $response = $this->post('/home/authRoomPassword', [
+            'enter_password' => 12345678,
+            'room_id' => $str_room_id,
+        ]);
+        $response->assertInvalid(['enter_password']);
+
+        //enter_passwordが正しくなく、存在するルームのルームIDをリクエスト煮含めた時
+        $response = $this->post('/home/authRoomPassword', [
+            'enter_password' => 123456789,
+            'room_id' => $this->room_id_2,
+        ]);
+        $response->assertInvalid(['enter_password']);
+
+        //enter_password,room_idともに正しいが、部屋にパスワードが付いていない時
+        $response = $this->post('/home/authRoomPassword', [
+            'enter_password' => 12345678,
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertInvalid(['enter_password']);
+
+        //enter_password,room_idともに正しく、部屋にパスワードが付いている時
+        $response = $this->post('/home/authRoomPassword', [
+            'enter_password' => 12345678,
+            'room_id' => $this->room_id_2,
+        ]);
+        $response->assertSessionHas(['auth_room_id' => $this->room_id_2]);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $this->room_id_2);
+    }
+
+    public function test_show_post_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+
+        $str_room_id = Str::random(26);
+        //存在しないルームのルームID
+        $response = $this->get('/home/postRoom:' . $str_room_id);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $str_room_id . 'は存在しません']);
+
+        //posted_atに値が入っていない場合
+        $response = $this->get('/home/postRoom:' . $this->room_id_1);
+        $response->assertStatus(302)->assertRedirect('/home/room:' . $this->room_id_1);
+
+        //適切にPostRoomに入室できる時
+        $room = Room::factory()->create(['posted_at' => Carbon::now()]);
+        $response = $this->get('/home/postRoom:' . $room->id);
+        $response->assertStatus(200)->assertViewIs('wit.post_room');
+        $response->assertViewHasAll([ //responseに以下のデータが存在しているか
+            'room_info',
+            'count_image_data',
+            'auth_user',
+        ]);
     }
 }
