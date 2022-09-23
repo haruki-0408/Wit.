@@ -162,7 +162,7 @@ class RoomController extends Controller
 
     public function authRoomPassword(AuthPasswordRequest $request)
     {
-        if(is_null($request->room_id)){
+        if (is_null($request->room_id)) {
             return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
@@ -250,7 +250,7 @@ class RoomController extends Controller
 
     public function saveRoom(Request $request)
     {
-        if(is_null($request->room_id)){
+        if (is_null($request->room_id)) {
             return redirect('home')->with('error_message', 'エラーが発生しました');
         }
         $room_id = $request->room_id;
@@ -283,18 +283,22 @@ class RoomController extends Controller
     public function receiveWebhooks(Request $request)
     {
         foreach ($request->events as $event) {
-            $room_id = substr($event['channel'], -26);
-            $user_id = $event['user_id'];
             if ($event['name'] == 'member_removed') {
+                $room_id = substr($event['channel'], -26);
+                $user_id = $event['user_id'];
                 event(new UserExited($room_id, $user_id));
                 return response()->Json('User Exited');
+            } else if ($event['name'] == 'member_added') {
+                return response()->Json('User Entered');
+                //入室時のwebhookは他のイベントで行うから特に処理を行わない
             }
         }
+        abort(404);
     }
 
     public function receiveMessage(Request $request)
     {
-        if(is_null($request->room_id)){
+        if (is_null($request->room_id)) {
             abort(404);
         }
 
@@ -652,7 +656,7 @@ class RoomController extends Controller
 
     public function removeRoom(Request $request)
     {
-        if(is_null($request->room_id)){
+        if (is_null($request->room_id)) {
             return redirect('home')->with('error_message', 'エラーが発生しました');
         }
         $room_id = $request->room_id;

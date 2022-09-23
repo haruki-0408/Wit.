@@ -17,6 +17,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
+use function PHPUnit\Framework\assertFalse;
+
 class RoomTest extends TestCase
 {
     /**
@@ -618,5 +620,56 @@ class RoomTest extends TestCase
             'count_image_data',
             'auth_user',
         ]);
+    }
+
+    public function test_receive_webhook() //外部APIに依存している唯一のアクション
+    {
+        $room = Room::find($this->room_id_1);
+        $room->roomUsers()->syncWithoutDetaching($this->user->id);
+        $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        //存在しないリクエストを送った時
+        $response = $this->post('/api/webhook', [
+            'events' => [
+                '0' =>
+                [
+                    'channel' => 'presence-room-user-notifications.adsfadfdsaf',
+                    'name' => 'asdfassaf',
+                    'user_id' => 'hogehogehogehoge',
+                ]
+            ]
+        ]);
+        $response->assertNotFound();
+
+        //nameがmember_addedの時　適切にステータスコード200ならOK
+        $response = $this->post('/api/webhook', [
+            'events' => [
+                '0' =>
+                [
+                    'channel' => 'presence-room-user-notifications.' . $this->room_id_1,
+                    'name' => 'member_added',
+                    'user_id' => $this->user->id,
+                ]
+            ]
+        ]);
+        $response->assertOk();
+
+        //nameがmember_removedの時　適切にステータスコード200ならOK
+        $response = $this->post('/api/webhook', [
+            'events' => [
+                '0' =>
+                [
+                    'channel' => 'presence-room-user-notifications.' . $this->room_id_1,
+                    'name' => 'member_removed',
+                    'user_id' => $this->user->id,
+                ]
+            ]
+        ]);
+        $response->assertOk();
+
+        
+        //webhookにより適切にルームユーザが退室していることになっているか確認
+        $this->assertFalse($room->roomUsers[0]->pivot->in_room);
+        $this->assertNotNull($room->roomUsers[0]->pivot->exited_at);
     }
 }
