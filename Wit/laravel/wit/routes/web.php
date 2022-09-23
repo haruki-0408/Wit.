@@ -39,8 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/exitRoom',[App\Http\Controllers\RoomController::class, 'exitRoom'])->name('exitRoom');
     Route::post('/home/createRoom', [App\Http\Controllers\RoomController::class, 'createRoom'])->name('createRoom');
     Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
-    
-    Route::get('/home/removeRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'removeRoom'])->name('removeRoom');
+    Route::post('/home/saveRoom', [App\Http\Controllers\RoomController::class, 'saveRoom'])->name('saveRoom');
+    Route::post('/home/removeRoom', [App\Http\Controllers\RoomController::class, 'removeRoom'])->name('removeRoom');
     Route::get('/home/addListRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'actionAddListRoom'])->name('actionAddListRoom');
     Route::get('/home/removeListRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'actionRemoveListRoom'])->name('actionRemoveListRoom');
     Route::get('/home/addListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionAddListUser'])->name('actioAddListUser');

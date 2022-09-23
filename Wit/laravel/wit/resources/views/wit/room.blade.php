@@ -233,8 +233,8 @@
                                         width="50" height="50" class="rounded-circle"></div>
                                 <div class="col-8 text-left mx-2 mx-sm-0">{{ $room_ban_user->name }}</div>
                                 <div class="col-2 text-center">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#Lift-Ban-User-Modal"
-                                        class="btn btn-outline-primary">
+                                    <button type="button" data-bs-toggle="modal"
+                                        data-bs-target="#Lift-Ban-User-Modal" class="btn btn-outline-primary">
                                         <svg width="16" height="16" fill="currentColor"
                                             class="bi bi-person-check-fill" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd"
@@ -255,8 +255,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="Lift-Ban-User-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="Lift-Ban-User-Modal" aria-hidden="true">
+    <div class="modal fade" id="Lift-Ban-User-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="Lift-Ban-User-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -286,8 +286,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="Confirm-Ban-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="Confirm-Ban-Modal" aria-hidden="true">
+    <div class="modal fade" id="Confirm-Ban-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="Confirm-Ban-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -337,18 +337,19 @@
                     <dd class="p-2">ルームへ新しいチャットは投稿できなくなり、POSTに保存されいつでも閲覧できます</dd>
                 </div>
                 <div class="modal-footer">
-                    <form method='post' action='/home/save/room:{{ $room_info->id }}'>
+                    <form method='post' action='/home/saveRoom'>
                         @csrf
                         <button id="Save-Room-Button" type="submit" class="btn btn-outline-primary"
                             onclick="window.onbeforeunload = null;" data-bs-dismiss="modal">Yes</button>
+                        <input type="hidden" name="room_id" value={{ $room_info->id }}>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="Remove-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="Remove-Room-Modal" aria-hidden="true">
+    <div class="modal fade" id="Remove-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="Remove-Room-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -368,8 +369,12 @@
                     <dd class="p-2">パスワード付き、またはタグが1つもないルームはセキュリティ上保存されることなく削除されます</dd>
                 </div>
                 <div class="modal-footer">
-                    <a id="Removev-Room-Button" href="/home/removeRoom:{{ $room_info->id }}"
-                        class="btn btn-outline-primary" onclick="window.onbeforeunload = null;">Yes</a>
+                    <form method='post' action='/home/removeRoom'>
+                        @csrf
+                        <button id="Remove-Room-Button" type="submit" class="btn btn-outline-primary"
+                            onclick="window.onbeforeunload = null;" data-bs-dismiss="modal">Yes</button>
+                        <input type="hidden" name="room_id" value={{ $room_info->id }}>
+                    </form>
                 </div>
             </div>
         </div>
@@ -474,8 +479,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="Room-Informations-Modal" aria-hidden="true">
+<div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="Room-Informations-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -508,8 +513,9 @@
                             <hr>
                             <li class="p-2">Room Administration</li>
 
-                            <li><button class="mx-2 btn-outline-danger btn" type="button" data-bs-target="#Ban-Users-Modal"
-                                    data-bs-toggle="modal">Ban Users List</button></li>
+                            <li><button class="mx-2 btn-outline-danger btn" type="button"
+                                    data-bs-target="#Ban-Users-Modal" data-bs-toggle="modal">Ban Users List</button>
+                            </li>
                             @if ($room_info->posted_at == null && $room_info->password == null && $room_info->tags->count() != 0)
                                 <li class="mt-2"><button class="mx-2 btn-outline-primary btn" type="button"
                                         data-bs-target="#Save-Room-Modal" data-bs-toggle="modal">Save
@@ -531,8 +537,8 @@
 </div>
 
 
-<div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="Exit-Room-Modal"
-    tabindex="-1">
+<div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="Exit-Room-Modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">

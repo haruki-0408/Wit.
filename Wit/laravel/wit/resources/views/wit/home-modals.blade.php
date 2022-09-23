@@ -401,7 +401,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a id="Remove-Room-Link" href="" class="btn btn-outline-primary text-end">Yes</a>
+                <!--<a id="Remove-Room-Link" href="" class="btn btn-outline-primary text-end">Yes</a>-->
+                <form method='post' action='/home/removeRoom'>
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary text-end"
+                        onclick="window.onbeforeunload = null;" data-bs-dismiss="modal">Yes</button>
+                    <input id="Remove-Room-Input" type="hidden" name="room_id" >
+                </form>
             </div>
         </div>
     </div>

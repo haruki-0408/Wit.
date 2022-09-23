@@ -11571,11 +11571,11 @@ $(document).on('click', '.Remove-List-User', function () {
   });
 }); //RemoveRoom Modalを開いたとき
 
-$(document).on('click', '.Remove-Room', function (event) {
+$(document).on('click', '.Remove-Room', function () {
   var button = $(this);
   var remove_room_id = button.parent().parent().parent().parent().attr('data-room-id');
-  var remove_room_link = document.getElementById('Remove-Room-Link');
-  remove_room_link.href = '/home/removeRoom:' + remove_room_id;
+  var remove_room_input = document.getElementById('Remove-Room-Input');
+  remove_room_input.value = remove_room_id;
 }); //検索タイプをユーザ検索に切り替えたとき
 
 $(document).on('click', '#Radio-User', function () {
