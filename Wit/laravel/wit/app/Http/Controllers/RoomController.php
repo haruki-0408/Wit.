@@ -341,12 +341,14 @@ class RoomController extends Controller
     {
 
         if (!($request->filled(['user_id', 'room_id']))) {
-            return redirect(route('enterRoom', [
-                'room_id' => $request->room_id,
-            ]));
+            return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
-        if (Room::where('id', $request->room_id)->doesntExist() || User::where('id', $request->user_id)->doesntExist()) {
+        if (Room::where('id', $request->room_id)->doesntExist()) {
+            return redirect('home')->with('error_message', 'エラーが発生しました');
+        }
+
+        if (User::where('id', $request->user_id)->doesntExist()) {
             return redirect(route('enterRoom', [
                 'room_id' => $request->room_id,
             ]));
@@ -374,12 +376,14 @@ class RoomController extends Controller
     public function receiveLiftBanUser(Request $request)
     {
         if (!($request->filled(['user_id', 'room_id']))) {
-            return redirect(route('enterRoom', [
-                'room_id' => $request->room_id,
-            ]));
+            return redirect('home')->with('error_message', 'エラーが発生しました');
         }
 
-        if (Room::where('id', $request->room_id)->doesntExist() || User::where('id', $request->user_id)->doesntExist()) {
+        if (Room::where('id', $request->room_id)->doesntExist()) {
+            return redirect('home')->with('error_message', 'エラーが発生しました');
+        }
+
+        if (User::where('id', $request->user_id)->doesntExist()) {
             return redirect(route('enterRoom', [
                 'room_id' => $request->room_id,
             ]));
