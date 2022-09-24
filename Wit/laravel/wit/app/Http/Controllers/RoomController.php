@@ -26,9 +26,11 @@ class RoomController extends Controller
 {
     public function searchRoom(Request $request)
     {
+        \Log::debug($request->all());
         $query = Room::query();
-        $second_query = Room::query();
         //queryを２つ用意しないとオーバーライドされてしまう
+        $second_query = Room::query();
+
 
 
         switch ($request->search_type) {
@@ -60,39 +62,36 @@ class RoomController extends Controller
         }
 
 
-
-        if ($request->check_image != 'false') {
-            $query->doesntHave('roomImages');
-            $second_query->doesntHave('roomImages');
-        }
-
-        if ($request->check_tag != 'false' && $request->search_type != 'tag' && $request->check_post == 'false') {
-            $query->doesntHave('tags');
-            $second_query->doesntHave('tags');
-        }
-
-        if ($request->check_password != 'false' && $request->check_post == 'false') {
-            $query->searchRoomPassword();
-            $second_query->searchRoomPassword();
-        }
-
-        if ($request->check_post != 'false') {
-            $query->searchPostRoom();
-            $second_query->searchPostRoom();
-        }
-
-
-        if (isset($request->room_id)) {
-            if (mb_strlen($request->room_id) == 26) {
-                $room_id = $request->room_id;
-                $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
-            } else {
-                abort(404);
+        if ($request->search_type !== 'id') {
+            if ($request->check_image != 'false') {
+                $query->doesntHave('roomImages');
+                $second_query->doesntHave('roomImages');
             }
-        } else {
-            $rooms = $query->orderBy('id', 'desc')->with(['user', 'tags'])->take(15)->get();
+
+            if ($request->check_tag != 'false' && $request->search_type != 'tag' && $request->check_post == 'false') {
+                $query->doesntHave('tags');
+                $second_query->doesntHave('tags');
+            }
+
+            if ($request->check_password != 'false' && $request->check_post == 'false') {
+                $query->searchRoomPassword();
+                $second_query->searchRoomPassword();
+            }
+
+            if ($request->check_post != 'false') {
+                $query->searchPostRoom();
+                $second_query->searchPostRoom();
+            }
         }
 
+        if (is_null($request->room_id)) {
+            $rooms = $query->orderBy('id', 'desc')->with(['user', 'tags'])->take(15)->get();
+        } else if (mb_strlen($request->room_id) == 26) {
+            $room_id = $request->room_id;
+            $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
+        } else {
+            abort(404);
+        }
 
         $rooms->map(function ($each) use ($second_query) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);

@@ -46,7 +46,7 @@ class RoomTest extends TestCase
             'name' => 'Other',
         ]);
 
-        //はじめにルームを2個(ユーザIDを変えて)作成し、それぞれタグを１０個つける　、パスワード付きも半分作成する
+        //はじめにルームを2個(ユーザIDを変えて)作成し、それぞれタグを１０個つける　、そのうち１つはパスワード付き        
         $this->rooms = Room::factory()->state(new Sequence(
             ['password' => null],
             ['password' => Hash::make(12345678)],
@@ -58,7 +58,12 @@ class RoomTest extends TestCase
         $this->room_id_1 = $this->rooms[0]->id;
         $this->room_id_2 = $this->rooms[1]->id;
 
-        $this->tags = Tag::factory()->count(10)->create();
+        $this->tags = [];
+        for ($tag_number = 1; $tag_number < 11; $tag_number++) {
+            //name numberともに　１〜１０の値を付けて検索テストに使用する
+            $tag = Tag::factory()->create(['name' => $tag_number, 'number' => $tag_number]);
+            array_push($this->tags, $tag);
+        }
         foreach ($this->rooms as $room) {
             foreach ($this->tags as $tag) {
                 $room->tags()->syncWithoutDetaching($tag->id);
@@ -667,9 +672,359 @@ class RoomTest extends TestCase
         ]);
         $response->assertOk();
 
-        
+
         //webhookにより適切にルームユーザが退室していることになっているか確認
         $this->assertFalse($room->roomUsers[0]->pivot->in_room);
         $this->assertNotNull($room->roomUsers[0]->pivot->exited_at);
+    }
+
+    //長くなるので２つに分ける
+    public function test_search_room_id_and_tag()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        //id検索テスト checkの項目がtrueになることはなく常に１つのルームしか返さない　複数返すことはありえない　
+        //keywordがない場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'id',
+            'keyword' => '',
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        $response->assertJsonCount(0);
+        $response->assertJsonStructure([]);
+
+        //id検索テスト 仮にcheckの値がtrueであっても参照しない
+        //存在しないroomのidを入力した場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'id',
+            'keyword' => Str::random(26),
+            'check_image' => 'true',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'true',
+        ]);
+        $response->assertJsonCount(0);
+        $response->assertJsonStructure([]);
+
+        //id検索テスト 仮にcheckの値がtrueであっても参照しない
+        //存在するroomのidを入力した場合　適切にルームが１つ返ってくる
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'id',
+            'keyword' => $this->room_id_1,
+            'check_image' => 'true',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'true',
+        ]);
+        $response->assertJsonCount(1);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'no_get_more',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
+        //tag検索テスト
+        //keyword入力なしの場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'tag',
+            'keyword' => '',
+            'check_image' => 'true',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'true',
+        ]);
+        $response->assertJsonCount(0);
+        $response->assertJsonStructure([]);
+
+        //tag検索テスト
+        //存在しないtag_nameを入力した場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'tag',
+            'keyword' => Str::random(26),
+            'check_image' => 'true',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'true',
+        ]);
+        $response->assertJsonCount(0);
+        $response->assertJsonStructure([]);
+
+        //tag検索テスト
+        //存在するtag_nameを入力した場合　ここではtag_name'1'を例に適切にルームが返ってくることを確認 checkはすべてfalse
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'tag',
+            'keyword' => '1',
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        //パスワード付きの部屋とパスワードが付いていない部屋の２つ返ってくる
+        $response->assertJsonCount(2);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
+        //tag検索テスト
+        //存在するtag_nameを入力した場合　ここではtag_name'1'を例に適切にルームが返ってくることを確認 check項目により検索結果が変わることを確認
+        //check_tagがtrueになることはありえないが、ユーザのhtml等操作によりtrueになったとしても参照せずに適切に結果が返ってくることを確認
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'tag',
+            'keyword' => '1',
+            'check_image' => 'true',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'false',
+        ]);
+        //check_passwordによりパスワード付きの部屋しか返ってこない
+        $response->assertJsonCount(1);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'no_get_more',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
+         //tag検索テスト
+        //存在するtag_nameを入力した場合　ここではtag_name'1'を例に適切にルームが返ってくることを確認 
+        //tag_name = '1'がついているルームを1５個追加で作成し、Get_Moreの動作を確認
+        $rooms = Room::factory()->count(15)->create();
+        $tag_id = Tag::where('name','1')->value('id');
+        foreach($rooms as $room){
+            $room->tags()->syncWithoutDetaching($tag_id);
+        }
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'tag',
+            'keyword' => '1',
+            'room_id' => $rooms[0]->id,
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        //新しく作成した１５個の部屋が最初返ってきており、Get_Moreにより2件しか返ってこないことを確認
+        $response->assertJsonCount(2);
+        $response->assertJsonStructure([
+            '0' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                //'no_get_more',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ],
+            '1' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                //'no_get_more',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+    }
+
+    public function test_search_room_keyword()
+    {
+        //ルームのバリエーションを増やしてcheck項目の検証に使う
+        //roomを新たに３０件作成 keyword にwitという単語を用いる
+        //setUp()で作成した部屋と合わせて合計３２件のルームが登録されている
+        $rooms = Room::factory()->count(30)->create(['description' => 'Test Search Keyword Wit.']);
+
+        //ルームイメージが付いている部屋を５つ作成
+        for($room_number=0;$room_number < 5; $room_number++)
+        {
+            $room_image = new RoomImage;
+            $room_controller = new RoomController;
+            $room_image->room_id = $rooms[$room_number]->id;
+            $uploaded_file = UploadedFile::fake()->image($room_number . '.jpg');
+            $image_path = $room_controller->storeImage($uploaded_file, 0, $rooms[$room_number]->id);
+            $room_image->image = $image_path;
+            $room_image->save();
+        }
+
+        //tagが付いている部屋を10個作成
+        for($room_number=5;$room_number < 15; $room_number++)
+        {
+            $tag_id = Tag::first()->id();
+            $rooms[$room_number]->tags()->syncWithoutDetaching($tag_id);
+        }
+
+        //passwordが付いている部屋を10個作成
+        for($room_number=15;$room_number < 25; $room_number++)
+        {
+            $rooms[$room_number]->password = Hash::make(12345678);
+        }
+
+        //post_roomを５つ作成
+        for($room_number=25;$room_number < 30; $room_number++)
+        {
+            $rooms[$room_number]->posted_at = Carbon::now();
+        }
+
+        //keyword検索テスト
+        //keyword入力なしの場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => '',
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        $response->assertJsonCount(15);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
     }
 }
