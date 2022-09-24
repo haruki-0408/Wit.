@@ -865,12 +865,12 @@ class RoomTest extends TestCase
             ]
         ]);
 
-         //tag検索テスト
+        //tag検索テスト
         //存在するtag_nameを入力した場合　ここではtag_name'1'を例に適切にルームが返ってくることを確認 
         //tag_name = '1'がついているルームを1５個追加で作成し、Get_Moreの動作を確認
         $rooms = Room::factory()->count(15)->create();
-        $tag_id = Tag::where('name','1')->value('id');
-        foreach($rooms as $room){
+        $tag_id = Tag::where('name', '1')->value('id');
+        foreach ($rooms as $room) {
             $room->tags()->syncWithoutDetaching($tag_id);
         }
         $response = $this->post('/home/searchRoom', [
@@ -948,14 +948,15 @@ class RoomTest extends TestCase
 
     public function test_search_room_keyword()
     {
+        $this->actingAs($this->user); //ユーザをログイン状態に変更
         //ルームのバリエーションを増やしてcheck項目の検証に使う
-        //roomを新たに３０件作成 keyword にwitという単語を用いる
+        //roomを新たに３０件作成 keyword にwitという単語を用いる 検索する文字は小文字でも大文字でもどちらもマッチするようにしているので適切に小文字がサーチされるテストも兼ねる
         //setUp()で作成した部屋と合わせて合計３２件のルームが登録されている
-        $rooms = Room::factory()->count(30)->create(['description' => 'Test Search Keyword Wit.']);
+        //長くなるので全てassertJsonStructure()を省略
+        $rooms = Room::factory()->count(30)->create(['title' => 'apple', 'description' => 'Test Search Keyword Wit.']);
 
         //ルームイメージが付いている部屋を５つ作成
-        for($room_number=0;$room_number < 5; $room_number++)
-        {
+        for ($room_number = 0; $room_number < 5; $room_number++) {
             $room_image = new RoomImage;
             $room_controller = new RoomController;
             $room_image->room_id = $rooms[$room_number]->id;
@@ -966,26 +967,25 @@ class RoomTest extends TestCase
         }
 
         //tagが付いている部屋を10個作成
-        for($room_number=5;$room_number < 15; $room_number++)
-        {
-            $tag_id = Tag::first()->id();
+        for ($room_number = 5; $room_number < 15; $room_number++) {
+            $tag_id = Tag::where('name', '1')->value('id');
             $rooms[$room_number]->tags()->syncWithoutDetaching($tag_id);
         }
 
         //passwordが付いている部屋を10個作成
-        for($room_number=15;$room_number < 25; $room_number++)
-        {
+        for ($room_number = 15; $room_number < 25; $room_number++) {
             $rooms[$room_number]->password = Hash::make(12345678);
+            $rooms[$room_number]->save();
         }
 
         //post_roomを５つ作成
-        for($room_number=25;$room_number < 30; $room_number++)
-        {
+        for ($room_number = 25; $room_number < 30; $room_number++) {
             $rooms[$room_number]->posted_at = Carbon::now();
+            $rooms[$room_number]->save();
         }
 
         //keyword検索テスト
-        //keyword入力なしの場合
+        //keyword入力なしの場合　checkなしの場合
         $response = $this->post('/home/searchRoom', [
             'search_type' => 'keyword',
             'keyword' => '',
@@ -994,37 +994,81 @@ class RoomTest extends TestCase
             'check_password' => 'false',
             'check_post' => 'false',
         ]);
+        //idがいちばん新しいものから降順に15件取得されていることを確認
         $response->assertJsonCount(15);
-        $response->assertJsonStructure([
-            '*' => [
-                'id',
-                'user_id',
-                'title',
-                'description',
-                'created_at',
-                'posted_at',
-                'type',
-                'count_online_users',
-                'count_chat_messages',
-                'expired_time_left',
-                'user' => [
-                    'id',
-                    'name',
-                    'profile_image',
-                ],
-                'tags' => [
-                    '*' => [
-                        'name',
-                        'number',
-                        'pivot' => [
-                            'room_id',
-                            'tag_id',
-                        ],
-                    ],
-                ],
-                'room_chat',
-            ]
-        ]);
 
+        //keyword = wit, 　check_imageのみtrueの場合 
+        //更にGet_Moreを組み合わせる
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => 'wit',
+            'room_id' => $rooms[15]->id,
+            'check_image' => 'true',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        //keyword = wit & check_imageに該当するのは25件だが画像がついていない部屋の１５番目をidとしてGet-Moreで取得するので10件返ってくる事を確認する
+        $response->assertJsonCount(10);
+
+        //keyword = wit, 　check_tagのみtrueの場合 
+        //更にGet_Moreを組み合わせる
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => 'wit',
+            'room_id' => $rooms[15]->id,
+            'check_image' => 'false',
+            'check_tag' => 'tag',
+            'check_password' => 'false',
+            'check_post' => 'false',
+        ]);
+        //keyword = wit & check_tagに該当するのは20件だがタグがついていない部屋の１５番目のidでGet_Moreを行うので5つ返ってくる事を確認
+        $response->assertJsonCount(5);
+
+        //keyword = APPLE, 　check_passwordのみtrueの場合 ここでkeywordをAPPLEに変更したのはtitleの文字列も検索結果にマッチすることをテストするため
+        //鍵がついているかどうか確認するためにここだけassertJsonStructure()で確認する
+        //更にGet_Moreを組み合わせる
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => 'APPLE',
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'true',
+            'check_post' => 'false',
+        ]);
+        //keyword = APPLE & check_passwordに該当するのは10件なので10件返ってくることを確認
+        $response->assertJsonCount(10);
+
+        //keyword = APPLE, 　check_postのみtrueの場合
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => 'APPLE',
+            'check_image' => 'false',
+            'check_tag' => 'false',
+            'check_password' => 'false',
+            'check_post' => 'true',
+        ]);
+        //keyword = APPLE & check_postに該当するのは5件なので5件返ってくることを確認
+        $response->assertJsonCount(5);
+
+        //keyword検索テスト
+        //keyword = APPLE, 　check_post,check_tag,check_passwordがtrueの場合
+        //パスワード付きのルームとタグが登録されていないルームはpostルームとして保存されることはない
+        //故にcheck_postとcheck_passwordまたはcheck_tagが同時にtrueになることはないが、もしなったとしたらcheck_postのみが適用されることを確認
+        $response = $this->post('/home/searchRoom', [
+            'search_type' => 'keyword',
+            'keyword' => 'APPLE',
+            'check_image' => 'false',
+            'check_tag' => 'true',
+            'check_password' => 'true',
+            'check_post' => 'true',
+        ]);
+        //keyword = APPLE & check_postに該当するのは5件なので5件返ってくることを確認
+        $response->assertJsonCount(5);
+    }
+    
+    public function test_get_room_info()
+    {
+        
     }
 }

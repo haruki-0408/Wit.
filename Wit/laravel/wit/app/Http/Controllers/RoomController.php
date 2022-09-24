@@ -113,10 +113,6 @@ class RoomController extends Controller
 
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
-
-            if (isset($room->password)) {
-                $room->password = 'yes';
-            }
         }
         //return $rooms;
         return response()->Json($rooms);
