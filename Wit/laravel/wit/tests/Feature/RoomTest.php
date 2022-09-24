@@ -1038,8 +1038,10 @@ class RoomTest extends TestCase
         ]);
         //keyword = APPLE & check_passwordに該当するのは10件なので10件返ってくることを確認
         $response->assertJsonCount(10);
+        //パスワード付きのルームは必ずtype = 1となるので確認
+        $response->assertJsonFragment(['type' => '1']);
 
-        //keyword = APPLE, 　check_postのみtrueの場合
+        //keyword = APPLE, check_postのみtrueの場合
         $response = $this->post('/home/searchRoom', [
             'search_type' => 'keyword',
             'keyword' => 'APPLE',
@@ -1050,6 +1052,7 @@ class RoomTest extends TestCase
         ]);
         //keyword = APPLE & check_postに該当するのは5件なので5件返ってくることを確認
         $response->assertJsonCount(5);
+
 
         //keyword検索テスト
         //keyword = APPLE, 　check_post,check_tag,check_passwordがtrueの場合
@@ -1066,9 +1069,171 @@ class RoomTest extends TestCase
         //keyword = APPLE & check_postに該当するのは5件なので5件返ってくることを確認
         $response->assertJsonCount(5);
     }
-    
+
     public function test_get_room_info()
     {
-        
+        $this->actingAs($this->user); //ユーザをログイン状態に変更
+        //部屋を部屋を25個作成　setUP()で作成しているものと合わせて合計27個にしたい
+        $rooms = Room::factory()->count(25)->create();
+        //作成された降順に並んでいるか確認しやすいように10番目の部屋のtitleを10, 9番目の部屋のtitleを9に変更する
+        $rooms[9]->title = '9';
+        $rooms[10]->title = '10';
+        $rooms[9]->save();
+        $rooms[10]->save();
+        //一つポストルームとして保存する
+        $post_room = Room::find($this->room_id_1);
+        $post_room->posted_at = Carbon::now();
+        $post_room->save();
+
+        //room_idを入力しない時適切にid降順にルームが１５個getできているか確認
+        $response = $this->get('/getRoomInfo');
+        $response->assertJsonCount(15);
+        $response->assertJsonPath('14.title', '10');
+
+        //room_idを入力時適切に送信したroom_id以降の10件が取得できているか確認
+        $room_id = $rooms[10]->id;
+        $response = $this->get('/getRoomInfo:' . $room_id);
+        $response->assertJsonCount(10);
+        $response->assertJsonPath('0.title', '9');
+
+        //２７件のルームのうち２５件を取得したので残りの２件を取得したいが、一つはposted_atに値が入っているので1件しか取得されないことを確認
+        $room_id = $rooms[0]->id;
+        $response = $this->get('/getRoomInfo:' . $room_id);
+        $response->assertJsonCount(1);
+    }
+
+    public function test_get_open_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態に変更
+        //ルームの作成者を$this->userとして部屋を新たに３つ追加
+        $rooms = Room::factory()->count(3)->create(['user_id' => $this->user->id]);
+        //一つをポストルームとして保存
+        $rooms[2]->posted_at = Carbon::now();
+        $rooms[2]->save();
+
+        //自分のopen roomを取得　post roomが省かれていることを確認
+        $response = $this->get('/getOpenRoom');
+        $response->assertJsonCount(3);
+        $response->assertJsonPath('0.posted_at', null);
+        $response->assertJsonPath('1.posted_at', null);
+        $response->assertJsonPath('2.posted_at', null);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
+        //他人のopen roomを取得　post roomが省かれていることを確認
+        $this->actingAs($this->other_user);
+        $user_id = Crypt::encrypt($this->user->id);
+        $response = $this->get('/getOpenRoom:' . $user_id);
+        $response->assertJsonCount(3);
+        $response->assertJsonPath('0.posted_at', null);
+        $response->assertJsonPath('1.posted_at', null);
+        $response->assertJsonPath('2.posted_at', null);
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+    }
+
+    public function test_get_post_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態に変更
+        //ルームの作成者を$this->userとして部屋を新たに15個追加
+        $rooms = Room::factory()->count(15)->create(['user_id' => $this->user->id]);
+        //すべてポストルームとして保存
+        foreach ($rooms as $room) {
+            $room->posted_at = Carbon::now();
+            $room->save();
+        }
+
+        //room_id user_id ともになし 10件取得確認
+        $response = $this->get('/getPostRoom');
+        $response->assertJsonCount(10);
+        foreach($response as $res_room){
+            $this->assertNotNull($res_room['attributes']['posted_at']);
+        }
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
     }
 }

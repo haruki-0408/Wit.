@@ -86,7 +86,7 @@ class RoomController extends Controller
 
         if (is_null($request->room_id)) {
             $rooms = $query->orderBy('id', 'desc')->with(['user', 'tags'])->take(15)->get();
-        } else if (mb_strlen($request->room_id) == 26) {
+        } else if (Room::find($request->room_id)->exists()) {
             $room_id = $request->room_id;
             $rooms = $query->where('id', '<', $room_id)->orderBy('id', 'desc')->with(['user', 'tags'])->take(10)->get();
         } else {
@@ -124,7 +124,7 @@ class RoomController extends Controller
         if (is_null($room_id)) {
             $rooms = Room::with(['user', 'tags'])->whereNull('posted_at')->take(15)->get();
         } else {
-            if (mb_strlen($room_id) == 26) {
+            if (Room::find($room_id)->exists()) {
                 $rooms = Room::where('id', '<', $room_id)->orderBy('id', 'DESC')->with(['user', 'tags'])->whereNull('posted_at')->take(10)->get();
             } else {
                 abort(404);
