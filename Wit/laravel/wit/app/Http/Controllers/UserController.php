@@ -33,7 +33,7 @@ class UserController extends Controller
         }
         $decrypted_user_id = Crypt::decrypt($user_id);
 
-        if (User::find($decrypted_user_id)->doesntExist()) {
+        if (User::where('id',$decrypted_user_id)->doesntExist()) {
             abort(404);
         }
 

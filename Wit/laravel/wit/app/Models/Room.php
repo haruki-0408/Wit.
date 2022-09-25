@@ -62,7 +62,7 @@ class Room extends Model
 
     public function listRooms()
     {
-        return $this->belongsToMany('App\Models\User', 'list_rooms', 'user_id', 'room_id');
+        return $this->belongsToMany('App\Models\User', 'list_rooms', 'room_id','user_id');
     }
 
     public function roomChat() //ここだけChatsとは言わないので複数形の意味だけどChat
@@ -220,11 +220,9 @@ class Room extends Model
             } else if (Room::where('id', $room_id)->exists()) {
                 $user->listRooms()->syncWithoutDetaching($room_id);
                 $message_type = 1;
-            } else {
-                $message_type = 2;
             }
         } else {
-            $message_type = 3;
+            $message_type = 2;
         }
 
         return $message_type;
@@ -240,11 +238,9 @@ class Room extends Model
             } else if (Room::where('id', $room_id)->exists()) {
                 $user->listRooms()->detach($room_id);
                 $message_type = 1;
-            } else {
-                $message_type = 2;
             }
         } else {
-            $message_type = 3;
+            $message_type = 2;
         }
 
         return $message_type;

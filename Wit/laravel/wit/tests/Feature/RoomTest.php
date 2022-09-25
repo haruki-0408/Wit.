@@ -1202,7 +1202,7 @@ class RoomTest extends TestCase
         //room_id user_id ともになし 10件取得確認
         $response = $this->get('/getPostRoom');
         $response->assertJsonCount(10);
-        for($room_number=0;$room_number<10;$room_number++) {
+        for ($room_number = 0; $room_number < 10; $room_number++) {
             $this->assertNotNull($response[$room_number]['posted_at']);
         }
         $response->assertJsonStructure([
@@ -1233,9 +1233,9 @@ class RoomTest extends TestCase
         ]);
 
         //room_id　あり user_id なし 5件取得確認
-        $response = $this->get('/getPostRoom:'.$rooms[5]->id);
+        $response = $this->get('/getPostRoom:' . $rooms[5]->id);
         $response->assertJsonCount(5);
-        for($room_number=0;$room_number<5;$room_number++) {
+        for ($room_number = 0; $room_number < 5; $room_number++) {
             $this->assertNotNull($response[$room_number]['posted_at']);
         }
         $response->assertJsonStructure([
@@ -1269,9 +1269,9 @@ class RoomTest extends TestCase
         //room_id　あり user_id あり 他人のpost roomを取得する時　5件取得できることを確認
         $this->actingAs($this->other_user);
         $user_id = Crypt::encrypt($this->user->id);
-        $response = $this->get('/getPostRoom:'.$rooms[5]->id.'/'.$user_id);
+        $response = $this->get('/getPostRoom:' . $rooms[5]->id . '/' . $user_id);
         $response->assertJsonCount(5);
-        for($room_number=0;$room_number < 5;$room_number++) {
+        for ($room_number = 0; $room_number < 5; $room_number++) {
             $res_user_id = Crypt::decrypt($response[$room_number]['user_id']);
             $this->assertSame($res_user_id, $this->user->id);
             $this->assertNotNull($response[$room_number]['posted_at']);
@@ -1302,5 +1302,182 @@ class RoomTest extends TestCase
                 ],
             ]
         ]);
+    }
+
+    public function test_get_list_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態に変更
+        //ルームを15件(うち5件はpost roomに変更)新たに作成し、$this->userにリスト登録する
+        $description = 'Auth User Listed';
+        $post_rooms = Room::factory()->count(5)->create(['description' => $description, 'posted_at' => Carbon::now()]);
+        $rooms = Room::factory()->count(10)->create(['description' => $description]);
+
+        foreach ($post_rooms as $room) {
+            $room->listRooms()->syncWithoutDetaching($this->user->id);
+        }
+
+        foreach ($rooms as $room) {
+            $room->listRooms()->syncWithoutDetaching($this->user->id);
+        }
+
+        //room_id user_id 入力なし
+        $response = $this->get('/getListRoom');
+        $response->assertJsonCount(10);
+        for ($room_number = 0; $room_number < 10; $room_number++) {
+            $this->assertSame($response[$room_number]['description'], $description);
+            //最初の取得する10件はpost roomでないことを確認する
+            $this->assertNull($response[$room_number]['posted_at']);
+        }
+
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'count_online_users',
+                'count_chat_messages',
+                'expired_time_left',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+                'room_chat',
+            ]
+        ]);
+
+        //room_id あり　user_id 入力なし　Get_More_List_Roomのテスト
+        $response = $this->get('/getListRoom:' . $rooms[0]->id);
+        $response->assertJsonCount(5);
+        for ($room_number = 0; $room_number < 5; $room_number++) {
+            $this->assertSame($response[$room_number]['description'], $description);
+            //Get_Moreで取得する5件はpost roomであることを確認する
+            $this->assertNotNull($response[$room_number]['posted_at']);
+        }
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+            ]
+        ]);
+
+        //room_id なし user_id　あり　つまり他人のlist_roomを初期で取得するルーティングは存在しない
+
+        //room_id あり　 user_id 入力あり　Other_More_List_Roomのテスト
+        $this->actingAs($this->other_user);
+        $user_id = Crypt::encrypt($this->user->id);
+        $response = $this->get('/getListRoom:' . $rooms[0]->id . '/' . $user_id);
+        $response->assertJsonCount(5);
+        for ($room_number = 0; $room_number < 5; $room_number++) {
+            $this->assertSame($response[$room_number]['description'], $description);
+            //Get_Moreで取得する5件はpost roomであることを確認する
+            $this->assertNotNull($response[$room_number]['posted_at']);
+        }
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+            ]
+        ]);
+    }
+
+    public function test_action_add_list_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        //room_id入力なし
+        $response = $this->get('/home/addListRoom:');
+        $response->assertNotFound();
+
+        //存在しないroom_idを入力した時
+        $str_room_id = Str::random(26);
+        $response = $this->get('/home/addListRoom:' . $str_room_id);
+        $response->assertJsonPath('error_message', 'ルーム:' . $str_room_id . 'は存在しません');
+
+        //すでにリストに登録されている部屋をリストに追加しようとした時
+        $room = Room::find($this->room_id_2);
+        $room->listRooms()->syncWithoutDetaching($this->user->id);
+        $response = $this->get('/home/addListRoom:' . $room->id);
+        $response->assertJsonPath('error_message', 'このルームは既にリストに追加されています');
+
+        //適切にリストに登録される時
+        $response = $this->get('/home/addListRoom:' . $this->room_id_1);
+        $response->assertJsonPath('message', 'リストにルームを追加しました');
+    }
+
+    public function test_action_remove_list_room()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        //room_id入力なし
+        $response = $this->get('/home/removeListRoom:');
+        $response->assertNotFound();
+
+        //存在しないroom_idを入力した時
+        $str_room_id = Str::random(26);
+        $response = $this->get('/home/removeListRoom:' . $str_room_id);
+        $response->assertJsonPath('error_message', 'ルーム:' . $str_room_id . 'は存在しません');
+
+        //リストに登録していないroom_idを入力した時
+        $response = $this->get('/home/removeListRoom:' . $this->room_id_1);
+        $response->assertJsonPath('error_message', 'このルームはリストに登録されていません');
+
+        //すでにリストに登録されている部屋をリストに追加しようとした時
+        $room = Room::find($this->room_id_2);
+        $room->listRooms()->syncWithoutDetaching($this->user->id);
+        $response = $this->get('/home/removeListRoom:' . $room->id);
+        $response->assertJsonPath('message', 'リストからルームを削除しました');
     }
 }

@@ -501,65 +501,59 @@ class RoomController extends Controller
 
     public function actionAddListRoom($add_room_id)
     {
-        if (mb_strlen($add_room_id) == 26) {
-            $room_id = $add_room_id;
-        } else {
+        if (Room::where('id', $add_room_id)->doesntExist()) {
             $error_message = 'ルーム:' . $add_room_id . 'は存在しません';
+            return response()->Json(["error_message" => $error_message]);
         }
 
-        if (isset($room_id)) {
-            $message_type = Room::addListRoom($room_id);
-            switch ($message_type) {
-                case 0:
-                    $error_message = 'このルームは既にリストに追加されています';
-                    break;
-                case 1:
-                    $message = 'リストにルームを追加しました';
-                    break;
-                case 2:
-                    $error_message = 'ルーム:' . $room_id . 'は存在しません';
-                    break;
-                case 3:
-                    $error_message = 'エラーが発生しました';
-            }
+        $room_id = $add_room_id;
 
-            if (isset($message)) {
-                return response()->Json(["message" => $message]);
-            } else {
-                return response()->Json(["error_message" => $error_message]);
-            }
+        $message_type = Room::addListRoom($room_id);
+        switch ($message_type) {
+            case 0:
+                $error_message = 'このルームは既にリストに追加されています';
+                break;
+            case 1:
+                $message = 'リストにルームを追加しました';
+                break;
+            default:
+                $error_message = 'エラーが発生しました';
+                break;
+        }
+
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
         }
     }
 
     public function actionRemoveListRoom($remove_room_id)
     {
-        if (mb_strlen($remove_room_id) == 26) {
-            $room_id = $remove_room_id;
-        } else {
+        if (Room::where('id', $remove_room_id)->doesntExist()) {
             $error_message = 'ルーム:' . $remove_room_id . 'は存在しません';
+            return response()->Json(["error_message" => $error_message]);
         }
 
-        if (isset($room_id)) {
-            $message_type = Room::removeListRoom($room_id);
-            switch ($message_type) {
-                case 0:
-                    $error_message = 'このルームはリストに登録されていません';
-                    break;
-                case 1:
-                    $message = 'リストからルームを削除しました';
-                    break;
-                case 2:
-                    $error_message = 'ルーム:' . $room_id . 'は存在しません';
-                    break;
-                case 3:
-                    $error_message = 'エラーが発生しました';
-            }
+        $room_id = $remove_room_id;
 
-            if (isset($message)) {
-                return response()->Json(["message" => $message]);
-            } else {
-                return response()->Json(["error_message" => $error_message]);
-            }
+        $message_type = Room::removeListRoom($room_id);
+        switch ($message_type) {
+            case 0:
+                $error_message = 'このルームはリストに登録されていません';
+                break;
+            case 1:
+                $message = 'リストからルームを削除しました';
+                break;
+            default:
+                $error_message = 'エラーが発生しました';
+                break;
+        }
+
+        if (isset($message)) {
+            return response()->Json(["message" => $message]);
+        } else {
+            return response()->Json(["error_message" => $error_message]);
         }
     }
 
