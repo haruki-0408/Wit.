@@ -26,7 +26,6 @@ class RoomController extends Controller
 {
     public function searchRoom(Request $request)
     {
-        \Log::debug($request->all());
         $query = Room::query();
         //queryを２つ用意しないとオーバーライドされてしまう
         $second_query = Room::query();

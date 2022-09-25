@@ -1202,8 +1202,8 @@ class RoomTest extends TestCase
         //room_id user_id ともになし 10件取得確認
         $response = $this->get('/getPostRoom');
         $response->assertJsonCount(10);
-        foreach($response as $res_room){
-            $this->assertNotNull($res_room['attributes']['posted_at']);
+        for($room_number=0;$room_number<10;$room_number++) {
+            $this->assertNotNull($response[$room_number]['posted_at']);
         }
         $response->assertJsonStructure([
             '*' => [
@@ -1214,9 +1214,6 @@ class RoomTest extends TestCase
                 'created_at',
                 'posted_at',
                 'type',
-                'count_online_users',
-                'count_chat_messages',
-                'expired_time_left',
                 'user' => [
                     'id',
                     'name',
@@ -1232,7 +1229,77 @@ class RoomTest extends TestCase
                         ],
                     ],
                 ],
-                'room_chat',
+            ]
+        ]);
+
+        //room_id　あり user_id なし 5件取得確認
+        $response = $this->get('/getPostRoom:'.$rooms[5]->id);
+        $response->assertJsonCount(5);
+        for($room_number=0;$room_number<5;$room_number++) {
+            $this->assertNotNull($response[$room_number]['posted_at']);
+        }
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
+            ]
+        ]);
+        //room_id なし user_id　あり　つまり他人のpost_roomを初期で取得するルーティングは存在しない
+
+        //room_id　あり user_id あり 他人のpost roomを取得する時　5件取得できることを確認
+        $this->actingAs($this->other_user);
+        $user_id = Crypt::encrypt($this->user->id);
+        $response = $this->get('/getPostRoom:'.$rooms[5]->id.'/'.$user_id);
+        $response->assertJsonCount(5);
+        for($room_number=0;$room_number < 5;$room_number++) {
+            $res_user_id = Crypt::decrypt($response[$room_number]['user_id']);
+            $this->assertSame($res_user_id, $this->user->id);
+            $this->assertNotNull($response[$room_number]['posted_at']);
+        }
+        $response->assertJsonStructure([
+            '*' => [
+                'id',
+                'user_id',
+                'title',
+                'description',
+                'created_at',
+                'posted_at',
+                'type',
+                'user' => [
+                    'id',
+                    'name',
+                    'profile_image',
+                ],
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'number',
+                        'pivot' => [
+                            'room_id',
+                            'tag_id',
+                        ],
+                    ],
+                ],
             ]
         ]);
     }

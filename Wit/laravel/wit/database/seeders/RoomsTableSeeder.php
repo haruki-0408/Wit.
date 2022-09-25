@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Room;
 
 class RoomsTableSeeder extends Seeder
 {
@@ -14,7 +17,7 @@ class RoomsTableSeeder extends Seeder
      */
     public function run()
     {
-        //DBクエリでまずはシーディング
+        /*DBクエリでまずはシーディング
         DB::table('rooms')->insert([ 
             'user_id'=>'1',
             'title'=>'TestRoom1',
@@ -25,6 +28,8 @@ class RoomsTableSeeder extends Seeder
             'user_id'=>'5',
             'title'=>'TestRoom2',
             'description'=>'TestRoom2シーディングの確認とパスワード設定の確認を兼ね備えた全テーブル確認'
-        ]);
+        ]);*/
+        $user_id = User::where('name','Test')->value('id');
+        Room::factory()->count(15)->create(['user_id' => $user_id, 'posted_at' => Carbon::now()]);
     }
 }
