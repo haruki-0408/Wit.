@@ -20,7 +20,7 @@ class RoomChatTable extends Migration
             $table->string('message',1000); 
             $table->string('postfile')->nullable()->comment('投稿ファイルのパス'); 
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除にしてチャットの内容はすべて記録する'); 
+            //$table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除にしてチャットの内容はすべて記録する'); 
         });
     }
 
