@@ -23,7 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpInfo'])->name('phpInfo');
+    //Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpInfo'])->name('phpInfo');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home/profile:{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
@@ -37,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class, 'authRoomPassword'])->name('authRoomPassword');
     Route::post('/home/exitRoom',[App\Http\Controllers\RoomController::class, 'exitRoom'])->name('exitRoom');
     Route::post('/home/createRoom', [App\Http\Controllers\RoomController::class, 'createRoom'])->name('createRoom');
-    Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
     Route::post('/home/saveRoom', [App\Http\Controllers\RoomController::class, 'saveRoom'])->name('saveRoom');
     Route::post('/home/removeRoom', [App\Http\Controllers\RoomController::class, 'removeRoom'])->name('removeRoom');
     Route::get('/home/addListRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'actionAddListRoom'])->name('actionAddListRoom');
@@ -48,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->name('receiveMessage');
     Route::post('/home/room/ban/', [App\Http\Controllers\RoomController::class, 'receiveBanUser'])->name('receiveBanUser');
     Route::post('/home/room/ban/lift', [App\Http\Controllers\RoomController::class, 'receiveLiftBanUser'])->name('receiveLiftBanUser');
+    Route::get('/getTrendTags', [App\Http\Controllers\TagController::class, 'getTrend'])->name('getTrendTags');
     Route::get('/getRoomInfo:{room_id?}', [App\Http\Controllers\RoomController::class, 'getRoomInfo'])->name('getRoomInfo');
     Route::get('/getOpenRoom:{user_id?}', [App\Http\Controllers\RoomController::class, 'getOpenRoom'])->name('getOpenRoom');
     Route::get('/getPostRoom:{room_id?}/{user_id?}', [App\Http\Controllers\RoomController::class, 'getPostRoom'])->name('getPostRoom');
