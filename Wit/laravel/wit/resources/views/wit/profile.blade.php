@@ -66,7 +66,7 @@
                         @endswitch
                     </div>
                 </div>
-
+                <!--
                 <div id="Page-Link" class="pt-2">
                     <ul>
                         <li class="w-50">
@@ -94,7 +94,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
             <hr class="m-1">
             <div id="Profile-Message">

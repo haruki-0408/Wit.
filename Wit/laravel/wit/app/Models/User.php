@@ -22,6 +22,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    const STATUS = [
+        0 ,//'仮登録済',
+        1 ,//'本登録済',
+        2 ,//'メール認証済',
+    ];
     protected $guarded = [
         'id',
     ];
@@ -31,7 +37,9 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_message',
-        'profile_image'
+        'profile_image',
+        'email_verified_at',
+        'email_verified_token'
 
     ];
 
@@ -43,6 +51,7 @@ class User extends Authenticatable
     protected $hidden = [
         'email',
         'email_verified_at',
+        //'email_verified_token',
         'password',
         'remember_token',
         'profile_message',

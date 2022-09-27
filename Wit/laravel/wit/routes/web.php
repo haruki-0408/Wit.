@@ -20,11 +20,13 @@ Route::get('/', function () {
     return view('wit.index');
 })->name('index');
 
+Route::post('/register/before', [App\Http\Controllers\Auth\RegisterController::class, 'beforeRegisterCheck'])->name('beforeRegisterCheck');
+Route::get('/register/verify/{token}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('showRegisterForm');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     //Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpInfo'])->name('phpInfo');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', App\Http\Controllers\HomeController::class)->name('home');
     Route::get('/home/profile:{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
     Route::post('/home/profile/settings/authUserPassword', [App\Http\Controllers\UserController::class, 'authUserPassword'])->name('authUserPassword');

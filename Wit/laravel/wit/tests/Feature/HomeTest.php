@@ -12,6 +12,8 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
+
+     
     public function test_index()
     {
         $response = $this->get('/');

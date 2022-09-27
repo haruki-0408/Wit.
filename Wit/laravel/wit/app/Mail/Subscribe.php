@@ -3,9 +3,11 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
 class Subscribe extends Mailable
 {
@@ -16,9 +18,12 @@ class Subscribe extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    protected $user;
+
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -28,6 +33,9 @@ class Subscribe extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.subscribers');
+        return $this
+            ->subject('仮登録が完了しました')
+            ->view('wit.Emails.subscribers')
+            ->with(['token' => $this->user->email_verified_token,]);
     }
 }
