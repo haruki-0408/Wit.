@@ -57,7 +57,7 @@ class RegisterController extends Controller
 
         $rules = [
             'name' => ['required', 'string', 'max:25'],
-            'password' => ['required', 'string', 'min:8', 'max:255','confirmed'],
+            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
         ];
 
         $messages = [
@@ -80,16 +80,15 @@ class RegisterController extends Controller
     public function beforeRegisterCheck(Request $request)
     {
         $rules = [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
         ];
 
         $messages = [
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレス形式で入力してください',
             'email.max' => 'メールアドレスは最大255文字までです',
-            'email.unique' => 'このメールアドレスは既に使用されています',
         ];
-        $request->validate($rules,$messages);
+        $request->validate($rules, $messages);
         return $this->beforeRegister($request);
     }
 
@@ -101,43 +100,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        /*
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);*/
-
-        $user = User::create([
-            'email' => $data['email'],
-            'email_verified_token' => base64_encode($data['email']),
-        ]);
+        if (User::where('email', $data['email'])->exists()) {
+            $user = User::where('email', $data['email'])->first();
+            if ($user->status == User::STATUS[0]) {
+                $user->email_verified_token = base64_encode($data['email']);
+                $user->save();
+            }
+        } else {
+            $user = User::create([
+                'email' => $data['email'],
+                'email_verified_token' => base64_encode($data['email']),
+            ]);
+        }
 
         $email = new Subscribe($user);
-        +Mail::to($user->email)->send($email);
-    }
-
-    public function showRegisterForm($email_token)
-    {
-        // 使用可能なトークンか
-        if (!User::where('email_verified_token', $email_token)->exists()) {
-            return view('auth.register')->with('message', '無効なトークンです。');
-        }
-
-        $user = User::where('email_verified_token', $email_token)->first();
-        // 本登録済みユーザーか
-        if ($user->status == User::STATUS[1]) //REGISTER=1
-        {
-            return view('auth.register')->with('message', 'すでに本登録されています。ログインして利用してください。');
-        }
-        // ユーザーステータス更新
-        $user->status = User::STATUS[2];
-        $user->email_verified_at = Carbon::now();
-        if ($user->save()) {
-            return view('auth.register-default', compact('email_token'));
-        } else {
-            return view('auth.register')->with('message', 'メール認証に失敗しました。再度、メールからリンクをクリックしてください。');
-        }
+        Mail::to($user->email)->send($email);
     }
 
     public function beforeRegister(Request $request)
@@ -147,12 +124,38 @@ class RegisterController extends Controller
         return view('auth.registered');
     }
 
+    public function showRegisterForm($email_token)
+    {
+        // 使用可能なトークンか
+        if (User::where('email_verified_token', $email_token)->doesntExist()) {
+            return redirect('register')->with('register_error_message', '無効なトークンです');
+        }
+
+        $user = User::where('email_verified_token', $email_token)->first();
+        // 本登録済みユーザーか
+        if ($user->status == User::STATUS[2]) //REGISTER=1
+        {
+            return redirect('register')->with('register_error_message', 'このメールアドレスはすでに本登録されています。ログインして利用してください');
+        }
+        // ユーザーステータス更新
+        $user->status = User::STATUS[1];
+        $user->email_verified_at = Carbon::now();
+        $email = $user->email;
+        if ($user->save()) {
+            return view('auth.register-default', compact('email', 'email_token'));
+        } else {
+            return redirect('register')->with('register_error_message', 'メール認証に失敗しました。再度、メールからリンクをクリックしてください。');
+        }
+    }
+
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        $user = User::where('email_verified_token',$request->email_token)->first();
+        $user = User::where('email_verified_token', $request->email_token)->first();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
+        //ユーザステータス更新
+        $user->status = User::STATUS[2];
         $user->save();
 
         $this->guard()->login($user);
@@ -162,7 +165,7 @@ class RegisterController extends Controller
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
     }
 }

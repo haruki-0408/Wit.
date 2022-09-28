@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div class="container p-3">
         <div class="row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="card border-success">
                     <div class="card-header bg-success text-light">アカウント仮登録</div>
 
@@ -23,11 +24,11 @@
                                         </span>
                                     @enderror
 
-                                    @error('message')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    @if(session('register_error_message'))
+                                        <span class="text-danger">
+                                            <strong>{{ session('register_error_message') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                             </div>
 

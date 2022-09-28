@@ -194,6 +194,25 @@ class UserController extends Controller
         Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
         return redirect(route('index'));
     }
+    public function getInquiryForm()
+    {
+       return view('wit.Account.inquiry-form');
+    }
+
+    public function receiveInquiry(Request $request)
+    {
+        $rules = [
+            'inquiry_sentence' => 'required|string',
+        ];
+
+        $messages = [
+            'inquiry_sentence.required' => '内容を入力してください',
+        ];
+
+        //$request->validate($rules, $messages);
+        $inquiry_sentence = $request->inquiry_sentence;
+        return redirect(route('deleteAccount'));
+    }
 
     protected function searchUser(Request $request)
     {

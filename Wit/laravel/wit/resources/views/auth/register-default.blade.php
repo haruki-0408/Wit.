@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <div class="card border-success">
-                    <div class="card-header bg-success text-light">アカウント新規登録</div>
+                    <div class="card-header bg-success text-light">アカウント本登録</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
@@ -27,6 +27,14 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label for="email" class="col-md-4 col-form-label text-md-end">メールアドレス</label>
+
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <p class="p-0 m-0" name='email'>{{ $email }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('パスワード') }}</label>
 
@@ -44,7 +52,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">パスワード確認</label>
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">パスワード確認用</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">

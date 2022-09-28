@@ -25,8 +25,8 @@ class User extends Authenticatable
 
     const STATUS = [
         0 ,//'仮登録済',
-        1 ,//'本登録済',
-        2 ,//'メール認証済',
+        1 ,//'メール認証済',
+        2 ,//'本登録済',
     ];
     protected $guarded = [
         'id',
