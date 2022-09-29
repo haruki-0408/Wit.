@@ -1,5 +1,5 @@
 <div id="Left-Sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
-    <div class="profile-box  ">
+    <div id="Profile-Box">
         <a href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <svg width="16" height="16" fill="currentColor"
@@ -64,7 +64,7 @@
     </div>
 
 
-    <div class="mylist-box">
+    <div id="Mylist-Box">
         <svg width="16" height="16" fill="currentColor" class="bi bi-card-list mx-2"
             viewBox="0 0 16 16">
             <path
@@ -102,6 +102,17 @@
                 Room
             </a>
         </div>
+        <hr>
+    </div>
+
+    <div id="Inquiry-Box">
+        <a class="d-flex align-items-center link-dark text-decoration-none" href="/home/profile/inquiry">
+            <svg width="16" height="16" fill="currentColor" class="bi bi-envelope-fill mx-2" viewBox="0 0 16 16">
+                <path
+                    d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+            </svg>
+            <span class="fs-4">Inquiry</span>
+        </a>
         <hr>
     </div>
 </div>

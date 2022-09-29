@@ -8,32 +8,17 @@
             <div class="card-title col-12 p-2 text-center">
                 <p class="fw-bold">
                     Wit.のご利用誠にありがとうございました。<br>
-                    ご不明点、ご意見ございましたら下記フォームにてお問い合わせ内容をご送信ください。
+                    ご不明点、ご意見ございましたら下記リンクからお問い合わせください。
                 </p>
-            </div>
 
-            <div class="p-3 row justify-content-center">
-                <div class="form-box-table text-start col-md-12; col-lg-6">
-                    <p class="hg fw-bold m-0">お問い合わせ内容</p>
-
-                    @if (session('inquiry'))
-                        <p>お問い合わせ内容が適切に送信されました</p>
-                    @else
-                        <form method="post" action="/home/profile/inquiry">
-                            @csrf
-                            <textarea id="Inquiry" class="w-100 bg-light" rows="5" name="inquiry_sentence" autocorrect="off"
-                                autocapitalize="off" placeholder=""></textarea>
-                            @error('inquiry_sentence')
-                                <span class="text-danger">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                            <div class="text-end">
-                                <button type="submit" class="mt-2 btn btn-outline-primary">Submit</button>
-                            </div>
-                        </form>
-                    @endif
-                </div>
+                <a class="d-flex align-items-center justify-content-center link-dark text-decoration-none" href="/home/profile/inquiry">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-envelope-fill mx-2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+                    </svg>
+                    <span class="fs-4">Inquiry</span>
+                </a>
             </div>
 
             <div class="card-text row justify-content-center">

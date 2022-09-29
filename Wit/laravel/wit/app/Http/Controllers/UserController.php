@@ -8,6 +8,8 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\Inquiry;
+use Illuminate\Support\Facades\Mail;
 use App\Events\RemoveRoom;
 
 use Illuminate\Support\Facades\Crypt;
@@ -33,7 +35,7 @@ class UserController extends Controller
         }
         $decrypted_user_id = Crypt::decrypt($user_id);
 
-        if (User::where('id',$decrypted_user_id)->doesntExist()) {
+        if (User::where('id', $decrypted_user_id)->doesntExist()) {
             abort(404);
         }
 
@@ -194,24 +196,44 @@ class UserController extends Controller
         Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $user_id);
         return redirect(route('index'));
     }
-    public function getInquiryForm()
+    public function getInquiryForm($inquiry_sentence = null)
     {
-       return view('wit.Account.inquiry-form');
+        $user = Auth::user();
+        $email = $user->email;
+        if (isset($inquiry_sentence)) {
+            return view('wit.Account.inquiry-form', ['inquiry_sentence' => $inquiry_sentence, 'email'=>$email]);
+        } else {
+            return view('wit.Account.inquiry-form');
+        }
     }
 
     public function receiveInquiry(Request $request)
     {
         $rules = [
-            'inquiry_sentence' => 'required|string',
+            'inquiry_sentence' => 'required|string|max:1000',
         ];
 
         $messages = [
             'inquiry_sentence.required' => '内容を入力してください',
+            'inquiry_sentence.max' => '最大文字数(1000文字)を超過しました',
         ];
+        $request->validate($rules, $messages);
 
-        //$request->validate($rules, $messages);
         $inquiry_sentence = $request->inquiry_sentence;
-        return redirect(route('deleteAccount'));
+        return $this->getInquiryForm($inquiry_sentence);
+    }
+
+    public function sendInquiry(Request $request)
+    {
+        if (isset($request->inquiry_sentence)) {
+            $user = Auth::user();
+            $inquiry_sentence = $request->inquiry_sentence;
+            $email = new Inquiry($user, $inquiry_sentence);
+            Mail::to('wit-info@wit-dot.com')->send($email);
+            return redirect('/home')->with('action_message','お問い合わせ内容が送信されました');
+        }
+
+        return redirect('/home')->with('error_message','お問い合わせがエラーにより送信できませんでした');
     }
 
     protected function searchUser(Request $request)
