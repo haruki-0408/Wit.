@@ -15,7 +15,7 @@ class TagController extends Controller
         return $tag;
     }
 
-    public static function getTrend()
+    public static function getRandomTags()
     {
         $trend_tags = Tag::inRandomOrder()->take(15)->get(['name','number']);
         return $trend_tags; 

@@ -136,8 +136,8 @@
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#Trend-Tags-Modal">
-                                <strong>Trend Tag</strong>
+                                data-bs-target="#Tags-Modal">
+                                <strong>Tag</strong>
                             </a>
                         </li>
                     </ul>
@@ -170,8 +170,8 @@
                         </li>
                         <li class="border-bottom">
                             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                                data-bs-target="#Trend-Tags-Modal">
-                                <strong>Trend Tag</strong>
+                                data-bs-target="#Tags-Modal">
+                                <strong>Tag</strong>
                             </a>
                         </li>
                     </ul>

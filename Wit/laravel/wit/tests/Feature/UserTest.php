@@ -54,7 +54,7 @@ class UserTest extends TestCase
             'Post',
             'List User',
             'List Room',
-            'Trend Tag',
+            'Tag',
         ]);
         $response->assertViewHasAll([ //responseに以下のデータが存在しているか
             'user_id',

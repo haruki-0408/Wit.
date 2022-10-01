@@ -4,6 +4,13 @@ const me_id = document.getElementById('Me').dataset.authId;
 const message = document.getElementById('Message');
 const send_button = document.getElementById('Send-Message-Button');
 
+const room_chat = document.getElementById('Room-Chat');
+if (document.getElementById('Room-Image')) {
+    room_chat.style = 'height:60%;'
+}else{
+    room_chat.style = 'height:100%;'
+}
+
 send_button.addEventListener('click', (e) => {
     if (message && message.value != "") {
         e.preventDefault();
@@ -40,15 +47,15 @@ window.onbeforeunload = function (e) {
 Echo.join('room-user-notifications.' + room_id)
     .here((users) => {
         const except_host_users = [];
-        users.forEach(user =>{
-            if(user.id != host_id){
+        users.forEach(user => {
+            if (user.id != host_id) {
                 except_host_users.push(user);
             }
         });
-        if(me_id !== host_id){
-            if(except_host_users.length > 10){
+        if (me_id !== host_id) {
+            if (except_host_users.length > 10) {
                 window.location.href = '/home';
-            }  
+            }
         }
 
         users.forEach(user => {
@@ -295,7 +302,7 @@ if (document.getElementById('Confirm-Ban-Modal')) {
         let modal_body = $(confirm_ban_modal).find('.modal-body')
         modal_body.children().remove();
         let button = (event.relatedTarget);
-        const ban_uesr_id = document.getElementById('Ban-User'); 
+        const ban_uesr_id = document.getElementById('Ban-User');
         const ban_room_id = document.getElementById('Ban-Room');
         const user_id = button.parentNode.parentNode.getAttribute('data-user-id');
         ban_uesr_id.value = user_id;

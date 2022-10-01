@@ -10932,6 +10932,14 @@ var host_id = document.getElementById('Host-User').dataset.hostId;
 var me_id = document.getElementById('Me').dataset.authId;
 var message = document.getElementById('Message');
 var send_button = document.getElementById('Send-Message-Button');
+var room_chat = document.getElementById('Room-Chat');
+
+if (document.getElementById('Room-Image')) {
+  room_chat.style = 'height:60%;';
+} else {
+  room_chat.style = 'height:100%;';
+}
+
 send_button.addEventListener('click', function (e) {
   if (message && message.value != "") {
     e.preventDefault();

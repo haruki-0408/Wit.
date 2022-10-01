@@ -63,18 +63,21 @@ class TagTest extends TestCase
         ]);
     }
 
-    public function test_get_trend()
+    public function test_get_random_tags()
     {
         $this->actingAs($this->user); //ユーザをログイン状態へ
-        //新しくタグを20件登録
-        $tags = Tag::factory()->count(20)->create();
-        $response = $this->get('/getTrendTags');
-        //15件しか返っていないことを確認する
-        $response->assertJsonCount(15);
+        //新しくタグを10件登録
+        Tag::factory()->count(10)->create();
+        $response = $this->get('/getRandomTags');
+        //10件返っていることを確認する
+        $response->assertJsonCount(10);
 
-        //タグナンバーが降順になるように並んでいるか確認
-        for($tag_number=0;$tag_number<14;$tag_number++){
-            $this->assertTrue($response[$tag_number]['number'] >= $response[$tag_number + 1]['number']);
-        }
+        //更に10件追加
+        Tag::factory()->count(10)->create();
+
+        $response = $this->get('/getRandomTags');
+        //15件しか返っていることを確認する
+        $response->assertJsonCount(15);
+        
     }
 }

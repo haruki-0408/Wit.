@@ -41,10 +41,6 @@
             height: 40%;
         }
 
-        #Room-Chat {
-            height: 60%;
-        }
-
         #Room-Description {
             margin: 10px;
             font-size: 13px;
@@ -88,7 +84,7 @@
         }
 
         #Room-Informations-List3 {
-            font-size:10px;
+            font-size: 10px;
         }
 
         #Access-Logs-List {
@@ -250,7 +246,7 @@
                             d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path
                             d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
-                    </svg>Room Tags
+                    </svg>Room Tag
                 </h5>
             </div>
             <div class="modal-body">
@@ -272,8 +268,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="Room-Informations-Modal" aria-hidden="true">
+<div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="Room-Informations-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -312,8 +308,8 @@
 </div>
 
 
-<div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="Exit-Room-Modal"
-    tabindex="-1">
+<div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="Exit-Room-Modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">
@@ -423,69 +419,70 @@
                     </div>
 
                     <div id="Center-Content" class="col-sm-12 col-md-9 col-lg-6 h-100 m-0 p-0">
-                        <div id="Room-Image" class="d-flex align-items-center">
-                            <div id="carouselIndicators"
-                                class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center"
-                                data-bs-interval="false">
-                                <div class="carousel-indicators">
-                                    @if ($count_image_data > 1)
+                        @if ($count_image_data > 0)
+                            <div id="Room-Image" class="d-flex align-items-center">
+                                <div id="carouselIndicators"
+                                    class="carousel slide w-100 h-100 p-0 m-0 d-flex align-items-center"
+                                    data-bs-interval="false">
+                                    <div class="carousel-indicators">
+                                        @if ($count_image_data > 1)
+                                            @for ($i = 0; $i < $count_image_data; $i++)
+                                                @if ($i == 0)
+                                                    <button type="button" data-bs-target="#carouselIndicators"
+                                                        data-bs-slide-to="{{ $i }}" class="active"
+                                                        aria-current="true"
+                                                        aria-label="image {{ $i }}"></button>
+                                                @else
+                                                    <button type="button" data-bs-target="#carouselIndicators"
+                                                        data-bs-slide-to="{{ $i }}"
+                                                        aria-label="image {{ $i }}"></button>
+                                                @endif
+                                            @endfor
+                                        @endif
+                                    </div>
+
+                                    <div class="carousel-inner  h-100 w-100">
                                         @for ($i = 0; $i < $count_image_data; $i++)
                                             @if ($i == 0)
-                                                <button type="button" data-bs-target="#carouselIndicators"
-                                                    data-bs-slide-to="{{ $i }}" class="active"
-                                                    aria-current="true"
-                                                    aria-label="image {{ $i }}"></button>
+                                                <div onclick="this.webkitRequestFullScreen();"
+                                                    class="carousel-item active">
+                                                    <img src=" {{ route('showRoomImage', [
+                                                        'room_id' => $room_info->id,
+                                                        'number' => $i,
+                                                    ]) }}"
+                                                        alt="" style="" class="image-fluid">
+                                                </div>
                                             @else
-                                                <button type="button" data-bs-target="#carouselIndicators"
-                                                    data-bs-slide-to="{{ $i }}"
-                                                    aria-label="image {{ $i }}"></button>
+                                                <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                                    <img src=" {{ route('showRoomImage', [
+                                                        'room_id' => $room_info->id,
+                                                        'number' => $i,
+                                                    ]) }}"
+                                                        alt="" style="" class=" image-fluid">
+                                                </div>
                                             @endif
                                         @endfor
+
+                                    </div>
+
+                                    @if ($count_image_data > 1)
+                                        <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                                            <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                                class="bi bi-chevron-left"></i>
+
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselIndicators" data-bs-slide="next">
+                                            <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
+                                                class="bi bi-chevron-right"></i>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
                                     @endif
                                 </div>
-
-                                <div class="carousel-inner  h-100 w-100">
-                                    @for ($i = 0; $i < $count_image_data; $i++)
-                                        @if ($i == 0)
-                                            <div onclick="this.webkitRequestFullScreen();"
-                                                class="carousel-item active">
-                                                <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => $room_info->id,
-                                                    'number' => $i,
-                                                ]) }}"
-                                                    alt="" style="" class="image-fluid">
-                                            </div>
-                                        @else
-                                            <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
-                                                <img src=" {{ route('showRoomImage', [
-                                                    'room_id' => $room_info->id,
-                                                    'number' => $i,
-                                                ]) }}"
-                                                    alt="" style="" class=" image-fluid">
-                                            </div>
-                                        @endif
-                                    @endfor
-
-                                </div>
-
-                                @if ($count_image_data > 1)
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselIndicators" data-bs-slide="prev">
-                                        <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
-                                            class="bi bi-chevron-left"></i>
-
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselIndicators" data-bs-slide="next">
-                                        <i style="font-size:2.5rem; font-weight:bolder; color:#6b7075;"
-                                            class="bi bi-chevron-right"></i>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                @endif
                             </div>
-                        </div>
-
+                        @endif
                         <div id="Room-Chat" class="card col-12">
                             <div class="card-body">
                                 <!-- MESSAGE -->
@@ -545,7 +542,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-        
+
                             <div class="d-none d-md-block d-lg-none">
                                 <div id="Room-Informations" class="col-12 d-flex align-items-center p-2">
                                     <svg width="20" height="20" fill="currentColor"
@@ -595,6 +592,15 @@
             </div>
         </main>
     </div>
+
+    <script>
+        const room_chat = document.getElementById('Room-Chat');
+        if (document.getElementById('Room-Image')) {
+            room_chat.style = 'height:60%;'
+        } else {
+            room_chat.style = 'height:100%;'
+        }
+    </script>
 </body>
 
 </html>

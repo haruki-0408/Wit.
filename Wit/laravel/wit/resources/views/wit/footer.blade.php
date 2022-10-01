@@ -32,17 +32,17 @@
             </ul>
         </div>
         -->
-        <a id="Inquiry-Footer" class="link-dark" href="/home/profile/inquiry"><svg width="16" height="16" fill="currentColor"
-                class="bi bi-envelope-fill mx-2" viewBox="0 0 16 16">
-                <path
-                    d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
-            </svg></a>
-        <a class="tags link-dark" data-bs-toggle="modal" data-bs-target="#Trend-Tags-Modal" href="#"><svg
-                width="16" height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+        <a class="tags link-dark" data-bs-toggle="modal" data-bs-target="#Tags-Modal" href="#"><svg width="16"
+                height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                 <path
                     d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                 <path
                     d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
+            </svg></a>
+        <a id="Inquiry-Footer" class="link-dark" href="/home/profile/inquiry"><svg width="16" height="16"
+                fill="currentColor" class="bi bi-envelope-fill mx-2" viewBox="0 0 16 16">
+                <path
+                    d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
             </svg></a>
         <a id="Settings-Button-Modal-Footer" class="link-dark" data-bs-toggle="modal"
             data-bs-target="#Settings-Modal"><svg width="16" height="16" fill="currentColor"
