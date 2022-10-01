@@ -35,7 +35,7 @@ class Subscribe extends Mailable
     {
         return $this
             ->subject('仮登録が完了しました')
-            ->view('wit.Emails.subscribers')
+            ->markdown('wit.Emails.subscribers')
             ->with(['token' => $this->user->email_verified_token,]);
     }
 }
