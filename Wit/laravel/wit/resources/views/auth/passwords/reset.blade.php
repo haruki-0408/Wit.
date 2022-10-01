@@ -51,8 +51,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4 text-end">
-                                <button type="submit" class="btn btn-primary">
-                                    Confirm
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Send
                                 </button>
                             </div>
                         </div>
