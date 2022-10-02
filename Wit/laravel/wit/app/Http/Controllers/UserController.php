@@ -18,6 +18,8 @@ use App\Http\Requests\ChangeProfileRequest;
 use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\AuthPasswordRequest;
+use App\Mail\ChangeEmail;
+use Laravel\Ui\Presets\React;
 
 class UserController extends Controller
 {
@@ -60,11 +62,11 @@ class UserController extends Controller
         return view('wit.profile', $user_data);
     }
 
-    public function settings($ref)
+    public function settings(Request $request)
     {
         if (session()->get('auth_user_id') == Auth::id()) {
             session()->forget('auth_user_id');
-            switch ($ref) { //query string によってどのページに飛ばすのか判定
+            switch ($request->input('ref')) { //query string によってどのページに飛ばすのか判定
                 case 'info':
                     return view('wit.Account.information-account');
 
@@ -76,7 +78,7 @@ class UserController extends Controller
                 default:
                     return redirect('home')->with('error_message', 'エラーが起きました');
             }
-        }else{
+        } else {
             abort(404);
         }
     }
@@ -102,7 +104,7 @@ class UserController extends Controller
 
         if (Hash::check($setting_password, $password)) {
             session()->put(['auth_user_id' => Auth::id()]);
-            return $this->settings($query);
+            return $this->settings($request);
         } else {
             return back()->with('error_message', 'パスワードが違います');
         }
@@ -147,7 +149,20 @@ class UserController extends Controller
 
     protected function changeEmail(ChangeEmailRequest $request)
     {
-        return view('wit.Account.changed-email');
+        if (User::where('email', $request->input('email'))->exists()) {
+        } else {
+            $email_address = $request->input('email');
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+            //email_verified_tokenを変更
+            $user->email_verified_token = base64_encode($email_address);
+            $user->save();
+        }
+
+        $email = new ChangeEmail($user);
+        Mail::to($email_address)->send($email);
+
+        return view('wit.Account.send-change-email');
     }
 
     protected function changePassword(ChangePasswordRequest $request)

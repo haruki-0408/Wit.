@@ -21,6 +21,8 @@ Route::get('/', function () {
 })->name('index');
 
 Route::post('/register/before', [App\Http\Controllers\Auth\RegisterController::class, 'beforeRegisterCheck'])->name('beforeRegisterCheck');
+Route::get('/email/verify/{token}', App\Http\Controllers\MailController::class);
+Auth::routes();
 Route::get('/register/verify/{token}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('showRegisterForm');
 Auth::routes();
 

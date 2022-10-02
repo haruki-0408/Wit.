@@ -1,5 +1,5 @@
 @component('mail::message')
-#こんにちは
+# こんにちは
 本メールは、あなたのWit. アカウントのパスワードリセットリクエストを受け取ったためにお送りしています。<br>
 @component('mail::button', ['url' => $url])
 Reset Password

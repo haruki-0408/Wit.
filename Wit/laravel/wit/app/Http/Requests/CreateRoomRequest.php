@@ -32,8 +32,8 @@ class CreateRoomRequest extends FormRequest
             'description' => 'required|max:400|string',
             'room_images.*' => 'image',
             'sum_image_size' => 'int|max:5120000',
-            'sum_image_count' => 'int|max:30',
             //ここはサイズではなくintの整数値で判断しているからサイズなら5120でいい
+            'sum_image_count' => 'int|max:30',
             'matches.*' => 'max:20',
             'create_password' => 'max:255|confirmed|min:8'
         ];

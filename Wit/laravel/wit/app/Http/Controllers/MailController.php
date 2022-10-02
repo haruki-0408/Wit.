@@ -11,47 +11,26 @@ use Illuminate\Support\Facades\Validator;
 
 class MailController extends Controller
 {
-    public function subscribe(Request $request)
-    {
-        /*$validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users'
-        ]);
-
-        if ($validator->fails()) {
-            return new JsonResponse(['success' => false, 'message' => $validator->errors()], 422);
+   public function __invoke($email_token)
+   {
+        $email_address = base64_decode($email_token);
+        $user = User::where('email_verified_token', $email_token)->first();
+    
+        // 使用可能なトークンか
+        if (User::where('email_verified_token', $email_token)->doesntExist()) {
+            return redirect('/home')->with('error_message', '無効なトークンです');
         }
 
-        $email = $request->all()['email'];
-        $subscriber = Subscriber::create(
-            [
-                'email' => $email
-            ]
-        );
-        
-        if ($subscriber) {
-            Mail::to($email)->send(new Subscribe($email));
-            return new JsonResponse(
-                [
-                    'success' => true,
-                    'message' => "Thank you for subscribing to our email, please check your inbox"
-                ],
-                200
-            );
-        }*/
-    }
-    public function testIndex()   //コンタクトフォームを表示
-    {
-        return view('wit.Emails.contact');
-    }
-
-    public function testSendMessage(Request $request)  //メールの自動送信設定
-    {
-        Mail::send('wit.Emails.test', [], function($data){
-                $data   ->to('haruki21789@gmail.com')
-                        ->subject('Wit Test');
-        });
-
-        return back()->withInput($request->only(['name']))
-                     ->with('sent', '送信完了しました。');  //送信完了を表示
-    }
+        $user = User::where('email_verified_token', $email_token)->first();
+        // 本登録済みユーザーか
+        if ($user->status == User::STATUS[2]) //REGISTER=2
+        {
+            //メールアドレスを更新
+            $user->email = $email_address;
+            $user->save();
+            return redirect('/home')->with('action_message', 'メールアドレスを変更しました');
+        }else{
+            return redirect('/home')->with('error_message', 'エラーが発生したためメールアドレスを変更できませんでした');
+        }
+   }
 }

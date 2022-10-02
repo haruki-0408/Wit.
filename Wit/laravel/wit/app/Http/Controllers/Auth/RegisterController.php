@@ -54,7 +54,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         $rules = [
             'name' => ['required', 'string', 'max:25'],
             'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
@@ -120,7 +119,6 @@ class RegisterController extends Controller
     public function beforeRegister(Request $request)
     {
         event(new Registered($user = $this->create($request->all())));
-
         return view('auth.registered');
     }
 
