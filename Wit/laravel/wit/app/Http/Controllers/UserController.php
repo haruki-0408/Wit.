@@ -15,6 +15,7 @@ use App\Events\RemoveRoom;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\RoomController;
 use App\Http\Requests\ChangeProfileRequest;
+use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\AuthPasswordRequest;
 
@@ -59,16 +60,24 @@ class UserController extends Controller
         return view('wit.profile', $user_data);
     }
 
-    public function settings(Request $request)
+    public function settings($ref)
     {
-        switch ($request->input('ref')) { //query string によってどのページに飛ばすのか判定
-            case 'info':
-                return view('wit.Account.information-account');
+        if (session()->get('auth_user_id') == Auth::id()) {
+            session()->forget('auth_user_id');
+            switch ($ref) { //query string によってどのページに飛ばすのか判定
+                case 'info':
+                    return view('wit.Account.information-account');
 
-            case 'delete':
-                return view('wit.Account.delete-account');
-            default:
-                return redirect('home')->with('error_message', 'エラーが起きました');
+                case 'email':
+                    return view('wit.Account.change-email');
+
+                case 'delete':
+                    return view('wit.Account.delete-account');
+                default:
+                    return redirect('home')->with('error_message', 'エラーが起きました');
+            }
+        }else{
+            abort(404);
         }
     }
 
@@ -87,10 +96,13 @@ class UserController extends Controller
             $setting_password = $request->information_password;
         } else if ($request->has('delete_password')) {
             $setting_password = $request->delete_password;
+        } else if ($request->has('change_email_password')) {
+            $setting_password = $request->change_email_password;
         }
 
         if (Hash::check($setting_password, $password)) {
-            return $this->settings($request);
+            session()->put(['auth_user_id' => Auth::id()]);
+            return $this->settings($query);
         } else {
             return back()->with('error_message', 'パスワードが違います');
         }
@@ -131,6 +143,11 @@ class UserController extends Controller
         $user->fill($form)->save();
         $encrypted_user_id = Crypt::encrypt($user_id);
         return redirect(route("showProfile", ['user_id' => $encrypted_user_id]));
+    }
+
+    protected function changeEmail(ChangeEmailRequest $request)
+    {
+        return view('wit.Account.changed-email');
     }
 
     protected function changePassword(ChangePasswordRequest $request)
@@ -200,7 +217,7 @@ class UserController extends Controller
         $user = Auth::user();
         $email = $user->email;
         if (isset($inquiry_sentence)) {
-            return view('wit.Account.inquiry-form', ['inquiry_sentence' => $inquiry_sentence, 'email'=>$email]);
+            return view('wit.Account.inquiry-form', ['inquiry_sentence' => $inquiry_sentence, 'email' => $email]);
         } else {
             return view('wit.Account.inquiry-form');
         }
@@ -229,10 +246,10 @@ class UserController extends Controller
             $inquiry_sentence = $request->inquiry_sentence;
             $email = new Inquiry($user, $inquiry_sentence);
             Mail::to('wit-info@wit-dot.com')->send($email);
-            return redirect('/home')->with('action_message','お問い合わせ内容が送信されました');
+            return redirect('/home')->with('action_message', 'お問い合わせ内容が送信されました');
         }
 
-        return redirect('/home')->with('error_message','お問い合わせがエラーにより送信できませんでした');
+        return redirect('/home')->with('error_message', 'お問い合わせがエラーにより送信できませんでした');
     }
 
     protected function searchUser(Request $request)

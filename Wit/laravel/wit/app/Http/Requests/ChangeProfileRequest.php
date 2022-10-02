@@ -24,6 +24,7 @@ class ChangeProfileRequest extends FormRequest
     public function authorize()
     {
         if ($this->path() == 'home/profile/settings/changeProfile') {
+            session()->put(['auth_user_id' => Auth::id()]);
             return true;
         } else {
             return false;
@@ -40,7 +41,6 @@ class ChangeProfileRequest extends FormRequest
         $auth_id = Auth::id();
         return [
             'name' => 'string|max:25',
-            'email' => 'email|max:255|string|unique:users,email,' . $auth_id . ',id',
             'message' => 'max:500',
             'image' => 'image|max:5120'
         ];
@@ -49,10 +49,8 @@ class ChangeProfileRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.string' => 'ユーザ名を適切に入力して下さい',
             'name.max' => '名前は最大25文字までです',
-            'email.email' => 'メールアドレス形式で入力してください',
-            'email.max' => 'メールアドレスは最大255文字までです',
-            'email.unique' => 'このメールアドレスは既に使用されています',
             'message.max' => 'プロフィールメッセージは最大500文字までです',
             'image.max' => '画像サイズは5MBまでです',
             'image' => '画像形式以外はアップロードできません',

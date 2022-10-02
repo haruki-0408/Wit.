@@ -290,19 +290,17 @@
             if (document.getElementById('Information-Password-Modal-Button')) {
                 const info_password_button = document.getElementById('Information-Password-Modal-Button');
                 info_password_button.click();
-            } else if (document.getElementById('Information-Password-Modal-Button-Footer')) {
-                const info_password_button2 = document.getElementById('informationPasswordModalButtonFooter');
-                info_password_button2.click();
-            }
+            } 
+        @elseif ($errors->has('change_email_password'))
+            if (document.getElementById('Change-Email-Modal-Button')) {
+                const change_email_button = document.getElementById('Change-Email-Modal-Button');
+                change_email_button.click();
+            } 
         @elseif ($errors->has('delete_password'))
             if (document.getElementById('Delete-Account-Password-Modal-Button')) {
                 const delete_password_button = document.getElementById('Delete-Account-Password-Modal-Button');
                 delete_password_button.click();
-            } else if (document.getElementById('deleteAccountPasswordModalButtonFooter')) {
-                const delete_password_button2 = document.getElementById(
-                    'deleteAccountPasswordModalButtonFooter');
-                delete_password_button2.click();
-            }
+            } 
         @elseif ($errors->has('enter_password'))
             const room_id = '{{ old('room_id') }}';
             const room = document.querySelector('[data-room-id="' + room_id + '"]');

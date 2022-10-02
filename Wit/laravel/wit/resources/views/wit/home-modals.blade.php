@@ -189,7 +189,7 @@
                         @enderror
                         <div class="text-end">
                             <button type="submit" form="Room-Password-Form"
-                                class="btn btn-outline-primary ">Submit</button>
+                                class="btn btn-outline-primary ">Send</button>
                         </div>
                     </form>
                 </div>
@@ -248,16 +248,29 @@
                                 <path
                                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </svg>Account Information</button></li>
-                    <li><button id="Change-Password-Modal-Button" type="button" class="dropdown-item fw-bold"
+
+                    <li><button id="Change-Email-Modal-Button" type="button" class="dropdown-item fw-bold"
                             data-bs-target="#User-Password-Modal2" data-bs-toggle="modal"
+                            data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
+                                class="bi bi-envelope-exclamation-fill mx-2" viewBox="0 0 16 16">
+                                <path
+                                    d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207L16 4.697Z" />
+                                <path
+                                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                            </svg>Change
+                            Email Address</button></li>
+
+                    <li><button id="Change-Password-Modal-Button" type="button" class="dropdown-item fw-bold"
+                            data-bs-target="#User-Password-Modal3" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-key-fill mx-2" viewBox="0 0 16 16">
                                 <path
                                     d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>Change
                             Password</button></li>
+
                     <li><button id="Delete-Account-Password-Modal-Button" class="dropdown-item fw-bold text-danger"
-                            data-bs-target="#User-Password-Modal3" data-bs-toggle="modal"
+                            data-bs-target="#User-Password-Modal4" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">
                                 <path
@@ -295,7 +308,37 @@
                     @enderror
                     <div class="text-end">
                         <button type="submit" form="User-Password-Form1"
-                            class="btn btn-outline-primary">Submit</button>
+                            class="btn btn-outline-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Password Form Change Email-->
+<div class="modal fade" id="User-Password-Modal2" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="User-Password-Modal2" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="User-Password-Form2" name='user-password' method="post"
+                    action="/home/profile/settings/authUserPassword">
+                    @csrf
+                    <input type="password" name="change_email_password" class="form-control mb-1" autocomplete=off>
+                    <input type="hidden" name="ref" value="email">
+                    @error('change_email_password')
+                        <div class="text-danger mb-1">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
+                    <div class="text-end">
+                        <button type="submit" form="User-Password-Form2"
+                            class="btn btn-outline-primary text-end">Send</button>
                     </div>
                 </form>
             </div>
@@ -304,8 +347,8 @@
 </div>
 
 <!-- User Password Form Change Password-->
-<div class="modal fade" id="User-Password-Modal2" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="User-Password-Modal2" tabindex="-1">
+<div class="modal fade" id="User-Password-Modal3" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="User-Password-Modal3" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -313,7 +356,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="User-Password-Form2" name='user_password' method="post"
+                <form id="User-Password-Form3" name='user_password' method="post"
                     action="/home/profile/settings/changePassword">
                     @csrf
                     Current Password
@@ -333,7 +376,7 @@
                     Confirm Password
                     <input type="password" name="new_password_confirmation" class="form-control " autocomplete=off>
                     <div class="text-end mt-3">
-                        <button type="submit" form="User-Password-Form2"
+                        <button type="submit" form="User-Password-Form3"
                             class="btn btn-outline-primary">Save</button>
                     </div>
                 </form>
@@ -343,8 +386,8 @@
 </div>
 
 <!-- User Password Form Delete Account-->
-<div class="modal fade" id="User-Password-Modal3" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="User-Password-Modal3" tabindex="-1">
+<div class="modal fade" id="User-Password-Modal4" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="User-Password-Modal4" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -352,8 +395,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="User-Password-Form3" name='user-password' method="post"
-                    action="/home/profile/settings/authUserPassword?ref=delete">
+                <form id="User-Password-Form4" name='user-password' method="post"
+                    action="/home/profile/settings/authUserPassword">
                     @csrf
                     <input type="password" name="delete_password" class="form-control mb-1" autocomplete=off>
                     <input type="hidden" name="ref" value="delete">
@@ -363,8 +406,8 @@
                         </div>
                     @enderror
                     <div class="text-end">
-                        <button type="submit" form="User-Password-Form3"
-                            class="btn btn-outline-primary text-end">Submit</button>
+                        <button type="submit" form="User-Password-Form4"
+                            class="btn btn-outline-primary text-end">Send</button>
                     </div>
                 </form>
             </div>
@@ -406,7 +449,7 @@
                     @csrf
                     <button type="submit" class="btn btn-outline-primary text-end"
                         onclick="window.onbeforeunload = null;" data-bs-dismiss="modal">Yes</button>
-                    <input id="Remove-Room-Input" type="hidden" name="room_id" >
+                    <input id="Remove-Room-Input" type="hidden" name="room_id">
                 </form>
             </div>
         </div>

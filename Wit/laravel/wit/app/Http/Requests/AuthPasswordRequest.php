@@ -32,6 +32,7 @@ class AuthPasswordRequest extends FormRequest
         return [
             'delete_password' => 'required_if:ref,delete|password',
             'information_password' => 'required_if:ref,info|password',
+            'change_email_password' => 'required_if:ref,email|password',
             'enter_password' => 'required_with:room_id|boolean'
         ];
     }
@@ -43,6 +44,8 @@ class AuthPasswordRequest extends FormRequest
             'delete_password.password' => 'パスワードが一致しませんでした',
             'information_password.required_if' => 'パスワードを入力して下さい',
             'information_password.password' => 'パスワードが一致しませんでした',
+            'change_email_password.required_if' => 'パスワードを入力して下さい',
+            'change_email_password.password' => 'パスワードが一致しませんでした',
             'enter_password.required_with' => 'パスワードを入力して下さい',
             'enter_password.boolean' => 'パスワードが一致しませんでした',
         ];
