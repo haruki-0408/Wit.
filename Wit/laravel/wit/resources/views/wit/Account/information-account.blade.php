@@ -36,15 +36,7 @@
 
                     <div id="Parent-Email" class="row justify-content-center align-items-center">
                         <strong class="card-title  col-10 col-md-4 text-center p-1 m-0 m-lg-2">Email</strong>
-                        <p id="Child-Email" class="card-text col-10 col-md-4  text-center p-1 m-0">{{ Auth::user()->email }}
-                        </p>
-                        @error('email')
-                            <div class="col-0 col-md-4">
-                            </div>
-                            <div class="col-8 col-md-4 text-center text-danger">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
+                        <p id="Child-Email" class="card-text col-10 col-md-4  text-center p-1 m-0">{{ Auth::user()->email }}</p>
                     </div>
 
                     <div id="Parent-Message" class="row justify-content-center align-items-center">
@@ -119,36 +111,32 @@
 
 
             const child_name = document.getElementById('Child-Name');
-            const child_email = document.getElementById('Child-Email');
             const child_message = document.getElementById('Child-Message');
-            let old_node = [child_name, child_email, child_message];
+            let old_node = [child_name, child_message];
 
             let input_name = document.createElement('input');
             input_name.setAttribute('name', 'name');
             input_name.className = "card-text col-10 col-md-4 p-1";
             input_name.value = child_name.innerText;
 
-            let input_email = document.createElement('input');
-            input_email.setAttribute('name', 'email');
-            input_email.className = "card-text col-10 col-md-4 p-1";
-            input_email.value = child_email.innerText;
+            let email_message = document.createElement('span');
+            email_message.className = "text-danger badge d-block";
+            email_message.textContent = '※メールアドレスは専用ページから変更して下さい';
 
             let input_message = document.createElement('textarea');
             input_message.setAttribute('name', 'message');
             input_message.className = "card-text col-10 col-md-4 p-1";
             input_message.value = child_message.innerText;
 
-            let new_node = [input_name, input_email, input_message];
+            document.getElementById('Child-Email').appendChild(email_message);
+            let new_node = [input_name, input_message];
 
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < 2; i++) {
                 switch (i) {
                     case 0:
                         var parent_node = document.getElementById('Parent-Name');
                         break;
                     case 1:
-                        var parent_node = document.getElementById('Parent-Email');
-                        break;
-                    case 2:
                         var parent_node = document.getElementById('Parent-Message');
                         break;
                     default:

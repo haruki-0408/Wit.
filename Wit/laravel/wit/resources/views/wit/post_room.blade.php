@@ -286,7 +286,7 @@
                     <ul id="Room-Informations-List2" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
                         <li class="row">
-                            <p class="m-0">Create User : </p>
+                            <p class="m-0">Created User : </p>
                             <div class="col-2">
                                 <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px"
                                     height="50px" class="rounded-circle ">
@@ -296,7 +296,7 @@
                             </div>
                         </li>
 
-                        <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                     </ul>
                 </div>
             </div>
@@ -412,7 +412,7 @@
                                 </div>
                                 <ul id="Room-Informations-List" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Created Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -554,7 +554,7 @@
                                 </div>
                                 <ul id="Room-Informations-List3" class="col-12 p-1">
                                     <li class="text-break pb-2">Id : {{ $room_info->id }}</li>
-                                    <li class="text-break">Create : {{ $room_info->created_at->format('Y/m/d H:i') }}
+                                    <li class="text-break">Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}
                                     </li>
                                 </ul>
                             </div>

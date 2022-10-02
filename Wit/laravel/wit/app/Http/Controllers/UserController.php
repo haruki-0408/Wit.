@@ -116,7 +116,6 @@ class UserController extends Controller
     {
         $form = [
             'name' => $request->name,
-            'email' => $request->email,
             'profile_message' => $request->message,
         ];
 

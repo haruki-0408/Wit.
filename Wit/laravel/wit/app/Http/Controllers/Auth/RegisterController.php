@@ -133,7 +133,7 @@ class RegisterController extends Controller
 
         $user = User::where('email_verified_token', $email_token)->first();
         // 本登録済みユーザーか
-        if ($user->status == User::STATUS[2]) //REGISTER=1
+        if ($user->status == User::STATUS[2]) //REGISTER=2
         {
             return redirect('register')->with('register_error_message', 'このメールアドレスはすでに本登録されています。ログインして利用してください');
         }

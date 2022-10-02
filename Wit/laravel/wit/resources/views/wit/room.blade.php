@@ -493,7 +493,7 @@
                     <ul id="Room-Informations-List2" class="p-1">
                         <li>Id : {{ $room_info->id }}</li>
                         <li class="row">
-                            <p class="m-0">Create User : </p>
+                            <p class="m-0">Created User : </p>
                             <div class="col-2">
                                 <img src="{{ asset($room_info->user->profile_image) }}" alt=""width="50px"
                                     height="50px" class="rounded-circle ">
@@ -503,7 +503,7 @@
                             </div>
                         </li>
 
-                        <li>Create Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                         <li>Expired Time: {{ $expired_time_left }} Hours </li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
@@ -637,7 +637,7 @@
                                 </div>
                                 <ul id="Room-Informations-List" class="col-12 mt-2 p-2">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Create Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Created Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
                                     <li>Expired Time: {{ $expired_time_left }} Hours </li>
                                     @if (Auth::id() == $room_info->user->id)
                                         <hr>
