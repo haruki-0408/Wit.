@@ -17,14 +17,14 @@ class CheckRoomState extends Command
      *
      * @var string
      */
-    protected $signature = 'checkroom:state';
+    protected $signature = 'check:room';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Manage room time limits and change to Save or Remove status (Test Commnad)';
+    protected $description = 'Manage room time limits and change to Save or Remove status';
 
     /**
      * Create a new command instance.
@@ -75,6 +75,7 @@ class CheckRoomState extends Command
                 }
             }
         }
-        logger()->info('--------------------HANDLE END------------------');
+
+        return 0;
     }
 }

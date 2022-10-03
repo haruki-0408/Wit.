@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckDatabase;
+use App\Console\Commands\CheckUserState;
 use App\Console\Commands\CheckRoomState;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     protected $commands =[
+        CheckUserState::class,
         CheckRoomState::class,
         CheckDatabase::class,
     ];
@@ -22,7 +24,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('checkroom:state')->hourly();;
+        $schedule->command('check:user')->hourly();
+        $schedule->command('check:room')->hourly();
     }
 
     /**

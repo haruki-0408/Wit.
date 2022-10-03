@@ -16,7 +16,7 @@
                                 <p id="Head-sentence" style="font-size:14px;">お問い合わせ内容はこちらでよろしいでしょうか</p>
                                 <hr>
                                 <p class="fw-bold pb-2">ご登録メールアドレス:{{$email}}</p>
-                                <textarea class="pt-2 w-100 d-flex justify-content-center bg-light" rows="7" name="inquiry_sentence" autocorrect="off" autocapitalize="off" readonly>{{ $inquiry_sentence }}</textarea>
+                                <textarea class="pt-2 w-100 d-flex justify-content-center" rows="7" name="inquiry_sentence" autocorrect="off" autocapitalize="off" readonly>{{ $inquiry_sentence }}</textarea>
                                 <p class="text-danger fw-bold pt-2">※ご質問の場合回答はご登録されているメールアドレス宛に返信されます。ご了承下さい</p>
                                 <div class="text-end">
                                     <button type="button" onclick="history.back(-1);return false;" class="mt-3 btn btn-outline-primary">Back</button>
@@ -28,7 +28,7 @@
                                 @csrf
                                 <p id="Head-sentence" style="font-size:14px;">
                                     Wit.のご利用ありがとうございます。ご不明な点やご要望等ございましたらお気軽に下記フォームにて投稿ください。</p>
-                                <textarea id="Inquiry" class="w-100 d-flex p-1 justify-content-center bg-light" rows="7" name="inquiry_sentence"
+                                <textarea id="Inquiry" class="w-100 d-flex p-1 justify-content-center" rows="7" name="inquiry_sentence"
                                     autocorrect="off" autocapitalize="off" placeholder=""></textarea>
                                 @error('inquiry_sentence')
                                     <span class="text-danger">

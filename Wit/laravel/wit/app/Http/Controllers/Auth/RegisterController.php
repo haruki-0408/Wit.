@@ -115,9 +115,9 @@ class RegisterController extends Controller
         $email = new Subscribe($user);
         Mail::to($user->email)->send($email);
     }
-
+    
     public function beforeRegister(Request $request)
-    {
+    { 
         event(new Registered($user = $this->create($request->all())));
         return view('auth.registered');
     }
