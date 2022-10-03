@@ -150,7 +150,7 @@ class UserController extends Controller
     protected function changeEmail(ChangeEmailRequest $request)
     {
         if (User::where('email', $request->input('email'))->exists()) {
-            return back()->with('error_message', 'そのメールアドレスはすでに登録されています');
+            return redirect('/home')->with('error_message', 'そのメールアドレスはすでに登録されています');
         } else {
             $email_address = $request->input('email');
             $user_id = Auth::id();

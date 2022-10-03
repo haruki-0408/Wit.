@@ -55,6 +55,7 @@ class UserTest extends TestCase
             'List User',
             'List Room',
             'Tag',
+            'Terms',
         ]);
         $response->assertViewHasAll([ //responseに以下のデータが存在しているか
             'user_id',
@@ -68,13 +69,26 @@ class UserTest extends TestCase
     public function test_profile_settings()
     {
         $this->actingAs($this->user);  //userをログイン状態にする
+        //user_idセッションがない状態でgetリクエスト
+        $response = $this->get('/home/profile/settings?ref=info');
+        $response->assertStatus(404);
+
+        //セッションをつけた状態でリクエスト
+        session()->put(['auth_user_id' => $this->user->id]);
+        //Account Information
         $response = $this->get('/home/profile/settings?ref=info');
         $response->assertStatus(200)->assertViewIs('wit.Account.information-account');
-
+        //Change Profile
+        session()->put(['auth_user_id' => $this->user->id]);
+        $response = $this->get('/home/profile/settings?ref=email');
+        $response->assertStatus(200)->assertViewIs('wit.Account.change-email');
+        //Delete Account
+        session()->put(['auth_user_id' => $this->user->id]);
         $response = $this->get('/home/profile/settings?ref=delete');
         $response->assertStatus(200)->assertViewIs('wit.Account.delete-account');
-
+        //refに適当な値を入れた時
         $random_string = Str::random(10);
+        session()->put(['auth_user_id' => $this->user->id]);
         $response = $this->get('/home/profile/settings?ref=' . $random_string);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが起きました']);
     }
@@ -146,18 +160,126 @@ class UserTest extends TestCase
         $profile_image = UploadedFile::fake()->image('hoge.png');
         $response = $this->post('/home/profile/settings/changeProfile', [
             'name' => 'TestUser',
-            'email' => 'test@test.com',
             'message' => 'hogehoge fugafuga',
             'image' => $profile_image,
         ]);
         $response->assertStatus(302);
-        \Storage::disk('local')->assertExists('/userImages/secondary:'.$this->user->id);
+        \Storage::disk('local')->assertExists('/userImages/secondary:' . $this->user->id);
         \Storage::disk('local')->deleteDirectory('/userImages/secondary:' . $this->user->id); //必ず最後は削除する
         $this->assertDatabaseHas('users', [
             'name' => 'TestUser',
-            'email' => 'test@test.com',
             'profile_message' => 'hogehoge fugafuga',
         ]);
+    }
+
+    public function test_change_email()
+    {
+        $this->actingAs($this->user);
+        //userのメールアドレスを分かりやすいものに変更
+        $email = 'test@test.com';
+        $this->user->email = $email;
+        $this->user->email_verified_token = base64_encode($email);
+        $this->user->save();
+
+        //メールアドレスの入力がない時のバリデーションチェック
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => '',
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home/profile/settings?ref=email')->assertInvalid(['email']);
+
+        //メールアドレスに@がない時のバリデーションチェック
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => 'testtest.com',
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home/profile/settings?ref=email')->assertInvalid(['email']);
+
+        //メールアドレスの入力が255文字を超えた時のバリデーションチェック
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => Str::random(256),
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home/profile/settings?ref=email')->assertInvalid(['email']);
+
+        //すでに登録されているメールアドレスに変更しようとした時のバリデーションチェック
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => 'test@test.com',
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home/profile/settings?ref=email')->assertInvalid(['email']);
+
+        //すでに登録されているメールアドレスに変更しようとした時のバリデーションチェック
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => 'test@test.com',
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home/profile/settings?ref=email')->assertInvalid(['email']);
+
+        //バリデーションが通った時
+        $response = $this->post('/home/profile/settings/changeEmail', [
+            'email' => 'change@test.com',
+        ]);
+        //email_verified_tokenが変更されていることを確認
+        $new_email_verified_token = base64_encode('change@test.com');
+        $this->assertDatabaseHas('users', [
+            'email_verified_token' => $new_email_verified_token,
+        ]);
+        $response->assertViewIs('wit.Account.send-change-email');
+    }
+
+    public function test_get_inquiry_form()
+    {
+        $this->actingAs($this->user);
+
+        //ここのロジックは少しややこしい$inquiry_sentenceがない状態でgetリクエストを送ると、お問い合わせフォームviewが表示される
+        $response = $this->get('/home/profile/inquiry');
+        $response->assertViewIs('wit.Account.inquiry-form');
+
+        //その後お問い合わせ内容を記述し、receive_inquiry()に送信するのだが、その内容を確認するために再度引数#inquiry_sentenceとしてget_inquiry_form()へ送信する
+        $inquiry_sentence = 'テストメッセージ';
+        $user_controller = new UserController;
+        $response = $user_controller->getInquiryForm($inquiry_sentence);
+        //controllerクラスにはassert使えないので、工夫する
+        $this->assertSame($response->email, $this->user->email);
+        $this->assertSame($response->inquiry_sentence, $inquiry_sentence);
+    }
+
+    public function test_receive_inquiry()
+    {
+        $this->actingAs($this->user);
+
+        //inquiry_sentenceの入力がない場合のバリデーションエラー
+        $response = $this->post('/home/profile/inquiry/confirm', [
+            'inquiry_sentence' => '',
+        ]);
+        $response->assertStatus(302)->assertInvalid(['inquiry_sentence']);
+
+        //inquiry_sentenceの入力が1000文字以上の時のバリデーションエラー
+        $response = $this->post('/home/profile/inquiry/confirm', [
+            'inquiry_sentence' => Str::random(1001),
+        ]);
+        $response->assertStatus(302)->assertInvalid(['inquiry_sentence']);
+
+        //バリデーションエラーなし
+        $inquiry_sentence = 'テストメッセージ';
+        $response = $this->post('/home/profile/inquiry/confirm', [
+            'inquiry_sentence' => $inquiry_sentence,
+        ]);
+        $response->assertValid(['inquiry_sentence']);
+        $response->assertStatus(200);
+    }
+
+    public function test_send_inquiry()
+    {
+        $this->actingAs($this->user);
+        $inquiry_sentence = 'テストメッセージ';
+        //inquiry_sentenceの入力がない時
+        $response = $this->post('home/profile/inquiry/send', [
+            'inquiry_sentence' => ''
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'お問い合わせがエラーにより送信できませんでした']);
+
+        //inquiry_sentenceの入力がある時
+        $response = $this->post('home/profile/inquiry/send', [
+            'inquiry_sentence' => $inquiry_sentence,
+        ]);
+        $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['action_message' => 'お問い合わせ内容が送信されました']);
     }
 
     public function test_change_password()
@@ -223,15 +345,16 @@ class UserTest extends TestCase
     public function test_search_user()
     {
         $this->actingAs($this->user);  //userをログイン状態にする
+        
         //keyword 入力なしのとき
         $response = $this->get('/home/searchUser?hoge=fuga');
         $response->assertStatus(404);
 
         //keyword 入力ありのとき 31件該当レコードがあっても30までしか取得しないことを確認
         User::factory()->count(31)->create([
-            'name' => 'test',
+            'name' => 'fugafuga',
         ]);
-        $response = $this->get('/home/searchUser?keyword=test');
+        $response = $this->get('/home/searchUser?keyword=fugafuga');
         $response->assertJsonCount(30);
         $response->assertJsonStructure([
             '*' => [
@@ -243,9 +366,11 @@ class UserTest extends TestCase
         ]);
 
         //Get-More-Userの時適切に続きから取得できているか
-        $user_id = Crypt::encrypt(User::offset(30)->first()->id);
-        $response = $this->get('/home/searchUser?keyword=test&user_id=' . $user_id);
-        $response->assertJsonCount(2);
+        //ここで注意しないといけないのはuserはuuidのアルファベット順にレコードが並んでいるのでidを昇順に並べ替える。
+        $order_users = User::where('name', 'fugafuga')->orderBy('id', 'asc')->get();
+        $user_id = Crypt::encrypt($order_users[29]->id);
+        $response = $this->get('/home/searchUser?keyword=fugafuga&user_id=' . $user_id);
+        $response->assertJsonCount(1);
         $response->assertJsonStructure([
             '*' => [
                 'id',
@@ -338,7 +463,7 @@ class UserTest extends TestCase
         $response->assertJsonPath('error_message', 'そのユーザは存在しません');
 
         //存在しているがすでにユーザーがリストに登録されている時
-        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id); 
+        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id);
         $other_user_id = Crypt::encrypt($this->other_user->id);
         $response = $this->get('/home/addListUser:' . $other_user_id);
         $response->assertJsonPath('error_message', 'そのユーザは既にリストに登録されています');
@@ -360,7 +485,7 @@ class UserTest extends TestCase
         $response->assertJsonPath('error_message', 'そのユーザはリストに登録されていません');
 
         //ユーザーが適切にリストから登録解除された時
-        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id); 
+        $this->user->listUsers()->syncWithoutDetaching($this->other_user->id);
         $other_user_id = Crypt::encrypt($this->other_user->id);
         $response = $this->get('/home/removeListUser:' . $other_user_id);
         $response->assertJsonPath('message', 'リストからユーザーを削除しました');
@@ -371,5 +496,4 @@ class UserTest extends TestCase
         $response = $this->get('/home/removeListUser:' . $list_user_id);
         $response->assertJsonPath('error_message', 'そのユーザはリストに登録されていません');
     }
-
 }
