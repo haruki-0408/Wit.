@@ -494,8 +494,8 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column p-3">
-
-
+                    @component('wit.terms')
+                    @endcomponent
                 </div>
             </div>
             <div class="modal-footer">
