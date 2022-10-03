@@ -1,7 +1,7 @@
 <div id="Left-Sidebar" class="col-lg-3 col-md-4 d-flex flex-column p-3 bg-light d-none d-md-block">
     <div id="Profile-Box">
         <a href="/home/profile:{{ Crypt::encrypt(Auth::user()->id) }}"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            class="d-flex align-items-center mx-2 mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <svg width="16" height="16" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg>
@@ -49,13 +49,13 @@
 
         <hr class="m-2">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li>
+            <li class="m-1">
                 <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal"
                     data-bs-target="#My-OpenRoom-Modal">
                     <strong>・Open</strong>
                 </a>
             </li>
-            <li>
+            <li class="m-1">
                 <a href="#" class="dropdown-item link-dark" data-bs-toggle="modal"
                     data-bs-target="#My-PostRoom-Modal">
                     <strong>・Post</strong>
@@ -68,7 +68,7 @@
 
 
     <div id="Mylist-Box">
-        <div class="d-flex align-items-center pt-1 pb-2 px-3">
+        <div class="d-flex align-items-center pt-1 pb-2 m-2">
             <svg width="16" height="16" fill="currentColor" class="bi bi-card-list mx-2" viewBox="0 0 16 16">
                 <path
                     d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -92,8 +92,7 @@
             </a>
         </div>
 
-
-        <div class="fs-5 dropdown-item mt-3 d-flex align-items-center">
+        <div class="fs-5 dropdown-item mt-2 d-flex align-items-center">
             <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
                 data-bs-target="#My-ListRoom-Modal">
                 <svg width="16" height="16" fill="currentColor" class="bi bi-house-fill mx-2"
@@ -110,7 +109,7 @@
     </div>
 
     <div id="Inquiry-Box">
-        <a class="d-flex align-items-center link-dark text-decoration-none" href="/home/profile/inquiry">
+        <a class="d-flex m-2 align-items-center link-dark text-decoration-none" href="/home/profile/inquiry">
             <svg width="16" height="16" fill="currentColor" class="bi bi-envelope-fill mx-2"
                 viewBox="0 0 16 16">
                 <path
@@ -122,7 +121,7 @@
     </div>
 
     <div id="Terms-Box">
-        <a href="#" class="dropdown-item d-flex align-items-center link-dark text-decoration-none" data-bs-toggle="modal"
+        <a href="#" class="m-0 px-2 dropdown-item d-flex align-items-center link-dark text-decoration-none" data-bs-toggle="modal"
             data-bs-target="#Terms-Modal">
             <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-fill mx-2"
                 viewBox="0 0 16 16">

@@ -11,10 +11,10 @@
         </div>
 
         <hr>
-        <ul class="mt-2">
-            @component('wit.tags')
-            @endcomponent
-        </ul>
+
+        @component('wit.tags')
+        @endcomponent
+
     </div>
     <hr>
 </div>

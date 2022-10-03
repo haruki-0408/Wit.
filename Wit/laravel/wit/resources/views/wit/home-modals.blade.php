@@ -480,7 +480,7 @@
 <!-- Terms of Service -->
 <div class="modal fade" id="Terms-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="Terms-Modal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
