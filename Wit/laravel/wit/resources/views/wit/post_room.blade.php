@@ -444,7 +444,7 @@
                                     <div class="carousel-inner  h-100 w-100">
                                         @for ($i = 0; $i < $count_image_data; $i++)
                                             @if ($i == 0)
-                                                <div onclick="this.webkitRequestFullScreen();"
+                                                <div onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }"
                                                     class="carousel-item active">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
@@ -453,7 +453,7 @@
                                                         alt="" style="" class="image-fluid">
                                                 </div>
                                             @else
-                                                <div onclick="this.webkitRequestFullScreen();" class="carousel-item">
+                                                <div onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }" class="carousel-item">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
                                                         'number' => $i,

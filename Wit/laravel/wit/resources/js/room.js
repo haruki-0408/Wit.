@@ -7,7 +7,7 @@ const send_button = document.getElementById('Send-Message-Button');
 const room_chat = document.getElementById('Room-Chat');
 if (document.getElementById('Room-Image')) {
     room_chat.style = 'height:60%;'
-}else{
+} else {
     room_chat.style = 'height:100%;'
 }
 
