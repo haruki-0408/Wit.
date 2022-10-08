@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/intense.min.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -92,14 +93,14 @@
             overflow: scroll
         }
 
-
+        /*
         :-webkit-full-screen {
             background-color: #fff;
         }
 
         :-webkit-full-screen img {
             cursor: pointer;
-        }
+        }*/
 
         .carousel-item img {
             width: auto;
@@ -444,21 +445,20 @@
                                     <div class="carousel-inner  h-100 w-100">
                                         @for ($i = 0; $i < $count_image_data; $i++)
                                             @if ($i == 0)
-                                                <div onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }"
-                                                    class="carousel-item active">
+                                                <div class="carousel-item active">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
                                                         'number' => $i,
                                                     ]) }}"
-                                                        alt="" style="" class="image-fluid">
+                                                        alt="" style="" class="Image image-fluid">
                                                 </div>
                                             @else
-                                                <div onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }" class="carousel-item">
+                                                <div class="carousel-item">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
                                                         'number' => $i,
                                                     ]) }}"
-                                                        alt="" style="" class=" image-fluid">
+                                                        alt="" style="" class="Image image-fluid">
                                                 </div>
                                             @endif
                                         @endfor
@@ -554,7 +554,8 @@
                                 </div>
                                 <ul id="Room-Informations-List3" class="col-12 p-1">
                                     <li class="text-break pb-2">Id : {{ $room_info->id }}</li>
-                                    <li class="text-break">Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}
+                                    <li class="text-break">Created Time :
+                                        {{ $room_info->created_at->format('Y/m/d H:i') }}
                                     </li>
                                 </ul>
                             </div>
@@ -594,11 +595,10 @@
     </div>
 
     <script>
-        const room_chat = document.getElementById('Room-Chat');
-        if (document.getElementById('Room-Image')) {
-            room_chat.style = 'height:60%;'
-        } else {
-            room_chat.style = 'height:100%;'
+        window.onload = function() {
+            const images = document.querySelectorAll('.Image');
+            console.log(images);
+            Intense(images);
         }
     </script>
 </body>

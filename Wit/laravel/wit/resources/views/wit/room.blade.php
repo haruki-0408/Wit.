@@ -13,6 +13,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/room.js') }}" defer></script>
+    <script src="{{ asset('js/intense.min.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -95,13 +96,24 @@
         }
 
 
-        :-webkit-full-screen {
+        /*:-webkit-full-screen {
             background-color: #fff;
         }
 
         :-webkit-full-screen img {
             cursor: pointer;
         }
+
+        .full-screen-image {
+            background: RGBA(0, 0, 0, .8) no-repeat center;
+            background-size: cover;
+            position: fixed;
+            z-index: 10000;
+            margin-left: auto;
+            inset: 0;
+            margin: auto;
+            cursor: zoom-out;
+        }*/
 
         .carousel-item img {
             width: auto;
@@ -686,25 +698,23 @@
                                         @endif
                                     </div>
 
-                                    <div class="carousel-inner  h-100 w-100">
+                                    <div class="carousel-inner h-100 w-100">
                                         @for ($i = 0; $i < $count_image_data; $i++)
                                             @if ($i == 0)
-                                                <div class="carousel-item active"
-                                                    onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }">
+                                                <div class="carousel-item active">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
                                                         'number' => $i,
                                                     ]) }}"
-                                                        alt="" style="" class="image-fluid">
+                                                        alt="" style="" class="Image image-fluid">
                                                 </div>
                                             @else
-                                                <div class="carousel-item"
-                                                    onclick="if (document.webkitFullscreenElement) { document.exitFullscreen();}else{ this.webkitRequestFullScreen(); }">
+                                                <div class="carousel-item">
                                                     <img src=" {{ route('showRoomImage', [
                                                         'room_id' => $room_info->id,
                                                         'number' => $i,
                                                     ]) }}"
-                                                        alt="" style="" class="image-fluid">
+                                                        alt="" style="" class="Image image-fluid">
                                                 </div>
                                             @endif
                                         @endfor
@@ -860,6 +870,13 @@
                 </div>
         </main>
     </div>
+    <script>
+        window.onload = function() {
+            const images = document.querySelectorAll('.Image');
+            console.log(images);
+            Intense(images);
+        }
+    </script>
 </body>
 
 </html>
