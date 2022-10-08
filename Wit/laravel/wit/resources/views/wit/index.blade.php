@@ -10,13 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- normal CSS -->
-
-
-    <style>
-
-    </style>
-
 
     <title>Wit.</title>
 
@@ -51,7 +44,6 @@
             <div class="top-button  mb-5">
                 <div class="row justify-content-center">
                     <div class="col-2">
-                        <!-- space -->
                     </div>
                     <div class="col-sm-12 align-self-center col-md-3"> <a href="{{ route('login') }}"
                             class="btn btn-primary px-5 m-2  ">ログイン</a> </div>
@@ -61,37 +53,10 @@
             </div>
 
             <div class="message-wrapper mx-auto"></div>
-            <div class="row text-center">
-                <div class="col-auto-12 m-3">
-                    <h1>Wit</h1>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>こんにちは</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>あなたの技術的に知りたい聞きたい</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>そんな願望を叶えてくれます</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>一人では分からない思いつかない</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>そんなときこそ</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>知識や技術を相互に共有しましょう</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>リアルタイム通信を用いた</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>データベース機能であなただけの技術展開を</h2>
-                </div>
-                <div class="col-auto-12 m-3">
-                    <h2>さあ今すぐ登録しましょう！</h2>
-                </div>
+            <div class="row">
+                <div id="PC" class="col-5"><video width="600" src="movie/pc.mp4" autoplay muted loop></video></div>
+                <div id="Tablet" class="col-3 mx-auto"><video width="400" src="movie/tb.mp4" autoplay muted loop></video></div>
+                <div id="Smartphone" class="col-2 mx-auto"><video width="200" src="movie/sm.mp4" autoplay muted loop></video></div>
             </div>
     </div>
     </main>

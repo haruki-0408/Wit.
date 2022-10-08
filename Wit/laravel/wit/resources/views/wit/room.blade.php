@@ -872,9 +872,11 @@
     </div>
     <script>
         window.onload = function() {
-            const images = document.querySelectorAll('.Image');
-            console.log(images);
-            Intense(images);
+            if (document.getElementById('Room-Image')) {
+                const images = document.querySelectorAll('.Image');
+                console.log(images);
+                Intense(images);
+            }
         }
     </script>
 </body>

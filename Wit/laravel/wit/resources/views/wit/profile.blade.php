@@ -98,7 +98,7 @@
             </div>
             <hr class="m-1">
             <div id="Profile-Message">
-                <p class="text-break m-1" style="font-size:1.1em;">
+                <p class="text-break m-1 p-3" style="font-size:0.9em;">
                     {{ $profile_message }}
                 </p>
             </div>
