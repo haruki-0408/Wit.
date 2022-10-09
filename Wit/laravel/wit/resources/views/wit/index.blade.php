@@ -26,8 +26,6 @@
                     aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-
             </nav>
         </header>
 
@@ -54,9 +52,9 @@
 
             <div class="message-wrapper mx-auto"></div>
             <div class="row">
-                <div id="PC" class="col-5"><video width="600" src="movie/pc.mp4" autoplay muted loop></video></div>
-                <div id="Tablet" class="col-3 mx-auto"><video width="400" src="movie/tb.mp4" autoplay muted loop></video></div>
-                <div id="Smartphone" class="col-2 mx-auto"><video width="200" src="movie/sm.mp4" autoplay muted loop></video></div>
+                <div id="PC" class="col-lg-5 col-sm-12 text-center"><video width="600" src="movie/pc.mp4" autoplay muted loop></video></div>
+                <div id="Tablet" class="col-lg-3 col-sm-12 text-center mx-auto"><video width="400" src="movie/tb.mp4" autoplay muted loop></video></div>
+                <div id="Smartphone" class="col-lg-2 col-sm-12 text-center mx-auto"><video width="200" src="movie/sm.mp4" autoplay muted loop></video></div>
             </div>
     </div>
     </main>

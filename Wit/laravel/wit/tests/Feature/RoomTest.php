@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Http\Controllers\RoomController;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Room;
@@ -633,20 +634,7 @@ class RoomTest extends TestCase
         $room->roomUsers()->syncWithoutDetaching($this->user->id);
         $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
 
-        //存在しないリクエストを送った時
-        $response = $this->post('/api/webhook', [
-            'events' => [
-                '0' =>
-                [
-                    'channel' => 'presence-room-user-notifications.adsfadfdsaf',
-                    'name' => 'asdfassaf',
-                    'user_id' => 'hogehogehogehoge',
-                ]
-            ]
-        ]);
-        $response->assertNotFound();
-
-        //nameがmember_addedの時　適切にステータスコード200ならOK
+        //Request headerにpusherの電子署名が付いていない時 そもそも全て404が返ってくる
         $response = $this->post('/api/webhook', [
             'events' => [
                 '0' =>
@@ -657,10 +645,25 @@ class RoomTest extends TestCase
                 ]
             ]
         ]);
-        $response->assertOk();
+        $response->assertNotFound();
 
+        //pusherの電子署名をHeaderに付与する
         //nameがmember_removedの時　適切にステータスコード200ならOK
-        $response = $this->post('/api/webhook', [
+        $app_secret = env('PUSHER_APP_SECRET');
+        $body = [
+            'events' => [
+                '0' =>
+                [
+                    'channel' => 'presence-room-user-notifications.' . $this->room_id_1,
+                    'name' => 'member_removed',
+                    'user_id' => $this->user->id,
+                ]
+            ]
+        ];
+        $webhook_signature = hash_hmac('sha256', is_string($body), $app_secret, false);
+        $response = $this->withHeaders([
+            'X-Pusher-Signature' => $webhook_signature,
+        ])->post('/api/webhook', [
             'events' => [
                 '0' =>
                 [

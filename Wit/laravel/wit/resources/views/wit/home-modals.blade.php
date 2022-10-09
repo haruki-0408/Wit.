@@ -241,7 +241,7 @@
             </div>
             <div class="modal-body p-1">
                 <ul id="Setting-Links" class="p-0 m-0 fs-5 rounded">
-                    <li><button id="Information-Password-Modal-Button" class="dropdown-item fw-bold"
+                    <li><button id="Information-Password-Modal-Button" class="d-flex align-items-center dropdown-item fs-6 fw-bold"
                             data-bs-target="#User-Password-Modal1" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-info-circle-fill mx-2" viewBox="0 0 16 16">
@@ -249,7 +249,7 @@
                                     d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                             </svg>Account Information</button></li>
 
-                    <li><button id="Change-Email-Modal-Button" type="button" class="dropdown-item fw-bold"
+                    <li><button id="Change-Email-Modal-Button" type="button" class="d-flex align-items-center dropdown-item fs-6 fw-bold"
                             data-bs-target="#User-Password-Modal2" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-envelope-exclamation-fill mx-2" viewBox="0 0 16 16">
@@ -260,7 +260,7 @@
                             </svg>Change
                             Email Address</button></li>
 
-                    <li><button id="Change-Password-Modal-Button" type="button" class="dropdown-item fw-bold"
+                    <li><button id="Change-Password-Modal-Button" type="button" class="d-flex align-items-center dropdown-item fs-6 fw-bold"
                             data-bs-target="#User-Password-Modal3" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-key-fill mx-2" viewBox="0 0 16 16">
@@ -269,7 +269,7 @@
                             </svg>Change
                             Password</button></li>
 
-                    <li><button id="Delete-Account-Password-Modal-Button" class="dropdown-item fw-bold text-danger"
+                    <li><button id="Delete-Account-Password-Modal-Button" class="d-flex align-items-center dropdown-item fs-6 fw-bold text-danger"
                             data-bs-target="#User-Password-Modal4" data-bs-toggle="modal"
                             data-bs-dismiss="modal"><svg width="16" height="16" fill="currentColor"
                                 class="bi bi-exclamation-triangle-fill mx-2" viewBox="0 0 16 16">

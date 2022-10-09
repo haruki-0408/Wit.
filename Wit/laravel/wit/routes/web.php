@@ -64,9 +64,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/searchUser', [App\Http\Controllers\UserController::class, 'searchUser'])->name('searchUser');
     Route::post('/home/searchRoom', [App\Http\Controllers\RoomController::class, 'searchRoom'])->name('searchRoom');
 
-    //Mail Test
-    Route::get('/contact', [App\Http\Controllers\MailController::class, 'testIndex'])->name('testIndex');
-    Route::post('/contact', [App\Http\Controllers\MailController::class, 'testSendMessage'])->name('testSendMessage');
 });
 
 

@@ -9,29 +9,6 @@
                 height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg></a>
-        <!--
-        <div class="dropup">
-            <a class="dropup link-dark dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false"" href=" #"><svg width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
-                  </svg></a>
-            <ul class="dropdown-menu justify-content-center p-2">
-                <li class="p-2">
-                    <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#My-ListUser-Modal">
-                        <strong>Users</strong>
-                    </a>
-                </li>
-                <hr>
-                <li class="p-2">
-                    <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
-                        data-bs-target="#My-ListRoom-Modal">
-                        <strong>Rooms</strong>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        -->
         <a class="tags link-dark" data-bs-toggle="modal" data-bs-target="#Tags-Modal" href="#"><svg width="16"
                 height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                 <path

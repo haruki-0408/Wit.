@@ -276,18 +276,34 @@ class RoomController extends Controller
 
     public function receiveWebhooks(Request $request)
     {
-        foreach ($request->events as $event) {
-            if ($event['name'] == 'member_removed') {
-                $room_id = substr($event['channel'], -26);
-                $user_id = $event['user_id'];
-                event(new UserExited($room_id, $user_id));
-                return response()->Json('User Exited');
-            } else if ($event['name'] == 'member_added') {
-                return response()->Json('User Entered');
-                //入室時のwebhookは他のイベントで行うから特に処理を行わない
-            }
+        //唯一の外部Api処理
+        if (is_null($request->headers->get('X-Pusher-Signature'))) {
+            abort(404);
         }
-        abort(404);
+
+        //pusherからのRequestなのかどうかをチェックしなくてはならない
+        //チェックがない状態だと誰でもWebhookを送信してこられるのでまずい
+        $webhook_signature = $request->headers->get('X-Pusher-Signature');
+        $body = file_get_contents('php://input');
+        $app_secret = env('PUSHER_APP_SECRET');
+        //requestのbodyの中身をpusherの秘密鍵と合わせてsha256でハッシュ化したものを電子署名として送信してきている
+        $expected_signature = hash_hmac( 'sha256', $body, $app_secret, false );
+
+        //電子署名が有効化どうかを確認
+        if ($expected_signature == $webhook_signature) {
+            foreach ($request->events as $event) {
+                if ($event['name'] == 'member_removed') {
+                    $room_id = substr($event['channel'], -26);
+                    $user_id = $event['user_id'];
+                    event(new UserExited($room_id, $user_id));
+                    return response()->Json('User Exited');
+                } else if ($event['name'] == 'member_added') {
+                    return response()->Json('User Entered');
+                }
+            }
+        } else {
+            abort(404);
+        }
     }
 
     public function receiveMessage(Request $request)
