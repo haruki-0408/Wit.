@@ -2,9 +2,9 @@
 
 
 @section('content')
-    <div class="container p-3">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <div class="container p-3" style="height: 100vh;">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-8 h-100">
                 <div class="card border-success">
                     <div class="card-header bg-success text-light">アカウント仮登録</div>
 
@@ -15,8 +15,9 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-end">メールアドレス</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -24,7 +25,7 @@
                                         </span>
                                     @enderror
 
-                                    @if(session('register_error_message'))
+                                    @if (session('register_error_message'))
                                         <span class="text-danger">
                                             <strong>{{ session('register_error_message') }}</strong>
                                         </span>
@@ -42,6 +43,17 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="card text-center" style="height:59%">
+                    <div class="card-header text-muted" style="font-size:0.5em">
+                        登録した時点で下記規約に同意したものと見なします。
+                    </div>
+                    <div class="card-body overflow-scroll text-start">
+                        @component('wit.terms')
+                        @endcomponent
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

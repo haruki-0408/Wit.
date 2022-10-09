@@ -79,7 +79,7 @@
         </div>
 
         <div class="fs-5 dropdown-item d-flex align-items-center">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+            <a href="#" class="link-dark text-decoration-none d-flex align-items-center" data-bs-toggle="modal"
                 data-bs-target="#My-ListUser-Modal">
                 <svg width="16" height="16" fill="currentColor" class="bi bi-people-fill mx-2"
                     viewBox="0 0 16 16">
@@ -93,7 +93,7 @@
         </div>
 
         <div class="fs-5 dropdown-item mt-2 d-flex align-items-center">
-            <a href="#" class="link-dark text-decoration-none" data-bs-toggle="modal"
+            <a href="#" class="link-dark text-decoration-none d-flex align-items-center" data-bs-toggle="modal"
                 data-bs-target="#My-ListRoom-Modal">
                 <svg width="16" height="16" fill="currentColor" class="bi bi-house-fill mx-2"
                     viewBox="0 0 16 16">
