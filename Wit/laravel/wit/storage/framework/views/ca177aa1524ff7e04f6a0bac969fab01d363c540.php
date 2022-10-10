@@ -1,0 +1,1 @@
+test email send message<?php /**PATH /var/www/laravel/wit/resources/views/wit/Emails/test.blade.php ENDPATH**/ ?>
