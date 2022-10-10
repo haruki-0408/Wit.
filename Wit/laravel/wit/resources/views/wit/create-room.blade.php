@@ -30,7 +30,7 @@
                     <div class="mb-3">
                         <label for="Input-Description" class="form-label">Description</label>
                         <textarea id="Input-Description" class="form-control" type="text" name="description" rows="3">{{ old('description') }}</textarea>
-                        <div class="form-text">Descriptionは400文字まで記載できます</div>
+                        <div class="form-text">Descriptionは500文字まで記載できます</div>
                         @error('description')
                             <div class="text-danger">
                                 <strong>{{ $message }}</strong>

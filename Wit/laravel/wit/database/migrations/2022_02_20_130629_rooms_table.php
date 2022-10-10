@@ -17,8 +17,8 @@ class RoomsTable extends Migration
             $table->char('id',26)->primary(); //RoomのIDだけはULID
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('title', 30);
-            $table->string('description', 400);
-            $table->string('password')->nullable()->default(null);
+            $table->string('description', 500);
+            $table->string('password', 100)->nullable()->default(null);
             $table->dateTime('created_at')->useCurrent(); 
             $table->dateTime('posted_at')->nullable()->default(null); 
         });

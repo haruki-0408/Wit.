@@ -48,7 +48,7 @@
                     <div class="card-header text-muted" style="font-size:0.5em">
                         登録した時点で下記規約に同意したものと見なします。
                     </div>
-                    <div class="card-body overflow-scroll text-start">
+                    <div class="card-body overflow-scroll text-start" style="font-size:0.6em;">
                         @component('wit.terms')
                         @endcomponent
                     </div>

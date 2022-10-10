@@ -9,7 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    
 
     <title>Wit.</title>
 
@@ -17,10 +18,39 @@
 </head>
 
 <body>
+    <!-- Terms of Service -->
+    <div class="modal fade" id="Terms-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="Terms-Modal" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-fill mx-2"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                        </svg>Terms
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column p-3" style="font-size:0.6em">
+                        @component('wit.terms')
+                        @endcomponent
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container-fluid content">
         <header>
             <nav class="navbar navbar-expand-md navbar-light bg-transparent">
-                <a class="navbar-brand" href="#">Wit.</a>
+                <p class="navbar-brand" href="#">Wit.</p>
             </nav>
         </header>
 
@@ -37,7 +67,7 @@
             <div class="row text-center m-2">
                 <p class="text-dark fw-bold" style="font-style:initial">質問　議論　コミュニティ</p>
             </div>
-            
+
             <div class="Auth-Button row justify-content-center mb-2">
                 <div class="col-sm-12 text-center col-md-3"> <a href="{{ route('login') }}"
                         class="btn btn-primary px-4 m-2  ">ログイン</a> </div>
@@ -65,7 +95,7 @@
                             <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                         </svg> Tablet
                     </div>
-                    <video width="100%" src="movie/tb.mp4" autoplay muted loop></video>
+                    <video width="80%" src="movie/tb.mp4" autoplay muted loop></video>
                 </div>
                 <div id="Smartphone" class="col-lg-2 col-md-6 col-12 text-center">
                     <div class="rounded-circle border-1 bg-white m-2">
@@ -75,7 +105,7 @@
                             <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                         </svg> Phone
                     </div>
-                    <video width="100%" src="movie/sm.mp4" autoplay muted loop></video>
+                    <video width="80%" src="movie/sm.mp4" autoplay muted loop></video>
                 </div>
             </div>
     </div>
@@ -83,7 +113,8 @@
 
     <!-- FOOTER -->
     <footer class="row m-1 bg-transparent fixed-bottom">
-        <p class="d-inline-block">Copyright © 2022 Wit. All Rights Reserved. <a href="#">Terms of Service</a></p>
+        <p class="d-inline-block">Copyright © 2022 Wit. All Rights Reserved. <a data-bs-toggle="modal"
+                data-bs-target="#Terms-Modal" href="#">Terms of Service</a></p>
     </footer>
 
 

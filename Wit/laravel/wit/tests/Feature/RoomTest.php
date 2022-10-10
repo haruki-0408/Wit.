@@ -1076,7 +1076,7 @@ class RoomTest extends TestCase
     public function test_get_room_info()
     {
         $this->actingAs($this->user); //ユーザをログイン状態に変更
-        //部屋を部屋を25個作成　setUP()で作成しているものと合わせて合計27個にしたい
+        //部屋を25個作成　setUP()で作成しているものと合わせて合計27個にしたい
         $rooms = Room::factory()->count(25)->create();
         //作成された降順に並んでいるか確認しやすいように10番目の部屋のtitleを10, 9番目の部屋のtitleを9に変更する
         $rooms[9]->title = '9';
