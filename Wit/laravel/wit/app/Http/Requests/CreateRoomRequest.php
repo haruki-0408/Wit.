@@ -35,7 +35,7 @@ class CreateRoomRequest extends FormRequest
             //ここはサイズではなくintの整数値で判断しているからサイズなら5120でいい
             'sum_image_count' => 'int|max:30',
             'matches.*' => 'max:20',
-            'create_password' => 'max:50|confirmed|min:8'
+            'create_password' => 'max:100|confirmed|min:8'
         ];
     }
 
@@ -45,12 +45,12 @@ class CreateRoomRequest extends FormRequest
             'title.required' => 'Titleを入力してください',
             'title.max' => 'Titleは最大30文字以内です',
             'description.required' => 'Descriptionを入力してください',
-            'description.max' => 'Descriptionは最大400文字以内です',
+            'description.max' => 'Descriptionは最大500文字以内です',
             'sum_image_size.max' => '画像サイズは合計5MBまでです',
             'sum_image_count.max' => '画像枚数は最大30枚までです',
             'room_images.*.image' => '画像形式以外はアップロードできません',
             'matches.*.max' => '1タグにつき最大20文字までです',
-            'create_password.max' => 'passwordは最大50文字以内です',
+            'create_password.max' => 'passwordは最大100文字以内です',
             'create_password.min' => 'passwordは最小8文字からです',
             'create_password.confirmed' => 'passwordが一致しませんでした',
         ];

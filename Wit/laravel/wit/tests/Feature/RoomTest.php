@@ -107,7 +107,7 @@ class RoomTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertValid(['title', 'description', 'create_password', 'sum_image_count', 'sum_image_size']);
         $response->assertSessionHas(['auth_room_id' => $room_id_2])->assertStatus(302)->assertRedirect('/home/room:' . $room_id_2);
-        \Storage::disk('local')->assertExists('roomImages/RoomID:' . $room_id_2); //適切にルームイメーじが保存されているか確認
+        \Storage::disk('local')->assertExists('roomImages/RoomID:' . $room_id_2); //適切にルームイメージが保存されているか確認
         \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $room_id_2); //必ず最後は削除する
 
         //同じユーザで部屋を4つ目を作成しようとした時の動作　３つ以上は同時に開設できないからエラーセッションが送られるはず
@@ -137,6 +137,7 @@ class RoomTest extends TestCase
         ]);
         $response->assertInvalid(['sum_image_count', 'matches.0', 'title', 'description', 'create_password']);
     }
+
 
     public function test_remove_room()
     {
@@ -242,7 +243,6 @@ class RoomTest extends TestCase
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['action_message' => 'ルーム:' . $this->room_id_1 . 'の保存が完了しました']);
         $this->assertNotNull(Room::find($this->room_id_1)->posted_at);
     }
-
 
     public function test_store_image()
     {
@@ -1071,6 +1071,10 @@ class RoomTest extends TestCase
         ]);
         //keyword = APPLE & check_postに該当するのは5件なので5件返ってくることを確認
         $response->assertJsonCount(5);
+        //ルームイメージつきの部屋を５つ作成したからディレクトリの中身を必ず削除する
+        for ($i = 0; $i < 5; $i++) {
+            \Storage::disk('local')->deleteDirectory('roomImages/RoomID:' . $rooms[$i]->id);
+        }
     }
 
     public function test_get_room_info()
