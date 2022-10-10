@@ -3,7 +3,6 @@
 /public/storage
 /storage/*.key
 /vendor
-../../docker/mysql/data
 .env
 .env.testing
 .env.backup
@@ -15,4 +14,3 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-.DS_Store-a
