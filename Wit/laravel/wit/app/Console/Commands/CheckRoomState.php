@@ -52,7 +52,7 @@ class CheckRoomState extends Command
 
                     foreach ($room_tags as $room_tag) {
                         $tag = Tag::find($room_tag->pivot->tag_id);
-                        if ($tag->number < 1) {
+                        if ($tag->number <= 1) {
                             $tag->delete();
                         } else {
                             $tag->update([
