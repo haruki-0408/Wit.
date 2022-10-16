@@ -1,5 +1,4 @@
 FROM alpine:3.6
-
 # nginxのインストール
 RUN apk update && \
     apk add --no-cache nginx
