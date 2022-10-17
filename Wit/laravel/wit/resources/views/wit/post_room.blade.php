@@ -597,7 +597,6 @@
     <script>
         window.onload = function() {
             const images = document.querySelectorAll('.Image');
-            console.log(images);
             Intense(images);
         }
     </script>

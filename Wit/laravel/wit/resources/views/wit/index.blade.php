@@ -58,7 +58,7 @@
             <div class="Top mx-auto">
                 <div class="row justify-content-center">
                     <div class="col-8">
-                        <img width=100px height=100px src="{{ asset('/images/wit/wit.png') }} "">
+                        <img width=100px height=100px src="{{ asset('/images/wit/wit.PNG') }} "">
                         <span class="text-center">Welcome to Wit.</span>
                     </div>
                 </div>

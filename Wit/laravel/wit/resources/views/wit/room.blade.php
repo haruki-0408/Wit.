@@ -874,7 +874,6 @@
         window.onload = function() {
             if (document.getElementById('Room-Image')) {
                 const images = document.querySelectorAll('.Image');
-                console.log(images);
                 Intense(images);
             }
         }
