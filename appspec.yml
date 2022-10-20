@@ -3,4 +3,5 @@ os: linux #EC2内で使用するOS
 files: 
     - source: /Wit/laravel/ #github内のどのファイルorフォルダをデプロイするか
       destination: ./var/www/laravel/ #ec2内のどの場所にデプロイするか
+file_exists_behavior: OVERWRITE
  
