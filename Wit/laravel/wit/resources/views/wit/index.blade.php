@@ -65,7 +65,7 @@
             </div>
 
             <div class="row text-center m-2">
-                <p class="text-dark fw-bold" style="font-style:initial">質問　議論　コミュニティ</p>
+                <p class="text-dark fw-bold" style="font-style:initial">質問　議論　コミュニティ　変更</p>
             </div>
 
             <div class="Auth-Button row justify-content-center mb-2">
