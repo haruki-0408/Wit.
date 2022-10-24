@@ -5,4 +5,3 @@ rm -r userImages && \
 cd /var/www/laravel/wit/ && \
 php artisan storage:link && \
 php artisan config:cache && \
-npm run dev
