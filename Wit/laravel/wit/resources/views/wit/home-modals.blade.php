@@ -92,7 +92,7 @@
                                 </a>
                             </div>
                             <div class="btn-group d-flex align-items-center p-2">
-                                <button type="button" class="Remove-ListUser btn btn-outline-danger"><svg
+                                <button type="button" class="Remove-List-User btn btn-outline-danger"><svg
                                         width="16" height="16" fill="currentColor"
                                         class="bi bi-person-dash-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
