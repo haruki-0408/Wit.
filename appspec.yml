@@ -5,6 +5,6 @@ files:
       destination: ./var/www/laravel/ #ec2内のどの場所にデプロイするか
 file_exists_behavior: OVERWRITE
 hooks:
-  AfterInstall:
-    - location: deploy.sh
-      timeout: 300
+  AfterInstall: #スクリプトを実行したいフェーズ
+    - location: deploy.sh #スクリプトファイルの場所を相対パスで記述
+      timeout: 300 #実行できなければ300msでタイムアウトする
