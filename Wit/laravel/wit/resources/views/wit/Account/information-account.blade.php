@@ -177,7 +177,8 @@
         document.addEventListener('click', function(e) {
             // id属性の値で判定
             if (event.target.id === 'Profile-Cancel-Button') {
-                window.location.reload(true);
+                window.onbeforeunload = null;
+                window.location.href = '/home/profile:{{ Crypt::encrypt(Auth::id()) }}';
             }
         });
     }
