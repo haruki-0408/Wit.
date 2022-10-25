@@ -5,5 +5,4 @@ rm -r userImages && \
 cd /var/www/laravel/wit/ && \
 php artisan storage:link && \
 php artisan config:clear && \
-node -v && \
-npm -v
+npm run prod
