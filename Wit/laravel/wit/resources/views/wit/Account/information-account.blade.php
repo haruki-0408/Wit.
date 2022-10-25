@@ -177,7 +177,7 @@
         document.addEventListener('click', function(e) {
             // id属性の値で判定
             if (event.target.id === 'Profile-Cancel-Button') {
-                window.location.reload(false);
+                window.location.reload(true);
             }
         });
     }
