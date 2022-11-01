@@ -11267,8 +11267,10 @@ $(document).on('click', '#Search-Button', function () {
   if (document.getElementById('Radio-User').checked && document.getElementById('Radio-Room').checked != true) {
     if (document.getElementById("Search-Keyword").value) {
       var keyword = document.getElementById("Search-Keyword").value;
-      var search_button = document.getElementById("Search-Button");
-      search_button.dataset.keyword = keyword;
+
+      var _search_button = document.getElementById("Search-Button");
+
+      _search_button.dataset.keyword = keyword;
       $.ajax({
         type: "get",
         //HTTP通信の種類
@@ -11287,7 +11289,7 @@ $(document).on('click', '#Search-Button', function () {
           no_result.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
           no_result.textContent = 'No result';
           document.getElementById('Rooms-List').appendChild(no_result);
-          search_button.disabled = false;
+          _search_button.disabled = false;
           click_flag = true;
         }
       }) //通信が失敗したとき
@@ -11295,18 +11297,18 @@ $(document).on('click', '#Search-Button', function () {
         console.log(error.statusText);
       });
     } else {
-      var _search_button = document.getElementById("Search-Button");
+      var _search_button2 = document.getElementById("Search-Button");
 
       var no_result = document.createElement('h3');
       no_result.setAttribute('data-room-id', 'No-Result');
       no_result.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
       no_result.textContent = 'No result';
       document.getElementById('Rooms-List').appendChild(no_result);
-      _search_button.disabled = false;
+      _search_button2.disabled = false;
       click_flag = true;
     }
   } else if (document.getElementById('Radio-Room').checked && document.getElementById('Radio-User').checked != true) {
-    var _search_button2 = document.getElementById("Search-Button");
+    var _search_button3 = document.getElementById("Search-Button");
 
     var _keyword = document.getElementById("Search-Keyword").value;
     var select = document.getElementById('Search-Type').value;
@@ -11314,12 +11316,12 @@ $(document).on('click', '#Search-Button', function () {
     var check_tag = document.getElementById('Check-Tag').checked;
     var check_password = document.getElementById('Check-Password').checked;
     var check_post = document.getElementById('Check-Post').checked;
-    _search_button2.dataset.select = select;
-    _search_button2.dataset.keyword = _keyword;
-    _search_button2.dataset.check_image = check_image;
-    _search_button2.dataset.check_tag = check_tag;
-    _search_button2.dataset.check_password = check_password;
-    _search_button2.dataset.check_post = check_post;
+    _search_button3.dataset.select = select;
+    _search_button3.dataset.keyword = _keyword;
+    _search_button3.dataset.check_image = check_image;
+    _search_button3.dataset.check_tag = check_tag;
+    _search_button3.dataset.check_password = check_password;
+    _search_button3.dataset.check_post = check_post;
     $.ajax({
       type: "post",
       //HTTP通信の種類
@@ -11356,7 +11358,7 @@ $(document).on('click', '#Search-Button', function () {
         _no_result.classList = "d-flex justify-content-center align-items-center text-black-50 h-100";
         _no_result.textContent = 'No result';
         document.getElementById('Rooms-List').appendChild(_no_result);
-        _search_button2.disabled = false;
+        _search_button3.disabled = false;
         click_flag = true;
       }
     }) //通信が失敗したとき
@@ -11370,8 +11372,12 @@ $(document).on('click', '.tag', function (event) {
   var preview = event.currentTarget.classList.contains('preview');
 
   if (click_flag) {
-    var search_button = document.getElementById("Search-Button");
-    search_button.disabled = true;
+    if (document.getElementById("Search-Button")) {
+      var _search_button4 = document.getElementById("Search-Button");
+
+      _search_button4.disabled = true;
+    }
+
     click_flag = false;
 
     if (!preview && document.getElementById('Rooms-List')) {
@@ -11716,8 +11722,9 @@ function addUserPage(res, show) {
       }
 
       if (document.getElementById("Search-Button")) {
-        var search_button = document.getElementById("Search-Button");
-        search_button.disabled = false;
+        var _search_button5 = document.getElementById("Search-Button");
+
+        _search_button5.disabled = false;
       }
     }
 
@@ -11764,7 +11771,6 @@ function addRoomPage(res, show) {
       }
 
       for (var j = 0; j < Object.keys(res[i].tags).length; j++) {
-        //ここの実装見直したい、、
         var room_tag_li = document.createElement("li");
         room_tag_li.setAttribute("class", "d-inline-block");
         var room_tag_button = document.createElement("button");
@@ -11812,8 +11818,9 @@ function addRoomPage(res, show) {
       }
 
       if (document.getElementById("Search-Button")) {
-        var search_button = document.getElementById("Search-Button");
-        search_button.disabled = false;
+        var _search_button6 = document.getElementById("Search-Button");
+
+        _search_button6.disabled = false;
       }
     };
 
@@ -12005,7 +12012,6 @@ function getMoreRoomButton(tag) {
     var check_password = document.getElementById('Check-Password').checked;
     var check_post = document.getElementById('Check-Post').checked;
     var check = [keyword, check_image, check_tag, check_password, check_post];
-    console.log(check);
 
     if (check.some(function (element) {
       return element === true;

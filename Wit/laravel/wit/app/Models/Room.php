@@ -54,6 +54,10 @@ class Room extends Model
      */
     protected $casts = [];
 
+    //アクセサtoJsonされてもcreated_atを適切にJST表記するための処置
+    protected function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d h:m:s');
+    }   
 
     public function user()
     {

@@ -515,7 +515,7 @@
                             </div>
                         </li>
 
-                        <li>Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Created Time : {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
                         <li>Expired Time: {{ $expired_time_left }} Hours </li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
@@ -649,7 +649,8 @@
                                 </div>
                                 <ul id="Room-Informations-List" class="col-12 mt-2 p-2">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Created Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Created Time:
+                                        {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
                                     <li>Expired Time: {{ $expired_time_left }} Hours </li>
                                     @if (Auth::id() == $room_info->user->id)
                                         <hr>
@@ -871,6 +872,13 @@
         </main>
     </div>
     <script>
+        const room_chat = document.getElementById('Room-Chat');
+        if (document.getElementById('Room-Image')) {
+            room_chat.style = 'height:60%;'
+        } else {
+            room_chat.style = 'height:100%;'
+        }
+        
         window.onload = function() {
             if (document.getElementById('Room-Image')) {
                 const images = document.querySelectorAll('.Image');

@@ -4,12 +4,7 @@ const me_id = document.getElementById('Me').dataset.authId;
 const message = document.getElementById('Message');
 const send_button = document.getElementById('Send-Message-Button');
 
-const room_chat = document.getElementById('Room-Chat');
-if (document.getElementById('Room-Image')) {
-    room_chat.style = 'height:60%;'
-} else {
-    room_chat.style = 'height:100%;'
-}
+
 
 send_button.addEventListener('click', (e) => {
     if (message && message.value != "") {

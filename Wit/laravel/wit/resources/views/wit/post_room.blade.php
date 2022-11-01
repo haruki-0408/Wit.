@@ -297,7 +297,7 @@
                             </div>
                         </li>
 
-                        <li>Created Time : {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                        <li>Created Time : {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
                     </ul>
                 </div>
             </div>
@@ -413,7 +413,8 @@
                                 </div>
                                 <ul id="Room-Informations-List" class="col-12 mt-2 p-1">
                                     <li>Id : {{ $room_info->id }}</li>
-                                    <li>Created Time: {{ $room_info->created_at->format('Y/m/d H:i') }}</li>
+                                    <li>Created Time:
+                                        {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -483,6 +484,7 @@
                                 </div>
                             </div>
                         @endif
+
                         <div id="Room-Chat" class="card col-12">
                             <div class="card-body">
                                 <!-- MESSAGE -->
@@ -513,6 +515,7 @@
                                     @endforeach
                                 </ul>
                             </div>
+
                         </div>
                     </div>
 
@@ -555,7 +558,7 @@
                                 <ul id="Room-Informations-List3" class="col-12 p-1">
                                     <li class="text-break pb-2">Id : {{ $room_info->id }}</li>
                                     <li class="text-break">Created Time :
-                                        {{ $room_info->created_at->format('Y/m/d H:i') }}
+                                        {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}
                                     </li>
                                 </ul>
                             </div>
@@ -595,9 +598,18 @@
     </div>
 
     <script>
+        const room_chat = document.getElementById('Room-Chat');
+        if (document.getElementById('Room-Image')) {
+            room_chat.style = 'height:60%;'
+        } else {
+            room_chat.style = 'height:100%;'
+        }
+        
         window.onload = function() {
-            const images = document.querySelectorAll('.Image');
-            Intense(images);
+            if (document.getElementById('Room-Image')) {
+                const images = document.querySelectorAll('.Image');
+                Intense(images);
+            }
         }
     </script>
 </body>

@@ -204,11 +204,15 @@ class RoomController extends Controller
         }
 
         $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
+        
+        
         $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
         if (isset($room_info->password) && session()->get('auth_room_id') != $room_id) {
             return redirect('home')->with('error_message', 'パスワード付きのルームです');
         }
+
+        
 
         event(new UserEntered($room_id));
         return view('wit.room', [
