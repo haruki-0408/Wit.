@@ -426,12 +426,12 @@ $(document).on('click', '#Search-Button', function () {
 //tagボタンを押したとき
 $(document).on('click', '.tag', function (event) {
     let preview = event.currentTarget.classList.contains('preview');
+
     if (click_flag) {
+        let search_button = document.getElementById("Search-Button");
         if (document.getElementById("Search-Button")) {
-            let search_button = document.getElementById("Search-Button");
             search_button.disabled = true;
         }
-
         click_flag = false;
         if (!(preview) && document.getElementById('Rooms-List')) {
             let search_tag_name = event.currentTarget.children[0].textContent;
