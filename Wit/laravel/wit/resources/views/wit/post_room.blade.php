@@ -67,12 +67,16 @@
             color: #fff;
             display: inline-block;
             text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
         .Opponent p {
             display: table;
             max-width: 70%;
             background-color: #f8f9fa;
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
         #Room-Tags-List {

@@ -68,12 +68,16 @@
             color: #fff;
             display: inline-block;
             text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
         .Opponent p {
             display: table;
             max-width: 70%;
             background-color: #f8f9fa;
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
         #Room-Tags-List {
@@ -155,7 +159,7 @@
         .Answer:hover{
             text-decoration: none;
             cursor: pointer;
-            color:#212529;
+            color:#6b7075;
         }
 
         .Ready-Answer:hover{
