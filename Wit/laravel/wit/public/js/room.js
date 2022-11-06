@@ -11140,7 +11140,8 @@ function addChatMessage(e) {
     var p_element = document.createElement('p');
     span_element.classList = "badge d-block text-dark text-end";
     span_element.textContent = getNowDate(type);
-    p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
+    console.log(e.message);
+    p_element.innerText = e.message;
     message_element.appendChild(span_element);
     message_element.appendChild(p_element);
     message_list.appendChild(message_element);
@@ -11161,7 +11162,7 @@ function addChatMessage(e) {
 
     var _p_element = document.createElement('p');
 
-    _p_element.innerHTML = e.message.replace(/\r?\n/g, '<br>');
+    _p_element.innerText = e.message;
     message_element.appendChild(user_image);
     message_element.appendChild(user_name);
     message_element.appendChild(_span_element);

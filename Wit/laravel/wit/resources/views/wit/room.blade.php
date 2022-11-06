@@ -140,12 +140,28 @@
         .tag:before {
             content: '●';
             margin-right: .5em;
-
         }
 
         .tag:hover {
             color: #0d6efd;
             background-color: #fff;
+        }
+
+        .Answer{
+            text-decoration: underline;
+            color: #dc3545;
+        }
+
+        .Answer:hover{
+            text-decoration: none;
+            cursor: pointer;
+            color:#212529;
+        }
+
+        .Ready-Answer:hover{
+            text-decoration: underline;
+            cursor: pointer;
+            color: #dc3545;
         }
 
         ul {
@@ -764,7 +780,7 @@
                                                     width="20" height="20" class="rounded-circle">
                                                 <strong>{{ $chat->name }}</strong><span
                                                     class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                <p>{{ $chat->pivot->message }}</p>
+                                                <p>{!! nl2br(e($chat->pivot->message)) !!}</p>
                                             </li>
                                         @endif
                                     @endforeach

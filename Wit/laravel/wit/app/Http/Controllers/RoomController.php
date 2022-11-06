@@ -331,7 +331,6 @@ class RoomController extends Controller
             'chat_count.integer' => 'エラーにより送信できません',
             'chat_count.max' => 'ルームの最大メッセージ数(1000)に達しました',
         ];
-
         $request->validate($rules, $message);
 
         $user = User::find($request->user()->id);
