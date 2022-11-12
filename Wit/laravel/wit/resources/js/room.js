@@ -1,10 +1,49 @@
+//bootstrapのモーダルを操作するために読み込む
+window.bootstrap = require('bootstrap');
+
+//ページ離脱防止禁止
+window.onbeforeunload = function (e) {
+    e.returnValue = "ページを離れようとしています。よろしいですか？";
+}
+
 const room_id = document.querySelector('body').id;
 const host_id = document.getElementById('Host-User').dataset.hostId;
 const me_id = document.getElementById('Me').dataset.authId;
 const message = document.getElementById('Message');
 const send_button = document.getElementById('Send-Message-Button');
+const upload_file_button = document.getElementById('Upload-File-Button');
+const input_file = document.getElementById('Upload-File-Input');
+const confirm_upload_modal = new bootstrap.Modal(document.getElementById('Confirm-Upload-Modal'));
 
+//ファイルアップロード確認メッセージの入力
+input_file.addEventListener('change', () => {
+    let file = input_file.files[0];
+    const confirm_upload_message = document.getElementById('Confirm-Upload-Message');
+    const file_name = document.createElement('p');
+    const file_size = document.createElement('p');
+    const file_help1 = document.createElement('p');
+    const file_help2 = document.createElement('p');
+    file_help1.style.fontSize = "12px";
+    file_help2.style.fontSize = "12px";
+    file_name.classList = "text-wrap text-break m-0";
+    file_size.classList = "text-wrap text-break";
+    file_help1.classList = "fw-bold fs-7 text-danger m-0";
+    file_help2.classList = "fw-bold fs-7 text-danger m-0";
+    file_name.innerText = 'ファイル名：' + file.name;
+    file_size.innerText = 'ファイルサイズ：' + fileSizeUnit(file.size);
+    file_help1.innerText = "※アップロード後は削除できません。最大10MBまで送信可能です";
+    file_help2.innerText = ".txt .csv .json .xml .htm .html .pdf .png .jpeg .gif .webp がアップロード可能です";
+    confirm_upload_message.appendChild(file_name);
+    confirm_upload_message.appendChild(file_size);
+    confirm_upload_message.appendChild(file_help1);
+    confirm_upload_message.appendChild(file_help2);
+    confirm_upload_modal.show();
+});
 
+document.getElementById('Confirm-Upload-Modal').addEventListener('hidden.bs.modal', () => {
+    $('#Confirm-Upload-Message').empty();
+    $('#Upload-File-Input').empty();
+});
 
 send_button.addEventListener('click', (e) => {
     if (message && message.value != "") {
@@ -22,21 +61,52 @@ send_button.addEventListener('click', (e) => {
             dataType: 'json',
         })
             .fail((error) => {
-                console.log(error);
                 if (error.responseJSON.errors.message) {
                     message.value = error.responseJSON.errors.message[0];
                 } else if (error.responseJSON.errors.chat_count) {
                     message.value = error.responseJSON.errors.chat_count[0];
+                } else {
+                    console.log(error.responseJSON);
                 }
             });
-        message.value = "";
-    }
+    } 
+    message.value = "";
 });
 
-//ページ離脱防止禁止
-window.onbeforeunload = function (e) {
-    e.returnValue = "ページを離れようとしています。よろしいですか？";
-}
+upload_file_button.addEventListener('click', (e) => {
+    let file = input_file.files[0];
+    if (file) {
+        e.preventDefault();
+        let formData = new FormData();
+        formData.append('room_id', room_id);
+        formData.append('file',file);
+        $.ajax({
+            type: "post",
+            url: '/home/room/chat/file',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: formData,
+            // Ajaxがdataを整形しない指定
+            processData: false,
+            //contentTypeもfalseに指定
+            contentType: false,
+            dataType: 'json',
+        })//通信が成功したとき
+            .done((res) => {
+                console.log(res)
+            })
+            .fail((error) => {
+                console.log(error);
+                if (error.responseJSON.errors.file) {
+                    message.value = error.responseJSON.errors.file[0];
+                }
+            });
+    }
+
+    confirm_upload_modal.hide();
+    input_file.value ="";
+});
 
 
 Echo.join('room-user-notifications.' + room_id)
@@ -82,11 +152,39 @@ Echo.join('room-user-notifications.' + room_id)
     .listen('SendMessage', (e) => {
         addChatMessage(e);
     })
+    .listen('UploadFile', (e) =>{
+        addUploadFile(e);
+    })
     .error((error) => {
         console.error(error);
         window.location.href = '/home';
     });
 
+function fileSizeUnit(size) {
+
+    // 1 KB = 1024 Byte
+    const kb = 1024
+    const mb = Math.pow(kb, 2)
+    const gb = Math.pow(kb, 3)
+    const tb = Math.pow(kb, 4)
+    const pb = Math.pow(kb, 5)
+    const round = (size, unit) => {
+        return Math.round(size / unit * 100.0) / 100.0
+    }
+
+    if (size >= pb) {
+        return round(size, pb) + 'PB'
+    } else if (size >= tb) {
+        return round(size, tb) + 'TB'
+    } else if (size >= gb) {
+        return round(size, gb) + 'GB'
+    } else if (size >= mb) {
+        return round(size, mb) + 'MB'
+    } else if (size >= kb) {
+        return round(size, kb) + 'KB'
+    }
+    return size + 'バイト'
+}
 
 function addOnlineUser(user) {
     const check = $('li[data-user-id="' + user.id + '"]');
@@ -243,6 +341,46 @@ function addChatMessage(e) {
         message_element.appendChild(user_name);
         message_element.appendChild(span_element);
         message_element.appendChild(p_element);
+        message_list.appendChild(message_element);
+    }
+}
+
+function addUploadFile(e) {
+    const message_list = document.getElementById('Message-List');
+    const message_element = document.createElement('li');
+    const type = 'half';
+    if (e.user.id === me_id) {
+        message_element.classList = "Myself Message-Wrapper"
+        const span_element = document.createElement('span');
+        const a_element = document.createElement('a');
+        span_element.classList = "badge d-block text-dark text-end";
+        span_element.textContent = getNowDate(type);
+        a_element.onclick = window.onbeforeunload = null;
+        a_element.href = '/home/room:'+ e.room_id + '/downloadRoomFile:' +e.post_file ;
+        a_element.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-file-earmark mx-2' viewBox='0 0 16 16'><path d='M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z'/></svg>" + e.post_file;
+        message_element.appendChild(span_element);
+        message_element.appendChild(a_element);
+        message_list.appendChild(message_element);
+    } else {
+        const user_image = document.createElement('img');
+        user_image.src = '/' + e.user.profile_image;
+        user_image.classList = "rounded-circle";
+        user_image.width = "20";
+        user_image.height = "20";
+        const user_name = document.createElement('strong');
+        user_name.textContent = e.user.name;
+        message_element.classList = "Opponent";
+        const span_element = document.createElement('span');
+        span_element.classList = "badge text-dark";
+        span_element.textContent = getNowDate(type);
+        const a_element = document.createElement('a');
+        a_element.onclick = window.onbeforeunload = null;
+        a_element.href = '/home/room:'+ e.room_id + '/downloadRoomFile:' +e.post_file ;
+        a_element.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-file-earmark mx-2' viewBox='0 0 16 16'><path d='M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z'/></svg>" + e.post_file;
+        message_element.appendChild(user_image);
+        message_element.appendChild(user_name);
+        message_element.appendChild(span_element);
+        message_element.appendChild(a_element);
         message_list.appendChild(message_element);
     }
 }

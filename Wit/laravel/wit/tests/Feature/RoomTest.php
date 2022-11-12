@@ -189,6 +189,7 @@ class RoomTest extends TestCase
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'エラーが発生しました']);
 
+        
         //存在しないルームIDの時
         $str_room_id = Str::random(26);
         $response = $this->post('/home/saveRoom', [
@@ -196,18 +197,21 @@ class RoomTest extends TestCase
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルーム:' . $str_room_id . 'は存在しません']);
 
+        
         //ログインユーザとルームの作成者が一致しない場合
         $response = $this->post('/home/saveRoom', [
             'room_id' => $this->room_id_2,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ログインユーザーとルームの作成者が一致しません']);
-
+        
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
         //ルームにパスワードが付いている場合
         $this->actingAs($this->other_user);
         $response = $this->post('/home/saveRoom', [
             'room_id' => $this->room_id_2,
         ]);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルームにパスワードがついているため保存できません']);
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
 
         //ルームにタグが付いていない場合
         $this->actingAs($this->user);
@@ -312,6 +316,28 @@ class RoomTest extends TestCase
     public function test_receive_message()
     {
         $this->actingAs($this->user);  //userをログイン状態にする
+        $room = Room::find($this->room_id_1);
+
+        ///入室していない状態でのチャットはCheckRoomIdではじかれる
+        $message = Str::random(10);
+        $response = $this->post('/home/room/chat/message', [
+            'message' => $message,
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertStatus(422);
+
+        //ルームにユーザを入室した状態に変更する
+        $room->roomUsers()->syncWithoutDetaching($this->user->id);
+        $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        //ユーザが入室しているルームIDと送信してきたルームIDが異なる場合は422
+        $message = Str::random(10);
+        $response = $this->post('/home/room/chat/message', [
+            'message' => $message,
+            'room_id' => $this->room_id_2,
+        ]);
+        $response->assertStatus(422);
+
         //バリデーションエラーなし
         $message = Str::random(10);
         $response = $this->post('/home/room/chat/message', [
@@ -325,12 +351,12 @@ class RoomTest extends TestCase
             'message' => $message,
         ]);
 
-        //room_id の入力なし
+        //room_id の入力なしはCheckRoomIdではじかれることを確認
         $response = $this->post('/home/room/chat/message', [
             'message' => '',
             'room_id' => '',
         ]);
-        $response->assertStatus(404);
+        $response->assertStatus(422);
 
         //room_idの入力ありだがメッセージの入力なし
         $response = $this->post('/home/room/chat/message', [
@@ -339,7 +365,7 @@ class RoomTest extends TestCase
         ]);
         $response->assertInvalid(['message']);
 
-        //room_idもありメッセージの10００文字制限のバリデーションエラーチェック
+        //room_idもありメッセージの1000文字制限のバリデーションエラーチェック
         $response = $this->post('/home/room/chat/message', [
             'message' => Str::random(1001),
             'room_id' => $this->room_id_1,
@@ -518,8 +544,9 @@ class RoomTest extends TestCase
         }
         $response = $this->get('/home/room:' . $room->id);
         $response->assertStatus(302)->assertRedirect('/home')->assertSessionHas(['error_message' => 'ルームの最大人数(作成者を除いて10人まで)を超過したため入室できません']);
-
+        
         //ルームに10人入っている状態で管理者ユーザが入室しようとした時
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
         $this->actingAs($this->other_user);
         $response = $this->get('/home/room:' . $room->id);
         $response->assertStatus(200)->assertViewIs('wit.room');
@@ -1156,6 +1183,7 @@ class RoomTest extends TestCase
         ]);
 
         //他人のopen roomを取得　post roomが省かれていることを確認
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
         $this->actingAs($this->other_user);
         $user_id = Crypt::encrypt($this->user->id);
         $response = $this->get('/getOpenRoom:' . $user_id);
@@ -1274,6 +1302,7 @@ class RoomTest extends TestCase
         //room_id なし user_id　あり　つまり他人のpost_roomを初期で取得するルーティングは存在しない
 
         //room_id　あり user_id あり 他人のpost roomを取得する時　5件取得できることを確認
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
         $this->actingAs($this->other_user);
         $user_id = Crypt::encrypt($this->user->id);
         $response = $this->get('/getPostRoom:' . $rooms[5]->id . '/' . $user_id);
@@ -1405,6 +1434,7 @@ class RoomTest extends TestCase
         //room_id なし user_id　あり　つまり他人のlist_roomを初期で取得するルーティングは存在しない
 
         //room_id あり　 user_id 入力あり　Other_More_List_Roomのテスト
+        $this->post('logout'); //ユーザを変化させる場合はAuthenticatedSessionミドルウェアが働くので一旦ログアウトさせる
         $this->actingAs($this->other_user);
         $user_id = Crypt::encrypt($this->user->id);
         $response = $this->get('/getListRoom:' . $rooms[0]->id . '/' . $user_id);

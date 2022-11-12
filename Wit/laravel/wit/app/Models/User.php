@@ -98,7 +98,12 @@ class User extends Authenticatable
 
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id')->using('App\Models\RoomUser');
+        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id')->withPivot('in_room')->using('App\Models\RoomUser');
+    }
+
+    public function inRoomCount()
+    {
+        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id')->withPivot('in_room')->using('App\Models\RoomUser')->where('in_room', '=', 1);
     }
 
     public function roomBans()

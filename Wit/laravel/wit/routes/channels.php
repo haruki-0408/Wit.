@@ -26,10 +26,14 @@ Broadcast::channel('room-user-notifications.{room_id}', function ($user, $room_i
 
     //ルームの管理者は数に入れない
     $count_online_users = $room->find($room_id)->roomUsers->except(['id',$room_user_id])->count();
-    
+    $count_in_room = $user->inRoomCount->count();
     $ban_check = $room->find($room_id)->roomBans->contains($user->id);
 
     if($ban_check){
+        return false;
+    }
+
+    if($count_in_room != 1){
         return false;
     }
 

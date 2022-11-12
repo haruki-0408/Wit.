@@ -17,10 +17,9 @@ class RoomChatTable extends Migration
             $table->id();
             $table->foreignUuid('room_id')->references('id')->on('rooms')->cascadeOnUpdate()->cascadeOnDelete()->comment('rooms_tableからの外部キー参照');
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
-            $table->string('message',1000); 
-            //tfile')->nullable()->comment('投稿ファイルのパス'); 
+            $table->string('message',1000)->nullable(); 
+            $table->string('postfile')->nullable(); 
             $table->dateTime('created_at')->useCurrent();
-            //$table->dateTime('deleted_at')->nullable()->default(null)->comment('論理削除にしてチャットの内容はすべて記録する'); 
         });
     }
 

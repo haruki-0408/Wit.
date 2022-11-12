@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
+use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserEntered;
 use App\Events\UserExited;
 use App\Events\SendMessage;
+use App\Events\UploadFile;
 use App\Events\RemoveRoom;
 use App\Events\SaveRoom;
 use App\Events\RoomBanned;
@@ -204,15 +206,15 @@ class RoomController extends Controller
         }
 
         $room_info = Room::with(['user:id,name,profile_image', 'tags:name,number'])->find($room_id);
-        
-        
+
+
         $count_image_data = RoomImage::where('room_id', $room_id)->get('image')->count();
 
         if (isset($room_info->password) && session()->get('auth_room_id') != $room_id) {
             return redirect('home')->with('error_message', 'パスワード付きのルームです');
         }
 
-        
+
 
         event(new UserEntered($room_id));
         return view('wit.room', [
@@ -291,9 +293,9 @@ class RoomController extends Controller
         $body = file_get_contents('php://input');
         $app_secret = env('PUSHER_APP_SECRET');
         //requestのbodyの中身をpusherの秘密鍵と合わせてsha256でハッシュ化したものを電子署名として送信してきている
-        $expected_signature = hash_hmac( 'sha256', $body, $app_secret, false );
+        $expected_signature = hash_hmac('sha256', $body, $app_secret, false);
 
-        //電子署名が有効化どうかを確認
+        //電子署名が有効化かどうかを確認
         if ($expected_signature == $webhook_signature) {
             foreach ($request->events as $event) {
                 if ($event['name'] == 'member_removed') {
@@ -312,10 +314,6 @@ class RoomController extends Controller
 
     public function receiveMessage(Request $request)
     {
-        if (is_null($request->room_id)) {
-            abort(404);
-        }
-
         $room = new Room;
         $chat_count = $room->find($request->room_id)->roomChat->count();
         $request->merge(['chat_count' => $chat_count]);
@@ -338,6 +336,17 @@ class RoomController extends Controller
 
         event(new SendMessage($request->room_id, $request->user(), $request->message));
         return response()->Json('Message broadcast');
+    }
+
+    public function receiveFile(UploadFileRequest $request)
+    {
+        $file_name = $this->storeFile($request->file('file'), $request->room_id);
+
+        $user = User::find($request->user()->id);
+        $user->roomChat()->attach($request->room_id, ['postfile' => $file_name]);
+
+        event(new UploadFile($request->room_id, $request->user(), $file_name));
+        return response()->Json('File Send Success');
     }
 
     public function receiveBanUser(Request $request)
@@ -601,6 +610,18 @@ class RoomController extends Controller
         }
     }
 
+    public function downloadRoomFile($room_id, $file_name)
+    {
+        $file_path = 'roomFiles/RoomID:' . $room_id . '/' . $file_name;
+        abort_unless(Storage::exists($file_path), 404);
+
+        $mimeType = Storage::mimeType($file_path);
+
+        $headers = [['Content-Type' => $mimeType]];
+
+        return Storage::download($file_path, $file_name, $headers);
+    }
+
 
 
     public function storeImage($image_file, $image_count, $room_id)
@@ -612,6 +633,23 @@ class RoomController extends Controller
             $img = $image_file->storeAs('roomImages/RoomID:' . $room_id, 'no' . $image_count . '.' . $extension, ['disk' => 'local']);
             return $img;
         }
+    }
+
+    public function storeFile($file, $room_id)
+    {
+        $file_name = $file->getClientOriginalName();
+
+        //同じ名前のファイルがアップロードされたら名称に+をつけ足す
+        $count = 0;
+        $extension = $file->getClientOriginalExtension();
+        $file_original_name = basename($file_name, '.'.$extension);
+        while(Storage::exists('roomFiles/RoomID:'.$room_id .'/'.$file_name)){
+            $count ++;
+            $file_name = $file_original_name.'('.$count.')'.'.'.$extension;
+        }
+
+        $file->storeAs('roomFiles/RoomID:' . $room_id, $file_name, ['disk' => 'local']);
+        return $file_name;
     }
 
 

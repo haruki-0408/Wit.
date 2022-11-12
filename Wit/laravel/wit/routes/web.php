@@ -26,8 +26,9 @@ Auth::routes();
 Route::get('/register/verify/{token}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('showRegisterForm');
 Auth::routes();
 
+//Route::view('/phpinfo', 'wit.php_info');
+
 Route::group(['middleware' => 'auth'], function () {
-    //Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpInfo'])->name('phpInfo');
     Route::get('/home', App\Http\Controllers\HomeController::class)->name('home');
     Route::get('/home/profile:{user_id}', [App\Http\Controllers\UserController::class, 'showProfile'])->name('showProfile');
     Route::get('/home/profile/settings', [App\Http\Controllers\UserController::class, 'settings'])->name('settings');
@@ -42,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/room:{room_id}', [App\Http\Controllers\RoomController::class, 'enterRoom'])->name('enterRoom');
     Route::get('/home/postRoom:{room_id}', [App\Http\Controllers\RoomController::class, 'showPostRoom'])->name('showPostRoom');
     Route::get('/home/room:{room_id}/showRoomImage:{number}', [App\Http\Controllers\RoomController::class, 'showRoomImage'])->name('showRoomImage');
+    Route::get('/home/room:{room_id}/downloadRoomFile:{file_name}', [App\Http\Controllers\RoomController::class, 'downloadRoomFile'])->name('downloadRoomFile');
     Route::post('/home/authRoomPassword', [App\Http\Controllers\RoomController::class, 'authRoomPassword'])->name('authRoomPassword');
     Route::post('/home/exitRoom',[App\Http\Controllers\RoomController::class, 'exitRoom'])->name('exitRoom');
     Route::post('/home/createRoom', [App\Http\Controllers\RoomController::class, 'createRoom'])->name('createRoom');
@@ -52,7 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/addListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionAddListUser'])->name('actioAddListUser');
     Route::get('/home/removeListUser:{user_id}', [App\Http\Controllers\UserController::class, 'actionRemoveListUser'])->name('actionRemoveListUser');
     //api
-    Route::post('/home/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->name('receiveMessage');
+    Route::post('/home/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->middleware('check.room_id')->name('receiveMessage');
+    Route::post('/home/room/chat/file', [App\Http\Controllers\RoomController::class, 'receiveFile'])->middleware('check.room_id')->name('receiveFile');
     Route::post('/home/room/ban/', [App\Http\Controllers\RoomController::class, 'receiveBanUser'])->name('receiveBanUser');
     Route::post('/home/room/ban/lift', [App\Http\Controllers\RoomController::class, 'receiveLiftBanUser'])->name('receiveLiftBanUser');
     Route::get('/getRandomTags', [App\Http\Controllers\TagController::class, 'getRandomTags'])->name('getRandomTags');

@@ -50,6 +50,13 @@
             background-color: #f8f9fa;
         }
 
+        #Message-List a {
+            font-size: 13px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 20px;
+        }
+
         #Message-List p {
             font-size: 13px;
             padding: 10px;
@@ -71,8 +78,28 @@
             word-break: break-word;
         }
 
+        .Myself a {
+            max-width: 70%;
+            background-color: #0d6efd;
+            color: #fff;
+            display: inline-block;
+            font-weight: bold;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
         .Opponent p {
             display: table;
+            max-width: 70%;
+            background-color: #f8f9fa;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .Opponent a {
+            display: table;
+            font-weight: bold;
             max-width: 70%;
             background-color: #f8f9fa;
             word-wrap: break-word;
@@ -503,8 +530,12 @@
                                                 <div class="Message-Wrapper">
                                                     <span
                                                         class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
-
+                                                    @if (isset($chat->pivot->message))
+                                                        <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                    @elseif (isset($chat->pivot->postfile))
+                                                        <a onclick="window.onbeforeunload = null;"
+                                                            href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'>{{ $chat->pivot->postfile }}</a>
+                                                    @endif
                                                 </div>
                                             </li>
                                         @else
@@ -513,7 +544,12 @@
                                                     width="20" height="20" class="rounded-circle">
                                                 <strong>{{ $chat->name }}</strong><span
                                                     class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                <p>{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                @if (isset($chat->pivot->message))
+                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                @elseif (isset($chat->pivot->postfile))
+                                                    <a onclick="window.onbeforeunload = null;"
+                                                        href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'>{{ $chat->pivot->postfile }}</a>
+                                                @endif
                                             </li>
                                         @endif
                                     @endforeach
@@ -608,7 +644,7 @@
         } else {
             room_chat.style = 'height:100%;'
         }
-        
+
         window.onload = function() {
             if (document.getElementById('Room-Image')) {
                 const images = document.querySelectorAll('.Image');

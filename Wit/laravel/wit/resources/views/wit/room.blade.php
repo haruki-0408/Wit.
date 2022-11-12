@@ -51,6 +51,13 @@
             background-color: #f8f9fa;
         }
 
+        #Message-List a {
+            font-size: 13px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 20px;
+        }
+
         #Message-List p {
             font-size: 13px;
             padding: 10px;
@@ -72,8 +79,28 @@
             word-break: break-word;
         }
 
+        .Myself a {
+            max-width: 70%;
+            background-color: #0d6efd;
+            color: #fff;
+            display: inline-block;
+            font-weight: bold;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
         .Opponent p {
             display: table;
+            max-width: 70%;
+            background-color: #f8f9fa;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .Opponent a {
+            display: table;
+            font-weight: bold;
             max-width: 70%;
             background-color: #f8f9fa;
             word-wrap: break-word;
@@ -151,18 +178,18 @@
             background-color: #fff;
         }
 
-        .Answer{
+        .Answer {
             text-decoration: underline;
             color: #dc3545;
         }
 
-        .Answer:hover{
+        .Answer:hover {
             text-decoration: none;
             cursor: pointer;
-            color:#6b7075;
+            color: #6b7075;
         }
 
-        .Ready-Answer:hover{
+        .Ready-Answer:hover {
             text-decoration: underline;
             cursor: pointer;
             color: #dc3545;
@@ -241,7 +268,7 @@
 
 <!-- Mordals -->
 @if (Auth::id() == $room_info->user->id)
-    <div class="modal fade" id="Ban-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="Ban-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false" 
         aria-labelledby="Ban-Users-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -284,7 +311,7 @@
     </div>
 
     <div class="modal fade" id="Lift-Ban-User-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="Lift-Ban-User-Modal" aria-hidden="true">
+        aria-labelledby="Lift-Ban-User-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -315,7 +342,7 @@
     </div>
 
     <div class="modal fade" id="Confirm-Ban-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="Confirm-Ban-Modal" aria-hidden="true">
+        aria-labelledby="Confirm-Ban-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -344,7 +371,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="Save-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="Save-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
         aria-labelledby="Save-Room-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -377,7 +404,7 @@
     </div>
 
     <div class="modal fade" id="Remove-Room-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="Remove-Room-Modal" aria-hidden="true">
+        aria-labelledby="Remove-Room-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -412,7 +439,7 @@
 
 @endif
 
-<div class="modal fade" id="Online-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="Online-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby="Online-Users-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -436,7 +463,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="Access-Logs-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="Access-Logs-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby=Access-Logs-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -473,7 +500,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="Room-Tags-Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="Room-Tags-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby="Room-Tags-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -508,7 +535,7 @@
 </div>
 
 <div class="modal fade" id="Room-Informations-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="Room-Informations-Modal" aria-hidden="true">
+    aria-labelledby="Room-Informations-Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -566,7 +593,7 @@
 
 
 <div class="modal fade" id="Exit-Room-Modal" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="Exit-Room-Modal" tabindex="-1">
+    aria-labelledby="Exit-Room-Modal">
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">
@@ -577,6 +604,26 @@
             <div class="modal-body">
                 <a id="Exit-Room-Link" href="/home" onclick="window.onbeforeunload = null;"
                     class="btn btn-outline-primary text-end">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Confirm-Upload-Modal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="Confirm-Upload-Modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border">
+                <h5 class="modal-title">ファイルをアップロードしますか?
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="Confirm-Upload-Message" class="modal-body text-start">
+
+            </div>
+            <div class="modal-footer">
+                <button id="Upload-File-Button" type="button" class="btn btn-outline-primary">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -690,6 +737,8 @@
                                                     data-bs-toggle="modal">Remove
                                                     Room</button></li>
                                         @endif
+                                        <li class="mt-2"><button class="mx-2 btn-outline-primary btn"
+                                            type="button">Choice Remarks</button></li>
                                     @endif
                                 </ul>
                             </div>
@@ -774,8 +823,17 @@
                                                 <div class="Message-Wrapper">
                                                     <span
                                                         class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
-
+                                                    @if (isset($chat->pivot->message))
+                                                        <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                    @elseif (isset($chat->pivot->postfile))
+                                                        <a onclick="window.onbeforeunload = null;"
+                                                            href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                width="16" height="16" fill="currentColor"
+                                                                class="bi bi-file-earmark mx-2" viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                            </svg>{{ $chat->pivot->postfile }}</a>
+                                                    @endif
                                                 </div>
                                             </li>
                                         @else
@@ -784,7 +842,17 @@
                                                     width="20" height="20" class="rounded-circle">
                                                 <strong>{{ $chat->name }}</strong><span
                                                     class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                <p>{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                @if (isset($chat->pivot->message))
+                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                @elseif(isset($chat->pivot->postfile))
+                                                    <a onclick="window.onbeforeunload = null;"
+                                                        href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                            width="16" height="16" fill="currentColor"
+                                                            class="bi bi-file-earmark mx-2" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                        </svg>{{ $chat->pivot->postfile }}</a>
+                                                @endif
                                             </li>
                                         @endif
                                     @endforeach
@@ -792,31 +860,41 @@
                             </div>
 
                             <div class="card-footer">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-9">
-                                            @if ($room_info->roomChat->count() > 999)
-                                                <strong
-                                                    class="text-center d-block text-danger">ルームの最大メッセージ数(1000)に達しました</strong>
-                                            @else
-                                                <textarea id="Message" class="form-control" type="text" rows='1'>
+                                <div class="row">
+                                    <div class="col-9 p-0">
+                                        @if ($room_info->roomChat->count() > 999)
+                                            <strong
+                                                class="text-center d-block text-danger">ルームの最大メッセージ数(1000)に達しました</strong>
+                                        @else
+                                            <textarea id="Message" class="form-control" type="text" rows='1'>
                                                 
-                                            </textarea>
-                                            @endif
-                                        </div>
-                                        <div class="col-3 d-flex justify-content-center">
-                                            <button id="Send-Message-Button" type="button" class="btn btn-primary"
-                                                onclick="window.onbeforeunload = null;">
-                                                <svg width="16" height="16" fill="currentColor"
-                                                    class="bi bi-send" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
+                                                </textarea>
+                                        @endif
                                     </div>
-                                </form>
+                                    <div class="col-3 d-flex justify-content-center">
+                                        <button id="Send-Message-Button" type="button" class="btn btn-primary"
+                                            onclick="window.onbeforeunload = null;">
+                                            <svg width="16" height="16" fill="currentColor"
+                                                class="bi bi-send" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        
+                                        <input id="Upload-File-Input" type="file" name="file" hidden>
+                                        
+                                        <button id="Upload-File-Button" type="button" class="btn btn-primary mx-2"
+                                            onclick="document.getElementById('Upload-File-Input').click()">
+                                            <svg width="16" height="16" fill="currentColor"
+                                                class="bi bi-folder2-open" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z" />
+                                            </svg>
+                                       </button>
+                                    
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -898,7 +976,7 @@
         } else {
             room_chat.style = 'height:100%;'
         }
-        
+
         window.onload = function() {
             if (document.getElementById('Room-Image')) {
                 const images = document.querySelectorAll('.Image');
