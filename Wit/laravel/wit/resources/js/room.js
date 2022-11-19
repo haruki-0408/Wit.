@@ -59,6 +59,8 @@ send_button.addEventListener('click', (e) => {
                 "message": message.value,
             },
             dataType: 'json',
+        }).done(() => {
+            scrollDownChat();
         })
             .fail((error) => {
                 if (error.responseJSON.errors.message) {
@@ -69,7 +71,7 @@ send_button.addEventListener('click', (e) => {
                     console.log(error.responseJSON);
                 }
             });
-    } 
+    }
     message.value = "";
 });
 
@@ -79,7 +81,7 @@ upload_file_button.addEventListener('click', (e) => {
         e.preventDefault();
         let formData = new FormData();
         formData.append('room_id', room_id);
-        formData.append('file',file);
+        formData.append('file', file);
         $.ajax({
             type: "post",
             url: '/home/room/chat/file',
@@ -92,10 +94,9 @@ upload_file_button.addEventListener('click', (e) => {
             //contentTypeもfalseに指定
             contentType: false,
             dataType: 'json',
-        })//通信が成功したとき
-            .done((res) => {
-                console.log(res)
-            })
+        }).done(() => {
+            scrollDownChat();
+        })
             .fail((error) => {
                 console.log(error);
                 if (error.responseJSON.errors.file) {
@@ -105,7 +106,7 @@ upload_file_button.addEventListener('click', (e) => {
     }
 
     confirm_upload_modal.hide();
-    input_file.value ="";
+    input_file.value = "";
 });
 
 
@@ -135,6 +136,9 @@ Echo.join('room-user-notifications.' + room_id)
         removeOnlineUser(user);
         sendExitMessage(user);
     })
+    .listen('ChoiceRemarks', (e) => {
+        addChoiceRemarks(e);
+    })
     .listen('RemoveRoom', () => {
         removeRoomNotification();
     })
@@ -152,7 +156,7 @@ Echo.join('room-user-notifications.' + room_id)
     .listen('SendMessage', (e) => {
         addChatMessage(e);
     })
-    .listen('UploadFile', (e) =>{
+    .listen('UploadFile', (e) => {
         addUploadFile(e);
     })
     .error((error) => {
@@ -309,21 +313,34 @@ function getNowDate(type) {
     }
 }
 
+function scrollDownChat() {
+    $('#Room-Chat .card-body').animate({ scrollTop: $('#Room-Chat .card-body')[0].scrollHeight, duration: 'fast' });
+}
+
 function addChatMessage(e) {
     const message_list = document.getElementById('Message-List');
     const message_element = document.createElement('li');
     const type = 'half';
     if (e.user.id === me_id) {
-        message_element.classList = "Myself Message-Wrapper"
+        message_element.id = e.chat_id;
+        message_element.classList = "Myself"
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+        div2.classList = "Message";
         const span_element = document.createElement('span');
         const p_element = document.createElement('p');
         span_element.classList = "badge d-block text-dark text-end";
         span_element.textContent = getNowDate(type);
         p_element.innerText = e.message;
-        message_element.appendChild(span_element);
-        message_element.appendChild(p_element);
+        div1.appendChild(span_element);
+        div2.appendChild(p_element);
+        message_element.appendChild(div1);
+        message_element.appendChild(div2);
         message_list.appendChild(message_element);
     } else {
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+        div2.classList = "Message";
         const user_image = document.createElement('img');
         user_image.src = '/' + e.user.profile_image;
         user_image.classList = "rounded-circle";
@@ -331,16 +348,19 @@ function addChatMessage(e) {
         user_image.height = "20";
         const user_name = document.createElement('strong');
         user_name.textContent = e.user.name;
+        message_element.id = e.chat_id;
         message_element.classList = "Opponent";
         const span_element = document.createElement('span');
         span_element.classList = "badge text-dark";
         span_element.textContent = getNowDate(type);
         const p_element = document.createElement('p');
         p_element.innerText = e.message;
-        message_element.appendChild(user_image);
-        message_element.appendChild(user_name);
-        message_element.appendChild(span_element);
-        message_element.appendChild(p_element);
+        div1.appendChild(user_image);
+        div1.appendChild(user_name);
+        div1.appendChild(span_element);
+        div2.appendChild(p_element);
+        message_element.appendChild(div1);
+        message_element.appendChild(div2);
         message_list.appendChild(message_element);
     }
 }
@@ -350,18 +370,27 @@ function addUploadFile(e) {
     const message_element = document.createElement('li');
     const type = 'half';
     if (e.user.id === me_id) {
-        message_element.classList = "Myself Message-Wrapper"
+        message_element.id = e.chat_id;
+        message_element.classList = "Myself"
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+        div2.classList = "Message";
         const span_element = document.createElement('span');
         const a_element = document.createElement('a');
         span_element.classList = "badge d-block text-dark text-end";
         span_element.textContent = getNowDate(type);
         a_element.onclick = window.onbeforeunload = null;
-        a_element.href = '/home/room:'+ e.room_id + '/downloadRoomFile:' +e.post_file ;
+        a_element.href = '/home/room:' + e.room_id + '/downloadRoomFile:' + e.post_file;
         a_element.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-file-earmark mx-2' viewBox='0 0 16 16'><path d='M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z'/></svg>" + e.post_file;
-        message_element.appendChild(span_element);
-        message_element.appendChild(a_element);
+        div1.appendChild(span_element);
+        div2.appendChild(a_element);
+        message_element.appendChild(div1);
+        message_element.appendChild(div2);
         message_list.appendChild(message_element);
     } else {
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+        div2.classList = "Message";
         const user_image = document.createElement('img');
         user_image.src = '/' + e.user.profile_image;
         user_image.classList = "rounded-circle";
@@ -369,20 +398,41 @@ function addUploadFile(e) {
         user_image.height = "20";
         const user_name = document.createElement('strong');
         user_name.textContent = e.user.name;
+        message_element.id = e.chat_id;
         message_element.classList = "Opponent";
         const span_element = document.createElement('span');
         span_element.classList = "badge text-dark";
         span_element.textContent = getNowDate(type);
         const a_element = document.createElement('a');
         a_element.onclick = window.onbeforeunload = null;
-        a_element.href = '/home/room:'+ e.room_id + '/downloadRoomFile:' +e.post_file ;
+        a_element.href = '/home/room:' + e.room_id + '/downloadRoomFile:' + e.post_file;
         a_element.innerHTML = "<svg width='16' height='16' fill='currentColor' class='bi bi-file-earmark mx-2' viewBox='0 0 16 16'><path d='M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z'/></svg>" + e.post_file;
-        message_element.appendChild(user_image);
-        message_element.appendChild(user_name);
-        message_element.appendChild(span_element);
-        message_element.appendChild(a_element);
+        div1.appendChild(user_image);
+        div1.appendChild(user_name);
+        div1.appendChild(span_element);
+        div2.appendChild(a_element);
+        message_element.appendChild(div1);
+        message_element.appendChild(div2);
         message_list.appendChild(message_element);
     }
+}
+
+function addChoiceRemarks(e) {
+    let target_array = e.room_chat_array;
+    console.log(target_array);
+    target_array.map((element) => {
+        if ($('#' + element).children('.Message').children('p').hasClass('Choice-Remarks')) {
+            $('#' + element).children('.Message').children('p').removeClass('Choice-Remarks');
+        } else {
+            $('#' + element).children('.Message').children('p').addClass('Choice-Remarks');
+        }
+
+        if ($('#' + element).children('.Message').children('a').hasClass('Choice-Remarks')) {
+            $('#' + element).children('.Message').children('a').removeClass('Choice-Remarks');
+        } else {
+            $('#' + element).children('.Message').children('a').addClass('Choice-Remarks');
+        }
+    });
 }
 
 function removeRoomNotification() {
@@ -501,4 +551,103 @@ if (document.getElementById('Lift-Ban-User-Modal')) {
         modal_body.append(message);
         modal_body.append(user_element);
     });
+}
+
+//Choice-Remarks機能
+if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
+    const offcanvas_close = document.getElementById("Offcanvas-Close");
+    const send_message_content = document.getElementById("Send-Message-Content");
+    const choice_remarks_content = document.getElementById("Choice-Remarks-Content");
+    let target_array = new Array;
+
+    //Choice-Remarksボタンを押した時
+    $(document).on('click', "[id^='Choice-Remarks-Button']", function () {
+        document.getElementById('Choice-Remarks-Button').disabled = true;
+        offcanvas_close.click();
+        send_message_content.hidden = true;
+        choice_remarks_content.hidden = false;
+        $('.Message p').css('cursor', 'pointer');
+
+        $(document).on('click', ".Message p, .Message a", (event) => {
+            event.preventDefault();
+            if (document.getElementById('Choice-Remarks-Button').disabled) {
+                const choice_check = document.createElement('span');
+                choice_check.classList = "Choice-Check text-success";
+                choice_check.innerHTML = "<svg width='30' height='16' fill='currentColor' class='bi bi-check-lg' viewBox='0 0 16 16'><path d='M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z'/></svg>";
+
+                if (event.currentTarget.parentNode.getElementsByClassName('Choice-Check').length !== 0) {
+                    event.currentTarget.parentNode.removeChild(event.currentTarget.parentNode.getElementsByClassName('Choice-Check')[0]);
+                    target_array = target_array.filter(function (item) {
+                        return item !== event.currentTarget.parentNode.parentNode.id;
+                    });
+                } else {
+                    if (event.currentTarget.parentNode.parentNode.classList.contains('Myself')) {
+                        event.currentTarget.parentNode.prepend(choice_check);
+                    } else {
+                        event.currentTarget.parentNode.append(choice_check);
+                    }
+                    target_array.push(event.currentTarget.parentNode.parentNode.id);
+                }
+            }
+        });
+
+
+        //Enterボタンを押した時
+        $(document).on('click', "[id='Choice-Remarks-Enter']", function () {
+            if (target_array.length == 0) {
+                return false;
+            }
+            if (document.getElementById('Choice-Remarks-Button').disabled) {
+                const enter_button = document.getElementById("Choice-Remarks-Enter");
+                enter_button.disabled = true;
+                const message_list = document.getElementById("Message-List");
+                message_list.classList.add("opacity-25");
+                enter_button.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Enter";
+                $.ajax({
+                    type: "post",
+                    url: '/home/room/choice',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    data: {
+                        "room_id": room_id,
+                        "target_array": target_array,
+                    },
+                    dataType: 'json',
+                })
+                    .done(() => {
+                        message_list.classList.remove("opacity-25");
+                        enter_button.innerText = 'Enter';
+                        afterPushButton(target_array);
+                        target_array = [];
+                        enter_button.disabled = false;
+                    })
+                    .fail((error) => {
+                        console.log(error);
+                    });
+            }
+        });
+
+
+        //Cancelボタンを押した時
+        $(document).on('click', "[id='Choice-Remarks-Cancel']", function () {
+            if (document.getElementById('Choice-Remarks-Button').disabled) {
+                afterPushButton(target_array);
+                target_array = [];
+            }
+        });
+    });
+};
+
+function afterPushButton(target_array) {
+    target_array.map((element) => {
+        $('#' + element).find('.Choice-Check').remove();
+    });
+    $(document).off('click', "[id='Choice-Remarks-Enter']");
+    $(document).off('click', "[id='Choice-Remarks-Cancel']");
+    $(document).off('click', ".Message p, .Message a");
+    document.getElementById("Send-Message-Content").hidden = false;
+    document.getElementById("Choice-Remarks-Content").hidden = true;
+    document.getElementById("Choice-Remarks-Button").disabled = false;
+    $('.Message p').css('cursor', '');
 }

@@ -53,9 +53,15 @@
 
         #Message-List a {
             font-size: 13px;
+            font-weight: bold;
             padding: 10px;
             margin: 5px;
             border-radius: 20px;
+            max-width: 70%;
+            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            background-color: #f8f9fa;
         }
 
         #Message-List p {
@@ -63,48 +69,27 @@
             padding: 10px;
             margin: 5px;
             border-radius: 20px;
+            max-width: 70%;
+            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-align: left;
+            background-color: #f8f9fa;
         }
 
-        .Message-Wrapper {
+        #Room-Description p {
+            max-width: 100%;
+        }
+
+        .Myself {
             text-align: right;
         }
 
-        .Myself p {
-            max-width: 70%;
-            background-color: #0d6efd;
-            color: #fff;
-            display: inline-block;
-            text-align: left;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Myself a {
-            max-width: 70%;
-            background-color: #0d6efd;
-            color: #fff;
-            display: inline-block;
+        .Choice-Remarks {
             font-weight: bold;
-            text-align: left;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Opponent p {
-            display: table;
-            max-width: 70%;
-            background-color: #f8f9fa;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Opponent a {
-            display: table;
-            font-weight: bold;
-            max-width: 70%;
-            background-color: #f8f9fa;
-            word-wrap: break-word;
-            word-break: break-word;
+            color: #198754;
+            border: solid;
+            border-color: #198745;
         }
 
         #Room-Tags-List {
@@ -126,26 +111,6 @@
             overflow: scroll
         }
 
-
-        /*:-webkit-full-screen {
-            background-color: #fff;
-        }
-
-        :-webkit-full-screen img {
-            cursor: pointer;
-        }
-
-        .full-screen-image {
-            background: RGBA(0, 0, 0, .8) no-repeat center;
-            background-size: cover;
-            position: fixed;
-            z-index: 10000;
-            margin-left: auto;
-            inset: 0;
-            margin: auto;
-            cursor: zoom-out;
-        }*/
-
         .carousel-item img {
             width: auto;
             max-width: 100%;
@@ -153,7 +118,6 @@
             display: block;
             margin: auto;
         }
-
 
         .tag {
             display: inline-block;
@@ -178,23 +142,6 @@
             background-color: #fff;
         }
 
-        .Answer {
-            text-decoration: underline;
-            color: #dc3545;
-        }
-
-        .Answer:hover {
-            text-decoration: none;
-            cursor: pointer;
-            color: #6b7075;
-        }
-
-        .Ready-Answer:hover {
-            text-decoration: underline;
-            cursor: pointer;
-            color: #dc3545;
-        }
-
         ul {
             list-style: none;
         }
@@ -215,7 +162,8 @@
             <img src="{{ asset($auth_user->profile_image) }}" id="Me" alt="" width="30"
                 height="30" class="rounded-circle me-2" data-auth-id={{ $auth_user->id }}>
         </div>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button id="Offcanvas-Close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
     </div>
 
     <div class="offcanvas-body d-flex flex-column align-items-center p-2">
@@ -268,7 +216,7 @@
 
 <!-- Mordals -->
 @if (Auth::id() == $room_info->user->id)
-    <div class="modal fade" id="Ban-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false" 
+    <div class="modal fade" id="Ban-Users-Modal" data-bs-backdrop="static" data-bs-keyboard="false"
         aria-labelledby="Ban-Users-Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -571,6 +519,10 @@
                             <li><button class="mx-2 btn-outline-danger btn" type="button"
                                     data-bs-target="#Ban-Users-Modal" data-bs-toggle="modal">Ban Users List</button>
                             </li>
+
+                            <li class="mt-2"><button id="Choice-Remarks-Button-Modal" data-bs-dismiss="modal"
+                                    class="mx-2 btn-outline-success btn" type="button">Choice Remarks</button></li>
+
                             @if ($room_info->posted_at == null && $room_info->password == null && $room_info->tags->count() != 0)
                                 <li class="mt-2"><button class="mx-2 btn-outline-primary btn" type="button"
                                         data-bs-target="#Save-Room-Modal" data-bs-toggle="modal">Save
@@ -597,7 +549,7 @@
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">
-                <h5 class="modal-title">ルームから退出しますか?
+                <h5 class="modal-title">ルームから退室しますか?
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -624,6 +576,26 @@
             <div class="modal-footer">
                 <button id="Upload-File-Button" type="button" class="btn btn-outline-primary">Yes</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Choice-Remarks-Modal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="Chioice-Remarks-Modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border">
+                <h5 class="modal-title">Choice Remarks</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start">
+                <ol style="font-size:0.7em" class="fw-bold">
+                    <li>この機能は解決に役立った、参考になったメッセージやファイルをマークできる機能です。</li>
+                    <li>メッセージを選択したのちEnterボタンを押すと、メッセージがマークされ緑色で表示されます。</li>
+                    <li>このルームを後から見た人にとって問題解決に繋がったメッセージをすぐに判別できるように、できるだけ会話の流れがわかるように選択して下さい。</li>
+                    <li>メッセージは複数マークでき、後から変更可能です</li>
+                </ol>
             </div>
         </div>
     </div>
@@ -726,6 +698,10 @@
                                         <li class="mt-2"><button class="mx-2 btn-outline-danger btn" type="button"
                                                 data-bs-target="#Ban-Users-Modal" data-bs-toggle="modal">Ban Users
                                                 List</button></li>
+
+                                        <li class="mt-2"><button id="Choice-Remarks-Button"
+                                                class="mx-2 btn-outline-success btn" type="button">Choice
+                                                Remarks</button></li>
                                         @if ($room_info->posted_at == null && $room_info->password == null && $room_info->tags->count() != 0)
                                             <li class="mt-2"><button class="mx-2 btn-outline-primary btn"
                                                     type="button" data-bs-target="#Save-Room-Modal"
@@ -737,8 +713,6 @@
                                                     data-bs-toggle="modal">Remove
                                                     Room</button></li>
                                         @endif
-                                        <li class="mt-2"><button class="mx-2 btn-outline-primary btn"
-                                            type="button">Choice Remarks</button></li>
                                     @endif
                                 </ul>
                             </div>
@@ -814,52 +788,92 @@
                                 <!-- MESSAGE -->
                                 <ul id="Message-List" class="p-0 m-0 w-100 ">
                                     <li id="Room-Description">
-                                        <p class="fs-6 fw-bold m-0 pb-0">Description</p>
+                                        <p class="fs-6 fw-bold m-0 pb-0">Description</p><br>
                                         <p> {!! nl2br(e($room_info->description)) !!}</p>
                                     </li>
                                     @foreach ($room_info->roomChat as $chat)
                                         @if ($chat->pivot->user_id == $auth_user->id)
-                                            <li class="Myself">
-                                                <div class="Message-Wrapper">
+                                            <li id='{{ $chat->pivot->id }}'class="Myself">
+                                                <div>
                                                     <span
                                                         class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                </div>
+                                                <div class="Message">
                                                     @if (isset($chat->pivot->message))
-                                                        <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @if ($chat->pivot->choice)
+                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @else
+                                                            <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @endif
                                                     @elseif (isset($chat->pivot->postfile))
-                                                        <a onclick="window.onbeforeunload = null;"
-                                                            href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
-                                                                width="16" height="16" fill="currentColor"
-                                                                class="bi bi-file-earmark mx-2" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
-                                                            </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @if ($chat->pivot->choice)
+                                                            <a class="Choice-Remarks"
+                                                                onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @else
+                                                            <a onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </li>
                                         @else
-                                            <li class="Opponent">
-                                                <img src="{{ asset($chat->profile_image) }}" alt="user-image"
-                                                    width="20" height="20" class="rounded-circle">
-                                                <strong>{{ $chat->name }}</strong><span
-                                                    class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                @if (isset($chat->pivot->message))
-                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
-                                                @elseif(isset($chat->pivot->postfile))
-                                                    <a onclick="window.onbeforeunload = null;"
-                                                        href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
-                                                            width="16" height="16" fill="currentColor"
-                                                            class="bi bi-file-earmark mx-2" viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
-                                                        </svg>{{ $chat->pivot->postfile }}</a>
-                                                @endif
+                                            <li id='{{ $chat->pivot->id }}' class="Opponent">
+                                                <div>
+                                                    <img src="{{ asset($chat->profile_image) }}" alt="user-image"
+                                                        width="20" height="20" class="rounded-circle">
+                                                    <strong>{{ $chat->name }}</strong><span
+                                                        class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                </div>
+                                                <div class="Message">
+                                                    @if (isset($chat->pivot->message))
+                                                        @if ($chat->pivot->choice)
+                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @else
+                                                            <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @endif
+                                                    @elseif(isset($chat->pivot->postfile))
+                                                        @if ($chat->pivot->choice)
+                                                            <a class="Choice-Remarks"
+                                                                onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @else
+                                                            <a onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @endif
+                                                    @endif
+                                                </div>
                                             </li>
                                         @endif
                                     @endforeach
                                 </ul>
                             </div>
 
-                            <div class="card-footer">
+                            <div id="Send-Message-Content" class="card-footer">
                                 <div class="row">
                                     <div class="col-9 p-0">
                                         @if ($room_info->roomChat->count() > 999)
@@ -881,9 +895,9 @@
                                                 </path>
                                             </svg>
                                         </button>
-                                        
+
                                         <input id="Upload-File-Input" type="file" name="file" hidden>
-                                        
+
                                         <button id="Upload-File-Button" type="button" class="btn btn-primary mx-2"
                                             onclick="document.getElementById('Upload-File-Input').click()">
                                             <svg width="16" height="16" fill="currentColor"
@@ -891,8 +905,23 @@
                                                 <path
                                                     d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z" />
                                             </svg>
-                                       </button>
-                                    
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="Choice-Remarks-Content" class="card-footer" hidden>
+                                <div class="row">
+                                    <div class="col-5 p-0 d-flex justify-content-center align-items-center">
+                                        <strong style="font-size:0.6em">メッセージを選択して下さい</strong>
+                                    </div>
+                                    <div class="col-7 text-end p-0">
+                                        <button type="button" class="btn btn-outline-primary"
+                                            data-bs-target="#Choice-Remarks-Modal"
+                                            data-bs-toggle="modal">Help</button>
+                                        <button id="Choice-Remarks-Enter" type="button"
+                                            class="btn btn-outline-primary">Enter</button>
+                                        <button id="Choice-Remarks-Cancel" type="button"
+                                            class="btn btn-secondary">Cancel</button>
                                     </div>
                                 </div>
                             </div>

@@ -52,9 +52,15 @@
 
         #Message-List a {
             font-size: 13px;
+            font-weight: bold;
             padding: 10px;
             margin: 5px;
             border-radius: 20px;
+            max-width: 70%;
+            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            background-color: #f8f9fa;
         }
 
         #Message-List p {
@@ -62,48 +68,27 @@
             padding: 10px;
             margin: 5px;
             border-radius: 20px;
+            max-width: 70%;
+            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-align: left;
+            background-color: #f8f9fa;
         }
 
-        .Message-Wrapper {
+        #Room-Description p {
+            max-width: 100%;
+        }
+
+        .Myself {
             text-align: right;
         }
 
-        .Myself p {
-            max-width: 70%;
-            background-color: #0d6efd;
-            color: #fff;
-            display: inline-block;
-            text-align: left;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Myself a {
-            max-width: 70%;
-            background-color: #0d6efd;
-            color: #fff;
-            display: inline-block;
+        .Choice-Remarks {
             font-weight: bold;
-            text-align: left;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Opponent p {
-            display: table;
-            max-width: 70%;
-            background-color: #f8f9fa;
-            word-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .Opponent a {
-            display: table;
-            font-weight: bold;
-            max-width: 70%;
-            background-color: #f8f9fa;
-            word-wrap: break-word;
-            word-break: break-word;
+            color: #198754;
+            border: solid;
+            border-color: #198745;
         }
 
         #Room-Tags-List {
@@ -123,15 +108,6 @@
             height: 90%;
             overflow: scroll
         }
-
-        /*
-        :-webkit-full-screen {
-            background-color: #fff;
-        }
-
-        :-webkit-full-screen img {
-            cursor: pointer;
-        }*/
 
         .carousel-item img {
             width: auto;
@@ -345,7 +321,7 @@
     <div class="modal-dialog">
         <div class="modal-content text-end">
             <div class="modal-header border">
-                <h5 class="modal-title">ルームから退出しますか?
+                <h5 class="modal-title">ルームから退室しますか?
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -521,41 +497,90 @@
                                 <!-- MESSAGE -->
                                 <ul id="Message-List" class="p-0 m-0 w-100 ">
                                     <li id="Room-Description">
-                                        <p class="fs-6 fw-bold m-0 pb-0">Description</p>
+                                        <p class="fs-6 fw-bold m-0 pb-0">Description</p><br>
                                         <p> {!! nl2br(e($room_info->description)) !!}</p>
                                     </li>
                                     @foreach ($room_info->roomChat as $chat)
                                         @if ($chat->pivot->user_id == $auth_user->id)
-                                            <li class="Myself">
-                                                <div class="Message-Wrapper">
+                                            <li id='{{ $chat->pivot->id }}'class="Myself">
+                                                <div>
                                                     <span
                                                         class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                </div>
+                                                <div>
                                                     @if (isset($chat->pivot->message))
-                                                        <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @if ($chat->pivot->choice)
+                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @else
+                                                            <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @endif
                                                     @elseif (isset($chat->pivot->postfile))
-                                                        <a onclick="window.onbeforeunload = null;"
-                                                            href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'>{{ $chat->pivot->postfile }}</a>
+                                                        @if ($chat->pivot->choice)
+                                                            <a class="Choice-Remarks"
+                                                                onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @else
+                                                            <a onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </li>
                                         @else
-                                            <li class="Opponent">
-                                                <img src="{{ asset($chat->profile_image) }}" alt="user-image"
-                                                    width="20" height="20" class="rounded-circle">
-                                                <strong>{{ $chat->name }}</strong><span
-                                                    class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
-                                                @if (isset($chat->pivot->message))
-                                                    <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
-                                                @elseif (isset($chat->pivot->postfile))
-                                                    <a onclick="window.onbeforeunload = null;"
-                                                        href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'>{{ $chat->pivot->postfile }}</a>
-                                                @endif
+                                            <li id='{{ $chat->pivot->id }}' class="Opponent">
+                                                <div>
+                                                    <img src="{{ asset($chat->profile_image) }}" alt="user-image"
+                                                        width="20" height="20" class="rounded-circle">
+                                                    <strong>{{ $chat->name }}</strong><span
+                                                        class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                </div>
+                                                <div>
+                                                    @if (isset($chat->pivot->message))
+                                                        @if ($chat->pivot->choice)
+                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @else
+                                                            <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                        @endif
+                                                    @elseif(isset($chat->pivot->postfile))
+                                                        @if ($chat->pivot->choice)
+                                                            <a class="Choice-Remarks"
+                                                                onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @else
+                                                            <a onclick="window.onbeforeunload = null;"
+                                                                href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
+                                                                    width="16" height="16" fill="currentColor"
+                                                                    class="bi bi-file-earmark mx-2"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                                                                </svg>{{ $chat->pivot->postfile }}</a>
+                                                        @endif
+                                                    @endif
+                                                </div>
                                             </li>
                                         @endif
                                     @endforeach
                                 </ul>
                             </div>
-
                         </div>
                     </div>
 

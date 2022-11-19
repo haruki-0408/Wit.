@@ -10,22 +10,24 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserEntered implements ShouldBroadcast
+class ChoiceRemarks implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
     public $room_id;
-
+    public $user_id;
+    public $room_chat_array;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($room_id)
+    public function __construct($room_id,$user_id,$room_chat_array)
     {
         $this->room_id = $room_id;
+        $this->user_id = $user_id;
+        $this->room_chat_array = $room_chat_array;
     }
 
     /**
@@ -35,6 +37,6 @@ class UserEntered implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('room-user-notifications.'.$this->room_id);
+        return new PresenceChannel('room-user-notifications.' . $this->room_id);
     }
 }

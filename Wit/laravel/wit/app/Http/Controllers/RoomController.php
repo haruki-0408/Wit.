@@ -10,14 +10,17 @@ use App\Events\UserEntered;
 use App\Events\UserExited;
 use App\Events\SendMessage;
 use App\Events\UploadFile;
+use App\Events\ChoiceRemarks;
 use App\Events\RemoveRoom;
 use App\Events\SaveRoom;
 use App\Events\RoomBanned;
 use App\Models\User;
 use App\Models\Room;
+use App\Models\RoomChat;
 use App\Models\RoomUser;
 use App\Models\Tag;
 use App\Models\RoomImage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
@@ -333,9 +336,10 @@ class RoomController extends Controller
 
         $user = User::find($request->user()->id);
         $user->roomChat()->attach($request->room_id, ['message' => $request->message]);
+        $chat_id = $user->roomChat->sortBy('id')->last()->pivot->id;
 
-        event(new SendMessage($request->room_id, $request->user(), $request->message));
-        return response()->Json('Message broadcast');
+        event(new SendMessage($request->room_id, $request->user(), $chat_id, $request->message));
+        return response()->Json('Message Broadcast');
     }
 
     public function receiveFile(UploadFileRequest $request)
@@ -344,9 +348,29 @@ class RoomController extends Controller
 
         $user = User::find($request->user()->id);
         $user->roomChat()->attach($request->room_id, ['postfile' => $file_name]);
-
-        event(new UploadFile($request->room_id, $request->user(), $file_name));
+        $chat_id = $user->roomChat->sortBy('id')->last()->pivot->id;
+        event(new UploadFile($request->room_id, $request->user(), $chat_id, $file_name));
         return response()->Json('File Send Success');
+    }
+
+    public function receiveChoiceRemarks(Request $request)
+    {
+        $room = Room::find($request->room_id);
+        if($room->user_id !== $request->user()->id){
+            abort(404);
+        }
+        
+        $target_array = $request->target_array;
+        foreach ($target_array as $target_id) {
+            $room_chat = $room->roomChat()->where('room_chat.id', $target_id)->first();
+            if ($room_chat->pivot->choice) {
+                DB::table('room_chat')->where('id', $target_id)->update(['choice' => false]);
+            } else {
+                DB::table('room_chat')->where('id', $target_id)->update(['choice' => true]);
+            }
+        }
+        event(new ChoiceRemarks($request->room_id, $request->user()->id, $target_array));
+        return response()->Json('Message Choiced');
     }
 
     public function receiveBanUser(Request $request)
@@ -642,10 +666,10 @@ class RoomController extends Controller
         //同じ名前のファイルがアップロードされたら名称に+をつけ足す
         $count = 0;
         $extension = $file->getClientOriginalExtension();
-        $file_original_name = basename($file_name, '.'.$extension);
-        while(Storage::exists('roomFiles/RoomID:'.$room_id .'/'.$file_name)){
-            $count ++;
-            $file_name = $file_original_name.'('.$count.')'.'.'.$extension;
+        $file_original_name = basename($file_name, '.' . $extension);
+        while (Storage::exists('roomFiles/RoomID:' . $room_id . '/' . $file_name)) {
+            $count++;
+            $file_name = $file_original_name . '(' . $count . ')' . '.' . $extension;
         }
 
         $file->storeAs('roomFiles/RoomID:' . $room_id, $file_name, ['disk' => 'local']);

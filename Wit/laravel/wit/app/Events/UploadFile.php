@@ -16,6 +16,7 @@ class UploadFile implements ShouldBroadcast
 
     public $room_id;
     public $user;
+    public $chat_id;
     public $post_file;
 
     /**
@@ -23,10 +24,11 @@ class UploadFile implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($room_id, $user, $post_file)
+    public function __construct($room_id, $user, $chat_id,$post_file)
     {
         $this->room_id = $room_id;
         $this->user = $user;
+        $this->chat_id = $chat_id;
         $this->post_file = $post_file;
     }
 

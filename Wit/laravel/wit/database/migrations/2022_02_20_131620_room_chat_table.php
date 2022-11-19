@@ -19,7 +19,9 @@ class RoomChatTable extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete()->comment('users_tableからの外部キー参照');
             $table->string('message',1000)->nullable(); 
             $table->string('postfile')->nullable(); 
+            $table->boolean('choice')->default(false);
             $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrentOnUpdate()->nullable();
         });
     }
 

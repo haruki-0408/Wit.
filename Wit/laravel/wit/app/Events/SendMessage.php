@@ -18,6 +18,7 @@ class SendMessage implements ShouldBroadcast
 
     public $room_id;
     public $user;
+    public $chat_id;
     public $message;
 
     /**
@@ -25,10 +26,11 @@ class SendMessage implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($room_id,$user,$message)
+    public function __construct($room_id,$user,$chat_id,$message)
     {
         $this->room_id = $room_id;
         $this->user = $user;
+        $this->chat_id = $chat_id;
         $this->message = $message;
     }
 
