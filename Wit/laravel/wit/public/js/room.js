@@ -19616,7 +19616,6 @@ function addUploadFile(e) {
 
 function addChoiceRemarks(e) {
   var target_array = e.room_chat_array;
-  console.log(target_array);
   target_array.map(function (element) {
     if ($('#' + element).children('.Message').children('p').hasClass('Choice-Remarks')) {
       $('#' + element).children('.Message').children('p').removeClass('Choice-Remarks');
@@ -19794,7 +19793,7 @@ if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
         enter_button.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Enter";
         $.ajax({
           type: "post",
-          url: '/home/room/choice',
+          url: '/home/room/chat/choice',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
@@ -19811,6 +19810,10 @@ if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
           enter_button.disabled = false;
         }).fail(function (error) {
           console.log(error);
+
+          if (error.responseJSON.errors.target_array) {
+            message.value = error.responseJSON.errors.target_array[0];
+          }
         });
       }
     }); //Cancelボタンを押した時

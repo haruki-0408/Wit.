@@ -93,7 +93,7 @@ class User extends Authenticatable
 
     public function roomChat()
     {
-        return $this->belongsToMany('App\Models\Room','room_chat','user_id')->withPivot('id')->using('App\Models\RoomChat');
+        return $this->belongsToMany('App\Models\Room','room_chat','user_id')->withPivot('id','choice')->using('App\Models\RoomChat');
     }
     public function roomUsers()
     {

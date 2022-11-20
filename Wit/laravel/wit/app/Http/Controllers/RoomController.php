@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
+use App\Http\Requests\ChoiceRemarksRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserEntered;
@@ -353,7 +354,7 @@ class RoomController extends Controller
         return response()->Json('File Send Success');
     }
 
-    public function receiveChoiceRemarks(Request $request)
+    public function receiveChoiceRemarks(ChoiceRemarksRequest $request)
     {
         $room = Room::find($request->room_id);
         if($room->user_id !== $request->user()->id){

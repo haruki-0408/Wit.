@@ -324,39 +324,38 @@ class RoomTest extends TestCase
             'message' => $message,
             'room_id' => $this->room_id_1,
         ]);
-        $response->assertStatus(422);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
 
         //ルームにユーザを入室した状態に変更する
         $room->roomUsers()->syncWithoutDetaching($this->user->id);
         $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
 
+        //ルームIDの入力がないと422
+        $response = $this->post('/home/room/chat/message', [
+            'message' => $message,
+            'room_id' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
         //ユーザが入室しているルームIDと送信してきたルームIDが異なる場合は422
-        $message = Str::random(10);
         $response = $this->post('/home/room/chat/message', [
             'message' => $message,
             'room_id' => $this->room_id_2,
         ]);
-        $response->assertStatus(422);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
 
-        //バリデーションエラーなし
-        $message = Str::random(10);
+        //ユーザを２つ以上の部屋に入室したことにする
+        Room::find($this->room_id_2)->roomUsers()->syncWithoutDetaching($this->user->id);
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        //ルームIDがあっていても入室している部屋が2つ以上なので422
         $response = $this->post('/home/room/chat/message', [
             'message' => $message,
             'room_id' => $this->room_id_1,
         ]);
-        $response->assertOk();
-        $this->assertDatabaseHas('room_chat', [
-            'room_id' => $this->room_id_1,
-            'user_id' => $this->user->id,
-            'message' => $message,
-        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
 
-        //room_id の入力なしはCheckRoomIdではじかれることを確認
-        $response = $this->post('/home/room/chat/message', [
-            'message' => '',
-            'room_id' => '',
-        ]);
-        $response->assertStatus(422);
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => false]);
 
         //room_idの入力ありだがメッセージの入力なし
         $response = $this->post('/home/room/chat/message', [
@@ -371,6 +370,19 @@ class RoomTest extends TestCase
             'room_id' => $this->room_id_1,
         ]);
         $response->assertInvalid(['message']);
+
+        //バリデーションエラーなし
+        $message = Str::random(10);
+        $response = $this->post('/home/room/chat/message', [
+            'message' => $message,
+            'room_id' => $this->room_id_1,
+        ]);
+        $response->assertOk()->assertExactJson(['Message Broadcast']);
+        $this->assertDatabaseHas('room_chat', [
+            'room_id' => $this->room_id_1,
+            'user_id' => $this->user->id,
+            'message' => $message,
+        ]);
 
         //チャットカウントが１０００を超えたときのバリデーション
         $room = Room::find($this->room_id_1);
@@ -1516,5 +1528,185 @@ class RoomTest extends TestCase
         $room->listRooms()->syncWithoutDetaching($this->user->id);
         $response = $this->get('/home/removeListRoom:' . $room->id);
         $response->assertJsonPath('message', 'リストからルームを削除しました');
+    }
+
+    public function test_receive_file()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        $room = Room::find($this->room_id_1);
+
+        //部屋に入場する前にroom_idを送ってもはじかれる
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザを部屋に入室したことにする
+        $room->roomUsers()->syncWithoutDetaching($this->user->id);
+        $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        //room_idの値がなかったらはじかれる
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => '',
+            'file' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザが入室している部屋が２つ以上だった場合(in_room = trueの値が２つ以上存在　理論的にはありえない)
+        Room::find($this->room_id_2)->roomUsers()->syncWithoutDetaching($this->user->id);
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザが入室している部屋を一つにする(room_id_1のほう)
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => false]);
+
+        //ミドルウェア CheckRoomIdは通るが、UploadFileRequestのバリデーションエラーが発生 file required
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => '',
+        ]);
+        $response->assertInvalid(['file']);
+
+        //file バリデーション fileがfile形式じゃないとき
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => 'string',
+        ]);
+        $response->assertInvalid(['file']);
+
+        //file バリデーション fileの拡張子が認められていないもののとき
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => UploadedFile::fake()->image('test.doc'),
+        ]);
+        $response->assertInvalid(['file']);
+
+        //バリデーションエラーなしのとき
+        $response = $this->post('/home/room/chat/file', [
+            'room_id' => $this->room_id_1,
+            'file' => UploadedFile::fake()->image('test.jpeg'),
+        ]);
+        $response->assertOK()->assertExactJson(['File Send Success']);
+        $this->assertDatabaseHas('room_chat', [
+            'room_id' => $this->room_id_1,
+            'user_id' => $this->user->id,
+            'postfile' => 'test.jpeg',
+        ]);
+
+        //必ず最後は削除す
+        \Storage::disk('local')->deleteDirectory('roomFiles/RoomID:' . $this->room_id_1); 
+    }
+
+    public function test_store_file()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        $room_id = $this->room_id_1;
+        $room_controller = new RoomController;
+        $upload_file = UploadedFile::fake()->image('test.jpg');
+        $file_name = 'test.jpg';
+
+        //Fileを保存
+        $room_controller->storeFile($upload_file, $room_id);
+        \Storage::disk('local')->assertExists('roomFiles/RoomID:' . $room_id . '/' . $file_name);
+
+        //２回め移行同じ名前のファイルがすでに保存されているとファイル名に(1),(2)などをつけているか確認
+        $room_controller->storeFile($upload_file, $room_id);
+        \Storage::disk('local')->assertExists('roomFiles/RoomID:' . $room_id . '/' . 'test(1).jpg');
+
+        $room_controller->storeFile($upload_file, $room_id);
+        \Storage::disk('local')->assertExists('roomFiles/RoomID:' . $room_id . '/' . 'test(2).jpg');
+
+        //必ず最後は削除す
+        \Storage::disk('local')->deleteDirectory('roomFiles/RoomID:' . $room_id); 
+    }
+
+    public function test_receive_choice_remarks()
+    {
+        $this->actingAs($this->user); //ユーザをログイン状態へ
+        $room = Room::find($this->room_id_1);
+
+        //部屋に入場する前にroom_idを送ってもはじかれる
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザを部屋に入室したことにする
+        $room->roomUsers()->syncWithoutDetaching($this->user->id);
+        $room->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        //room_idの値がなかったらはじかれる
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => '',
+            'target_array' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザが入室している部屋が２つ以上だった場合(in_room = trueの値が２つ以上存在　理論的にはありえない)
+        Room::find($this->room_id_2)->roomUsers()->syncWithoutDetaching($this->user->id);
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => true]);
+
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => '',
+        ]);
+        $response->assertStatus(422)->assertExactJson(['ルームIDの値が不正です']);
+
+        //ユーザが入室している部屋を一つにする(room_id_1のほう)
+        Room::find($this->room_id_2)->roomUsers()->updateExistingPivot($this->user->id, ['in_room' => false]);
+
+        // target_array required バリデーションエラー
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => '',
+        ]);
+        $response->assertInvalid(['target_array']);
+
+        // target_array array バリデーションエラー
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => 'string',
+        ]);
+        $response->assertInvalid(['target_array']);
+
+        $room->roomChat()->attach($this->user, ['message' => 'Choice Check用テストメッセージ1']);
+        $chat_id_1 = $this->user->roomChat->sortBy('id')->last()->pivot->id;
+        $chat_choice_1 = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ1')->first()->pivot->choice;
+        $room->roomChat()->attach($this->user, ['message' => 'Choice Check用テストメッセージ2']);
+        $chat_id_2 = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ2')->first()->pivot->id;
+        $chat_choice_2 = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ2')->first()->pivot->choice;
+        $this->assertFalse($chat_choice_1);
+        $this->assertFalse($chat_choice_2);
+
+        // バリデーションなし choice がfalse→true に変わればOK
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => [$chat_id_1,$chat_id_2],
+        ]);
+        $response->assertOK()->assertExactJson(['Message Choiced']);
+
+        $chat_choice_1_after = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ1')->first()->pivot->choice;
+        $chat_choice_2_after = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ2')->first()->pivot->choice;
+        $this->assertTrue($chat_choice_1_after);
+        $this->assertTrue($chat_choice_2_after);
+
+        // バリデーションなし　choice がtrue→false に変わればOK
+        $response = $this->post('/home/room/chat/choice', [
+            'room_id' => $this->room_id_1,
+            'target_array' => [$chat_id_1,$chat_id_2],
+        ]);
+        $response->assertOK()->assertExactJson(['Message Choiced']);
+
+        $chat_choice_1_after = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ1')->first()->pivot->choice;
+        $chat_choice_2_after = $room->roomChat()->where('room_chat.message','Choice Check用テストメッセージ2')->first()->pivot->choice;
+        $this->assertFalse($chat_choice_1_after);
+        $this->assertFalse($chat_choice_2_after);
     }
 }

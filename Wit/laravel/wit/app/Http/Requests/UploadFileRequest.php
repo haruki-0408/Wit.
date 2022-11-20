@@ -36,7 +36,7 @@ class UploadFileRequest extends FormRequest
     public function messages()
     {
         return [
-            'room_id.required' => 'ルームIDがありません',
+            'room_id.required' => 'ルームIDが存在しません',
             'file.required' => 'ファイル送信失敗',
             'file.file' => 'ファイル形式を適切に選択して下さい',
             'file.max' => '最大アップロードサイズは10MBです',

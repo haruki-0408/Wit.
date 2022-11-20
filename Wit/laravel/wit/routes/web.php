@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     //api
     Route::post('/home/room/chat/message', [App\Http\Controllers\RoomController::class, 'receiveMessage'])->middleware('check.room_id')->name('receiveMessage');
     Route::post('/home/room/chat/file', [App\Http\Controllers\RoomController::class, 'receiveFile'])->middleware('check.room_id')->name('receiveFile');
-    Route::post('/home/room/choice', [\App\Http\Controllers\RoomController::class, 'receiveChoiceRemarks'])->middleware('check.room_id')->name('receiveChoiceRemarks');
+    Route::post('/home/room/chat/choice', [\App\Http\Controllers\RoomController::class, 'receiveChoiceRemarks'])->middleware('check.room_id')->name('receiveChoiceRemarks');
     Route::post('/home/room/ban/', [App\Http\Controllers\RoomController::class, 'receiveBanUser'])->name('receiveBanUser');
     Route::post('/home/room/ban/lift', [App\Http\Controllers\RoomController::class, 'receiveLiftBanUser'])->name('receiveLiftBanUser');
     Route::get('/getRandomTags', [App\Http\Controllers\TagController::class, 'getRandomTags'])->name('getRandomTags');
