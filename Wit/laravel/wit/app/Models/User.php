@@ -97,7 +97,7 @@ class User extends Authenticatable
     }
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id')->withPivot('in_room')->using('App\Models\RoomUser');
+        return $this->belongsToMany('App\Models\Room','room_users','user_id','room_id')->withPivot('in_room','entered_at','exited_at')->using('App\Models\RoomUser');
     }
 
     public function inRoomCount()

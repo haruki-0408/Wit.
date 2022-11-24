@@ -106,9 +106,9 @@
             overflow: scroll;
         }
 
-        #Access-Log-List {
+        #Access-Logs-List {
             height: 90%;
-            overflow: scroll
+            overflow: scroll;
         }
 
         .carousel-item img {
@@ -432,11 +432,11 @@
 
                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                 @if (isset($user->pivot->exited_at))
-                                    Latest Offline {{ $user->pivot->exited_at->format('m/d H:i') }}
+                                    Latest Offline {{ $user->pivot->exited_at }}
                                 @endif
                             </p>
                             <p data-enter-id="{{ $user->id }}" class="m-0 text-primary">
-                                Latest Online {{ $user->pivot->entered_at->format('m/d H:i') }}</p>
+                                Latest Online {{ $user->pivot->entered_at }}</p>
                         </li>
                     @endforeach
                 </ul>
@@ -510,7 +510,7 @@
                             </div>
                         </li>
 
-                        <li>Created Time : {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
+                        <li>Created Time : {{ $room_info->created_at }}</li>
                         <li>Expired Time: {{ $expired_time_left }} Hours </li>
                         @if (Auth::id() == $room_info->user->id)
                             <hr>
@@ -689,7 +689,7 @@
                                 <ul id="Room-Informations-List" class="col-12 mt-2 p-2">
                                     <li>Id : {{ $room_info->id }}</li>
                                     <li>Created Time:
-                                        {{ Carbon\Carbon::parse($room_info->created_at)->format('Y/m/d H:i') }}</li>
+                                        {{ $room_info->created_at }}</li>
                                     <li>Expired Time: {{ $expired_time_left }} Hours </li>
                                     @if (Auth::id() == $room_info->user->id)
                                         <hr>
@@ -796,7 +796,7 @@
                                             <li id='{{ $chat->pivot->id }}'class="Myself">
                                                 <div>
                                                     <span
-                                                        class="badge d-block text-dark text-end">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                        class="badge d-block text-dark text-end">{{ $chat->pivot->created_at }}</span>
                                                 </div>
                                                 <div class="Message">
                                                     @if (isset($chat->pivot->message))
@@ -835,7 +835,7 @@
                                                     <img src="{{ asset($chat->profile_image) }}" alt="user-image"
                                                         width="20" height="20" class="rounded-circle">
                                                     <strong>{{ $chat->name }}</strong><span
-                                                        class="badge text-dark">{{ $chat->pivot->created_at->format('m/d H:i') }}</span>
+                                                        class="badge text-dark">{{ $chat->pivot->created_at }}</span>
                                                 </div>
                                                 <div class="Message">
                                                     @if (isset($chat->pivot->message))
@@ -983,16 +983,17 @@
 
                                             <p data-exit-id="{{ $user->id }}" class="m-0 text-danger">
                                                 @if (isset($user->pivot->exited_at))
-                                                    Latest Offline {{ $user->pivot->exited_at->format('m/d H:i') }}
+                                                    Latest Offline {{ $user->pivot->exited_at }}
                                                 @endif
                                             </p>
 
                                             <p data-enter-id="{{ $user->id }}" class="m-0 text-primary">Latest
-                                                Online {{ $user->pivot->entered_at->format('m/d H:i') }}</p>
+                                                Online {{ $user->pivot->entered_at }}</p>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

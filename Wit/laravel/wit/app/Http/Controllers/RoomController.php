@@ -218,9 +218,8 @@ class RoomController extends Controller
             return redirect('home')->with('error_message', 'パスワード付きのルームです');
         }
 
-
-
         event(new UserEntered($room_id));
+
         return view('wit.room', [
             'room_info' => $room_info,
             'count_image_data' => $count_image_data,

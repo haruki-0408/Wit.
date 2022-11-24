@@ -56,7 +56,7 @@ class Room extends Model
 
     //アクセサtoJsonされてもcreated_atを適切にJST表記するための処置
     protected function getCreatedAtAttribute($value){
-        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y/m/d H:i');
     }   
 
     public function user()
@@ -76,7 +76,7 @@ class Room extends Model
 
     public function roomUsers()
     {
-        return $this->belongsToMany('App\Models\User', 'room_users', 'room_id', 'user_id')->using('App\Models\RoomUser')->withPivot('in_room','entered_at', 'exited_at');
+        return $this->belongsToMany('App\Models\User', 'room_users', 'room_id', 'user_id')->withPivot('in_room','entered_at', 'exited_at')->using('App\Models\RoomUser');
     }
 
     public function roomBans()
