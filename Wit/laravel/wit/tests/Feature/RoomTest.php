@@ -1626,7 +1626,7 @@ class RoomTest extends TestCase
         \Storage::disk('local')->deleteDirectory('roomFiles/RoomID:' . $room_id); 
     }
 
-    public function test_receive_choice_remarks()
+    public function test_receive_choice_messages()
     {
         $this->actingAs($this->user); //ユーザをログイン状態へ
         $room = Room::find($this->room_id_1);

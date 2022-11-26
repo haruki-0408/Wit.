@@ -84,7 +84,7 @@
             text-align: right;
         }
 
-        .Choice-Remarks {
+        .Choice-Messages {
             font-weight: bold;
             color: #198754;
             border: solid;
@@ -510,13 +510,13 @@
                                                 <div>
                                                     @if (isset($chat->pivot->message))
                                                         @if ($chat->pivot->choice)
-                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                            <p class="Choice-Messages">{!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @else
                                                             <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @endif
                                                     @elseif (isset($chat->pivot->postfile))
                                                         @if ($chat->pivot->choice)
-                                                            <a class="Choice-Remarks"
+                                                            <a class="Choice-Messages"
                                                                 onclick="window.onbeforeunload = null;"
                                                                 href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
                                                                     width="16" height="16" fill="currentColor"
@@ -549,13 +549,13 @@
                                                 <div>
                                                     @if (isset($chat->pivot->message))
                                                         @if ($chat->pivot->choice)
-                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                            <p class="Choice-Messages">{!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @else
                                                             <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @endif
                                                     @elseif(isset($chat->pivot->postfile))
                                                         @if ($chat->pivot->choice)
-                                                            <a class="Choice-Remarks"
+                                                            <a class="Choice-Messages"
                                                                 onclick="window.onbeforeunload = null;"
                                                                 href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
                                                                     width="16" height="16" fill="currentColor"

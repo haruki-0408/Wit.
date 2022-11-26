@@ -85,7 +85,7 @@
             text-align: right;
         }
 
-        .Choice-Remarks {
+        .Choice-Messages {
             font-weight: bold;
             color: #198754;
             border: solid;
@@ -520,7 +520,7 @@
                                     data-bs-target="#Ban-Users-Modal" data-bs-toggle="modal">Ban Users List</button>
                             </li>
 
-                            <li class="mt-2"><button id="Choice-Remarks-Button-Modal" data-bs-dismiss="modal"
+                            <li class="mt-2"><button id="Choice-Messages-Button-Modal" data-bs-dismiss="modal"
                                     class="mx-2 btn-outline-success btn" type="button">Choice Remarks</button></li>
 
                             @if ($room_info->posted_at == null && $room_info->password == null && $room_info->tags->count() != 0)
@@ -581,12 +581,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="Choice-Remarks-Modal" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="Chioice-Remarks-Modal">
+<div class="modal fade" id="Choice-Messages-Modal" data-bs-backdrop="static" aria-hidden="true"
+    aria-labelledby="Choice-Messages-Modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header border">
-                <h5 class="modal-title">Choice Remarks</h5>
+                <h5 class="modal-title">Choice Messages</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-start">
@@ -699,9 +699,9 @@
                                                 data-bs-target="#Ban-Users-Modal" data-bs-toggle="modal">Ban Users
                                                 List</button></li>
 
-                                        <li class="mt-2"><button id="Choice-Remarks-Button"
+                                        <li class="mt-2"><button id="Choice-Messages-Button"
                                                 class="mx-2 btn-outline-success btn" type="button">Choice
-                                                Remarks</button></li>
+                                                Messages</button></li>
                                         @if ($room_info->posted_at == null && $room_info->password == null && $room_info->tags->count() != 0)
                                             <li class="mt-2"><button class="mx-2 btn-outline-primary btn"
                                                     type="button" data-bs-target="#Save-Room-Modal"
@@ -801,13 +801,13 @@
                                                 <div class="Message">
                                                     @if (isset($chat->pivot->message))
                                                         @if ($chat->pivot->choice)
-                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                            <p class="Choice-Messages">{!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @else
                                                             <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @endif
                                                     @elseif (isset($chat->pivot->postfile))
                                                         @if ($chat->pivot->choice)
-                                                            <a class="Choice-Remarks"
+                                                            <a class="Choice-Messages"
                                                                 onclick="window.onbeforeunload = null;"
                                                                 href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
                                                                     width="16" height="16" fill="currentColor"
@@ -840,13 +840,13 @@
                                                 <div class="Message">
                                                     @if (isset($chat->pivot->message))
                                                         @if ($chat->pivot->choice)
-                                                            <p class="Choice-Remarks">{!! nl2br(e($chat->pivot->message)) !!}</p>
+                                                            <p class="Choice-Messages">{!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @else
                                                             <p> {!! nl2br(e($chat->pivot->message)) !!}</p>
                                                         @endif
                                                     @elseif(isset($chat->pivot->postfile))
                                                         @if ($chat->pivot->choice)
-                                                            <a class="Choice-Remarks"
+                                                            <a class="Choice-Messages"
                                                                 onclick="window.onbeforeunload = null;"
                                                                 href='/home/room:{{ $chat->pivot->room_id }}/downloadRoomFile:{{ $chat->pivot->postfile }}'><svg
                                                                     width="16" height="16" fill="currentColor"
@@ -909,18 +909,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="Choice-Remarks-Content" class="card-footer" hidden>
+                            <div id="Choice-Messages-Content" class="card-footer" hidden>
                                 <div class="row">
                                     <div class="col-5 p-0 d-flex justify-content-center align-items-center">
                                         <strong style="font-size:0.6em">メッセージを選択して下さい</strong>
                                     </div>
                                     <div class="col-7 text-end p-0">
                                         <button type="button" class="btn btn-outline-primary"
-                                            data-bs-target="#Choice-Remarks-Modal"
+                                            data-bs-target="#Choice-Messages-Modal"
                                             data-bs-toggle="modal">Help</button>
-                                        <button id="Choice-Remarks-Enter" type="button"
+                                        <button id="Choice-Messages-Enter" type="button"
                                             class="btn btn-outline-primary">Enter</button>
-                                        <button id="Choice-Remarks-Cancel" type="button"
+                                        <button id="Choice-Messages-Cancel" type="button"
                                             class="btn btn-secondary">Cancel</button>
                                     </div>
                                 </div>

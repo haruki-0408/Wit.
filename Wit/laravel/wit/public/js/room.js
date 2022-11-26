@@ -19310,8 +19310,8 @@ Echo.join('room-user-notifications.' + room_id).here(function (users) {
 }).leaving(function (user) {
   removeOnlineUser(user);
   sendExitMessage(user);
-}).listen('ChoiceRemarks', function (e) {
-  addChoiceRemarks(e);
+}).listen('ChoiceMessages', function (e) {
+  addChoiceMessages(e);
 }).listen('RemoveRoom', function () {
   removeRoomNotification();
 }).listen('SaveRoom', function () {
@@ -19614,19 +19614,19 @@ function addUploadFile(e) {
   }
 }
 
-function addChoiceRemarks(e) {
+function addChoiceMessages(e) {
   var target_array = e.room_chat_array;
   target_array.map(function (element) {
-    if ($('#' + element).children('.Message').children('p').hasClass('Choice-Remarks')) {
-      $('#' + element).children('.Message').children('p').removeClass('Choice-Remarks');
+    if ($('#' + element).children('.Message').children('p').hasClass('Choice-Messages')) {
+      $('#' + element).children('.Message').children('p').removeClass('Choice-Messages');
     } else {
-      $('#' + element).children('.Message').children('p').addClass('Choice-Remarks');
+      $('#' + element).children('.Message').children('p').addClass('Choice-Messages');
     }
 
-    if ($('#' + element).children('.Message').children('a').hasClass('Choice-Remarks')) {
-      $('#' + element).children('.Message').children('a').removeClass('Choice-Remarks');
+    if ($('#' + element).children('.Message').children('a').hasClass('Choice-Messages')) {
+      $('#' + element).children('.Message').children('a').removeClass('Choice-Messages');
     } else {
-      $('#' + element).children('.Message').children('a').addClass('Choice-Remarks');
+      $('#' + element).children('.Message').children('a').addClass('Choice-Messages');
     }
   });
 }
@@ -19740,17 +19740,17 @@ if (document.getElementById('Lift-Ban-User-Modal')) {
     modal_body.append(message);
     modal_body.append(user_element);
   });
-} //Choice-Remarks機能
+} //Choice-Messages機能
 
 
-if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
+if ($("[id^='Choice-Messages-Button']") && $("[id^='Choice-Messages-Cancel']")) {
   var offcanvas_close = document.getElementById("Offcanvas-Close");
   var send_message_content = document.getElementById("Send-Message-Content");
-  var choice_remarks_content = document.getElementById("Choice-Remarks-Content");
-  var target_array = new Array(); //Choice-Remarksボタンを押した時
+  var choice_remarks_content = document.getElementById("Choice-Messages-Content");
+  var target_array = new Array(); //Choice-Messagesボタンを押した時
 
-  $(document).on('click', "[id^='Choice-Remarks-Button']", function () {
-    document.getElementById('Choice-Remarks-Button').disabled = true;
+  $(document).on('click', "[id^='Choice-Messages-Button']", function () {
+    document.getElementById('Choice-Messages-Button').disabled = true;
     offcanvas_close.click();
     send_message_content.hidden = true;
     choice_remarks_content.hidden = false;
@@ -19758,7 +19758,7 @@ if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
     $(document).on('click', ".Message p, .Message a", function (event) {
       event.preventDefault();
 
-      if (document.getElementById('Choice-Remarks-Button').disabled) {
+      if (document.getElementById('Choice-Messages-Button').disabled) {
         var choice_check = document.createElement('span');
         choice_check.classList = "Choice-Check text-success";
         choice_check.innerHTML = "<svg width='30' height='16' fill='currentColor' class='bi bi-check-lg' viewBox='0 0 16 16'><path d='M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z'/></svg>";
@@ -19780,13 +19780,13 @@ if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
       }
     }); //Enterボタンを押した時
 
-    $(document).on('click', "[id='Choice-Remarks-Enter']", function () {
+    $(document).on('click', "[id='Choice-Messages-Enter']", function () {
       if (target_array.length == 0) {
         return false;
       }
 
-      if (document.getElementById('Choice-Remarks-Button').disabled) {
-        var enter_button = document.getElementById("Choice-Remarks-Enter");
+      if (document.getElementById('Choice-Messages-Button').disabled) {
+        var enter_button = document.getElementById("Choice-Messages-Enter");
         enter_button.disabled = true;
         var message_list = document.getElementById("Message-List");
         message_list.classList.add("opacity-25");
@@ -19818,8 +19818,8 @@ if ($("[id^='Choice-Remarks-Button']") && $("[id^='Choice-Remarks-Cancel']")) {
       }
     }); //Cancelボタンを押した時
 
-    $(document).on('click', "[id='Choice-Remarks-Cancel']", function () {
-      if (document.getElementById('Choice-Remarks-Button').disabled) {
+    $(document).on('click', "[id='Choice-Messages-Cancel']", function () {
+      if (document.getElementById('Choice-Messages-Button').disabled) {
         afterPushButton(target_array);
         target_array = [];
       }
@@ -19833,12 +19833,12 @@ function afterPushButton(target_array) {
   target_array.map(function (element) {
     $('#' + element).find('.Choice-Check').remove();
   });
-  $(document).off('click', "[id='Choice-Remarks-Enter']");
-  $(document).off('click', "[id='Choice-Remarks-Cancel']");
+  $(document).off('click', "[id='Choice-Messages-Enter']");
+  $(document).off('click', "[id='Choice-Messages-Cancel']");
   $(document).off('click', ".Message p, .Message a");
   document.getElementById("Send-Message-Content").hidden = false;
-  document.getElementById("Choice-Remarks-Content").hidden = true;
-  document.getElementById("Choice-Remarks-Button").disabled = false;
+  document.getElementById("Choice-Messages-Content").hidden = true;
+  document.getElementById("Choice-Messages-Button").disabled = false;
   $('.Message p').css('cursor', '');
 }
 })();

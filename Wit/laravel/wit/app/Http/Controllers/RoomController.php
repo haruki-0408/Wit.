@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRoomRequest;
-use App\Http\Requests\ChoiceRemarksRequest;
+use App\Http\Requests\ChoiceMessagesRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\AuthPasswordRequest;
 use App\Events\UserEntered;
 use App\Events\UserExited;
 use App\Events\SendMessage;
 use App\Events\UploadFile;
-use App\Events\ChoiceRemarks;
+use App\Events\ChoiceMessages;
 use App\Events\RemoveRoom;
 use App\Events\SaveRoom;
 use App\Events\RoomBanned;
@@ -353,7 +353,7 @@ class RoomController extends Controller
         return response()->Json('File Send Success');
     }
 
-    public function receiveChoiceRemarks(ChoiceRemarksRequest $request)
+    public function receiveChoiceMessages(ChoiceMessagesRequest $request)
     {
         $room = Room::find($request->room_id);
         if($room->user_id !== $request->user()->id){
@@ -369,7 +369,7 @@ class RoomController extends Controller
                 DB::table('room_chat')->where('id', $target_id)->update(['choice' => true]);
             }
         }
-        event(new ChoiceRemarks($request->room_id, $request->user()->id, $target_array));
+        event(new ChoiceMessages($request->room_id, $request->user()->id, $target_array));
         return response()->Json('Message Choiced');
     }
 
