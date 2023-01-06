@@ -14,7 +14,6 @@ class MailController extends Controller
    public function __invoke($email_token)
    {
         $email_address = base64_decode($email_token);
-        $user = User::where('email_verified_token', $email_token)->first();
     
         // 使用可能なトークンか
         if (User::where('email_verified_token', $email_token)->doesntExist()) {

@@ -37,7 +37,6 @@ class RoomController extends Controller
         $second_query = Room::query();
 
 
-
         switch ($request->search_type) {
             case 'keyword':
                 if (isset($request->keyword)) {
@@ -115,7 +114,6 @@ class RoomController extends Controller
         });
 
         foreach ($rooms as $room) {
-
             $room->user->id = Crypt::encrypt($room->user->id);
             $room->user_id = Crypt::encrypt($room->user_id);
         }
@@ -663,7 +661,7 @@ class RoomController extends Controller
     {
         $file_name = $file->getClientOriginalName();
 
-        //同じ名前のファイルがアップロードされたら名称に+をつけ足す
+        //同じ名前のファイルがアップロードされたら名称に(n)をつけ足す
         $count = 0;
         $extension = $file->getClientOriginalExtension();
         $file_original_name = basename($file_name, '.' . $extension);

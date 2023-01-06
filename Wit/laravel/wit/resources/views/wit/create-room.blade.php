@@ -136,7 +136,7 @@
                 '<input type="password" name="create_password" id="Disabled-Text-Input" class="form-control" placeholder="password" autocomplete="off">';
             confirm_password.innerHTML = 
                 '<input type="password" name="create_password_confirmation" class="form-control" placeholder="confirm password" autocomplete="off">';
-            password_help.innerHTML = '<p>passwordは8文字以上255文字以下で半角英数字&記号が使用できます</p><p>※パスワード付きのルームはPost Roomとして保存できません</p>';
+            password_help.innerHTML = '<p>passwordは8文字以上100文字以下で半角英数字&記号が使用できます</p><p>※パスワード付きのルームはPost Roomとして保存できません</p>';
         } else {
             password.innerHTML =
                 '<input type="password" name="create_password" id="Disabled-Text-Input" class="form-control" placeholder="password" autocomplete="off" disabled>';
