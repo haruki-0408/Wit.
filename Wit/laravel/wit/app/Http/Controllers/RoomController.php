@@ -99,7 +99,7 @@ class RoomController extends Controller
 
         $rooms->map(function ($each) use ($second_query) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
-            $count_chat_messages = $each->roomChat->count();
+            $count_chat_messages = $each->roomChat()->count();
             $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id, $second_query);
             $each['type'] = $type['type'];
@@ -136,7 +136,7 @@ class RoomController extends Controller
 
         $rooms->map(function ($each) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
-            $count_chat_messages = $each->roomChat->count();
+            $count_chat_messages = $each->roomChat()->count();
             $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
@@ -456,7 +456,7 @@ class RoomController extends Controller
             $type = Room::buttonTypeJudge($each->id);
             $each['type'] = $type['type'];
             $count_online_users = RoomUser::countOnlineUsers($each->id);
-            $count_chat_messages = $each->roomChat->count();
+            $count_chat_messages = $each->roomChat()->count();
             $expired_time_left = Room::getRoomExpiredTime($each->id);
             $each['count_online_users'] = $count_online_users;
             $each['count_chat_messages'] = $count_chat_messages;
@@ -527,7 +527,7 @@ class RoomController extends Controller
         }
         $list_rooms->map(function ($each) use ($list_query) {
             $count_online_users = RoomUser::countOnlineUsers($each->id);
-            $count_chat_messages = $each->roomChat->count();
+            $count_chat_messages = $each->roomChat()->count();
             $expired_time_left = Room::getRoomExpiredTime($each->id);
             $type = Room::buttonTypeJudge($each->id, null, $list_query);
             $each['type'] = $type['type'];
