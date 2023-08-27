@@ -161,6 +161,7 @@ Echo.join('room-user-notifications.' + room_id)
     })
     .error((error) => {
         console.error(error);
+        console.log("user deplicated");
         window.location.href = '/home';
     });
 

@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -287,7 +288,8 @@ class RoomController extends Controller
         if (is_null($request->headers->get('X-Pusher-Signature'))) {
             abort(404);
         }
-
+        Log::info($request->headers);
+        Log::info($request->all());
         //pusherからのRequestなのかどうかをチェックしなくてはならない
         //チェックがない状態だと誰でもWebhookを送信してこられるのでまずい
         $webhook_signature = $request->headers->get('X-Pusher-Signature');
