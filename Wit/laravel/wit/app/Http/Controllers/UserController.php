@@ -258,10 +258,11 @@ class UserController extends Controller
     {
         if (isset($request->inquiry_sentence)) {
             $user = Auth::user();
-            $inquiry_sentence = $request->inquiry_sentence;
-            $email = new Inquiry($user, $inquiry_sentence);
-            Mail::to('wit-info@wit-dot.com')->send($email);
-            return redirect('/home')->with('action_message', 'お問い合わせ内容が送信されました');
+            // $inquiry_sentence = $request->inquiry_sentence;
+            // $email = new Inquiry($user, $inquiry_sentence);
+            // Mail::to('wit-info@wit-dot.com')->send($email);
+            // return redirect('/home')->with('action_message', 'お問い合わせ内容が送信されました');
+            return redirect('/home')->with('error_message', 'お問い合わせ機能は停止中です');
         }
 
         return redirect('/home')->with('error_message', 'お問い合わせがエラーにより送信できませんでした');
